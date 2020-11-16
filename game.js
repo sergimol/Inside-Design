@@ -8,5 +8,7 @@ export default class Game extends Phaser.Scene {
     this.add.text(10, 10, "+ el apellido de tu madre", { fontColor: 0xffff00 });
   }
 
-  update(time, delta) {}
+  update(time, delta) {
+    this.add.text(10, 10, " ", { fontColor: 0xffff00 });
+  }
 }
