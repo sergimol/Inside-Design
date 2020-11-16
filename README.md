@@ -1,9 +1,7 @@
-Inside Design
+# Plantilla para juegos en Phaser
 
-Un proyecto de Hummus Sapiens
+Plantilla básica para juegos en Phaser. Hace falta un servidor web para que se ejecute. Por ejemplo:
 
-
-
-
-
-https://docs.google.com/document/d/1yMrtayUTp4Gg8F9OBfY62ApORQyxJdX7Kd_lLJLypx4/edit
+```bash
+npx http-server
+```
