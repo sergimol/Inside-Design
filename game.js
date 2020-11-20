@@ -2,25 +2,16 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: "main" });
   }
-<<<<<<< HEAD
   preload() {
-
-    this.preload.image('phaser', "Sprites/character1.png");
+    this.load.spritesheet('phaser', 'Sprites/character1.png', 120, 144, 30);
+    
   }
 
-  create() {
+  create() { 
     
-    player = scene.add.sprite(100, 200, 'phaser');
-
     this.add.text(10, 10, "Estoy hecho un puto, amono", { fontColor: 0xffff00 });
-    scene.load(player);
+    var phaser=this.add.sprite(400, 400, "phaser")
     
-=======
-  preload() {}
-
-  create() {
-    this.add.text(10, 10, "Estoy hecho un puto, amono", { fontColor: 0xffff00 });
->>>>>>> main
   }
 
   update(time, delta) {
