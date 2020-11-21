@@ -38,6 +38,7 @@ export default class Game extends Phaser.Scene {
     })
 
     this.physics.add.collider(this.player, this.platforms);
+    this.player.setScale(5);
 
     //this.player.setVelocityX(-160);
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -48,12 +49,14 @@ export default class Game extends Phaser.Scene {
     
     if (this.cursors.left.isDown)
     {
+      this.player.setFlipX(true)
       this.player.setVelocityX(-160);
-      this.player.anims.play('left', true);
+      this.player.anims.play('right', true);
       
     }
     else if (this.cursors.right.isDown)
     {
+      this.player.setFlipX(false);
       this.player.setVelocityX(160);
       this.player.anims.play('right', true);
       
