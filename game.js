@@ -21,29 +21,32 @@ export default class Game extends Phaser.Scene {
   
   create() {
 
-    //let platforms;
+    //ANIMACIONES
+    this.anims.create({
+      key:'walk',
+      frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 15}),
+      frameRate: 10,
+      repeat: -1
+    })
+    this.anims.create({
+      key:'idle',
+      frames: this.anims.generateFrameNumbers('sky', {start: 1, end: 3}),
+      frameRate: 10,
+      repeat: -1
+    })
+
+    //Fondo
     this.add.image(700, 400, 'hummus');
 
-    //Grupo de plataformas
-    
-    /*
-    this.platforms = this.physics.add.staticGroup();
-    this.platforms.create(400, 500, 'platform');
-    this.platforms.create(900, 300, 'platform');
-    this.platforms.create(700, 700, 'platform').setScale(3).refreshBody();
-    */
-    this.player = this.physics.add.sprite(100, 450, 'sky');
-    this.player.setBounce(0.2);
-    this.player.setCollideWorldBounds(true); //esto no esta funcionando profe
+    //Personaje
+    this.player = new Player(this, 100, 450);       
     
     //Grupo de coberturas
     let cobers;
     this.cobers = this.physics.add.staticGroup();
     this.cobers.create(577, 591, 'cobertura');
     this.cobers.create(903, 310, 'cobertura');
-    this.cobers.create(257, 246, 'cobertura');
-
-    
+    this.cobers.create(257, 246, 'cobertura');       
 
     //Muro Arriba
     let upWall;
@@ -63,28 +66,9 @@ export default class Game extends Phaser.Scene {
     let wall;
     this.wall = this.physics.add.staticGroup();
     this.wall.create(30, 400, 'Wall');
-    this.wall.create(1370, 400, 'Wall');
+    this.wall.create(1370, 400, 'Wall');    
 
-
-
-
-  
-    //ANIMACIONES
-    this.anims.create({
-      key:'walk',
-      frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 15}),
-      frameRate: 10,
-      repeat: -1
-    })
-    this.anims.create({
-      key:'idle',
-      frames: this.anims.generateFrameNumbers('sky', {start: 1, end: 3}),
-      frameRate: 10,
-      repeat: -1
-    })
-
-
-    //Collider y escala personaje
+    //Collider personaje
     //this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.cobers);
     this.physics.add.collider(this.player, this.UpWall);
@@ -93,14 +77,12 @@ export default class Game extends Phaser.Scene {
 
 
 
-    this.player = new Player(this, 100, 450);
+    
 
     
 
     this.physics.add.collider(this.player, this.platforms);
     this.cursors = this.input.keyboard.createCursorKeys();
-
-    this.player.setSize(14,15);
 
   }
 
@@ -109,26 +91,6 @@ export default class Game extends Phaser.Scene {
       this.player.setIdle();
       this.player.stopX();
       this.player.stopY();
-    }
-    else if (this.cursors.right.isDown)
-    {
-      this.player.setFlipX(false);
-      this.player.setVelocityX(160);
-      this.player.anims.play('right', true);
-      
-    }
-    else
-    {
-       this.player.setVelocityX(0);
-      
-    }
-    if (this.cursors.up.isDown)
-    {
-      this.player.setVelocityY(-160);
-    }
-    else if (this.cursors.down.isDown)
-    {
-      this.player.setVelocityY(160);
     }
     else {
       //Movimiento horizontal

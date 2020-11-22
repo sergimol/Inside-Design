@@ -10,7 +10,8 @@ export default class Player extends Phaser.GameObjects.Sprite{
         this.body.setCollideWorldBounds(true);
         this.setScale(3);
         this.body.onWorldBounds = true;
-        
+        this.body.setSize(14,15);
+
         this.play('idle', true);
     }
         
