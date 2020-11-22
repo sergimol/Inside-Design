@@ -1,3 +1,31 @@
 h1 {
+position: absolute;
+font-family: "Courier New", cursive, sans-serif;
+font-size: 45px;
+letter-spacing: -1.6px;
+word-spacing: 0px;
+color: #000000;
+font-weight: 700;
+text-decoration: none solid rgb(250, 249, 249);
+font-style: normal;
+font-variant: normal;
+text-transform: none;
+}
+
+button {
+  position: absolute;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
   text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

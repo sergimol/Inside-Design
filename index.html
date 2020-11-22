@@ -5,39 +5,20 @@
     <link rel="shortcut icon" href="Sprites/hummusIcon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=2.0" />
     <link rel="stylesheet" href="game.css" />
-    <script src="phaser.js"></script>
+
 
     <title>INSIDE DESIGN</title>
   </head>
 
   <body>
-    <h1>Inside Design</h1>
-    <h2>Goty</h2>
-    <p>
-      Bastante fresco
-    </p>
-    <script type="module">
-      import Game from "./game.js";
-
-      var config = {
-        type: Phaser.AUTO,
-        width: 1400,
-        height: 800,
-        pixelArt: true,
-        input: {
-          gamepad: true,
-        },
-        scale: {
-          mode: Phaser.Scale.FIT,
-          autoCenter: Phaser.Scale.CENTER_BOTH,
-        },
-        scene: [Game],
-        physics: {
-          default: "arcade",
-          arcade: { gravity: { y: 0 }, debug: false },
-        },
-      };
-      new Phaser.Game(config);
-    </script>
+    <body background = './Sprites/Web/background.png'>
+    <img src =  './Sprites/Web/encabezadoFin.png' width="100%" height="auto" > 
+    <h1 style = "left:20%; top:150px";> Inside Design </h1>
+    <img src =  './Sprites/Web/portada.png' style = "display: block; margin-left: auto; margin-right: auto; margin-top: 10px; margin-bottom: 20px;">
+    <form action="game.html">
+      <div class="center"> 
+        <button style = "top:800px">- JUGAR -</button>
+      </div>
+    </form>
   </body>
 </html>
