@@ -5,20 +5,41 @@
     <link rel="shortcut icon" href="Sprites/hummusIcon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=2.0" />
     <link rel="stylesheet" href="game.css" />
-
-
     <title>INSIDE DESIGN</title>
-  </head>
-
-  <body>
-    <body background = './Sprites/Web/background.png'>
     <img src =  './Sprites/Web/encabezadoFin.png' width="100%" height="auto" > 
+  </head>
+  <body>
+    <body background = './Sprites/Web/background.png'></body>
     <h1 style = "left:20%; top:150px";> Inside Design </h1>
-    <img src =  './Sprites/Web/portada.png' style = "display: block; margin-left: auto; margin-right: auto; margin-top: 10px; margin-bottom: 20px;">
+    <!--BOTONES-->
+    <form action="https://twitter.com/HummusSapiens_"; target="_blank">
+      <input type="image" src="./Sprites/Web/twitter.png" width="50" height="auto" style="position: absolute; top: 180px;">
+    </form>
+    <form action="https://github.com/sergimol/Inside-Design"; target="_blank">
+      <input type="image" src="./Sprites/Web/github.png" width="50" height="auto" style="position: absolute; top: 180px; left:60px">
+    </form>
+      <img src =  './Sprites/Web/portada.png' style = "display: block; margin-left: auto; margin-right: auto; margin-top: 10px; margin-bottom: 20px;">
     <form action="game.html">
       <div class="center"> 
-        <button style = "top:800px">- JUGAR -</button>
+        <button class = "button" style = "top:800px; position: absolute">- JUGAR -</button>
       </div>
     </form>
-  </body>
+
+    <!--PARTE DESCRIPTIVA-->
+<table style="position: relative; top: -370px">
+  <tr>
+    <img src =  './Sprites/Web/black.png' width="100%" height="400" > 
+    <td>
+     <h1 style= "color: darkgoldenrod; top: 100px;left: 100px"> Descripción </h2>
+    </td>
+    <td style = "color: darksalmon; position: relative; left: -200px; top:80px">Inside Design es un top down shooter rogue-like en el que se pretende realizar una simulación del  proceso de desarrollo de un videojuego. Mientras el jugador avanza por los niveles, tendrá que lidiar con las mecánicas introducidas por los personajes de los desarrolladores.
+    </td>
+    <td>
+      <iframe width="420" height="315"
+         src="https://www.youtube.com/embed/z8ukuh8iQuI">
+      </iframe>
+     </td>
+  </tr>
+</table>
+</body>
 </html>
