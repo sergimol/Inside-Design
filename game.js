@@ -19,15 +19,15 @@ export default class Game extends Phaser.Scene {
     this.load.image('upWall', './Sprites/upWall.png');
     this.load.image('downWall', './Sprites/downWall.png');
     this.load.image('cobertura', './Sprites/Cobertura.png');
-
-
+    this.load.audio('mainTheme','./audio/main_theme_v1.0.wav');
+    this.load.audio('gunShootSound', './audio/gunShoot.wav');
   }
   
   create() {
     //ANIMACIONES
     this.anims.create({
       key:'walk',
-      frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 15}),
+      frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 9}), //15
       frameRate: 15,
       repeat: -1
     })
@@ -73,13 +73,21 @@ this.input.on('pointerdown', function (pointer) {
             //this.bullet.anims('shot', true);
               this.bullet.rotation = angleToPointer;
               this.physics.moveToObject(this.bullet, this.puntero, 800);
-              //if (this.bullet.)
-            //this.physics.arcade.moveToPointer(bullet, 300);
-        
+              this.cameras.main.shake(200, 0.002);
+
+              let gunSound = this.sound.add('gunShootSound');
+              gunSound.play();
+             
 
 }, this);
 
-    
+
+
+
+
+    //Prototipo Musica
+    let sound = this.sound.add('mainTheme');
+    sound.play();
 
     //Fondo
     this.add.image(700, 400, 'hummus');
@@ -115,7 +123,6 @@ this.input.on('pointerdown', function (pointer) {
     this.wall.create(1370, 400, 'Wall');    
 
     //Collider personaje
-    //this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.cobers);
     this.physics.add.collider(this.player, this.UpWall);
     this.physics.add.collider(this.player, this.DownWall);
@@ -168,6 +175,15 @@ this.input.keyboard.on('keydown-Q', function (event) {
 }, this);
  */
   }
+
+  shake() {
+
+    //  You can set your own intensity and duration
+    this.camera.shake(0.05, 500);
+  
+  }
+
+
 
   update() {
     if(!(this.cursors.left.isDown || this.cursors.right.isDown) && !(this.cursors.up.isDown ||this.cursors.down.isDown)){
