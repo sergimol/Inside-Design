@@ -25,13 +25,13 @@ export default class Game extends Phaser.Scene {
     this.anims.create({
       key:'walk',
       frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 15}),
-      frameRate: 10,
+      frameRate: 15,
       repeat: -1
     })
     this.anims.create({
       key:'idle',
       frames: this.anims.generateFrameNumbers('sky', {start: 1, end: 3}),
-      frameRate: 10,
+      frameRate: 7,
       repeat: -1
     })
 
@@ -83,6 +83,9 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.player, this.platforms);
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.cameras.main.startFollow(this.player);
+
 
   }
 

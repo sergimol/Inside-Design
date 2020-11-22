@@ -17,23 +17,23 @@ export default class Player extends Phaser.GameObjects.Sprite{
         
     moveLeft(){
         this.setFlipX(true)
-        this.body.setVelocityX(-160);
+        this.body.setVelocityX(-200);
         this.play('walk', true);
     }
 
     moveRight(){
         this.setFlipX(false)
-        this.body.setVelocityX(160);
+        this.body.setVelocityX(200);
         this.play('walk', true);
     }
 
     moveUp(){
-        this.body.setVelocityY(-160);
+        this.body.setVelocityY(-200);
         this.play('walk', true);
     }
 
     moveDown(){
-        this.body.setVelocityY(160);
+        this.body.setVelocityY(200);
         this.play('walk', true)
     }
 
