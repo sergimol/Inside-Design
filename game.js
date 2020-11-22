@@ -24,41 +24,6 @@ export default class Game extends Phaser.Scene {
   }
   
   create() {
-    
-    //BULLET
-
-
-
-this.bullets = this.add.group();
-this.bullets.enableBody = true;
-this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-
-this.bullets.createMultiple(50, 'bullet');
-var angleToPointer;
-this.input.on('pointermove', function (pointer){
-  angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x, pointer.y);
-  
-}, this);
-this.bullets.rotation = angleToPointer;
-
-
-
-this.input.on('pointerdown', function (pointer) {
-
-  console.log("help");
-            this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
-            this.bullet.play('shot', true);
-            this.bullet.setScale(4);
-            //= bullets.getFirstDead();
-            //this.bullet.anims('shot', true);
-              this.bullet.rotation = angleToPointer;
-              this.physics.moveToObject(this.bullet, pointer, 400);
-              //if (this.bullet.)
-            //this.physics.arcade.moveToPointer(bullet, 300);
-        
-
-}, this);
-
     //ANIMACIONES
     this.anims.create({
       key:'walk',
@@ -79,6 +44,42 @@ this.input.on('pointerdown', function (pointer) {
       frameRate: 7,
       repeat: -1
     })
+    
+    //BULLET
+
+
+
+this.bullets = this.add.group();
+this.bullets.enableBody = true;
+this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+this.bullets.createMultiple(50, 'bullet');
+var angleToPointer;
+this.input.on('pointermove', function (pointer){
+  angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
+  
+}, this);
+this.bullets.rotation = angleToPointer;
+
+
+
+this.input.on('pointerdown', function (pointer) {
+
+  console.log("help");
+            this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
+            this.bullet.play('shot', true);
+            this.bullet.setScale(4);
+            //= bullets.getFirstDead();
+            //this.bullet.anims('shot', true);
+              this.bullet.rotation = angleToPointer;
+              this.physics.moveToObject(this.bullet, this.puntero, 800);
+              //if (this.bullet.)
+            //this.physics.arcade.moveToPointer(bullet, 300);
+        
+
+}, this);
+
+    
 
     //Fondo
     this.add.image(700, 400, 'hummus');
@@ -130,27 +131,42 @@ this.input.on('pointerdown', function (pointer) {
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.cameras.main.startFollow(this.player);
+    //this.pointer.main.startFollow(this.player);
+    
 
   
 //puntero
+/*
+this.input.on('pointerdown', function (pointer) {
+  
+  this.input.mouse.requestPointerLock();
+  
+}, this);
+ */
 this.puntero = this.add.sprite(400, 300, 'crosshair');
+this.puntero.setScale(3);
 this.input.on('pointermove', function (pointer) {
 
-      this.puntero.x += pointer.movementX - this.player.x;
-      this.puntero.y += pointer.movementY - this.player.y;
+      this.puntero.x += pointer.movementX + this.cameras.main.worldView.x;
+      this.puntero.y += pointer.movementY  + this.cameras.main.worldView.y;
 
 
       // Force the sprite to stay on screen
-      this.puntero.x = pointer.x;//Phaser.Math.Wrap(sprite.x, 0, this.renderer.width);
-      this.puntero.y = pointer.y;//Phaser.Math.Wrap(sprite.y, 0, this.renderer.height);
+      this.puntero.x = pointer.x+ this.cameras.main.worldView.x;//Phaser.Math.Wrap(sprite.x, 0, this.renderer.width);
+      this.puntero.y = pointer.y+ this.cameras.main.worldView.y;//Phaser.Math.Wrap(sprite.y, 0, this.renderer.height);
 
-      if (this.puntero.movementX > 0) { sprite.setRotation(0.1); }
-      else if (pointer.movementX < 0) { sprite.setRotation(-0.1); }
-      else { this.puntero.setRotation(0); }
 
       //updateLockText(true);
   
 }, this);
+/*
+this.input.keyboard.on('keydown-Q', function (event) {
+  if (this.input.mouse.locked)
+  {
+    this.input.mouse.releasePointerLock();
+  }
+}, this);
+ */
   }
 
   update() {
