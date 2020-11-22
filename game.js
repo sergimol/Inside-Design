@@ -1,3 +1,5 @@
+import Player from "./player.js";
+
 export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: "main" });
@@ -74,6 +76,12 @@ export default class Game extends Phaser.Scene {
       frameRate: 10,
       repeat: -1
     })
+    this.anims.create({
+      key:'idle',
+      frames: this.anims.generateFrameNumbers('sky', {start: 1, end: 3}),
+      frameRate: 10,
+      repeat: -1
+    })
 
 
     //Collider y escala personaje
@@ -85,9 +93,11 @@ export default class Game extends Phaser.Scene {
 
 
 
-    this.player.setScale(5);
+    this.player = new Player(this, 100, 450);
 
-    //this.player.setVelocityX(-160);
+    
+
+    this.physics.add.collider(this.player, this.platforms);
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.player.setSize(14,15);
@@ -95,19 +105,16 @@ export default class Game extends Phaser.Scene {
   }
 
   update() {
-    
-    if (this.cursors.left.isDown)
-    {
-      this.player.setFlipX(true)
-      this.player.setVelocityX(-160);
-      this.player.anims.play('walk', true);
-      
+    if(!(this.cursors.left.isDown || this.cursors.right.isDown) && !(this.cursors.up.isDown ||this.cursors.down.isDown)){
+      this.player.setIdle();
+      this.player.stopX();
+      this.player.stopY();
     }
     else if (this.cursors.right.isDown)
     {
       this.player.setFlipX(false);
       this.player.setVelocityX(160);
-      this.player.anims.play('walk', true);
+      this.player.anims.play('right', true);
       
     }
     else
@@ -124,8 +131,20 @@ export default class Game extends Phaser.Scene {
       this.player.setVelocityY(160);
     }
     else {
-      this.player.setVelocityY(0);
+      //Movimiento horizontal
+      if (this.cursors.left.isDown)
+        this.player.moveLeft();
+      else if (this.cursors.right.isDown)
+        this.player.moveRight();      
+      else
+        this.player.stopX();
+      //Movimiento vertical        
+      if (this.cursors.up.isDown)
+        this.player.moveUp();
+      else if (this.cursors.down.isDown)
+        this.player.moveDown();
+      else
+        this.player.stopY();
     }
-    
   }
 }
