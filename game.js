@@ -73,7 +73,7 @@ this.input.on('pointerdown', function (pointer) {
             //this.bullet.anims('shot', true);
               this.bullet.rotation = angleToPointer;
               this.physics.moveToObject(this.bullet, this.puntero, 800);
-              this.cameras.main.shake(200, 0.002);
+              this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
               let gunSound = this.sound.add('gunShootSound');
               gunSound.play();
