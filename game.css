@@ -40,6 +40,15 @@ h3 {
   text-transform: none;
 }
 
+td {
+  font-size: 35px;
+  line-height: 30px;
+  padding: 0 20px;
+  text-align: justify;
+  vertical-align: top;
+  width: 50%;
+}
+
 .button {
   background-color: #4CAF50; /* Green */
   border: none;
