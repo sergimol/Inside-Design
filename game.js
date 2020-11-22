@@ -10,6 +10,10 @@ export default class Game extends Phaser.Scene {
     this.load.image('hummus', './Sprites/BACKGROUND.png'); //nuevo
     this.load.image('platform', './Sprites/platform.png');
 
+    //Diego
+    this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 16, frameHeight: 16});
+    this.load.image('crosshair', 'Sprites/crosshair.png');
+
     //nuevo
     this.load.image('Wall', './Sprites/Wall.png');
     this.load.image('upWall', './Sprites/upWall.png');
@@ -20,12 +24,53 @@ export default class Game extends Phaser.Scene {
   }
   
   create() {
+    
+    //BULLET
+
+
+
+this.bullets = this.add.group();
+this.bullets.enableBody = true;
+this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+this.bullets.createMultiple(50, 'bullet');
+var angleToPointer;
+this.input.on('pointermove', function (pointer){
+  angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x, pointer.y);
+  
+}, this);
+this.bullets.rotation = angleToPointer;
+
+
+
+this.input.on('pointerdown', function (pointer) {
+
+  console.log("help");
+            this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
+            this.bullet.play('shot', true);
+            this.bullet.setScale(4);
+            //= bullets.getFirstDead();
+            //this.bullet.anims('shot', true);
+              this.bullet.rotation = angleToPointer;
+              this.physics.moveToObject(this.bullet, pointer, 400);
+              //if (this.bullet.)
+            //this.physics.arcade.moveToPointer(bullet, 300);
+        
+
+}, this);
 
     //ANIMACIONES
     this.anims.create({
       key:'walk',
       frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 15}),
       frameRate: 15,
+      repeat: -1
+    })
+      
+    this.anims.create({
+      key:'shot',
+      frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 2}),
+      frameRate: 8,
       repeat: -1
     })
     this.anims.create({
@@ -86,7 +131,26 @@ export default class Game extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player);
 
+  
+//puntero
+this.puntero = this.add.sprite(400, 300, 'crosshair');
+this.input.on('pointermove', function (pointer) {
 
+      this.puntero.x += pointer.movementX - this.player.x;
+      this.puntero.y += pointer.movementY - this.player.y;
+
+
+      // Force the sprite to stay on screen
+      this.puntero.x = pointer.x;//Phaser.Math.Wrap(sprite.x, 0, this.renderer.width);
+      this.puntero.y = pointer.y;//Phaser.Math.Wrap(sprite.y, 0, this.renderer.height);
+
+      if (this.puntero.movementX > 0) { sprite.setRotation(0.1); }
+      else if (pointer.movementX < 0) { sprite.setRotation(-0.1); }
+      else { this.puntero.setRotation(0); }
+
+      //updateLockText(true);
+  
+}, this);
   }
 
   update() {

@@ -1,0 +1,149 @@
+@@ -7,13 +7,15 @@ export default class Game extends Phaser.Scene {
+    this.load.spritesheet('sky', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
+    this.load.image('hummus', 'Sprites/hummardo.jpg');
+    this.load.image('platform', 'Sprites/platform.png');
+    this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 16, frameHeight: 16});
+    //this.load.image('bullet', 'Sprites/bullet1.png');
+    this.load.image('crosshair', 'Sprites/crosshair.png');
+  }
+  
+  create() {
+
+    let platforms;
+    this.add.image(700, 400, 'hummus');
+
+    //Grupo de plataformas
+    this.platforms = this.physics.add.staticGroup();
+    this.platforms.create(400, 500, 'platform');
+@ -22,6 +24,51 @@ export default class Game extends Phaser.Scene {
+    this.player = this.physics.add.sprite(100, 450, 'sky');
+    this.player.setBounce(0.2);
+    this.player.setCollideWorldBounds(true); //esto no esta funcionando profe
+
+//BULLET
+
+
+
+this.bullets = this.add.group();
+this.bullets.enableBody = true;
+this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+this.bullets.createMultiple(50, 'bullet');
+var angleToPointer;
+this.input.on('pointermove', function (pointer){
+  angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x, pointer.y);
+  
+}, this);
+this.bullets.rotation = angleToPointer;
+
+
+
+this.input.on('pointerdown', function (pointer) {
+
+  console.log("help");
+            this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
+            this.bullet.play('shot', true);
+            this.bullet.setScale(4);
+            //= bullets.getFirstDead();
+            //this.bullet.anims('shot', true);
+              this.bullet.rotation = angleToPointer;
+              this.physics.moveToObject(this.bullet, pointer, 400);
+              //if (this.bullet.)
+            //this.physics.arcade.moveToPointer(bullet, 300);
+        
+
+}, this);
+/*
+if (this.input.activePointer.isDown)
+{
+  
+  //fire();
+}
+*/
+//this.bullets.setCollideWorldBounds(true)//('checkWorldBounds', true);
+//this.bullets.bou//('outOfBoundsKill', true);
+
+
+  
+    //ANIMACIONES
+    this.anims.create({
+@ -30,6 +77,14 @@ export default class Game extends Phaser.Scene {
+      frameRate: 10,
+      repeat: -1
+    })
+    
+    this.anims.create({
+      key:'shot',
+      frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 2}),
+      frameRate: 8,
+      repeat: -1
+    })
+     
+    this.anims.create({
+      key:'left',
+      frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 15}),
+@ -43,10 +98,34 @@ export default class Game extends Phaser.Scene {
+    //this.player.setVelocityX(-160);
+    this.cursors = this.input.keyboard.createCursorKeys();
+
+
+    
+//puntero
+this.puntero = this.add.sprite(400, 300, 'crosshair');
+this.input.on('pointermove', function (pointer) {
+
+      this.puntero.x += pointer.movementX;
+      this.puntero.y += pointer.movementY;
+
+
+      // Force the sprite to stay on screen
+      this.puntero.x = pointer.x;//Phaser.Math.Wrap(sprite.x, 0, this.renderer.width);
+      this.puntero.y = pointer.y;//Phaser.Math.Wrap(sprite.y, 0, this.renderer.height);
+
+      if (this.puntero.movementX > 0) { sprite.setRotation(0.1); }
+      else if (pointer.movementX < 0) { sprite.setRotation(-0.1); }
+      else { this.puntero.setRotation(0); }
+
+      //updateLockText(true);
+  
+}, this);
+
+  }
+
+  update() {
+    
+    
+    
+    if (this.cursors.left.isDown)
+    {
+      this.player.setFlipX(true)
+@ -79,6 +158,30 @@ export default class Game extends Phaser.Scene {
+    }
+    
+  }
+fire() {
+
+    if (game.time.now > nextFire && bullets.countDead() > 0)
+    {
+        nextFire = game.time.now + fireRate;
+
+        var bullet = bullets.getFirstDead();
+
+        bullet.reset(sprite.x - 8, sprite.y - 8);
+
+        game.physics.arcade.moveToPointer(bullet, 300);
+    }
+  }
+  /*
+   fire() {
+
+        var bullet = bullets.getFirstDead();
+
+        //bullet.reset(sprite.x - 8, sprite.y - 8);
+
+        game.physics.arcade.moveToPointer(bullet, 300);
+    }
+  }
+  */
+  /*
+  preload() {
