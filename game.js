@@ -1,4 +1,5 @@
 import Player from "./player.js";
+import Puntero from "./puntero.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -6,7 +7,7 @@ export default class Game extends Phaser.Scene {
   }
   
   preload() {
-    this.load.spritesheet('sky', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
+    this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
     this.load.image('hummus', './Sprites/BACKGROUND.png'); //nuevo
     this.load.image('platform', './Sprites/platform.png');
 
@@ -27,7 +28,7 @@ export default class Game extends Phaser.Scene {
     //ANIMACIONES
     this.anims.create({
       key:'walk',
-      frames: this.anims.generateFrameNumbers('sky', {start: 4, end: 9}), //15
+      frames: this.anims.generateFrameNumbers('player', {start: 4, end: 9}), //15
       frameRate: 15,
       repeat: -1
     })
@@ -40,7 +41,7 @@ export default class Game extends Phaser.Scene {
     })
     this.anims.create({
       key:'idle',
-      frames: this.anims.generateFrameNumbers('sky', {start: 1, end: 3}),
+      frames: this.anims.generateFrameNumbers('player', {start: 1, end: 3}),
       frameRate: 7,
       repeat: -1
     })
@@ -49,131 +50,116 @@ export default class Game extends Phaser.Scene {
 
 
 
-this.bullets = this.add.group();
-this.bullets.enableBody = true;
-this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+  this.bullets = this.add.group();
+  this.bullets.enableBody = true;
+  this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
-this.bullets.createMultiple(50, 'bullet');
-var angleToPointer;
-this.input.on('pointermove', function (pointer){
-  angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
-  
-}, this);
-this.bullets.rotation = angleToPointer;
-
-
-
-this.input.on('pointerdown', function (pointer) {
-
-  console.log("help");
-            this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
-            this.bullet.play('shot', true);
-            this.bullet.setScale(4);
-            //= bullets.getFirstDead();
-            //this.bullet.anims('shot', true);
-              this.bullet.rotation = angleToPointer;
-              this.physics.moveToObject(this.bullet, this.puntero, 800);
-              this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
-
-              let gunSound = this.sound.add('gunShootSound');
-              gunSound.play();
-             
-
-}, this);
-
-
-
-
-
-    //Prototipo Musica
-    let sound = this.sound.add('mainTheme');
-    sound.play();
-
-    //Fondo
-    this.add.image(700, 400, 'hummus');
-
-    //Personaje
-    this.player = new Player(this, 100, 450);       
+  let angleToPointer;
+  this.input.on('pointermove', function (pointer){
+    angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
     
-    //Grupo de coberturas
-    let cobers;
-    this.cobers = this.physics.add.staticGroup();
-    this.cobers.create(577, 591, 'cobertura');
-    this.cobers.create(903, 310, 'cobertura');
-    this.cobers.create(257, 246, 'cobertura');       
+  }, this);
+  this.bullets.rotation = angleToPointer;
 
-    //Muro Arriba
-    let upWall;
-    this.upWall = this.physics.add.staticGroup();
-    this.upWall.create(700, 49, 'upWall');
+  //Fondo
+  this.add.image(700, 400, 'hummus');
 
-    //Muro Arriba
-    let UpWall;
-    this.UpWall = this.physics.add.staticImage(700, 49, 'upWall');
+  //Personaje
+  this.player = new Player(this, 100, 450);
+  
+  this.puntero = new Puntero(this, 400, 300);
 
-    //Muro Abajo
-    let DownWall;
-    this.DownWall = this.physics.add.staticImage(700, 770, 'downWall');
-    this.DownWall.setFlipY(true);
+  this.input.on('pointerdown', function (pointer) {
 
-    //Muro 
-    let wall;
-    this.wall = this.physics.add.staticGroup();
-    this.wall.create(30, 400, 'Wall');
-    this.wall.create(1370, 400, 'Wall');    
+    console.log("help");
+    this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
+    this.bullet.play('shot', true);
+    this.bullet.setScale(4);
+    //= bullets.getFirstDead();
+    //this.bullet.anims('shot', true);
+    this.bullet.rotation = angleToPointer;
+    this.physics.moveToObject(this.bullet, this.puntero, 800);
+    this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
-    //Collider personaje
-    this.physics.add.collider(this.player, this.cobers);
-    this.physics.add.collider(this.player, this.UpWall);
-    this.physics.add.collider(this.player, this.DownWall);
-    this.physics.add.collider(this.player, this.wall);
+    let gunSound = this.sound.add('gunShootSound');
+    gunSound.play();
+              
+
+  }, this);
 
 
 
+
+
+  //Prototipo Musica
+  let sound = this.sound.add('mainTheme');
+  sound.play();      
+  
+  //Grupo de coberturas
+  let cobers;
+  this.cobers = this.physics.add.staticGroup();
+  this.cobers.create(577, 591, 'cobertura');
+  this.cobers.create(903, 310, 'cobertura');
+  this.cobers.create(257, 246, 'cobertura');       
+
+  //Muro Arriba
+  let upWall;
+  this.upWall = this.physics.add.staticGroup();
+  this.upWall.create(700, 49, 'upWall');
+
+  //Muro Arriba
+  let UpWall;
+  this.UpWall = this.physics.add.staticImage(700, 49, 'upWall');
+
+  //Muro Abajo
+  let DownWall;
+  this.DownWall = this.physics.add.staticImage(700, 770, 'downWall');
+  this.DownWall.setFlipY(true);
+
+  //Muro 
+  let wall;
+  this.wall = this.physics.add.staticGroup();
+  this.wall.create(30, 400, 'Wall');
+  this.wall.create(1370, 400, 'Wall');    
+
+  //Collider personaje
+  this.physics.add.collider(this.player, this.cobers);
+  this.physics.add.collider(this.player, this.UpWall);
+  this.physics.add.collider(this.player, this.DownWall);
+  this.physics.add.collider(this.player, this.wall);
+
+
+
+  
+
+  
+
+  this.physics.add.collider(this.player, this.platforms);
+  this.cursors = this.input.keyboard.createCursorKeys();
+
+  this.cameras.main.startFollow(this.player);
+  //this.pointer.main.startFollow(this.player);
     
 
+  
+  //puntero
+  /*
+  this.input.on('pointerdown', function (pointer) {
     
-
-    this.physics.add.collider(this.player, this.platforms);
-    this.cursors = this.input.keyboard.createCursorKeys();
-
-    this.cameras.main.startFollow(this.player);
-    //this.pointer.main.startFollow(this.player);
+    this.input.mouse.requestPointerLock();
     
-
+  }, this);
+  */
+ //en player
   
-//puntero
-/*
-this.input.on('pointerdown', function (pointer) {
-  
-  this.input.mouse.requestPointerLock();
-  
-}, this);
- */
-this.puntero = this.add.sprite(400, 300, 'crosshair');
-this.puntero.setScale(3);
-this.input.on('pointermove', function (pointer) {
-
-      this.puntero.x += pointer.movementX + this.cameras.main.worldView.x;
-      this.puntero.y += pointer.movementY  + this.cameras.main.worldView.y;
-
-
-      // Force the sprite to stay on screen
-      this.puntero.x = pointer.x+ this.cameras.main.worldView.x;//Phaser.Math.Wrap(sprite.x, 0, this.renderer.width);
-      this.puntero.y = pointer.y+ this.cameras.main.worldView.y;//Phaser.Math.Wrap(sprite.y, 0, this.renderer.height);
-
-
-      //updateLockText(true);
-  
-}, this);
-/*
-this.input.keyboard.on('keydown-Q', function (event) {
-  if (this.input.mouse.locked)
-  {
-    this.input.mouse.releasePointerLock();
-  }
-}, this);
- */
+  /*
+  this.input.keyboard.on('keydown-Q', function (event) {
+    if (this.input.mouse.locked)
+    {
+      this.input.mouse.releasePointerLock();
+    }
+  }, this);
+  */
   }
 
   shake() {
@@ -186,6 +172,10 @@ this.input.keyboard.on('keydown-Q', function (event) {
 
 
   update() {
+    this.input.on('pointermove', function(pointer){
+      this.puntero.move(pointer, this);
+    }, this)
+    
     if(!(this.cursors.left.isDown || this.cursors.right.isDown) && !(this.cursors.up.isDown ||this.cursors.down.isDown)){
       this.player.setIdle();
       this.player.stopX();
