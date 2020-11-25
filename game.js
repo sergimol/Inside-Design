@@ -1,5 +1,5 @@
-import Player from "./source/player.js";
-import Puntero from "./source/puntero.js";
+import Player from "/source/player.js";
+import Puntero from "/source/puntero.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -23,6 +23,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('cobertura', './Sprites/Cobertura.png');
     this.load.audio('mainTheme','./audio/main_theme_v1.0.wav');
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
+    this.load.image('gunShoot', './Sprites/gunShootProt.png');
   }
   
   create() {
@@ -50,6 +51,12 @@ export default class Game extends Phaser.Scene {
     //BULLET
 
 
+    //WEAPON
+    let gun = this.add.image('gunShootProt');
+    //BULLETS
+    this.bullets = this.add.group();
+    this.bullets.enableBody = true;
+    this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
   this.bullets = this.add.group();
   this.bullets.enableBody = true;
@@ -177,26 +184,38 @@ export default class Game extends Phaser.Scene {
       this.puntero.move(pointer, this);
     }, this)
 
+    this.dirX = 0;
+    this.dirY = 0;
+    /*
     if(!(this.cursors.left.isDown || this.cursors.right.isDown) && !(this.cursors.up.isDown ||this.cursors.down.isDown)){
+      /*
       this.player.setIdle();
       this.player.stopX();
       this.player.stopY();
-    }
-    else {
-      //Movimiento horizontal
-      if (this.cursors.left.isDown)
-        this.player.moveLeft();
-      else if (this.cursors.right.isDown)
-        this.player.moveRight();      
-      else
-        this.player.stopX();
-      //Movimiento vertical        
-      if (this.cursors.up.isDown)
-        this.player.moveUp();
-      else if (this.cursors.down.isDown)
-        this.player.moveDown();
-      else
-        this.player.stopY();
-    }
+      */
+    
+  
+    //Movimiento horizontal
+    if (this.cursors.left.isDown)
+      this.dirX = -1;
+      //this.player.moveLeft();
+    else if (this.cursors.right.isDown)
+      this.dirX = 1;
+      //this.player.moveRight();      
+   // else
+      //this.player.stopX();
+    //Movimiento vertical        
+    if (this.cursors.up.isDown)
+      this.dirY = -1;
+      //this.player.moveUp();
+    else if (this.cursors.down.isDown)
+      this.dirY = 1;
+      //this.player.moveDown();
+    //else
+      //this.player.stopY();
+    
+
+    this.player.move(this.dirX, this.dirY);
+    this.player.moveRotate(this.puntero.x - this.player.x);
   }
 }

@@ -40,6 +40,25 @@ export default class Humanoid extends Phaser.GameObjects.Sprite{
         this.play('walk', true)
     }
 
+    //Nuevo
+    move(dirX, dirY){
+        this.body.setVelocityX(this.speed * dirX);
+        this.body.setVelocityY(this.speed * dirY);
+        //Animacion
+        if(dirX === 0 && dirY === 0)
+            this.play('idle', true);
+        else
+            this.play('walk', true);
+    }
+
+    moveRotate(dirX)
+    {
+        if(dirX > 0)
+            this.setFlipX(false)
+        else 
+            this.setFlipX(true)
+    }
+
     stopX(){
         this.body.setVelocityX(0);
     }
