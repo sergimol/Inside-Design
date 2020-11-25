@@ -61,7 +61,6 @@ export default class Game extends Phaser.Scene {
   //Personaje
   this.player = new Player(this, 100, 450), 'Player';
   
-  this.puntero = new Puntero(this, 400, 300);
 
   this.input.on('pointerdown', function (pointer) {
 
@@ -114,7 +113,7 @@ export default class Game extends Phaser.Scene {
   let wall;
   this.wall = this.physics.add.staticGroup();
   this.wall.create(30, 400, 'Wall');
-  this.wall.create(1370, 400, 'Wall');    
+  this.wall.create(1370, 400, 'Wall');
 
   //Collider personaje
   this.physics.add.collider(this.player, this.cobers);
@@ -125,7 +124,9 @@ export default class Game extends Phaser.Scene {
 
 
   
+//puntero a tope
 
+this.puntero = new Puntero(this, 400, 300);
   
 
   this.physics.add.collider(this.player, this.platforms);
