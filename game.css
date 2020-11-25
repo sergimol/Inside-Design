@@ -1,5 +1,4 @@
 h1 {
-  position: absolute;
   font-family: "Courier New", cursive, sans-serif;
   font-size: 45px;
   letter-spacing: -1.6px;
@@ -49,6 +48,17 @@ td {
   width: 50%;
 }
 
+ul{
+  list-style-type: none;
+  text-align: left;
+}
+
+li{
+  display: inline;
+  text-align: center;
+  margin: 0 10px 0 0;
+}
+
 .button {
   background-color: #4CAF50; /* Green */
   border: none;
@@ -64,4 +74,22 @@ td {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.contenedor{
+  margin: 1% 1%;
+}
+
+.button-container{
+  display:inline-block;
+  position:relative;
+  align-items: center;
+  right:-20%;
+  }
+  
+.button-container a{
+position: absolute;
+bottom:4%;
+right:50%;
+left:50%;
 }
