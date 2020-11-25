@@ -3,44 +3,32 @@ export default class Humanoid extends Phaser.GameObjects.Sprite{
     {
         super(scene, x, y, Sprite);
         
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
-
-        this.body.setBounce(0.2);
-        this.body.setCollideWorldBounds(true);
-        this.setScale(3);
-        this.body.onWorldBounds = true;
-        this.body.setSize(14,15);
+        this.scene = scene;                             //Guardamos la escena en humanoide
+        scene.add.existing(this);                       //Añadimos a la escena el objeto humanoide
+        this.scene.physics.world.enableBody(this,0);    //le añadimos físicas dinámicas
+        this.isDead = false;                            //La entidad está viva
+        this.Sprite = Sprite;                           //Pasamos el sprite
 
         this.play('idle', true);
 
+        //Escala
+        this.setScale(3);           //Tamaño sprite
+        this.body.setSize(14,15);   //Collider
+        //Atributos
         this.health;
         this.speed = 200;
-    }
+    }//Fin constructora
         
-    moveLeft(){
-        this.setFlipX(true)
-        this.body.setVelocityX(-this.speed);
-        this.play('walk', true);
-    }
+    die(){
+        if(!this.isDead){
+            this.isDead = true;
+            this.destroy();
+            console.log('entity explode');
+        }
 
-    moveRight(){
-        this.setFlipX(false)
-        this.body.setVelocityX(this.speed);
-        this.play('walk', true);
     }
-
-    moveUp(){
-        this.body.setVelocityY(-this.speed);
-        this.play('walk', true);
-    }
-
-    moveDown(){
-        this.body.setVelocityY(this.speed);
-        this.play('walk', true)
-    }
-
-    //Nuevo
+    ////////////
+    //MOVIMIENTO
     move(dirX, dirY){
         this.body.setVelocityX(this.speed * dirX);
         this.body.setVelocityY(this.speed * dirY);
@@ -50,24 +38,11 @@ export default class Humanoid extends Phaser.GameObjects.Sprite{
         else
             this.play('walk', true);
     }
-
     moveRotate(dirX)
     {
         if(dirX > 0)
             this.setFlipX(false)
         else 
             this.setFlipX(true)
-    }
-
-    stopX(){
-        this.body.setVelocityX(0);
-    }
-
-    stopY(){
-        this.body.setVelocityY(0);
-    }
-
-    setIdle(){
-        this.play('idle', true);
     }
 }

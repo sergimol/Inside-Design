@@ -28,29 +28,15 @@ export default class Game extends Phaser.Scene {
   
   create() {
     //ANIMACIONES
-    this.anims.create({
-      key:'walk',
-      frames: this.anims.generateFrameNumbers('player', {start: 4, end: 9}), //15
-      frameRate: 15,
-      repeat: -1
-    })
-      
+    
+    //BULLET
     this.anims.create({
       key:'shot',
       frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 2}),
       frameRate: 8,
       repeat: -1
     })
-    this.anims.create({
-      key:'idle',
-      frames: this.anims.generateFrameNumbers('player', {start: 1, end: 3}),
-      frameRate: 7,
-      repeat: -1
-    })
     
-    //BULLET
-
-
     //WEAPON
     let gun = this.add.image('gunShootProt');
     //BULLETS
@@ -73,7 +59,7 @@ export default class Game extends Phaser.Scene {
   this.add.image(700, 400, 'hummus');
 
   //Personaje
-  this.player = new Player(this, 100, 450);
+  this.player = new Player(this, 100, 450), 'Player';
   
   this.puntero = new Puntero(this, 400, 300);
 
@@ -144,78 +130,15 @@ export default class Game extends Phaser.Scene {
 
   this.physics.add.collider(this.player, this.platforms);
   this.cursors = this.input.keyboard.createCursorKeys();
-
   this.cameras.main.startFollow(this.player);
-  //this.pointer.main.startFollow(this.player);
-    
-
-  
-  //puntero
-  /*
-  this.input.on('pointerdown', function (pointer) {
-    
-    this.input.mouse.requestPointerLock();
-    
-  }, this);
-  */
- //en player
-  
-  /*
-  this.input.keyboard.on('keydown-Q', function (event) {
-    if (this.input.mouse.locked)
-    {
-      this.input.mouse.releasePointerLock();
-    }
-  }, this);
-  */
   }
-
-  shake() {
-
-    //  You can set your own intensity and duration
-    this.camera.shake(0.05, 500);
-  
-  }
-
-
 
   update() {
+    //puntero
     this.input.on('pointermove', function(pointer){
       this.puntero.move(pointer, this);
     }, this)
-
-    this.dirX = 0;
-    this.dirY = 0;
-    /*
-    if(!(this.cursors.left.isDown || this.cursors.right.isDown) && !(this.cursors.up.isDown ||this.cursors.down.isDown)){
-      /*
-      this.player.setIdle();
-      this.player.stopX();
-      this.player.stopY();
-      */
-    
-  
-    //Movimiento horizontal
-    if (this.cursors.left.isDown)
-      this.dirX = -1;
-      //this.player.moveLeft();
-    else if (this.cursors.right.isDown)
-      this.dirX = 1;
-      //this.player.moveRight();      
-   // else
-      //this.player.stopX();
-    //Movimiento vertical        
-    if (this.cursors.up.isDown)
-      this.dirY = -1;
-      //this.player.moveUp();
-    else if (this.cursors.down.isDown)
-      this.dirY = 1;
-      //this.player.moveDown();
-    //else
-      //this.player.stopY();
-    
-
-    this.player.move(this.dirX, this.dirY);
-    this.player.moveRotate(this.puntero.x - this.player.x);
+    //Jugador
+    this.player.update();
   }
 }
