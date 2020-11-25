@@ -130,13 +130,13 @@ export default class Game extends Phaser.Scene {
 
   this.physics.add.collider(this.player, this.platforms);
   this.cursors = this.input.keyboard.createCursorKeys();
-  this.cameras.main.startFollow(this.player);
+  this.cameras.main.startFollow(this.puntero.intermedio);
   }
 
   update() {
     //puntero
     this.input.on('pointermove', function(pointer){
-      this.puntero.move(pointer, this);
+      this.puntero.move(pointer, this, this.player);
     }, this)
     //Jugador
     this.player.update();
