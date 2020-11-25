@@ -14,7 +14,7 @@ export default class Humanoid extends Phaser.GameObjects.Sprite{
 
         this.play('idle', true);
 
-        this.health;
+        let health;
         this.speed = 200;
     }
         
