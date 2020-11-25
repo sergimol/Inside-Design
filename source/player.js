@@ -1,4 +1,4 @@
-import Humanoid from "./source/humanoid.js";
+import Humanoid from "source/humanoid.js";
 
 export default class Player extends Humanoid{
     constructor(scene, x, y, Sprite){
