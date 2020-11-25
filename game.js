@@ -1,5 +1,5 @@
-import Player from "source/player.js";
-import Puntero from "source/puntero.js";
+import Player from "./source/player.js";
+import Puntero from "./source/puntero.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
