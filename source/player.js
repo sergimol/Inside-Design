@@ -78,17 +78,17 @@ export default class Player extends Humanoid{
         moverlo junto al jugador, hay encontrar la manera de que si el jugador se mueve tmb lo haga le puntero, el problema es que el metodo move es de3 un game object con fisicas, el punteor no tiene fisicas
         */
 
-        //let px = this.puntero.x - this.x;
-        //let py = this.puntero.y - this.y;
+       
+       //this.puntero.x = this.x;
+       //this.puntero.y = this.y;
+       
+       this.move(this.dirX, this.dirY);
 
-         //this.puntero.x = this.x;
-         //this.puntero.y = this.y;
-         
-         this.move(this.dirX, this.dirY);
-         // asignar la posicion del puntero
-         //this.puntero.x = this.x + px;
-         //this.puntero.y = this.y + py;
-         
+       
+       // asignar la posicion del puntero
+       this.puntero.x = this.x - this.puntero.px;
+       this.puntero.y = this.y - this.puntero.py;
+       
          this.moveRotate(this.puntero.x - this.x);
          this.weapon.rotateWeapon(angle);
          //updatea la posicion del punto medio (camara)
