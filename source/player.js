@@ -1,4 +1,5 @@
 import Humanoid from "./humanoid.js";
+import Puntero from "./puntero.js";
 
 export default class Player extends Humanoid{
     constructor(scene, x, y, Sprite){
@@ -37,6 +38,11 @@ export default class Player extends Humanoid{
             s: S,
             d: D
         })
+
+
+        //Puntero hijo 
+        //this.puntero = new Puntero(scene, x, y, 'crosshair');
+
     }//Fin constructora
 
     update(){
@@ -56,5 +62,7 @@ export default class Player extends Humanoid{
        
        this.move(this.dirX, this.dirY);
        this.moveRotate(this.scene.puntero.x - this.x);
+
+       
     }
 }
