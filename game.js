@@ -54,12 +54,12 @@ export default class Game extends Phaser.Scene {
   this.bullets.enableBody = true;
   this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
-  let angleToPointer;
+   this.angleToPointer;
   this.input.on('pointermove', function (pointer){
-    angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
+    this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
     
   }, this);
-  this.bullets.rotation = angleToPointer;
+  this.bullets.rotation = this.angleToPointer;
 
   //Fondo
   this.add.image(700, 400, 'hummus');
@@ -75,7 +75,7 @@ export default class Game extends Phaser.Scene {
     this.bullet.setScale(4);
     //= bullets.getFirstDead();
     //this.bullet.anims('shot', true);
-    this.bullet.rotation = angleToPointer;
+    this.bullet.rotation = this.angleToPointer;
     this.physics.moveToObject(this.bullet, this.puntero, 800);
     this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
@@ -170,5 +170,6 @@ this.puntero = new Puntero(this, 400, 300);
         child.update();
       }
     });
+    this.player.update(this.angleToPointer);
   }
 }
