@@ -10,7 +10,6 @@ export default class Game extends Phaser.Scene {
   
   preload() {
     this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
-    this.load.spritesheet('enemy', './Sprites/enemy.png', {frameWidth: 24, frameHeight: 24});
     this.load.image('hummus', './Sprites/BACKGROUND.png'); //nuevo
     this.load.image('platform', './Sprites/platform.png');
 
@@ -33,6 +32,9 @@ export default class Game extends Phaser.Scene {
   }
   
   create() {
+
+
+    
     //ANIMACIONES
     
     //BULLET
@@ -94,53 +96,50 @@ export default class Game extends Phaser.Scene {
   sound.play();      
   
   //Grupo de coberturas
-  let worldLayer;
-  this.worldLayer = this.physics.add.staticGroup();
-  this.worldLayer.create(577, 591, 'cobertura');
-  this.worldLayer.create(903, 310, 'cobertura');
-  this.worldLayer.create(257, 246, 'cobertura');       
+  let cobers;
+  this.cobers = this.physics.add.staticGroup();
+  this.cobers.create(577, 591, 'cobertura');
+  this.cobers.create(903, 310, 'cobertura');
+  this.cobers.create(257, 246, 'cobertura');       
 
   //Muro Arriba
   let upWall;
-  this.worldLayer = this.physics.add.staticGroup();
-  this.worldLayer.create(700, 49, 'upWall');
+  this.upWall = this.physics.add.staticGroup();
+  this.upWall.create(700, 49, 'upWall');
 
   //Muro Arriba
   let UpWall;
-  this.worldLayer = this.physics.add.staticImage(700, 49, 'upWall');
+  this.UpWall = this.physics.add.staticImage(700, 49, 'upWall');
 
   //Muro Abajo
   let DownWall;
-  this.worldLayer = this.physics.add.staticImage(700, 770, 'downWall');
-  this.worldLayer.setFlipY(true);
+  this.DownWall = this.physics.add.staticImage(700, 770, 'downWall');
+  this.DownWall.setFlipY(true);
 
   //Muro 
   let wall;
-  this.worldLayer = this.physics.add.staticGroup();
-  this.worldLayer.create(30, 400, 'Wall');
-  this.worldLayer.create(1370, 400, 'Wall');
+  this.wall = this.physics.add.staticGroup();
+  this.wall.create(30, 400, 'Wall');
+  this.wall.create(1370, 400, 'Wall');
 
   //Collider personaje
-  this.physics.add.collider(this.player, this.worldLayer);
-  //this.physics.add.collider(this.player, this.UpWall);
-  //this.physics.add.collider(this.player, this.DownWall);
-  //this.physics.add.collider(this.player, this.wall);
- 
-
+  this.physics.add.collider(this.player, this.cobers);
+  this.physics.add.collider(this.player, this.UpWall);
+  this.physics.add.collider(this.player, this.DownWall);
+  this.physics.add.collider(this.player, this.wall);
 
 //ENEMY
 this.enemy = new Enemy(this, 250,200, 'enemy');
-this.physics.add.collider(this.enemy, worldLayer);
-this.enemy.body.setCollideWorldBounds(true);
+this.physics.add.collider(this.enemy, cobers);
 //ENEMIES
 this.enemies = this.add.group();
 for(let i = 0; i<8; i++){
-  const e = new Enemy(this, 350 + 50*i, 250, 'enemy');
+  const e = new Enemy(this, 220 + 20*i, 250, 'enemy');
   e.body.setCollideWorldBounds(true);
   e.setTint(0x9999ff);
   this.enemies.add(e);
 }
-this.physics.add.collider(this.enemies, worldLayer);
+
   
 //puntero a tope
 

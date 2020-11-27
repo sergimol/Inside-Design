@@ -12,7 +12,7 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         this.isDead = false;                            //La entidad está viva
         this.Sprite = Sprite;                           //Pasamos el sprite
 
-        //this.play('idle', true);
+        this.play('idle', true);
 
         //Escala
         this.setScale(3);           //Tamaño sprite
@@ -45,10 +45,10 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         this.body.setVelocityX(this.speed * dirX);
         this.body.setVelocityY(this.speed * dirY);
         //Animacion
-        //if(dirX === 0 && dirY === 0)
-         //   this.play('idle', true);
-       // else
-         //   this.play('walk', true);
+        if(dirX === 0 && dirY === 0)
+            this.play('idle', true);
+        else
+            this.play('walk', true);
     }
     moveRotate(dirX)
     {
