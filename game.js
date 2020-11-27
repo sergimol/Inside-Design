@@ -159,7 +159,6 @@ this.puntero = new Puntero(this, 400, 300);
     
 
     //Jugador
-<<<<<<< Updated upstream
     this.player.update();
     //Enemigos
     if(!this.enemy.isDead){
@@ -170,8 +169,6 @@ this.puntero = new Puntero(this, 400, 300);
         child.update();
       }
     });
-=======
     this.player.update(this.angleToPointer);
->>>>>>> Stashed changes
   }
 }
