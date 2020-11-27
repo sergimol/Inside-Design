@@ -166,8 +166,12 @@ this.puntero = new Puntero(this, 400, 300);
     }
     this.enemies.children.iterate((child)=>{
       if(!child.isDead){
-        child.update();
+        child.update(this,angleToPointer);
       }
     });
+<<<<<<< HEAD
+=======
+    this.player.update(this.angleToPointer);
+>>>>>>> parent of a53d867... Revert "añadida arma y rotacion del arma taki taki rumba"
   }
 }
