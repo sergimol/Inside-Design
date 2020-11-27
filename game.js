@@ -1,6 +1,7 @@
 import Weapon from "/source/weapon.js";
 import Player from "/source/player.js";
 import Puntero from "/source/puntero.js";
+import Enemy from "/source/enemy.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -24,9 +25,16 @@ export default class Game extends Phaser.Scene {
     this.load.audio('mainTheme','./audio/main_theme_v1.0.wav');
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
+
+    this.player;
+    this.enemy;
+    this.enemies;
   }
   
   create() {
+
+
+    
     //ANIMACIONES
     
     //BULLET
@@ -81,7 +89,7 @@ export default class Game extends Phaser.Scene {
 
 
 
-
+  
 
   //Prototipo Musica
   let sound = this.sound.add('mainTheme');
@@ -120,7 +128,17 @@ export default class Game extends Phaser.Scene {
   this.physics.add.collider(this.player, this.DownWall);
   this.physics.add.collider(this.player, this.wall);
 
-
+//ENEMY
+this.enemy = new Enemy(this, 250,200, 'enemy');
+this.physics.add.collider(this.enemy, cobers);
+//ENEMIES
+this.enemies = this.add.group();
+for(let i = 0; i<8; i++){
+  const e = new Enemy(this, 220 + 20*i, 250, 'enemy');
+  e.body.setCollideWorldBounds(true);
+  e.setTint(0x9999ff);
+  this.enemies.add(e);
+}
 
   
 //puntero a tope
@@ -142,5 +160,14 @@ this.puntero = new Puntero(this, 400, 300);
 
     //Jugador
     this.player.update();
+    //Enemigos
+    if(!this.enemy.isDead){
+      this.enemy.update();
+    }
+    this.enemies.children.iterate((child)=>{
+      if(!child.isDead){
+        child.update();
+      }
+    });
   }
 }

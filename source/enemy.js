@@ -73,9 +73,7 @@ export default class Enemy extends Humanoid{
         }
         
     }
-
-
-
+}
 
 //EN GAME
 /*
