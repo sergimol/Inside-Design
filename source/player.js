@@ -89,7 +89,7 @@ export default class Player extends Humanoid{
        this.puntero.x = this.x - this.puntero.px;
        this.puntero.y = this.y - this.puntero.py;
        
-         this.moveRotate(this.scene.puntero.x - this.x);
+         this.moveRotate(this.puntero.x - this.x);
          this.weapon.rotateWeapon(angle);
          //updatea la posicion del punto medio (camara)
          this.puntero.updateMiddle(this);
