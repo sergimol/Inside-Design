@@ -43,9 +43,9 @@ export default class Game extends Phaser.Scene {
     //WEAPON
     let gun = this.add.image('gunShootProt');
     //BULLETS
-    //this.bullets = this.add.group();
-    //this.bullets.enableBody = true;
-    //this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    this.bullets = this.add.group();
+    this.bullets.enableBody = true;
+    this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
     //PUNTERO
     this.angleToPointer;
@@ -59,23 +59,24 @@ export default class Game extends Phaser.Scene {
 
     //Prototipo Musica
     let sound = this.sound.add('mainTheme');
-    sound.play(); 
+    //sound.play(); 
     
     
     //DISPARO
     this.input.on('pointerdown', function (pointer) {
-    console.log("help");
-    this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
-    this.bullet.play('shot', true);
-    this.bullet.setScale(4);
-    //= bullets.getFirstDead();
-    //this.bullet.anims('shot', true);
-    this.bullet.rotation = this.angleToPointer;
-    this.physics.moveToObject(this.bullet, this.player.puntero, 800);
-    this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
+      console.log("help");
+      this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
+      this.bullet.play('shot', true);
+      this.bullet.setScale(4);
+      //= bullets.getFirstDead();
+      //this.bullet.anims('shot', true);
+      this.bullet.rotation = this.angleToPointer;
+      this.physics.moveToObject(this.bullets, this.player.puntero, 800);
+      this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
-    let gunSound = this.sound.add('gunShootSound');
-    gunSound.play();
+      
+      let gunSound = this.sound.add('gunShootSound');
+      gunSound.play();
     }, this);
 
 
