@@ -44,7 +44,7 @@ export default class Player extends Humanoid{
 
     }//Fin constructora
 
-    update(angletopointer){
+    update(){
         //Idle por defecto
         this.dirX = 0;
         this.dirY = 0;
@@ -61,7 +61,6 @@ export default class Player extends Humanoid{
        
        this.move(this.dirX, this.dirY);
        this.moveRotate(this.scene.puntero.x - this.x);
-       this.rotateWeapon(angletopointer);
 
        
     }
