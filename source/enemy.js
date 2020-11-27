@@ -2,9 +2,10 @@ import Humanoid from "/source/humanoid.js";
 export default class Enemy extends Humanoid{
     constructor(scene, x, y, Sprite){
         super(scene, x, y, 'enemy');
-
+        //this.Sprite = Sprite;
         //Atributos
         this.speed = 100;
+        //this.physics.quit.collider(this.Enemy, this.Enemy);
 
         /////////////
         //Animaciones
@@ -12,40 +13,25 @@ export default class Enemy extends Humanoid{
 
         anims.create({
             key:'walk',
-            frames: anims.generateFrameNumbers(this.Sprite, {start: 4, end: 9}), //15
+            frames: anims.generateFrameNumbers(Sprite, {start: 4, end: 9}), //15
             frameRate: 15,
             repeat: -1
         })
         anims.create({
         key:'idle',
-        frames: anims.generateFrameNumbers(this.Sprite, {start: 1, end: 3}),
+        frames: anims.generateFrameNumbers(Sprite, {start: 1, end: 3}),
         frameRate: 7,
         repeat: -1
         })*/
-
-        
-        let dir = Math.floor(Math.random()*4);
-        switch(dir){
-            case 0:
-                this.body.setVelocity(0, -this.speed);  //up
-                break;
-            case 1:
-                this.body.setVelocity(-this.speed, 0);  //left
-                break;
-            case 2:
-                this.body.setVelocity(0, this.speed);   //down
-                break;
-            case 3:
-                this.body.setVelocity(this.speed, 0);   //right
-                break;
-            default:
-                break;
-        }
+        this.dirX = -1;
+        this.dirY = 0;
     }//Fin constructora
-    Update(){
+
+    decidirMov(){
         const {speed} = this;
         const enemyBlocked = this.body.blocked;
         if(enemyBlocked.down ||enemyBlocked.up ||enemyBlocked.right ||enemyBlocked.left){
+            console.log("colision");
             let possibleDirections = [];
             for(const direction in enemyBlocked){
                 possibleDirections.push(direction);
@@ -53,25 +39,29 @@ export default class Enemy extends Humanoid{
             const newDirection = possibleDirections[Math.floor(Math.random()*4)+1];
             switch(newDirection){
                 case 'up':
-                    this.body.setVelocity(0,-this.speed);
+                    this.dirX = 0;
+                    this.dirY = -1;
                     break;
                 case 'left':
-                    this.body.setVelocity(-this.speed,0);
+                    this.dirX = -1;
+                    this.dirY = 0;
                     break;
                 case 'down':
-                    this.body.setVelocity(0,this.speed);
+                    this.dirX = 0;
+                    this.dirY = 1;
                     break;
-                case 'up':
-                    this.body.setVelocity(this.speed,0);
-                    break;
-                case 'none':
-                    this.body.setVelocity(0,0);
+                case 'right':
+                    this.dirX = 1;
+                    this.dirY = 0;
                     break;
                 default:
                     break;
             }
         }
-        
+    }
+    update(){      
+        this.decidirMov();
+        this.move(this.dirX, this.dirY);
     }
 }
 
