@@ -40,6 +40,15 @@ export default class Player extends Humanoid{
         })
 
 
+        
+        
+         //Container
+         this.container = scene.add.container();
+         this.scene.add.existing(this.container);
+         //Para añadir hijos
+         this.puntero = new Puntero(scene, x, y);
+         this.container.add(this.puntero);
+   
         //Puntero hijo 
         //this.puntero = new Puntero(scene, x, y, 'crosshair');
 
@@ -60,9 +69,30 @@ export default class Player extends Humanoid{
        else if (this.cursors.down.isDown|| this.cursors.s.isDown)
          this.dirY = 1;
        
-       this.move(this.dirX, this.dirY);
-       this.moveRotate(this.scene.puntero.x - this.x);
-       this.weapon.rotateWeapon(angle);
+         //updatear la posicion del puntero si el jugador se mueve
+        /**
+        
+        Ideas
+
+        calcular la distancia y despues de moverlo ponerlo, como primero s emueve el puntero en caso de moverse no habria problema
+        moverlo junto al jugador, hay encontrar la manera de que si el jugador se mueve tmb lo haga le puntero, el problema es que el metodo move es de3 un game object con fisicas, el punteor no tiene fisicas
+        */
+
+        //let px = this.puntero.x - this.x;
+        //let py = this.puntero.y - this.y;
+
+         //this.puntero.x = this.x;
+         //this.puntero.y = this.y;
+         
+         this.move(this.dirX, this.dirY);
+         // asignar la posicion del puntero
+         //this.puntero.x = this.x + px;
+         //this.puntero.y = this.y + py;
+         
+         this.moveRotate(this.puntero.x - this.x);
+         this.weapon.rotateWeapon(angle);
+         //updatea la posicion del punto medio (camara)
+         this.puntero.updateMiddle(this);
 
        
     }

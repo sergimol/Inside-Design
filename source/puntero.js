@@ -11,12 +11,16 @@ export default class Puntero extends Phaser.GameObjects.Sprite{
         this.x = pointer.x + scene.cameras.main.worldView.x;
         this.y = pointer.y + scene.cameras.main.worldView.y;
 
-        this.intermedio.x = (player.x + (player.x + this.x)/2) /2;
-        this.intermedio.y = (player.y + (player.y + this.y)/2) /2;
 
         //calucloY = this.intermedio.y / 5;
-
+        this.updateMiddle(player);
         //this.intermedio.y = calculoY;
 
+    }
+
+    updateMiddle(player){
+        
+        this.intermedio.x = (player.x + (player.x + this.x)/2) /2;
+        this.intermedio.y = (player.y + (player.y + this.y)/2) /2;
     }
 }

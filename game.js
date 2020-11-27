@@ -78,7 +78,7 @@ export default class Game extends Phaser.Scene {
     //= bullets.getFirstDead();
     //this.bullet.anims('shot', true);
     this.bullet.rotation = this.angleToPointer;
-    this.physics.moveToObject(this.bullet, this.puntero, 800);
+    this.physics.moveToObject(this.bullet, this.player.puntero, 800);
     this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
     let gunSound = this.sound.add('gunShootSound');
@@ -148,13 +148,13 @@ this.puntero = new Puntero(this, 400, 300);
 
   this.physics.add.collider(this.player, this.platforms);
   this.cursors = this.input.keyboard.createCursorKeys();
-  this.cameras.main.startFollow(this.puntero.intermedio);
+  this.cameras.main.startFollow(this.player.puntero.intermedio);
   }
 
   update() {
 
     this.input.on('pointermove', function(pointer){
-      this.puntero.move(pointer, this, this.player);
+      this.player.puntero.move(pointer, this, this.player);
     }, this)
     
 
