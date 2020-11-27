@@ -71,7 +71,7 @@ export default class Game extends Phaser.Scene {
       //= bullets.getFirstDead();
       //this.bullet.anims('shot', true);
       this.bullet.rotation = this.angleToPointer;
-      this.physics.moveToObject(this.bullets, this.player.puntero, 800);
+      this.physics.moveToObject(this.bullet, this.player.puntero, 800);
       this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
       this.bullets.add(this.bullet);
@@ -127,26 +127,34 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.player.puntero.intermedio);
 
     //Enemy
-    this.enemy = new Enemy(this, 350,200, 'enemy');
-    this.physics.add.collider(this.enemy, this.cobers);
+    //this.enemy = new Enemy(this, 350,200, 'enemy');
+    //this.physics.add.collider(this.enemy, this.cobers);
+    
+    
     //Enemies
     this.enemies = this.add.group();
-    for(let i = 0; i<0; i++){
-    const e = new Enemy(this, 400 + 20*i, 250, 'enemy');
-    e.body.setCollideWorldBounds(true);
-    e.setTint(0x9999ff);
-    this.enemies.add(e);
+    for(let i = 0; i<3; i++){
+      
+      const e = new Enemy(this, 400 + 20*i, 250, 'enemy');
+      e.body.setCollideWorldBounds(true);
+      e.setTint(0x9999ff);
+      this.enemies.add(e);
     }
-      //Eliminar enemigos
-      this.physics.add.overlap(this.bullets, this.enemies, this.handleBulletEnemyCollision, null, this);
+    this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
+
+
+    //Eliminar enemigos
+    //this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision, this);
     
     //puntero a tope
-    this.puntero = new Puntero(this, 400, 300);
+    //this.puntero = new Puntero(this, 400, 300);
   }//End of create
 
   handleBulletEnemyCollision(b,e){
     console.log('enemy hit');
     e.die();
+    //esto no es la manera correcta ni pa tras xd
+    b.destroy();
   }
 
   update() {
@@ -158,9 +166,12 @@ export default class Game extends Phaser.Scene {
     //Jugador
     this.player.update();
     //Enemigos
-    if(!this.enemy.isDead){
-      this.enemy.update();
-    }
+    /**
+     * 
+     if(!this.enemy.isDead){
+       this.enemy.update();
+      }
+  */
     this.enemies.children.iterate((child)=>{
       if(!child.isDead){
         child.update();
