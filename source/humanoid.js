@@ -1,4 +1,7 @@
-export default class Humanoid extends Phaser.GameObjects.Sprite{
+import Weapon from "./weapon.js";
+
+export default class Humanoid extends Phaser.GameObjects.Sprite 
+{ //Container
     constructor(scene, x, y, Sprite)
     {
         super(scene, x, y, Sprite);
@@ -17,6 +20,15 @@ export default class Humanoid extends Phaser.GameObjects.Sprite{
         //Atributos
         this.health;
         this.speed = 200;
+
+        //Container
+        this.container = scene.add.container(x,y);
+        this.scene.add.existing(this.container);
+        //Para añadir hijos
+        this.weapon = new Weapon(scene, x+20, y+20);
+        this.container.add(this.weapon);
+
+
     }//Fin constructora
         
     die(){
@@ -45,4 +57,6 @@ export default class Humanoid extends Phaser.GameObjects.Sprite{
         else 
             this.setFlipX(true)
     }
+
+
 }

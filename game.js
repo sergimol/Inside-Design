@@ -1,5 +1,6 @@
-import Player from "./source/player.js";
-import Puntero from "./source/puntero.js";
+import Weapon from "/source/weapon.js";
+import Player from "/source/player.js";
+import Puntero from "/source/puntero.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -10,7 +11,6 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
     this.load.image('hummus', './Sprites/BACKGROUND.png'); //nuevo
     this.load.image('platform', './Sprites/platform.png');
-    this.load.image('gunshot', './Sprites/gunShootProt.png');
 
     //Diego
     this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 16, frameHeight: 16});
@@ -60,7 +60,6 @@ export default class Game extends Phaser.Scene {
 
   //Personaje
   this.player = new Player(this, 100, 450), 'Player';
-  
 
   this.input.on('pointerdown', function (pointer) {
 
@@ -135,10 +134,12 @@ this.puntero = new Puntero(this, 400, 300);
   }
 
   update() {
-    //puntero
+
     this.input.on('pointermove', function(pointer){
       this.puntero.move(pointer, this, this.player);
     }, this)
+    
+
     //Jugador
     this.player.update();
   }
