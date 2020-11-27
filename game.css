@@ -45,7 +45,7 @@ td {
   padding: 0 20px;
   text-align: justify;
   vertical-align: top;
-  width: 50%;
+  width: auto; 
 }
 
 ul{
