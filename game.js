@@ -74,7 +74,8 @@ export default class Game extends Phaser.Scene {
       this.physics.moveToObject(this.bullets, this.player.puntero, 800);
       this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
-      
+      this.bullets.add(this.bullet);
+
       let gunSound = this.sound.add('gunShootSound');
       gunSound.play();
     }, this);
@@ -137,7 +138,7 @@ export default class Game extends Phaser.Scene {
     this.enemies.add(e);
     }
       //Eliminar enemigos
-      this.physics.add.overlap(this.bullet, this.enemy, this.handleBulletEnemyCollision, null, this);
+      this.physics.add.overlap(this.bullets, this.enemies, this.handleBulletEnemyCollision, null, this);
     
     //puntero a tope
     this.puntero = new Puntero(this, 400, 300);

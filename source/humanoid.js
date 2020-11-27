@@ -32,11 +32,9 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
     }//Fin constructora
         
     die(){
-        if(!this.isDead){
-            this.isDead = true;
-            this.destroy();
-            console.log('entity explode');
-        }
+        this.isDead = true;
+        this.destroy();
+        console.log('entity explode');
     }
     ////////////
     //MOVIMIENTO
