@@ -159,7 +159,6 @@ this.puntero = new Puntero(this, 400, 300);
     
 
     //Jugador
-<<<<<<< Updated upstream
     this.player.update();
     //Enemigos
     if(!this.enemy.isDead){
@@ -172,6 +171,7 @@ this.puntero = new Puntero(this, 400, 300);
     });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     this.player.update(this.angleToPointer);
 >>>>>>> parent of a53d867... Revert "añadida arma y rotacion del arma taki taki rumba"
@@ -180,5 +180,8 @@ this.puntero = new Puntero(this, 400, 300);
     this.player.update(this.angleToPointer);
 >>>>>>> Stashed changes
 >>>>>>> parent of b9037ac... ya esta my in side demons have been drowne
+=======
+    this.player.update(this.angleToPointer);
+>>>>>>> parent of a53d867... Revert "añadida arma y rotacion del arma taki taki rumba"
   }
 }
