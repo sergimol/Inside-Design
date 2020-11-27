@@ -22,10 +22,10 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         this.speed = 200;
 
         //Container
-        this.container = scene.add.container(x,y);
+        this.container = scene.add.container();
         this.scene.add.existing(this.container);
         //Para añadir hijos
-        this.weapon = new Weapon(scene, x+20, y+20);
+        this.weapon = new Weapon(scene, x, y);
         this.container.add(this.weapon);
 
 
@@ -49,13 +49,23 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
             this.play('idle', true);
         else
             this.play('walk', true);
+
+            this.weapon.x = this.x;
+            this.weapon.y = this.y+ 20;
     }
     moveRotate(dirX)
     {
-        if(dirX > 0)
+        if(dirX > 0){
             this.setFlipX(false)
-        else 
+            this.weapon.setFlipY(false)
+        }
+        else{
             this.setFlipX(true)
+            this.weapon.setFlipY(true)
+        } 
+    }
+    rotateWeapon(angle){
+        this.weapon.rotateWeapon(angle);
     }
 
 
