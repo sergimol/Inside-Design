@@ -37,7 +37,6 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
             this.destroy();
             console.log('entity explode');
         }
-
     }
     ////////////
     //MOVIMIENTO

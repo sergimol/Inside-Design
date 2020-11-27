@@ -5,7 +5,7 @@ export default class Enemy extends Humanoid{
 
         //Atributos
         this.speed = 100;
-
+        this.health = 1;
         /////////////
         //Animaciones
         /*const anims = scene.anims;
@@ -23,7 +23,7 @@ export default class Enemy extends Humanoid{
         repeat: -1
         })*/
 
-        this.dirX = -1;
+        this.dirX = 0;
         this.dirY = 0;
     }//Fin constructora
 
@@ -63,7 +63,7 @@ export default class Enemy extends Humanoid{
         }
     }
     update(){
-        this.decidirMov();
+        //this.decidirMov();
         this.move(this.dirX, this.dirY);
     }
 }
