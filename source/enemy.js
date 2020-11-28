@@ -5,7 +5,7 @@ export default class Enemy extends Humanoid{
 
         //Atributos
         this.speed = 100;
-        this.health = 1;
+        this.health = 3;
         /////////////
         //Animaciones
         /*const anims = scene.anims;
