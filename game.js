@@ -174,9 +174,10 @@ export default class Game extends Phaser.Scene {
   */
     this.enemies.children.iterate((child)=>{
       if(!child.isDead){
-        child.update();
+        child.update(this.player);
       }
     });
     this.player.update(this.angleToPointer);
+    console.log(this.angleToPointer);
   }
 }
