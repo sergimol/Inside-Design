@@ -11,6 +11,7 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         this.scene.physics.world.enableBody(this,0);    //le añadimos físicas dinámicas
         this.isDead = false;                            //La entidad está viva
         this.Sprite = Sprite;                           //Pasamos el sprite
+        this.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
 
         this.play('idle', true);
 
@@ -27,16 +28,21 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         //Para añadir hijos
         this.weapon = new Weapon(scene, x, y);
         this.container.add(this.weapon);
+        //this.container.setDepth(4);
 
 
     }//Fin constructora
         
     die(){
-        this.isDead = true;
-        this.weapon.destroy();
-        this.container.destroy();
-        this.destroy();
-        console.log('entity explode');
+        --this.health;
+        console.log(this.health);
+        if(this.health===0){
+            this.isDead = true;
+            this.weapon.destroy();
+            this.container.destroy();
+            this.destroy();
+            console.log('entity explode');
+        }
     }
     ////////////
     //MOVIMIENTO
@@ -68,7 +74,16 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
 
     rotateWeapon(angle){
     this.weapon.rotateWeapon(angle);
+
+    this.depth
+
+
+     if (angle < (Math.Pi/4) && angle > (3*Math.PI/4)){
+         this.container.setDepth(2);
     }
+    else;
+     this.weapon.depth = 4;
+}
 
 
 }

@@ -143,7 +143,7 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
 
 
-    //Eliminar enemigos jaja andres
+       //Eliminar enemigos jaja andres
     //this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision, this);
     
     //puntero a tope
@@ -174,9 +174,10 @@ export default class Game extends Phaser.Scene {
   */
     this.enemies.children.iterate((child)=>{
       if(!child.isDead){
-        child.update();
+        child.update(this.player);
       }
     });
     this.player.update(this.angleToPointer);
+    //console.log(this.angleToPointer);
   }
 }
