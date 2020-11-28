@@ -1,7 +1,7 @@
-import Weapon from "/source/weapon.js";
-import Player from "/source/player.js";
-import Puntero from "/source/puntero.js";
-import Enemy from "/source/enemy.js";
+import Weapon from "./source/weapon.js";
+import Player from "./source/player.js";
+import Puntero from "./source/puntero.js";
+import Enemy from "./source/enemy.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
