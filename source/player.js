@@ -88,11 +88,11 @@ export default class Player extends Humanoid{
        // asignar la posicion del puntero
        this.puntero.x = this.x - this.puntero.px;
        this.puntero.y = this.y - this.puntero.py;
+       this.puntero.updateMiddle(this);
        
-         this.moveRotate(this.puntero.x - this.x);
-         this.weapon.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.puntero.x, this.puntero.y));
+       this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.puntero.x, this.puntero.y));
+       this.moveRotate(this.puntero.x - this.x);
          //updatea la posicion del punto medio (camara)
-         this.puntero.updateMiddle(this);
 
        
     }

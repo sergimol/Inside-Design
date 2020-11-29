@@ -12,23 +12,23 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         this.isDead = false;                            //La entidad está viva
         this.Sprite = Sprite;                           //Pasamos el sprite
         this.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
-
+        
         this.play('idle', true);
-
+        
         //Escala
         this.setScale(3);           //Tamaño sprite
         this.body.setSize(14,15);   //Collider
         //Atributos
         this.health;
         this.speed = 200;
-
+        
         //Container
         this.container = scene.add.container();
         this.scene.add.existing(this.container);
         //Para añadir hijos
         this.weapon = new Weapon(scene, x, y);
         this.container.add(this.weapon);
-        //this.container.setDepth(4);
+        
 
 
     }//Fin constructora
@@ -75,13 +75,11 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
     rotateWeapon(angle){
     this.weapon.rotateWeapon(angle);
 
-    this.depth
-
 
      if (angle < 0){
-         this.container.depth = 2;
+         this.container.depth = this.depth - 1;
     }
-    else this.container.depth = 4;
+    else this.container.depth = this.depth + 1;
 }
 
 

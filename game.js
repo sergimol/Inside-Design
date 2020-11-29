@@ -144,7 +144,6 @@ export default class Game extends Phaser.Scene {
         child.update(this.player);
       }
     });
-    this.player.update(this.angleToPointer);
     //console.log(this.angleToPointer);
   }
 }
