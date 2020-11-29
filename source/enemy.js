@@ -4,7 +4,7 @@ export default class Enemy extends Humanoid{
         super(scene, x, y, 'enemy');
 
         //Atributos
-        this.speed = 50;
+        this.speed = 100;
         this.health = 3;
         /////////////
         //Animaciones
@@ -70,8 +70,8 @@ export default class Enemy extends Humanoid{
             }
         }
     }
-        this.moveRotate((player.x - this.x));
-    update(){
+        
+    update(player){
         //this.decidirMov();
         //this.move(this.dirX, this.dirY);
         //this.enemyMove();
@@ -87,7 +87,10 @@ export default class Enemy extends Humanoid{
                 this.enemyMove();
             }
         }
-
+        this.weapon.x = this.x;
+        this.weapon.y = this.y + 20; 
+        this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y));
+        this.moveRotate((player.x - this.x));
 
     }
 
