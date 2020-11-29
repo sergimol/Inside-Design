@@ -43,18 +43,18 @@ export default class Player extends Humanoid{
         
         
          //Container
-         this.container = scene.add.container();
-         this.scene.add.existing(this.container);
+         this.contenedor = scene.add.container();
+         this.scene.add.existing(this.contenedor);
          //Para añadir hijos
          this.puntero = new Puntero(scene, x, y);
-         this.container.add(this.puntero);
+         this.contenedor.add(this.puntero);
    
         //Puntero hijo 
         //this.puntero = new Puntero(scene, x, y, 'crosshair');
 
     }//Fin constructora
 
-    update(angle){
+    update(){
         //Idle por defecto
         this.dirX = 0;
         this.dirY = 0;
@@ -88,11 +88,12 @@ export default class Player extends Humanoid{
        // asignar la posicion del puntero
        this.puntero.x = this.x - this.puntero.px;
        this.puntero.y = this.y - this.puntero.py;
+       this.puntero.updateMiddle(this);
        
-         this.moveRotate(this.puntero.x - this.x);
-         this.weapon.rotateWeapon(angle);
+       this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.puntero.x, this.puntero.y));
+       this.moveRotate(this.puntero.x - this.x);
          //updatea la posicion del punto medio (camara)
-         this.puntero.updateMiddle(this);
+         //console.log(this.depth + " " + this.container.depth + " " + this.weapon.depth);
 
        
     }
