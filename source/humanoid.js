@@ -78,11 +78,10 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
     this.depth
 
 
-     if (angle < (Math.Pi/4) && angle > (3*Math.PI/4)){
-         this.container.setDepth(2);
+     if (angle < 0){
+         this.container.depth = 2;
     }
-    else;
-     this.weapon.depth = 4;
+    else this.container.depth = 4;
 }
 
 

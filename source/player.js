@@ -54,7 +54,7 @@ export default class Player extends Humanoid{
 
     }//Fin constructora
 
-    update(angle){
+    update(){
         //Idle por defecto
         this.dirX = 0;
         this.dirY = 0;
@@ -90,7 +90,7 @@ export default class Player extends Humanoid{
        this.puntero.y = this.y - this.puntero.py;
        
          this.moveRotate(this.puntero.x - this.x);
-         this.weapon.rotateWeapon(angle);
+         this.weapon.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.puntero.x, this.puntero.y));
          //updatea la posicion del punto medio (camara)
          this.puntero.updateMiddle(this);
 
