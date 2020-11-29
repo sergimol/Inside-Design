@@ -57,8 +57,8 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         else
             this.play('walk', true);
 
-            this.weapon.x = this.x;
-            this.weapon.y = this.y+ 20;
+        this.weapon.x = this.x;
+        this.weapon.y = this.y+ 20;
     }
     moveRotate(dirX){
         if(dirX > 0){

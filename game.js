@@ -99,7 +99,7 @@ export default class Game extends Phaser.Scene {
     }, this);
 
     //Personaje
-    this.player = new Player(this, 100, 450), 'Player';
+    this.player = new Player(this, 400, 450), 'Player';
     //Fisicas personaje
     this.physics.add.collider(this.player, this.platforms);
 

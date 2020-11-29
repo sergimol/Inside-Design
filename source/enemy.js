@@ -33,6 +33,11 @@ export default class Enemy extends Humanoid{
         this.nextY = this.y + newY;
 
         this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);   
+
+        //Timer para mover al enemigo aunque no llegue a la siguiente posicion
+        this.scene.time.addEvent({ delay: 1000, callback: this.enemyMove, callbackScope: this, loop: true });
+
+
     }//Fin constructora
 
     decidirMov(){
@@ -72,20 +77,25 @@ export default class Enemy extends Humanoid{
     }
         
     update(player){
-        //this.decidirMov();
-        //this.move(this.dirX, this.dirY);
-        //this.enemyMove();
-        
+
+        //Calculamos la distancia entre la siguiente posicion y el enemigo
         let distance = Phaser.Math.Distance.Between(this.x, this.y, this.nextX, this.nextY);
 
         if (this.body.speed > 0)
-        {
-            //PARAR AL BICHO CUANDO LLEGA A LA POSICION
-            //4 ES UN VALOR CERCANO A LA POS PORQUE SI IGUALAS POSICIONES HACE JAJA xd Y NO SE PARA
-            if (distance < 4)
-            {
-                this.enemyMove();
-            }
+        { 
+                //PARAR AL BICHO CUANDO LLEGA A LA POSICION
+                //4 ES UN VALOR CERCANO A LA POS PORQUE SI IGUALAS POSICIONES HACE JAJA xd Y NO SE PARA
+                if (distance < 4)
+                {
+                    //Elegimos entre una posicion aleatoria y que se acerque al jugador
+                    let wichMove;
+                    wichMove = Math.floor(Math.random() * (6 - 1)) + 1;
+                    if(wichMove <  5)
+                        this.enemyMove();
+                    else
+                        this.enemyMoveToPlayer(player);
+                    
+                }            
         }
         this.weapon.x = this.x;
         this.weapon.y = this.y + 20; 
@@ -94,18 +104,27 @@ export default class Enemy extends Humanoid{
 
     }
 
+    //Mueve el enemigo a una posicon aleatoria
     enemyMove()
     {
-        //this.stopMove();
-        //Calculamos unos margenes para la siguiente posicion
+        
         let newX, newY;
         newX = Math.floor(Math.random() * (60 + 60)) - 60;
         newY = Math.floor(Math.random() * (60 + 60)) - 60;
         //Creamos la nueva posicon
         this.nextX = this.x + newX;
         this.nextY = this.y +newY;
+
         //Movemos al enemigo a la siguiente posicion
-        this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);
+        this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);    
+    }
+
+    //Mueve el enemigo hacia la posicion del jugador
+    enemyMoveToPlayer(player)
+    {
+        this.nextX = player.x;
+        this.nextY = player.y;  
+        this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);    
     }
 
 }
