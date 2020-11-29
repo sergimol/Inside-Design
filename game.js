@@ -61,7 +61,24 @@ export default class Game extends Phaser.Scene {
     let sound = this.sound.add('mainTheme');
     sound.play(); 
     
-    
+
+    //Colliders
+    //this.physics.scene.enable(this.platforms);
+    //this.platforms = this.add.physicsGroup();
+    this.platforms = this.physics.add.staticGroup();
+      //Coberturas
+      this.platforms.create(577, 591, 'cobertura');
+      this.platforms.create(903, 310, 'cobertura');
+      this.platforms.create(257, 246, 'cobertura');
+      //Muro Arriba
+      this.platforms.create(700, 49, 'upWall');
+      //Muro Abajo
+      this.platforms.create(700, 770, 'downWall').setFlipY(true);
+      //this.platforms.setFlipY(true);
+      //Muros laterales 
+      this.platforms.create(30, 400, 'Wall');
+      this.platforms.create(1370, 400, 'Wall');
+
     //DISPARO
     this.input.on('pointerdown', function (pointer) {
       console.log("help");
@@ -74,82 +91,38 @@ export default class Game extends Phaser.Scene {
       this.physics.moveToObject(this.bullet, this.player.puntero, 800);
       this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
+      this.physics.add.overlap(this.bullet, this.platforms, this.destroyBullet);
       this.bullets.add(this.bullet);
 
       let gunSound = this.sound.add('gunShootSound');
       gunSound.play();
     }, this);
 
-
-
-    
-
-        
-    
-    //Grupo de coberturas
-    let cobers;
-    this.cobers = this.physics.add.staticGroup();
-    this.cobers.create(577, 591, 'cobertura');
-    this.cobers.create(903, 310, 'cobertura');
-    this.cobers.create(257, 246, 'cobertura');       
-
-    //Muro Arriba
-    let upWall;
-    this.upWall = this.physics.add.staticGroup();
-    this.upWall.create(700, 49, 'upWall');
-
-    //Muro Arriba
-    let UpWall;
-    this.UpWall = this.physics.add.staticImage(700, 49, 'upWall');
-
-    //Muro Abajo
-    let DownWall;
-    this.DownWall = this.physics.add.staticImage(700, 770, 'downWall');
-    this.DownWall.setFlipY(true);
-
-    //Muro 
-    let wall;
-    this.wall = this.physics.add.staticGroup();
-    this.wall.create(30, 400, 'Wall');
-    this.wall.create(1370, 400, 'Wall');
-
-    
-
     //Personaje
     this.player = new Player(this, 100, 450), 'Player';
     //Fisicas personaje
-    this.physics.add.collider(this.player, this.cobers);
-    this.physics.add.collider(this.player, this.UpWall);
-    this.physics.add.collider(this.player, this.DownWall);
-    this.physics.add.collider(this.player, this.wall);
+    this.physics.add.collider(this.player, this.platforms);
 
     //Camara
     this.cameras.main.startFollow(this.player.puntero.intermedio);
-
-    //Enemy
-    //this.enemy = new Enemy(this, 350,200, 'enemy');
-    //this.physics.add.collider(this.enemy, this.cobers);
-    
     
     //Enemies
     this.enemies = this.add.group();
     for(let i = 0; i<3; i++){
-      
       const e = new Enemy(this, 400 + 20*i, 250, 'enemy');
       e.body.setCollideWorldBounds(true);
       e.setTint(0x9999ff);
       this.enemies.add(e);
     }
+    this.physics.add.collider(this.enemies, this.platforms);
     this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
 
-
-       //Eliminar enemigos jaja andres
-    //this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision, this);
-    
-    //puntero a tope
-    //this.puntero = new Puntero(this, 400, 300);
   }//End of create
 
+  destroyBullet(b){
+    console.log('bullet hit');
+    b.destroy();
+  }
   handleBulletEnemyCollision(b,e){
     console.log('enemy hit');
     e.die();
@@ -166,12 +139,6 @@ export default class Game extends Phaser.Scene {
     //Jugador
     this.player.update();
     //Enemigos
-    /**
-     * 
-     if(!this.enemy.isDead){
-       this.enemy.update();
-      }
-  */
     this.enemies.children.iterate((child)=>{
       if(!child.isDead){
         child.update(this.player);
