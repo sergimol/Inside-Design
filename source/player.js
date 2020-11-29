@@ -43,11 +43,12 @@ export default class Player extends Humanoid{
         
         
          //Container
-         this.contenedor = scene.add.container();
-         this.scene.add.existing(this.contenedor);
+         //this.contenedor = scene.add.container();
+         //this.scene.add.existing(this.contenedor);
          //Para añadir hijos
          this.puntero = new Puntero(scene, x, y);
-         this.contenedor.add(this.puntero);
+         this.puntero.depth = this.depth + 64;
+         //this.contenedor.add(this.puntero);
    
         //Puntero hijo 
         //this.puntero = new Puntero(scene, x, y, 'crosshair');
