@@ -41,8 +41,10 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
             this.weapon.destroy();
             this.container.destroy();
             this.destroy();
+            
             console.log('entity explode');
         }
+        
     }
     ////////////
     //MOVIMIENTO
@@ -70,6 +72,12 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
             this.weapon.setFlipY(true)
         }
         
+    }
+
+    stopMove()
+    {
+        console.log("PARATE BOLUDO");
+        this.body.setVelocity(0,0);
     }
 
     rotateWeapon(angle){

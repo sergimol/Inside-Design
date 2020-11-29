@@ -25,6 +25,14 @@ export default class Enemy extends Humanoid{
 
         this.dirX = -1;
         this.dirY = 0;
+
+        let newX = Math.floor(Math.random() * (60 + 60)) - 60;
+        let newY = Math.floor(Math.random() * (60 + 60)) - 60;
+
+        this.nextX = this.x + newX;
+        this.nextY = this.y + newY;
+
+        this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);   
     }//Fin constructora
 
     decidirMov(){
@@ -62,12 +70,41 @@ export default class Enemy extends Humanoid{
             }
         }
     }
-    update(player){
-        this.decidirMov();
-        this.move(this.dirX, this.dirY);
-        this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y))
         this.moveRotate((player.x - this.x));
+    update(){
+        //this.decidirMov();
+        //this.move(this.dirX, this.dirY);
+        //this.enemyMove();
+        
+        let distance = Phaser.Math.Distance.Between(this.x, this.y, this.nextX, this.nextY);
+
+        if (this.body.speed > 0)
+        {
+            //PARAR AL BICHO CUANDO LLEGA A LA POSICION
+            //4 ES UN VALOR CERCANO A LA POS PORQUE SI IGUALAS POSICIONES HACE JAJA xd Y NO SE PARA
+            if (distance < 4)
+            {
+                this.enemyMove();
+            }
+        }
+
+
     }
+
+    enemyMove()
+    {
+        //this.stopMove();
+        //Calculamos unos margenes para la siguiente posicion
+        let newX, newY;
+        newX = Math.floor(Math.random() * (60 + 60)) - 60;
+        newY = Math.floor(Math.random() * (60 + 60)) - 60;
+        //Creamos la nueva posicon
+        this.nextX = this.x + newX;
+        this.nextY = this.y +newY;
+        //Movemos al enemigo a la siguiente posicion
+        this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);
+    }
+
 }
 
 
