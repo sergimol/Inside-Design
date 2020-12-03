@@ -10,28 +10,45 @@ export default class Game extends Phaser.Scene {
   
   preload() {
     this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
-    this.load.image('hummus', './Sprites/BACKGROUND.png'); //nuevo
-    this.load.image('platform', './Sprites/platform.png');
 
     //Diego
     this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 16, frameHeight: 16});
     this.load.image('crosshair', 'Sprites/crosshair.png');
 
     //nuevo
-    this.load.image('Wall', './Sprites/Wall.png');
-    this.load.image('upWall', './Sprites/upWall.png');
-    this.load.image('downWall', './Sprites/downWall.png');
-    this.load.image('cobertura', './Sprites/Cobertura.png');
     this.load.audio('mainTheme','./audio/main_theme_v1.0.wav');
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
 
+    //Javi
+    this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
+    this.load.tilemapTiledJSON('dungeon','./Sprites/tiles/Nivel_0.json');
+    
     this.player;
     this.enemy;
     this.enemies;
   }
   
   create() {
+    const map = this.make.tilemap({key:'dungeon'})
+    const tileset = map.addTilesetImage('Tilemap','tiles');
+
+    const groundLayer = map.createStaticLayer('Ground', tileset);
+    const detailsLayer = map.createStaticLayer('Details', tileset);
+    const wallsLayer = map.createStaticLayer('Walls', tileset);
+    const collidersLayer = map.createStaticLayer('Colliders', tileset);
+    const colsLayer = map.createStaticLayer('Cols', tileset);
+    const boxLayer = map.createStaticLayer('wBox', tileset);
+
+    collidersLayer.setCollisionByProperty({collisions: true});
+
+    const debugGraphics = this.add.graphics().setAlpha(0.7);
+    collidersLayer.renderDebug(debugGraphics,{
+      tileColor:null,
+      collidingTileColor: new Phaser.Display.Color(243,234,48,255),
+      faceColor: new Phaser.Display.Color(40,39,37,255)
+    })
+
     //BULLET
     this.anims.create({
       key:'shot',
@@ -54,30 +71,9 @@ export default class Game extends Phaser.Scene {
     }, this);
     //this.bullets.rotation = this.angleToPointer;
 
-    //Fondo
-    this.add.image(700, 400, 'hummus');
-
     //Prototipo Musica
     let sound = this.sound.add('mainTheme');
-    sound.play(); 
-    
-
-    //Colliders
-    //this.physics.scene.enable(this.platforms);
-    //this.platforms = this.add.physicsGroup();
-    this.platforms = this.physics.add.staticGroup();
-      //Coberturas
-      this.platforms.create(577, 591, 'cobertura');
-      this.platforms.create(903, 310, 'cobertura');
-      this.platforms.create(257, 246, 'cobertura');
-      //Muro Arriba
-      this.platforms.create(700, 49, 'upWall');
-      //Muro Abajo
-      this.platforms.create(700, 770, 'downWall').setFlipY(true);
-      //this.platforms.setFlipY(true);
-      //Muros laterales 
-      this.platforms.create(30, 400, 'Wall');
-      this.platforms.create(1370, 400, 'Wall');
+    //sound.play(); 
 
     //DISPARO
     this.input.on('pointerdown', function (pointer) {
@@ -91,7 +87,7 @@ export default class Game extends Phaser.Scene {
       this.physics.moveToObject(this.bullet, this.player.puntero, 800);
       this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
-      this.physics.add.overlap(this.bullet, this.platforms, this.destroyBullet);
+      this.physics.add.collider(this.bullet, collidersLayer, this.destroyBullet);
       this.bullets.add(this.bullet);
 
       let gunSound = this.sound.add('gunShootSound');
@@ -101,7 +97,7 @@ export default class Game extends Phaser.Scene {
     //Personaje
     this.player = new Player(this, 400, 450), 'Player';
     //Fisicas personaje
-    this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.player, collidersLayer);
 
     //Camara
     this.cameras.main.startFollow(this.player.puntero.intermedio);
@@ -114,7 +110,7 @@ export default class Game extends Phaser.Scene {
       e.setTint(0x9999ff);
       this.enemies.add(e);
     }
-    this.physics.add.collider(this.enemies, this.platforms);
+    this.physics.add.collider(this.enemies, collidersLayer);
     this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
 
   }//End of create
@@ -144,6 +140,5 @@ export default class Game extends Phaser.Scene {
         child.update(this.player);
       }
     });
-    //console.log(this.angleToPointer);
   }
 }
