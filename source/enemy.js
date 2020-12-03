@@ -98,7 +98,7 @@ export default class Enemy extends Humanoid{
                 }            
         }
         this.weapon.x = this.x;
-        this.weapon.y = this.y + 20; 
+        this.weapon.y = this.y + 5; 
         this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y));
         this.moveRotate((player.x - this.x));
 

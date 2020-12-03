@@ -4,7 +4,7 @@ export default class Puntero extends Phaser.GameObjects.Image{
         //middle = super(scene,x,y, '');
         this.intermedio = scene.add.image(x, y);
         scene.add.existing(this);
-        this.setScale(3);
+        //this.setScale(3);
         this.px = 0;
         this.py = 0;
     }

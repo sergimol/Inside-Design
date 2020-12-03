@@ -16,11 +16,11 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
         this.play('idle', true);
         
         //Escala
-        this.setScale(3);           //Tamaño sprite
+        //this.setScale(3);           //Tamaño sprite
         this.body.setSize(14,15);   //Collider
         //Atributos
         this.health;
-        this.speed = 200;
+        this.speed = 100;
         
         //Container
         this.container = scene.add.container();
@@ -58,7 +58,7 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
             this.play('walk', true);
 
         this.weapon.x = this.x;
-        this.weapon.y = this.y+ 20;
+        this.weapon.y = this.y+ 5;
     }
     moveRotate(dirX){
         if(dirX > 0){

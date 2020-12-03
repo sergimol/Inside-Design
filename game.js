@@ -38,7 +38,7 @@ export default class Game extends Phaser.Scene {
     const wallsLayer = map.createStaticLayer('Walls', tileset);
     const collidersLayer = map.createStaticLayer('Colliders', tileset);
     const colsLayer = map.createStaticLayer('Cols', tileset);
-    const boxLayer = map.createStaticLayer('wBox', tileset);
+    const boxLayer = map.createStaticLayer('Box', tileset);
 
     collidersLayer.setCollisionByProperty({collisions: true});
 
@@ -80,11 +80,11 @@ export default class Game extends Phaser.Scene {
       console.log("help");
       this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
       this.bullet.play('shot', true);
-      this.bullet.setScale(4);
+      //this.bullet.setScale(4);
       //= bullets.getFirstDead();
       //this.bullet.anims('shot', true);
       this.bullet.rotation = this.angleToPointer;
-      this.physics.moveToObject(this.bullet, this.player.puntero, 800);
+      this.physics.moveToObject(this.bullet, this.player.puntero, 300);
       this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
 
       this.physics.add.collider(this.bullet, collidersLayer, this.destroyBullet);
@@ -101,7 +101,7 @@ export default class Game extends Phaser.Scene {
 
     //Camara
     this.cameras.main.startFollow(this.player.puntero.intermedio);
-    
+    this.cameras.main.zoom = 3;
     //Enemies
     this.enemies = this.add.group();
     for(let i = 0; i<3; i++){
