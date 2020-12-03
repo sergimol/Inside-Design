@@ -41,7 +41,6 @@ export default class Humanoid extends Phaser.GameObjects.Sprite
             this.weapon.destroy();
             this.container.destroy();
             this.destroy();
-            
             console.log('entity explode');
         }
         

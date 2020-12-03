@@ -137,6 +137,7 @@ export default class Game extends Phaser.Scene {
     //Enemigos
     this.enemies.children.iterate((child)=>{
       if(!child.isDead){
+        //console.log(child.isDead());  !No se está pasando bien el atributo isDead, en humanoid detecta que es true pero aqui siempre es false
         child.update(this.player);
       }
     });
