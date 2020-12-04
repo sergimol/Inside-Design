@@ -41,13 +41,25 @@ export default class Game extends Phaser.Scene {
     const boxLayer = map.createStaticLayer('Box', tileset);
 
     collidersLayer.setCollisionByProperty({collisions: true});
+    colsLayer.setCollisionByProperty({collisions: true});
+    boxLayer.setCollisionByProperty({collisions: true});
 
     const debugGraphics = this.add.graphics().setAlpha(0.7);
-    collidersLayer.renderDebug(debugGraphics,{
+    /*collidersLayer.renderDebug(debugGraphics,{
       tileColor:null,
       collidingTileColor: new Phaser.Display.Color(243,234,48,255),
       faceColor: new Phaser.Display.Color(40,39,37,255)
     })
+    colsLayer.renderDebug(debugGraphics,{
+      tileColor:null,
+      collidingTileColor: new Phaser.Display.Color(243,234,48,255),
+      faceColor: new Phaser.Display.Color(40,39,37,255)
+    })
+    boxLayer.renderDebug(debugGraphics,{
+      tileColor:null,
+      collidingTileColor: new Phaser.Display.Color(243,234,48,255),
+      faceColor: new Phaser.Display.Color(40,39,37,255)
+    })*/
 
     //BULLET
     this.anims.create({
@@ -85,7 +97,7 @@ export default class Game extends Phaser.Scene {
       //this.bullet.anims('shot', true);
       this.bullet.rotation = this.angleToPointer;
       this.physics.moveToObject(this.bullet, this.player.puntero, 300);
-      this.cameras.main.shake(200, 0.002); //tiempo que dura el shake, fuerza del shake
+      this.cameras.main.shake(200, 0.0005); //tiempo que dura el shake, fuerza del shake
 
       this.physics.add.collider(this.bullet, collidersLayer, this.destroyBullet);
       this.bullets.add(this.bullet);
@@ -98,6 +110,8 @@ export default class Game extends Phaser.Scene {
     this.player = new Player(this, 400, 450), 'Player';
     //Fisicas personaje
     this.physics.add.collider(this.player, collidersLayer);
+    this.physics.add.collider(this.player, colsLayer);
+    this.physics.add.collider(this.player, boxLayer);
 
     //Camara
     this.cameras.main.startFollow(this.player.puntero.intermedio);
@@ -111,6 +125,8 @@ export default class Game extends Phaser.Scene {
       this.enemies.add(e);
     }
     this.physics.add.collider(this.enemies, collidersLayer);
+    this.physics.add.collider(this.enemies, colsLayer);
+    this.physics.add.collider(this.enemies, boxLayer);
     this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
 
   }//End of create
