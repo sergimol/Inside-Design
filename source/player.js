@@ -94,8 +94,8 @@ this.playerMove(this.dirX, this.dirY);
 }
 
 playerMove(dirX, dirY) {
-this.sprite.setVelocityX(this.speed * dirX);
-this.sprite.setVelocityY(this.speed * dirY);
+this.body.setVelocityX(this.speed * dirX);
+this.body.setVelocityY(this.speed * dirY);
 }
 /*
 //Animacion
