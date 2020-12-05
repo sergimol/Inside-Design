@@ -10,28 +10,39 @@ export default class Game extends Phaser.Scene {
   
   preload() {
     this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
-    this.load.image('hummus', './Sprites/BACKGROUND.png'); //nuevo
-    this.load.image('platform', './Sprites/platform.png');
 
     //Diego
     this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 16, frameHeight: 16});
     this.load.image('crosshair', 'Sprites/crosshair.png');
 
+    //Javi
+    this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
+    this.load.tilemapTiledJSON('dungeon','./Sprites/tiles/Nivel_0.json');
+
     //nuevo
-    this.load.image('Wall', './Sprites/Wall.png');
-    this.load.image('upWall', './Sprites/upWall.png');
-    this.load.image('downWall', './Sprites/downWall.png');
-    this.load.image('cobertura', './Sprites/Cobertura.png');
     this.load.audio('mainTheme','./audio/main_theme_v1.0.wav');
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
-
-    //this.player;
-    //this.enemy;
-    //this.enemies;
+    
   }
   
   create() {
+    // colisiones tilemap
+    const map = this.make.tilemap({key:'dungeon'})
+    const tileset = map.addTilesetImage('Tilemap','tiles');
+
+    const groundLayer = map.createStaticLayer('Ground', tileset);
+    const detailsLayer = map.createStaticLayer('Details', tileset);
+    const wallsLayer = map.createStaticLayer('Walls', tileset);
+    const collidersLayer = map.createStaticLayer('Colliders', tileset);
+    const colsLayer = map.createStaticLayer('Cols', tileset);
+    const boxLayer = map.createStaticLayer('Box', tileset);
+
+    collidersLayer.setCollisionByProperty({collisions: true});
+    colsLayer.setCollisionByProperty({collisions: true});
+    boxLayer.setCollisionByProperty({collisions: true});
+
+
     //BULLET
     this.anims.create({
       key:'shot',
@@ -39,31 +50,29 @@ export default class Game extends Phaser.Scene {
       frameRate: 8,
       repeat: -1
     })
-    /*
+    
     //WEAPON
-    let gun = this.add.image('gunShootProt');
+    //let gun = this.add.image('gunShootProt');
+
     //BULLETS
     this.bullets = this.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
     
-    */
+    
     //PUNTERO
-    /**
-     * 
+    
      this.angleToPointer;
      this.input.on('pointermove', function (pointer){
        this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
       }, this);
- */
+
     //this.bullets.rotation = this.angleToPointer;
-    /**
-     * 
      this.input.on('pointerdown', function (pointer){
        console.log("shoot");
        this.player.shoot();
-       /**
-        * 
+       
+        
         this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
         this.bullet.setScale(4);
         //= bullets.getFirstDead();
@@ -75,62 +84,39 @@ export default class Game extends Phaser.Scene {
         
         
       }, this);
-      //Fondo
-      this.add.image(700, 400, 'hummus');
       
       //Prototipo Musica
-      let sound = this.sound.add('mainTheme');
-      sound.play(); 
-      
-      
-      */
-      //Colliders
-      //this.physics.scene.enable(this.platforms);
-      //this.platforms = this.add.physicsGroup();
-      /**
-       * 
-       this.platforms = this.physics.add.staticGroup();
-       //Coberturas
-       this.platforms.create(577, 591, 'cobertura');
-       this.platforms.create(903, 310, 'cobertura');
-       this.platforms.create(257, 246, 'cobertura');
-       //Muro Arriba
-       this.platforms.create(700, 49, 'upWall');
-       //Muro Abajo
-       this.platforms.create(700, 770, 'downWall').setFlipY(true);
-       //this.platforms.setFlipY(true);
-       //Muros laterales 
-       this.platforms.create(30, 400, 'Wall');
-       this.platforms.create(1370, 400, 'Wall');
+      //let sound = this.sound.add('mainTheme');
+      //sound.play(); 
        
-       */
+       
       //DISPARO
       
       
       //Personaje
-      this.player = new Player(this, 400, 450, 'Player');
+      this.player = new Player(this, 400, 450, 'player');
       //Fisicas personaje
-      //this.physics.add.collider(this.player, this.platforms);
+      this.physics.add.collider(this.player, collidersLayer);
+      this.physics.add.collider(this.player, colsLayer);
+      this.physics.add.collider(this.player, boxLayer);
       
       //Camara
 
-      //this.cameras.main.startFollow(this.player.puntero.intermedio);
+      this.cameras.main.startFollow(this.player.puntero.intermedio);
       
-      //Enemies
-      /*
-     
+      //Enemies        
       this.enemies = this.add.group();
       
       for(let i = 0; i<3; i++){
         const e = new Enemy(this, 400 + 20*i, 250, 'enemy');
         e.body.setCollideWorldBounds(true);
-        e.setTint(0x9999ff);
+        //e.setTint(0x9999ff);
         this.enemies.add(e);
       }
-*/
-    //this.physics.add.collider(this.player.weapon.bullets, this.platforms, this.destroyBullet);
-    //this.physics.add.collider(this.enemies, this.platforms);
-    //this.physics.add.collider(this.player.weapon.bullets, this.enemies, this.handleBulletEnemyCollision);
+      this.physics.add.collider(this.enemies, collidersLayer);
+      this.physics.add.collider(this.enemies, colsLayer);
+      this.physics.add.collider(this.enemies, boxLayer);
+      this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
 
   }//End of create
 
@@ -147,24 +133,14 @@ export default class Game extends Phaser.Scene {
     //b.setActive(false);
   }
 
-  update() {
-/**
- * 
- this.input.on('pointermove', function(pointer){
-   this.player.puntero.move(pointer, this, this.player);
-  }, this)
-  */
+  update() {  
  //Jugador
- //this.player.update();
- /**
-  * 
   //Enemigos
   this.enemies.children.iterate((child)=>{
     if(!child.isDead){
       child.update(this.player);
     }
   });
-  */
   //console.log(this.angleToPointer);
   }
 }
