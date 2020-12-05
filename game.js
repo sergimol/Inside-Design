@@ -9,7 +9,7 @@ export default class Game extends Phaser.Scene {
   }
   
   preload() {
-    this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
+    this.load.spritesheet('playerSprite', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
 
     //Diego
     this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 16, frameHeight: 16});
@@ -24,6 +24,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
     this.load.tilemapTiledJSON('dungeon','./Sprites/tiles/Nivel_0.json');
     
+    //TODO: modificar
     this.player;
     this.enemy;
     this.enemies;
@@ -77,7 +78,6 @@ export default class Game extends Phaser.Scene {
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
     //PUNTERO
-    this.angleToPointer;
     this.input.on('pointermove', function (pointer){
     this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
     }, this);
@@ -107,7 +107,7 @@ export default class Game extends Phaser.Scene {
     }, this);
 
     //Personaje
-    this.player = new Player(this, 400, 450), 'Player';
+    this.player = new Player(this, 400, 450, 'playerSprite');
     //Fisicas personaje
     this.physics.add.collider(this.player, collidersLayer);
     this.physics.add.collider(this.player, colsLayer);
@@ -119,9 +119,9 @@ export default class Game extends Phaser.Scene {
     //Enemies
     this.enemies = this.add.group();
     for(let i = 0; i<3; i++){
-      const e = new Enemy(this, 400 + 20*i, 250, 'enemy');
+      const e = new Enemy(this, 400 + 20*i, 350, 'enemy');
       e.body.setCollideWorldBounds(true);
-      e.setTint(0x9999ff);
+      //e.setTint(0x9999ff);
       this.enemies.add(e);
     }
     this.physics.add.collider(this.enemies, collidersLayer);
@@ -137,25 +137,18 @@ export default class Game extends Phaser.Scene {
   }
   handleBulletEnemyCollision(b,e){
     console.log('enemy hit');
-    e.die();
+    //e.die();
     //esto no es la manera correcta ni pa tras xd
     b.destroy();
   }
 
   update() {
 
+    /*
     this.input.on('pointermove', function(pointer){
       this.player.puntero.move(pointer, this, this.player);
     }, this)
+    */
     
-    //Jugador
-    this.player.update();
-    //Enemigos
-    this.enemies.children.iterate((child)=>{
-      if(!child.isDead){
-        //console.log(child.isDead());  !No se está pasando bien el atributo isDead, en humanoid detecta que es true pero aqui siempre es false
-        child.update(this.player);
-      }
-    });
   }
 }

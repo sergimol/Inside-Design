@@ -2,25 +2,26 @@ import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 
 export default class Player extends Humanoid{
-    constructor(scene, x, y, Sprite){
-        super(scene, x, y, 'player');
-
+    constructor(scene, x, y, sprite){
+        super(scene, x, y, sprite);
+//
         //Atributos
         let ammo, active;
 
+        this.sprite=sprite;
         /////////////
         //Animaciones
         const anims = scene.anims;
 
         anims.create({
             key:'walk',
-            frames: anims.generateFrameNumbers(this.Sprite, {start: 4, end: 9}), //15
+            frames: anims.generateFrameNumbers(this.sprite, {start: 4, end: 9}), //15
             frameRate: 15,
             repeat: -1
         })
         anims.create({
         key:'idle',
-        frames: anims.generateFrameNumbers(this.Sprite, {start: 1, end: 3}),
+        frames: anims.generateFrameNumbers(this.sprite, {start: 1, end: 3}),
         frameRate: 7,
         repeat: -1
         })
@@ -55,7 +56,8 @@ export default class Player extends Humanoid{
 
     }//Fin constructora
 
-    update(){
+
+    preUpdate(){
         //Idle por defecto
         this.dirX = 0;
         this.dirY = 0;
@@ -83,7 +85,7 @@ export default class Player extends Humanoid{
        //this.puntero.x = this.x;
        //this.puntero.y = this.y;
        
-       this.move(this.dirX, this.dirY);
+       this.playerMove(this.dirX, this.dirY);
 
        
        // asignar la posicion del puntero
@@ -98,4 +100,18 @@ export default class Player extends Humanoid{
 
        
     }
+
+    playerMove(dirX, dirY) {
+      this.body.setVelocityX(this.speed * dirX);
+      this.body.setVelocityY(this.speed * dirY);
+      //Animacion
+      /*
+      if (dirX === 0 && dirY === 0)
+          this.sprite.play('idle', true);
+      else
+          this.sprite.play('walk', true);
+      */
+      //this.weapon.x = this.x;
+      //this.weapon.y = this.y + 5;
+  }
 }

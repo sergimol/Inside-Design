@@ -10,12 +10,12 @@ export default class Puntero extends Phaser.GameObjects.Image{
     }
 
     move(pointer, scene, player){
-        this.x = pointer.x + scene.cameras.main.worldView.x;
-        this.y = pointer.y + scene.cameras.main.worldView.y;
+        this.x = (pointer.x + scene.cameras.main.worldView.x);
+        this.y = (pointer.y + scene.cameras.main.worldView.y);
 
         //El 3 es el cameraZoom, no sé como pasar la constante a esta clase
-        this.px = (player.x - this.x)/3;
-        this.py = (player.y - this.y)/3;
+        this.px = (player.x - this.x) /3;
+        this.py = (player.y - this.y) /3;
 
         //calucloY = this.intermedio.y / 5;
         this.updateMiddle(player);

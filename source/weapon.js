@@ -4,7 +4,7 @@ export default class Weapon extends Phaser.GameObjects.Image{
         console.log("cum a abolo");
         //this.setScale(2.5);
         this.setOrigin(0.15,0.5);
-        this.cadence, this.ammoRate, this.damage;
+        //this.cadence, this.ammoRate, this.damage;
     }
     rotateWeapon(angle){
 
