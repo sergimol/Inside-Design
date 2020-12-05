@@ -23,10 +23,7 @@ export default class Player extends Humanoid {
       frameRate: 7,
       repeat: -1
     })
-    /*  
-    this.intermedio = scene.add.image(0, 0, "crosshair");
-    this.add(this.intermedio);
-    *///////
+    
     //INPUT
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
     this.cursors = scene.input.keyboard.addKeys({
@@ -66,11 +63,13 @@ export default class Player extends Humanoid {
     playerMove(dirX, dirY) {
       this.body.setVelocityX(this.speed * dirX);
       this.body.setVelocityY(this.speed * dirY);
+      //Animacion
+      if (dirX === 0 && dirY === 0)
+      this.aspecto.play('idle', true);
+      else
+      this.aspecto.play('walk', true);
     }
-    asignarIntermedio(puntero){
-      
-      
-    }
+
     
     preUpdate() {
       //Idle por defecto
@@ -92,38 +91,5 @@ export default class Player extends Humanoid {
       
 
       //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
-    }
-      /*
-      //Animacion
-      if (dirX === 0 && dirY === 0)
-      this.sprite.play('idle', true);
-      else
-      this.sprite.play('walk', true);
-      
-      //this.weapon.x = this.x;
-      //this.weapon.y = this.y + 5;
-    }
-    /*
-    
-    
-    /*
-    
-    
-    
-    //Container
-    //this.contenedor = scene.add.container();
-    //this.scene.add.existing(this.contenedor);
-    //Para añadir hijos
-    this.puntero = new Puntero(scene, x, y);
-    this.puntero.depth = this.depth + 64;
-    //this.contenedor.add(this.puntero);
-    
-    //Puntero hijo 
-    //this.puntero = new Puntero(scene, x, y, 'crosshair');
-    this.setScale(3);
-  }//Fin constructora
-  
-  
-  preUpdate(){
-    
-}*/}
+    }   
+}

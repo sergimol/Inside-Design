@@ -75,16 +75,16 @@ export default class Game extends Phaser.Scene {
 
     //this.bullets.rotation = this.angleToPointer;
      this.input.on('pointerdown', function (pointer){
-       console.log("shoot");
-       this.player.shoot();
+        console.log("shoot");
+        //this.player.shoot();
        
         
         this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
-        this.bullet.setScale(4);
+        this.bullet.setScale(1.25);
         //= bullets.getFirstDead();
         //this.bullet.anims('shot', true);
         this.bullet.rotation = this.angleToPointer;
-        this.physics.moveToObject(this.bullet, this.player.puntero, 800);
+        this.physics.moveToObject(this.bullet, this.puntero, 400);
         
         this.bullets.add(this.bullet);
         
@@ -132,7 +132,7 @@ export default class Game extends Phaser.Scene {
   }
   handleBulletEnemyCollision(e,b){
     console.log('enemy hit');
-    e.die();
+    //e.die();
     //esto no es la manera correcta ni pa tras xd
     //esto tiene que estar mal ajajajaj
     b.destroy();
