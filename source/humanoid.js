@@ -9,8 +9,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         scene.add.existing(this);
 
 
-        /**
-         * 
+        
          this.scene = scene;                             //Guardamos la escena en humanoide
          scene.add.existing(this);                       //Añadimos a la escena el objeto humanoide
          this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
@@ -30,9 +29,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
          
          //Para añadir hijos
          this.weapon = new Weapon(scene, x, y);
-         this.add(this.weapon);
-      */
-        
+         this.add(this.weapon);      
         
 
     }//Fin constructora

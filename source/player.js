@@ -2,9 +2,8 @@ import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 
 export default class Player extends Humanoid{
-    constructor(scene, x, y, sprite){
-        super(scene, x, y, sprite);
-//
+constructor(scene, x, y, sprite){
+  super(scene, x, y, sprite);
 /**
  * 
  //Atributos
@@ -46,20 +45,21 @@ export default class Player extends Humanoid{
 
 preUpdate(){
 //Idle por defecto
-this.dirX = 0;
-this.dirY = 0;
-//Movimiento horizontal
-if (this.cursors.left.isDown || this.cursors.a.isDown){
-  this.dirX = -1;
-  console.log("something");
-}
-else if (this.cursors.right.isDown|| this.cursors.d.isDown)
-this.dirX = 1;
-//Movimiento vertical        
-if (this.cursors.up.isDown|| this.cursors.w.isDown)
-this.dirY = -1;
-else if (this.cursors.down.isDown|| this.cursors.s.isDown)
-this.dirY = 1;
+  this.dirX = 0;
+  this.dirY = 0;
+  //Movimiento horizontal
+  if (this.cursors.left.isDown || this.cursors.a.isDown){
+    this.dirX = -1;
+    console.log("something");
+  }
+  else if (this.cursors.right.isDown|| this.cursors.d.isDown)
+    this.dirX = 1;
+  //Movimiento vertical        
+  if (this.cursors.up.isDown|| this.cursors.w.isDown)
+    this.dirY = -1;
+  else if (this.cursors.down.isDown|| this.cursors.s.isDown)
+    this.dirY = 1;
+  this.playerMove(this.dirX, this.dirY);
 
 //updatear la posicion del puntero si el jugador se mueve
 /**
