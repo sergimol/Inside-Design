@@ -87,27 +87,30 @@ export default class Game extends Phaser.Scene {
       //Colliders
       //this.physics.scene.enable(this.platforms);
       //this.platforms = this.add.physicsGroup();
-      this.platforms = this.physics.add.staticGroup();
-      //Coberturas
-      this.platforms.create(577, 591, 'cobertura');
-      this.platforms.create(903, 310, 'cobertura');
-      this.platforms.create(257, 246, 'cobertura');
-      //Muro Arriba
-      this.platforms.create(700, 49, 'upWall');
-      //Muro Abajo
-      this.platforms.create(700, 770, 'downWall').setFlipY(true);
-      //this.platforms.setFlipY(true);
-      //Muros laterales 
-      this.platforms.create(30, 400, 'Wall');
-      this.platforms.create(1370, 400, 'Wall');
-      
+      /**
+       * 
+       this.platforms = this.physics.add.staticGroup();
+       //Coberturas
+       this.platforms.create(577, 591, 'cobertura');
+       this.platforms.create(903, 310, 'cobertura');
+       this.platforms.create(257, 246, 'cobertura');
+       //Muro Arriba
+       this.platforms.create(700, 49, 'upWall');
+       //Muro Abajo
+       this.platforms.create(700, 770, 'downWall').setFlipY(true);
+       //this.platforms.setFlipY(true);
+       //Muros laterales 
+       this.platforms.create(30, 400, 'Wall');
+       this.platforms.create(1370, 400, 'Wall');
+       
+       */
       //DISPARO
       
       
       //Personaje
       this.player = new Player(this, 400, 450, 'Player');
       //Fisicas personaje
-      this.physics.add.collider(this.player, this.platforms);
+      //this.physics.add.collider(this.player, this.platforms);
       
       //Camara
 
@@ -152,7 +155,7 @@ export default class Game extends Phaser.Scene {
   }, this)
   */
  //Jugador
- this.player.update();
+ //this.player.update();
  /**
   * 
   //Enemigos

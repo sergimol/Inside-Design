@@ -7,6 +7,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         let aspecto = scene.add.sprite(0, 0, 'player');
         super(scene, x, y, aspecto);
         scene.add.existing(this);
+        this.speed = 100;
 
 
         /**
@@ -26,7 +27,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
          //this.body.setSize(14, 15);   //Collider
          //Atributos
          this.health = 0;
-         this.speed = 100;
          
          //Para añadir hijos
          this.weapon = new Weapon(scene, x, y);

@@ -60,6 +60,7 @@ if (this.cursors.up.isDown|| this.cursors.w.isDown)
 this.dirY = -1;
 else if (this.cursors.down.isDown|| this.cursors.s.isDown)
 this.dirY = 1;
+this.playerMove(this.dirX, this.dirY);
 
 //updatear la posicion del puntero si el jugador se mueve
 /**
@@ -74,7 +75,6 @@ this.dirY = 1;
 //this.puntero.x = this.x;
 //this.puntero.y = this.y;
 
-//this.playerMove(this.dirX, this.dirY);
 
 
 // asignar la posicion del puntero
@@ -94,8 +94,8 @@ this.dirY = 1;
 }
 
 playerMove(dirX, dirY) {
-this.body.setVelocityX(this.speed * dirX);
-this.body.setVelocityY(this.speed * dirY);
+this.sprite.setVelocityX(this.speed * dirX);
+this.sprite.setVelocityY(this.speed * dirY);
 }
 /*
 //Animacion
