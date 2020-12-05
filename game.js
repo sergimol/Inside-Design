@@ -61,7 +61,8 @@ export default class Game extends Phaser.Scene {
     
     
     //PUNTERO
-    this.sys.canvas.style.cursor = 'crosshair'
+    this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
+    //this.sys.canvas.style.cursor = 'crosshair'
 
     this.puntero = new Puntero(this,400, 450);
     
