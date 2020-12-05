@@ -53,7 +53,7 @@ export default class Game extends Phaser.Scene {
     
     //WEAPON
     //let gun = this.add.image('gunShootProt');
-
+    this.cameras.main.zoom = 3;
     //BULLETS
     this.bullets = this.add.group();
     this.bullets.enableBody = true;
@@ -61,10 +61,15 @@ export default class Game extends Phaser.Scene {
     
     
     //PUNTERO
+    this.sys.canvas.style.cursor = 'crosshair'
+
+    this.puntero = new Puntero(this,400, 450);
     
      this.angleToPointer;
      this.input.on('pointermove', function (pointer){
        this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
+       this.puntero.x = pointer.x;
+       this.puntero.y = pointer.y;
       }, this);
 
     //this.bullets.rotation = this.angleToPointer;
@@ -102,7 +107,7 @@ export default class Game extends Phaser.Scene {
       
       //Camara
 
-      this.cameras.main.startFollow(this.player.puntero.intermedio);
+      this.cameras.main.startFollow(this.player);
       
       //Enemies        
       this.enemies = this.add.group();

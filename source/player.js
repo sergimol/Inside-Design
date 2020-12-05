@@ -1,5 +1,4 @@
 import Humanoid from "./humanoid.js";
-import Puntero from "./puntero.js";
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite) {
@@ -25,8 +24,8 @@ export default class Player extends Humanoid {
       repeat: -1
     })
       
-    this.puntero = new Puntero(scene, 0, 0);
-    this.add(this.puntero);
+    this.intermedio = scene.add.image(0, 0, "crosshair");
+    this.add(this.intermedio);
     ///////
     //INPUT
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
@@ -42,26 +41,8 @@ export default class Player extends Humanoid {
     })
   }
 
-  preUpdate() {
-    //Idle por defecto
-    this.dirX = 0;
-    this.dirY = 0;
-    //Movimiento horizontal
-    if (this.cursors.left.isDown || this.cursors.a.isDown) {
-      this.dirX = -1;
-      console.log("something");
-    }
-    else if (this.cursors.right.isDown || this.cursors.d.isDown)
-      this.dirX = 1;
-    //Movimiento vertical        
-    if (this.cursors.up.isDown || this.cursors.w.isDown)
-      this.dirY = -1;
-    else if (this.cursors.down.isDown || this.cursors.s.isDown)
-      this.dirY = 1;
-
-    this.playerMove(this.dirX, this.dirY);
-
-    //updatear la posicion del puntero si el jugador se mueve
+  
+  //updatear la posicion del puntero si el jugador se mueve
     /**
      
      Ideas
@@ -69,58 +50,88 @@ export default class Player extends Humanoid {
      calcular la distancia y despues de moverlo ponerlo, como primero s emueve el puntero en caso de moverse no habria problema
      moverlo junto al jugador, hay encontrar la manera de que si el jugador se mueve tmb lo haga le puntero, el problema es que el metodo move es de3 un game object con fisicas, el punteor no tiene fisicas
      */
-
-
-
+    
+    
+    
     // asignar la posicion del puntero
-    this.puntero.updateMiddle(this);
-
+    
     //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.puntero.x, this.puntero.y));
     //this.moveRotate(this.puntero.x - this.x);
     //updatea la posicion del punto medio (camara)
     //console.log(this.depth + " " + this.container.depth + " " + this.weapon.depth);
-
-
-
-
-
-  }
-
-  playerMove(dirX, dirY) {
-    this.body.setVelocityX(this.speed * dirX);
-    this.body.setVelocityY(this.speed * dirY);
-  }
-/*
-//Animacion
-if (dirX === 0 && dirY === 0)
-this.sprite.play('idle', true);
-else
-this.sprite.play('walk', true);
-
-//this.weapon.x = this.x;
-//this.weapon.y = this.y + 5;
-}
-/*
-
-
-  /*
+    
+    
+    
+    
+    
+    
+    
+    playerMove(dirX, dirY) {
+      this.body.setVelocityX(this.speed * dirX);
+      this.body.setVelocityY(this.speed * dirY);
+    }
+    asignarIntermedio(puntero){
+      
+      
+    }
+    
+    preUpdate() {
+      //Idle por defecto
+      this.dirX = 0;
+      this.dirY = 0;
+      //Movimiento horizontal
+      if (this.cursors.left.isDown || this.cursors.a.isDown) {
+        this.dirX = -1;
+        console.log("something");
+      }
+      else if (this.cursors.right.isDown || this.cursors.d.isDown)
+      this.dirX = 1;
+      //Movimiento vertical        
+      if (this.cursors.up.isDown || this.cursors.w.isDown)
+      this.dirY = -1;
+      else if (this.cursors.down.isDown || this.cursors.s.isDown)
+      this.dirY = 1;
+      let px
+      let py
+      this.playerMove(this.dirX, this.dirY);
+      this.scene.input.on('pointermove', function (pointer){
+         px = pointer.x;//(this.x + (this.x + pointer.x)/2) /2;
+         py = pointer.y;//(this.y + (this.y + pointer.y)/2) /2;
+      }, this.scene);
+      this.intermedio.x = px;
+      this.intermedio.y = py;
+    }
+      /*
+      //Animacion
+      if (dirX === 0 && dirY === 0)
+      this.sprite.play('idle', true);
+      else
+      this.sprite.play('walk', true);
+      
+      //this.weapon.x = this.x;
+      //this.weapon.y = this.y + 5;
+    }
+    /*
+    
+    
+    /*
+    
+    
+    
+    //Container
+    //this.contenedor = scene.add.container();
+    //this.scene.add.existing(this.contenedor);
+    //Para añadir hijos
+    this.puntero = new Puntero(scene, x, y);
+    this.puntero.depth = this.depth + 64;
+    //this.contenedor.add(this.puntero);
+    
+    //Puntero hijo 
+    //this.puntero = new Puntero(scene, x, y, 'crosshair');
+    this.setScale(3);
+  }//Fin constructora
   
   
-  
-  //Container
-  //this.contenedor = scene.add.container();
-  //this.scene.add.existing(this.contenedor);
-  //Para añadir hijos
-  this.puntero = new Puntero(scene, x, y);
-  this.puntero.depth = this.depth + 64;
-  //this.contenedor.add(this.puntero);
-  
-  //Puntero hijo 
-  //this.puntero = new Puntero(scene, x, y, 'crosshair');
-  this.setScale(3);
-}//Fin constructora
-
-
-preUpdate(){
-  
+  preUpdate(){
+    
 }*/}
