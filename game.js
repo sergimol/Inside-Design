@@ -67,7 +67,7 @@ export default class Game extends Phaser.Scene {
     
      this.angleToPointer;
      this.input.on('pointermove', function (pointer){
-       this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
+        this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x, (pointer.y/this.cameras.main.zoom) + this.cameras.main.worldView.y);
         this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
         this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
         
@@ -142,6 +142,8 @@ export default class Game extends Phaser.Scene {
   update() {  
 
     this.puntero.updateMiddle(this.player);
+    this.player.moveRotate(this.puntero.x - this.player.x);
+    this.player.rotateWeapon(this.angleToPointer)
  //Jugador
   //Enemigos
   this.enemies.children.iterate((child)=>{

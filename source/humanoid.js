@@ -2,8 +2,8 @@ import Weapon from "./weapon.js";
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
     constructor(scene, x, y, humanSprite) {
-        let aspecto = scene.add.sprite(0, 0, humanSprite);
         super(scene, x, y);
+        this.aspecto = scene.add.sprite(0, 0, humanSprite);
         scene.add.existing(this);
         this.speed = 100;
 
@@ -14,13 +14,13 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
         this.isDead = false;                            //La entidad está viva
         this.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
-        this.add(aspecto);
+        this.add(this.aspecto);
         //this.Sprite.play('idle', true);
         //Atributos
         this.health = 0;
 
         //Para añadir hijos
-        this.weapon = new Weapon(scene, 0, 0);
+        this.weapon = new Weapon(scene, 0, 5);
         this.add(this.weapon);
     }//Fin constructora
 
@@ -43,10 +43,16 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
     // @param {*} dirY
 
     moveRotate(dirX) {
-        if (dirX > 0)
-            this.setFlipX(false)
-        else
-            this.setFlipX(true)
+        if (dirX > 0){
+            //this.each(entity => entity.flipX = false)
+            this.aspecto.setFlipX(false);
+            this.weapon.setFlipY(false);
+        }
+        else{
+            //this.each(entity => entity.flipX = true)
+            this.aspecto.setFlipX(true);    
+            this.weapon.setFlipY(true);
+        }
     }
 
 

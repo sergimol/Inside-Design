@@ -23,10 +23,10 @@ export default class Player extends Humanoid {
       frameRate: 7,
       repeat: -1
     })
-      
+    /*  
     this.intermedio = scene.add.image(0, 0, "crosshair");
     this.add(this.intermedio);
-    ///////
+    *///////
     //INPUT
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
     this.cursors = scene.input.keyboard.addKeys({
@@ -55,10 +55,7 @@ export default class Player extends Humanoid {
     
     // asignar la posicion del puntero
     
-    //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.puntero.x, this.puntero.y));
-    //this.moveRotate(this.puntero.x - this.x);
-    //updatea la posicion del punto medio (camara)
-    //console.log(this.depth + " " + this.container.depth + " " + this.weapon.depth);
+    
     
     
     
@@ -91,15 +88,10 @@ export default class Player extends Humanoid {
       this.dirY = -1;
       else if (this.cursors.down.isDown || this.cursors.s.isDown)
       this.dirY = 1;
-      let px
-      let py
       this.playerMove(this.dirX, this.dirY);
-      this.scene.input.on('pointermove', function (pointer){
-         px = pointer.x;//(this.x + (this.x + pointer.x)/2) /2;
-         py = pointer.y;//(this.y + (this.y + pointer.y)/2) /2;
-      }, this.scene);
-      this.intermedio.x = px;
-      this.intermedio.y = py;
+      
+
+      //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
     }
       /*
       //Animacion
