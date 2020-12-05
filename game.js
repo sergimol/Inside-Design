@@ -68,7 +68,7 @@ export default class Game extends Phaser.Scene {
     
      this.angleToPointer;
      this.input.on('pointermove', function (pointer){
-       this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, pointer.x + this.cameras.main.worldView.x, pointer.y + this.cameras.main.worldView.y);
+        this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x, (pointer.y/this.cameras.main.zoom) + this.cameras.main.worldView.y);
         this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
         this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
         
@@ -76,16 +76,16 @@ export default class Game extends Phaser.Scene {
 
     //this.bullets.rotation = this.angleToPointer;
      this.input.on('pointerdown', function (pointer){
-       console.log("shoot");
-       this.player.shoot();
+        console.log("shoot");
+        //this.player.shoot();
        
         
         this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
-        this.bullet.setScale(4);
+        this.bullet.setScale(1.25);
         //= bullets.getFirstDead();
         //this.bullet.anims('shot', true);
         this.bullet.rotation = this.angleToPointer;
-        this.physics.moveToObject(this.bullet, this.player.puntero, 800);
+        this.physics.moveToObject(this.bullet, this.puntero, 400);
         
         this.bullets.add(this.bullet);
         
@@ -133,7 +133,7 @@ export default class Game extends Phaser.Scene {
   }
   handleBulletEnemyCollision(e,b){
     console.log('enemy hit');
-    e.die();
+    //e.die();
     //esto no es la manera correcta ni pa tras xd
     //esto tiene que estar mal ajajajaj
     b.destroy();
@@ -143,6 +143,8 @@ export default class Game extends Phaser.Scene {
   update() {  
 
     this.puntero.updateMiddle(this.player);
+    this.player.moveRotate(this.puntero.x - this.player.x);
+    this.player.rotateWeapon(this.angleToPointer)
  //Jugador
   //Enemigos
   this.enemies.children.iterate((child)=>{
