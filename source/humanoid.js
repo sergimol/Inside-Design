@@ -13,7 +13,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         scene.add.existing(this);                       //Añadimos a la escena el objeto humanoide
         this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
         this.isDead = false;                            //La entidad está viva
-        this.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
+        this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
         this.add(this.aspecto);
         //this.Sprite.play('idle', true);
         //Atributos
@@ -65,10 +65,10 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.weapon.rotateWeapon(angle);
 
         if (angle < 0)
-            this.weapon.depth = this.depth - 1;
+            this.sendToBack(this.weapon);
 
         else
-            this.weapon.depth = this.depth + 1;
+            this.bringToTop(this.weapon);
     }
 
 
