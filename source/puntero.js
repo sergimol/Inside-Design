@@ -2,7 +2,7 @@ export default class Puntero extends Phaser.GameObjects.Image{
     constructor(scene, x, y){
         super(scene, x, y)
         //middle = super(scene,x,y, '');
-        this.intermedio = scene.add.image(x, y, "crosshair");
+        this.intermedio = scene.add.image(x, y);
         scene.add.existing(this);
         //this.setScale(3);
         this.px = 0;
