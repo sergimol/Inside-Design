@@ -1,10 +1,16 @@
 import Humanoid from "./humanoid.js";
+import Puntero from "./puntero.js";
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite) {
     super(scene, x, y, sprite);
+
     //Atributos
     let ammo, active;
+    //Puntero
+    this.puntero = new Puntero(scene,0,0);
+    this.add(this.puntero);
+    
 
     //this.add(sprite);
     /////////////
@@ -57,7 +63,10 @@ export default class Player extends Humanoid {
     
     
     
-    
+    playerMoverPuntero(pointer){
+      this.puntero.move(pointer,this);
+      this.puntero.updateMiddle(this);
+    }
     
     
     playerMove(dirX, dirY) {
@@ -88,7 +97,18 @@ export default class Player extends Humanoid {
       else if (this.cursors.down.isDown || this.cursors.s.isDown)
       this.dirY = 1;
       this.playerMove(this.dirX, this.dirY);
-      
+      this.puntero.moverconjugador(this);
+      this.puntero.updateMiddle(this);      
+
+      //esto no deberia de ir aqui
+      this.scene.input.on('pointermove', function (pointer){
+        //this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x, (pointer.y/this.cameras.main.zoom) + this.cameras.main.worldView.y);
+  this.playerMoverPuntero(pointer);
+        //this.player.
+        //      this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
+    //    this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
+        
+      }, this);
 
       //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
     }   
