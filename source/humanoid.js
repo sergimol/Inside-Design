@@ -26,7 +26,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
     damage() {
         --this.health;
-        console.log(this.health);
+        console.log(thisdws.health);
         if (this.health === 0) {
             this.isDead = true;
             this.weapon.destroy();

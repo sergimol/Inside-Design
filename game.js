@@ -142,10 +142,6 @@ export default class Game extends Phaser.Scene {
   }
 
   update() {  
-
-    //this.puntero.updateMiddle(this.player);
-   // this.player.moveRotate(this.puntero.x - this.player.x);
-    this.player.rotateWeapon(this.angleToPointer)
  //Jugador
   //Enemigos
   this.enemies.children.iterate((child)=>{

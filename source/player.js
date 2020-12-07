@@ -42,6 +42,17 @@ export default class Player extends Humanoid {
       s: S,
       d: D
     })
+    this.angleToPointer = 0;
+    //en la constructora es preferible a tener 2 millones de veces esta llamada al input, de hay el console log de overComplication, solo es para recordarnoslo ejeje
+    this.scene.input.on('pointermove', function (pointer){
+      this.playerMoverPuntero(pointer);
+      console.log("overcomplication");
+      //this.player.
+      //      this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
+      //    this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
+      this.angleToPointer = Phaser.Math.Angle.Between(this.x, this.y, (pointer.x/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.x, (pointer.y/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.y);
+      
+    }, this);
   }
 
   
@@ -98,18 +109,13 @@ export default class Player extends Humanoid {
       this.dirY = 1;
       this.playerMove(this.dirX, this.dirY);
       this.puntero.moverconjugador(this);
-      this.puntero.updateMiddle(this);      
-
+      this.puntero.updateMiddle(this);     
+      
       //esto no deberia de ir aqui
-      this.scene.input.on('pointermove', function (pointer){
-        //this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x, (pointer.y/this.cameras.main.zoom) + this.cameras.main.worldView.y);
-  this.playerMoverPuntero(pointer);
-        //this.player.
-        //      this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
-    //    this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
-        
-      }, this);
-
+      
+      this.moveRotate(this.puntero.x - this.x);
+      this.rotateWeapon(this.angleToPointer); 
+      
       //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
     }   
 }
