@@ -17,7 +17,7 @@ export default class Game extends Phaser.Scene {
 
     //Javi
     this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
-    this.load.tilemapTiledJSON('dungeon','./Sprites/tiles/Nivel_0.json');
+    this.load.tilemapTiledJSON('dungeon','./Sprites/tiles/NivelBase.json');
 
     //nuevo
     this.load.audio('mainTheme','./audio/main_theme_v1.0.wav');
@@ -29,7 +29,7 @@ export default class Game extends Phaser.Scene {
   create() {
     // colisiones tilemap
     const map = this.make.tilemap({key:'dungeon'})
-    const tileset = map.addTilesetImage('Tilemap','tiles');
+    const tileset = map.addTilesetImage('TilesetBase','tiles');
 
     const groundLayer = map.createStaticLayer('Ground', tileset);
     const detailsLayer = map.createStaticLayer('Details', tileset);
@@ -54,6 +54,7 @@ export default class Game extends Phaser.Scene {
     //WEAPON
     //let gun = this.add.image('gunShootProt');
     this.cameras.main.zoom = 3;
+    //this.cameras.roundPixels = true; ->No arregla las estrias del tilemap
     //BULLETS
     this.bullets = this.add.group();
     this.bullets.enableBody = true;
