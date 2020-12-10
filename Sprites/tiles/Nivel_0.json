@@ -91,7 +91,7 @@
         {
          "columns":32,
          "firstgid":1,
-         "image":"..\/..\/nivel 0\/TilesetDEF.png",
+         "image":"TilesetDEF.png",
          "imageheight":256,
          "imagewidth":512,
          "margin":0,
