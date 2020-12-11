@@ -103,7 +103,7 @@ export default class Game extends Phaser.Scene {
       
       
       //Personaje
-      this.player = new Player(this, 400, 450, 'player');
+      this.player = new Player(this, 600, 650, 'player');
       //Fisicas personaje
       this.physics.add.collider(this.player, collidersLayer);
       this.physics.add.collider(this.player, colsLayer);
@@ -117,9 +117,8 @@ export default class Game extends Phaser.Scene {
       this.enemies = this.add.group();
       
       for(let i = 0; i<3; i++){
-        const e = new Enemy(this, 400 + 20*i, 250, 'enemy');
+        const e = new Enemy(this, 600 + 20*i, 450, 'player', this.player);
         e.body.setCollideWorldBounds(true);
-        //e.setTint(0x9999ff);
         this.enemies.add(e);
       }
       this.physics.add.collider(this.enemies, collidersLayer);
@@ -145,11 +144,11 @@ export default class Game extends Phaser.Scene {
   update() {  
  //Jugador
   //Enemigos
-  this.enemies.children.iterate((child)=>{
+  /*this.enemies.children.iterate((child)=>{
     if(!child.isDead){
       child.update(this.player);
     }
-  });
+  });*/
   //console.log(this.angleToPointer);
   }
 }
