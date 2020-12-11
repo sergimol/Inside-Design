@@ -24,6 +24,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.add(this.weapon);
         this.setSize(16, 16);
         this.scene.matter.add.gameObject(this);
+        this.scene.matter.body.setInertia(this.body, Infinity);
     }//Fin constructora
 
     damage() {
