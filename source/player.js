@@ -81,8 +81,9 @@ export default class Player extends Humanoid {
     
     
     playerMove(dirX, dirY) {
-      this.body.setVelocityX(this.speed * dirX);
-      this.body.setVelocityY(this.speed * dirY);
+      this.setVelocity(dirX, dirY);
+      //this.body.setVelocityX(this.speed * dirX);
+      //this.body.setVelocityY(this.speed * dirY);
       //Animacion
       if (dirX === 0 && dirY === 0)
       this.aspecto.play('idle', true);

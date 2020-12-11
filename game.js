@@ -112,26 +112,29 @@ export default class Game extends Phaser.Scene {
       //Personaje
       this.player = new Player(this, 600, 450, 'player');
       //Fisicas personaje
-      this.physics.add.collider(this.player, collidersLayer);
-      this.physics.add.collider(this.player, colsLayer);
-      this.physics.add.collider(this.player, boxLayer);
+      //this.physics.add.collider(this.player, collidersLayer);
+      //this.physics.add.collider(this.player, colsLayer);
+      //this.physics.add.collider(this.player, boxLayer);
       
       //Camara
 
       this.cameras.main.startFollow(this.player.puntero.intermedio);
       
       //Enemies        
-      this.enemies = this.add.group();
-      
-      for(let i = 0; i<3; i++){
-        const e = new Enemy(this, 600 + 20*i, 650, 'player', this.player);
-        e.body.setCollideWorldBounds(true);
-        this.enemies.add(e);
-      }
-      this.physics.add.collider(this.enemies, collidersLayer);
-      this.physics.add.collider(this.enemies, colsLayer);
-      this.physics.add.collider(this.enemies, boxLayer);
-      this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
+      /**
+       * 
+       this.enemies = this.add.group();
+       
+       for(let i = 0; i<3; i++){
+         const e = new Enemy(this, 600 + 20*i, 650, 'player', this.player);
+         //e.body.setCollideWorldBounds(true);
+         this.enemies.add(e);
+        }
+  */
+      //this.physics.add.collider(this.enemies, collidersLayer);
+      //this.physics.add.collider(this.enemies, colsLayer);
+      //this.physics.add.collider(this.enemies, boxLayer);
+      //this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
 
   }//End of create
 

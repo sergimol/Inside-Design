@@ -9,9 +9,9 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
 
 
-        this.scene = scene;                             //Guardamos la escena en humanoide
+        //this.scene = scene;                             //Guardamos la escena en humanoide
         scene.add.existing(this);                       //Añadimos a la escena el objeto humanoide
-        this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
+        //this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
         this.isDead = false;                            //La entidad está viva
         this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
         this.add(this.aspecto);
@@ -22,6 +22,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         //Para añadir hijos
         this.weapon = new Weapon(scene, 0, 5);
         this.add(this.weapon);
+        this.setSize(16, 16);
+        this.scene.matter.add.gameObject(this);
     }//Fin constructora
 
     damage() {
@@ -57,8 +59,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
 
     stopMove() {
-        console.log("PARATE BOLUDO");
-        this.body.setVelocity(0, 0);
+        //console.log("PARATE BOLUDO");
+        //this.body.awsetVelocity(0, 0);
     }
 
     rotateWeapon(angle) {
