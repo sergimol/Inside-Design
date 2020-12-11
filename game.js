@@ -38,9 +38,14 @@ export default class Game extends Phaser.Scene {
     const colsLayer = map.createStaticLayer('Cols', tileset);
     const boxLayer = map.createStaticLayer('Box', tileset);
 
-    collidersLayer.setCollisionByProperty({collisions: true});
-    colsLayer.setCollisionByProperty({collisions: true});
-    boxLayer.setCollisionByProperty({collisions: true});
+    collidersLayer.setCollisionByProperty({collide: true});
+    colsLayer.setCollisionByProperty({collide: true});
+    boxLayer.setCollisionByProperty({collide: true});
+
+    this.matter.world.convertTilemapLayer(collidersLayer);
+    this.matter.world.convertTilemapLayer(colsLayer);
+    this.matter.world.convertTilemapLayer(boxLayer);
+
 
 
     //BULLET
@@ -77,6 +82,7 @@ export default class Game extends Phaser.Scene {
       }, this);
 
     //this.bullets.rotation = this.angleToPointer;
+    /*
      this.input.on('pointerdown', function (pointer){
         console.log("shoot");
         //this.player.shoot();
@@ -100,7 +106,7 @@ export default class Game extends Phaser.Scene {
         
         
       }, this);
-      
+      */
       //Prototipo Musica
       //let sound = this.sound.add('mainTheme');
       //sound.play(); 
@@ -112,7 +118,7 @@ export default class Game extends Phaser.Scene {
       //Personaje
       this.player = new Player(this, 600, 450, 'player');
       //Fisicas personaje
-      //this.physics.add.collider(this.player, collidersLayer);
+      //this.scene.world.this.player, collidersLayer);
       //this.physics.add.collider(this.player, colsLayer);
       //this.physics.add.collider(this.player, boxLayer);
       
@@ -150,6 +156,7 @@ export default class Game extends Phaser.Scene {
     b.destroy();
     //b.setActive(false);
   }
+
 
   update() {  
  //Jugador
