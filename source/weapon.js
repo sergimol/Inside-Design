@@ -1,7 +1,7 @@
 export default class Weapon extends Phaser.GameObjects.Image{
     constructor(scene, x, y){
         super(scene, x, y, 'gunShoot');
-        console.log("cum a abolo");
+        console.log("disparo");
         this.setScale(1.25);
         this.setOrigin(0.15,0.5);
         //this.cadence, this.ammoRate, this.damage;

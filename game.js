@@ -12,7 +12,7 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
 
     //Diego
-    this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 16, frameHeight: 16});
+    this.load.spritesheet('bullet', 'Sprites/newBullet.png', {frameWidth: 64, frameHeight: 64});
     this.load.image('crosshair', 'Sprites/crosshair.png');
 
     //Javi
@@ -46,7 +46,7 @@ export default class Game extends Phaser.Scene {
     //BULLET
     this.anims.create({
       key:'shot',
-      frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 2}),
+      frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 3}),
       frameRate: 8,
       repeat: -1
     })
@@ -83,13 +83,20 @@ export default class Game extends Phaser.Scene {
        
         
         this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
-        this.bullet.setScale(1.25);
+        this.bullet.setScale(0.6);
         //= bullets.getFirstDead();
-        //this.bullet.anims('shot', true);
+        this.bullet.play('shot', true);
         this.bullet.rotation = this.angleToPointer;
-        this.physics.moveToObject(this.bullet, this.puntero, 400);
+        //this.physics.moveToObject(this.bullet, this.puntero, 400);
+        this.physics.moveTo(this.bullet, pointer.x, pointer.y, 400);
         
         this.bullets.add(this.bullet);
+
+        //sonido
+        let sound = this.sound.add('gunShootSound');
+        sound.play(); 
+        //shake
+        this.cameras.main.shake(200, 0.0005);
         
         
       }, this);
@@ -103,7 +110,7 @@ export default class Game extends Phaser.Scene {
       
       
       //Personaje
-      this.player = new Player(this, 600, 650, 'player');
+      this.player = new Player(this, 600, 450, 'player');
       //Fisicas personaje
       this.physics.add.collider(this.player, collidersLayer);
       this.physics.add.collider(this.player, colsLayer);
@@ -117,7 +124,7 @@ export default class Game extends Phaser.Scene {
       this.enemies = this.add.group();
       
       for(let i = 0; i<3; i++){
-        const e = new Enemy(this, 600 + 20*i, 450, 'player', this.player);
+        const e = new Enemy(this, 600 + 20*i, 650, 'player', this.player);
         e.body.setCollideWorldBounds(true);
         this.enemies.add(e);
       }
