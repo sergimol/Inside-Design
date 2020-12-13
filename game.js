@@ -12,7 +12,7 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('player', './Sprites/character1.png', {frameWidth: 24, frameHeight: 24});
 
     //Diego
-    this.load.spritesheet('bullet', 'Sprites/newBullet.png', {frameWidth: 64, frameHeight: 64});
+    this.load.spritesheet('bullet', 'Sprites/bullet2.png', {frameWidth: 64, frameHeight: 64});
     this.load.image('crosshair', 'Sprites/crosshair.png');
 
     //Javi
@@ -58,7 +58,7 @@ export default class Game extends Phaser.Scene {
     
     //WEAPON
     //let gun = this.add.image('gunShootProt');
-    //this.cameras.main.zoom = 3;
+    this.cameras.main.zoom = 3;
     //this.cameras.roundPixels = true; ->No arregla las estrias del tilemap
     //BULLETS
     this.bullets = this.add.group();

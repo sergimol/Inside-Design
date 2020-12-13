@@ -20,16 +20,18 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
     }
 
-    shoot(x,y){
+    shoot(){
         this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
 
         var d = this.tempMatrix.decomposeMatrix();
         
        let disparo = new Bullet(this.scene, d.translateX, d.translateY);
+       disparo.setRotation(this.rotation);
+       disparo.thrust(1);
+       //disparo.applyForce({x: 0, y: 0});
+       //disparo.rotation = this.rotation;
        //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
     }
-
-
 
     rotateWeapon(angle){
 
