@@ -46,13 +46,18 @@ export default class Player extends Humanoid {
     //en la constructora es preferible a tener 2 millones de veces esta llamada al input, de hay el console log de overComplication, solo es para recordarnoslo ejeje
     this.scene.input.on('pointermove', function (pointer){
       this.playerMoverPuntero(pointer);
-      console.log("overcomplication");
       //this.player.
       //      this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
       //    this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
       this.angleToPointer = Phaser.Math.Angle.Between(this.x, this.y, (pointer.x/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.x, (pointer.y/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.y);
       
     }, this);
+
+
+    
+    this.scene.input.on('pointerdown', function (pointer){
+      this.shoot();
+    },this);
   }
 
   
@@ -72,7 +77,9 @@ export default class Player extends Humanoid {
     
     
     
-    
+    shoot(){
+      this.weapon.shoot(this.x,this.y);
+    }
     
     playerMoverPuntero(pointer){
       this.puntero.move(pointer,this);
@@ -99,7 +106,6 @@ export default class Player extends Humanoid {
       //Movimiento horizontal
       if (this.cursors.left.isDown || this.cursors.a.isDown) {
         this.dirX = -1;
-        console.log("something");
       }
       else if (this.cursors.right.isDown || this.cursors.d.isDown)
       this.dirX = 1;

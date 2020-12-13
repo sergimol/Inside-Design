@@ -49,12 +49,12 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         if (dirX > 0){
             //this.each(entity => entity.flipX = false)
             this.aspecto.setFlipX(false);
-            this.weapon.setFlipY(false);
+            this.weapon.image.setFlipY(false);
         }
         else{
             //this.each(entity => entity.flipX = true)
             this.aspecto.setFlipX(true);    
-            this.weapon.setFlipY(true);
+            this.weapon.image.setFlipY(true);
         }
     }
 
