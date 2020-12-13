@@ -58,7 +58,7 @@ export default class Game extends Phaser.Scene {
     
     //WEAPON
     //let gun = this.add.image('gunShootProt');
-    this.cameras.main.zoom = 3;
+    //this.cameras.main.zoom = 3;
     //this.cameras.roundPixels = true; ->No arregla las estrias del tilemap
     //BULLETS
     this.bullets = this.add.group();

@@ -14,14 +14,18 @@ export default class Weapon extends Phaser.GameObjects.Container{
         
         //hace falta pasarle a cuanta distancia esta la punta del cañon, para cada arma sera diferente aqsi que habra que pasarselo a la constructora
         //es que voy a pasar numeros magicos xd
-        this.canyon = scene.add.image(20,0,"crosshair");
+        this.canyon = scene.add.image(20,0);
         this.add(this.canyon);
         //this.cadence, this.ammoRate, this.damage;
+        this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
     }
 
     shoot(x,y){
+        this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+
+        var d = this.tempMatrix.decomposeMatrix();
         
-       let disparo = new Bullet(this.scene, x + this.canyon.x, y + this.canyonsd.y);
+       let disparo = new Bullet(this.scene, d.translateX, d.translateY);
        //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
     }
 
