@@ -1,97 +1,79 @@
 import Weapon from "./weapon.js";
 
-export default class Humanoid extends Phaser.GameObjects.Sprite 
-{ //Container
-    constructor(scene, x, y, Sprite)
-    {
-        super(scene, x, y, Sprite);
-        
-        this.scene = scene;                             //Guardamos la escena en humanoide
-        scene.add.existing(this);                       //Añadimos a la escena el objeto humanoide
-        this.scene.physics.world.enableBody(this,0);    //le añadimos físicas dinámicas
-        this.isDead = false;                            //La entidad está viva
-        this.Sprite = Sprite;                           //Pasamos el sprite
-        this.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
-        
-        this.play('idle', true);
-        
-        //Escala
-        //this.setScale(3);           //Tamaño sprite
-        this.body.setSize(14,15);   //Collider
-        //Atributos
-        this.health;
+export default class Humanoid extends Phaser.GameObjects.Container { //Container
+    constructor(scene, x, y, humanSprite) {
+        super(scene, x, y);
+        this.aspecto = scene.add.sprite(0, 0, humanSprite);
+        scene.add.existing(this);
         this.speed = 100;
-        
-        //Container
-        this.container = scene.add.container();
-        this.scene.add.existing(this.container);
+
+
+
+        //this.scene = scene;                             //Guardamos la escena en humanoide
+        scene.add.existing(this);                       //Añadimos a la escena el objeto humanoide
+        //this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
+        this.isDead = false;                            //La entidad está viva
+        this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
+        this.add(this.aspecto);
+        //this.Sprite.play('idle', true);
+        //Atributos
+        this.health = 0;
+
         //Para añadir hijos
-        this.weapon = new Weapon(scene, x, y);
-        this.container.add(this.weapon);
-        
-
-
+        this.weapon = new Weapon(scene, 0, 5);
+        this.add(this.weapon);
+        this.setSize(16, 16);
+        this.scene.matter.add.gameObject(this);
+        this.scene.matter.body.setInertia(this.body, Infinity);
     }//Fin constructora
-        
-    die(){
+
+    damage() {
         --this.health;
-        console.log(this.health);
-        if(this.health===0){
+        console.log(thisdws.health);
+        if (this.health === 0) {
             this.isDead = true;
             this.weapon.destroy();
-            this.container.destroy();
-            this.destroy();
+            //this.destroy();
             console.log('entity explode');
         }
-        
     }
+
+
     ////////////
     //MOVIMIENTO
-    move(dirX, dirY){
-        this.body.setVelocityX(this.speed * dirX);
-        this.body.setVelocityY(this.speed * dirY);
-        //Animacion
-        if(dirX === 0 && dirY === 0)
-            this.play('idle', true);
+
+    //@param {*} dirX 
+    // @param {*} dirY
+
+    moveRotate(dirX) {
+        if (dirX > 0){
+            //this.each(entity => entity.flipX = false)
+            this.aspecto.setFlipX(false);
+            this.weapon.image.setFlipY(false);
+        }
+        else{
+            //this.each(entity => entity.flipX = true)
+            this.aspecto.setFlipX(true);    
+            this.weapon.image.setFlipY(true);
+        }
+    }
+
+
+    stopMove() {
+        //console.log("PARATE BOLUDO");
+        //this.body.awsetVelocity(0, 0);
+    }
+
+    rotateWeapon(angle) {
+        this.weapon.rotateWeapon(angle);
+
+        if (angle < 0)
+            this.sendToBack(this.weapon);
+
         else
-            this.play('walk', true);
-
-        this.weapon.x = this.x;
-        this.weapon.y = this.y+ 5;
-    }
-    moveRotate(dirX){
-        if(dirX > 0){
-
-            this.setFlipX(false)
-            this.weapon.setFlipY(false)
-        }
-        else {
-
-            this.setFlipX(true)
-            this.weapon.setFlipY(true)
-        }
-        
+            this.bringToTop(this.weapon);
     }
 
-    stopMove()
-    {
-        console.log("PARATE BOLUDO");
-        this.body.setVelocity(0,0);
-    }
-
-    rotateWeapon(angle){
-    this.weapon.rotateWeapon(angle);
-
-
-     if (angle < 0){
-         this.container.depth = this.depth - 1;
-    }
-    else{
-        this.container.depth = this.depth + 1;
-    } 
-
-    
-}
 
 
 }

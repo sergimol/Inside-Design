@@ -1,6 +1,6 @@
 export default class Puntero extends Phaser.GameObjects.Image{
     constructor(scene, x, y){
-        super(scene, x, y, 'crosshair')
+        super(scene, x, y)
         //middle = super(scene,x,y, '');
         this.intermedio = scene.add.image(x, y);
         scene.add.existing(this);
@@ -9,18 +9,15 @@ export default class Puntero extends Phaser.GameObjects.Image{
         this.py = 0;
     }
 
-    move(pointer, scene, player){
-        this.x = pointer.x + scene.cameras.main.worldView.x;
-        this.y = pointer.y + scene.cameras.main.worldView.y;
-
-        //El 3 es el cameraZoom, no sé como pasar la constante a esta clase
-        this.px = (player.x - this.x)/3;
-        this.py = (player.y - this.y)/3;
-
-        //calucloY = this.intermedio.y / 5;
-        this.updateMiddle(player);
-        //this.intermedio.y = calculoY;
-
+    move(pointer,player){
+        this.x = (pointer.x/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.x;
+        this.y = (pointer.y/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.y;
+        this.px = player.x - this.x;
+        this.py = player.y - this.y;
+    }
+    moverconjugador(player){
+        this.x = player.x - this.px;
+        this.y = player.y - this.py;
     }
 
     updateMiddle(player){
