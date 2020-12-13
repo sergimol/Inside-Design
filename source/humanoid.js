@@ -20,7 +20,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.health = 0;
 
         //Para añadir hijos
-        this.weapon = new Weapon(scene, 0, 5);
+        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet");
         this.add(this.weapon);
         this.setSize(16, 16);
         this.scene.matter.add.gameObject(this);

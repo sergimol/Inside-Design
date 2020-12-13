@@ -3,11 +3,13 @@
 import Bullet from "./bullet.js";
 
 export default class Weapon extends Phaser.GameObjects.Container{
-    constructor(scene, x, y){
+    constructor(scene, x, y, spriteWeapon, spriteBullet){
         super(scene, x, y);
+        //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
+        this.spriteBullet = spriteBullet;
 
         //imagen del arma
-        this.image = scene.add.image(0, 0, 'gunShoot');
+        this.image = scene.add.image(0, 0, spriteWeapon);
         this.image.setOrigin(0.15,0.5);
         this.add(this.image);
         //this.setScale(1.25);
@@ -25,7 +27,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
         var d = this.tempMatrix.decomposeMatrix();
         
-       let disparo = new Bullet(this.scene, d.translateX, d.translateY);
+       let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
        disparo.setRotation(this.rotation);
        disparo.thrust(1);
        //disparo.applyForce({x: 0, y: 0});
