@@ -127,8 +127,7 @@ export default class Game extends Phaser.Scene {
       this.cameras.main.startFollow(this.player.puntero.intermedio);
       
       //Enemies        
-      /**
-       * 
+      /*
        this.enemies = this.add.group();
        
        for(let i = 0; i<3; i++){
