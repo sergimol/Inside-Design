@@ -29,19 +29,22 @@ export default class Game extends Phaser.Scene {
   create() {
     // colisiones tilemap
     const map = this.make.tilemap({key:'dungeon'})
-    const tileset = map.addTilesetImage('TilesetBase','tiles');
+    const tileset = map.addTilesetImage('TilesetBase','tiles',16,16,1,2);
 
     const groundLayer = map.createStaticLayer('Ground', tileset);
     const detailsLayer = map.createStaticLayer('Details', tileset);
     const wallsLayer = map.createStaticLayer('Walls', tileset);
+    const doorsLayer = map.createStaticLayer('Doors', tileset);
     const collidersLayer = map.createStaticLayer('Colliders', tileset);
     const colsLayer = map.createStaticLayer('Cols', tileset);
     const boxLayer = map.createStaticLayer('Box', tileset);
 
+    doorsLayer.setCollisionByProperty({collide: true});
     collidersLayer.setCollisionByProperty({collide: true});
     colsLayer.setCollisionByProperty({collide: true});
     boxLayer.setCollisionByProperty({collide: true});
 
+    this.matter.world.convertTilemapLayer(doorsLayer);
     this.matter.world.convertTilemapLayer(collidersLayer);
     this.matter.world.convertTilemapLayer(colsLayer);
     this.matter.world.convertTilemapLayer(boxLayer);
