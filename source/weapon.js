@@ -33,6 +33,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
        //disparo.applyForce({x: 0, y: 0});
        //disparo.rotation = this.rotation;
        //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
+       this.scene.cameras.main.shake(100,0.0005);
     }
 
     rotateWeapon(angle){
