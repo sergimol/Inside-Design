@@ -26,28 +26,60 @@ export default class Enemy extends Humanoid {
         //Cambiar color "placeholder"
         this.aspecto.setTint(0x9999ff);
         
-        let newX = Math.floor(Math.random() * (30 + 30)) - 30;
-        let newY = Math.floor(Math.random() * (30 + 30)) - 30;
-        
-        this.nextX = this.x + newX;
-        this.nextY = this.y + newY;
+        this.newNextPos();
                 
         //Timer para mover al enemigo aunque no llegue a la siguiente posicion
-        this.minMoveTime = this.scene.time.addEvent({ delay: 1000, callback: this.enemyMove, callbackScope: this, loop: true });
+       ////// this.minMoveTime = this.scene.time.addEvent({ delay: 1000, callback: this.enemyMove, callbackScope: this, loop: true });
         //this.scene.time.addEvent({ delay: 1000, callback: this.enemyMove, callbackScope: this, loop: true });
+        //this.scene.time.addEvent({ delay: 3000, callback: this.restEnemyMove, callbackScope: this, loop: true });
         this.attackState = false;
         
         this.timeEvent;
         this.enemyTime = 1;
         this.playerRef = player; 
- 
-    }//Fin constructora
+
+        //Primera posicionaw
+        this.dir = new Phaser.Math.Vector2();
+        this.enemyMove();
+        this.miscojones = false;
+    }//Fin constructorasd
 
 
 
 
+    newNextPos(){
+        let newX, newY;
+        let wichMove = 0;
+        if (!this.attackState) //reposo
+        {
+            newX = Math.floor(Math.random() * (30 + 30)) - 30;
+            newY = Math.floor(Math.random() * (30 + 30)) - 30;
+        }
+        else //atake
+        {
+            wichMove = Math.floor(Math.random() * (6 - 1)) + 1;
+            if (wichMove < 5)
+            {
+                newX = Math.floor(Math.random() * (30 + 30)) - 30;
+                newY = Math.floor(Math.random() * (30 + 30)) - 30;
+            }
+        }
+        //Creamos la nueva posicon
+        if(wichMove < 5)
+        {
+            this.nextX = this.x + newX;
+            this.nextY = this.y + newY;
+        }
+        else
+        {
+            this.nextX = this.playerRef.x;
+            this.nextY = this.playerRef.y;
+        }
+    }
+
+    
     preUpdate() {
-
+       
         //Comprobamos el movimiento para asignar la animacion
         if(this.body.speed>0)
             this.aspecto.play('enemyWalk', true);
@@ -57,78 +89,74 @@ export default class Enemy extends Humanoid {
         //Para calcular la distancia entre siguientes posiciones   
         let distanceBetweenPos = Phaser.Math.Distance.Between(this.x, this.y, this.nextX, this.nextY);
         //ESTADO REPOSO
-        if (!this.attackState){
-            //Si llega a la siguiente pos
-            if (distanceBetweenPos < 4) {
-                    
-                this.stopMove();
+        if (!this.attackState)
+            this.restEnemy(distanceBetweenPos);
 
-                if (this.nextX > this.x) {
-                    this.moveRotate((1));
-                    this.rotateWeapon((0 * Math.PI) / 180.0);
-                }
-                else {
-                    this.moveRotate((-1));
-                    this.rotateWeapon((180 * Math.PI) / 180.0);
-                }  
-            }
-            //Si el enemigo esta en el rango del jugador cambiamos el estado
-            let distanceEnemyPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
-            if(distanceEnemyPlayer < 70)
-                this.attackState = true;
-        }
         //ESTADO ATAQUE
-        else {
-        
-            //Si llega a la siguiente pos
-            if (distanceBetweenPos < 4) {
-                
-                //Elegimos entre una posicion aleatoria y que se acerque al jugador
-                let wichMove;
-                wichMove = Math.floor(Math.random() * (6 - 1)) + 1;
-                if (wichMove < 5)
-                this.enemyMove();
-                else
-                this.enemyMoveToPlayer();
-            }
-                
-            this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y));
-            this.moveRotate((this.playerRef.x - this.x));
-        }
-          
+        else 
+            this.attackEnemy(distanceBetweenPos);
+                       
     }
     
     //Mueve el enemigo a una posicon aleatoria
-    enemyMove() {
-        
-        let newX, newY;
-        if (!this.attackState) //reposo
-        {
-            newX = Math.floor(Math.random() * (30 + 30)) - 30;
-            newY = Math.floor(Math.random() * (30 + 30)) - 30;
-        }
-        else //atake
-        {
-            newX = Math.floor(Math.random() * (60 + 60)) - 60;
-            newY = Math.floor(Math.random() * (60 + 60)) - 60;
-        }
-        //Creamos la nueva posicon
-        this.nextX = this.x + newX;
-        this.nextY = this.y + newY;
-        
-        //Movemos al enemigo a la siguiente posicion
-        if (!this.attackState)
-            this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed - 30);
-        else
-            this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);
-        
+    enemyMove() {   
+        this.dir = new Phaser.Math.Vector2(this.nextX - this.x, this.nextY - this.y);
+        this.dir.normalize();  
+        this.miscojones = false;     
     }
     
-    //Mueve el enemigo hacia la posicion del jugador
-    enemyMoveToPlayer() {
-        this.nextX = this.playerRef.x;
-        this.nextY = this.playerRef.y;
-        this.scene.physics.moveTo(this, this.nextX, this.nextY, this.speed);
+
+    restEnemy(distanceBetweenPos)
+    {
+        //Si llega a la siguiente pos
+        if (distanceBetweenPos < 4 && !this.miscojones) {
+  
+            this.newNextPos();
+            this.restEnemyMove();
+        }
+        //Si el enemigo esta en el rango del jugador cambiamos el estado
+        let distanceEnemyPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
+        if(distanceEnemyPlayer < 70)
+            this.attackState = true;
+
+        this.setVelocity(this.dir.x * 0.3, this.dir.y * 0.3);
+       
+    }
+
+    attackEnemy(distanceBetweenPos)
+    {
+        //Si llega a la siguiente pos
+        if (distanceBetweenPos < 4) {
+                
+            console.log("me quiero morir");
+            //Elegimos entre una posicion aleatoria y que se acerque al jugador
+            this.newNextPos();
+            this.enemyMove();
+        }
+            
+        this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y));
+        this.moveRotate((this.playerRef.x - this.x));
+
+        this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
+    }
+
+    restEnemyMove(){
+        this.miscojones = true;
+        this.dir=new Phaser.Math.Vector2(0,0);
+        this.scene.time.delayedCall(500, this.rotateRest, [], this); 
+        this.scene.time.delayedCall(1000, this.enemyMove, [], this);  
+    }
+
+    rotateRest()
+    {
+        if (this.nextX > this.x) {
+            this.moveRotate((1));
+            this.rotateWeapon((0 * Math.PI) / 180.0);
+        }
+        else {
+            this.moveRotate((-1));
+            this.rotateWeapon((180 * Math.PI) / 180.0);
+        } 
     }
     
     

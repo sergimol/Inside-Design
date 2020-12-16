@@ -6,11 +6,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.aspecto = scene.add.sprite(0, 0, humanSprite);
         scene.add.existing(this);
         this.speed = 100;
-
-
-
-        //this.scene = scene;                             //Guardamos la escena en humanoide
-        scene.add.existing(this);                       //Añadimos a la escena el objeto humanoide
         //this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
         this.isDead = false;                            //La entidad está viva
         this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;

@@ -130,15 +130,14 @@ export default class Game extends Phaser.Scene {
       this.cameras.main.startFollow(this.player.puntero.intermedio);
       
       //Enemies        
-      /*
        this.enemies = this.add.group();
        
-       for(let i = 0; i<3; i++){
+       for(let i = 0; i<1; i++){
          const e = new Enemy(this, 600 + 20*i, 650, 'player', this.player);
          //e.body.setCollideWorldBounds(true);
          this.enemies.add(e);
         }
-  */
+
       //this.physics.add.collider(this.enemies, collidersLayer);
       //this.physics.add.collider(this.enemies, colsLayer);
       //this.physics.add.collider(this.enemies, boxLayer);
