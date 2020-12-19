@@ -58,7 +58,9 @@ export default class Player extends Humanoid {
     this.dir.normalize();
 
     this.scene.input.on('pointerdown', function (pointer){
-      this.shoot();
+      if (!this.weapon.esAutomatica()){
+        this.shoot();
+      }
     },this);
   }
 
@@ -102,6 +104,9 @@ export default class Player extends Humanoid {
 
     
     preUpdate() {
+      
+
+
       //Idle por defecto
       this.dir.x = 0;
       this.dir.y = 0;
@@ -125,7 +130,14 @@ export default class Player extends Humanoid {
       
       this.moveRotate(this.puntero.x - this.x);
       this.rotateWeapon(this.angleToPointer); 
-      
       //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
+      
+      
+      if (this.weapon.esAutomatica()){
+        var pointer = this.scene.input.activePointer;
+        if (pointer.isDown){
+          this.shoot();
+      }}
+      
     }   
 }

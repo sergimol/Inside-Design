@@ -8,9 +8,12 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
         this.spriteBullet = spriteBullet;
 
-        //tipo, mono, rafaga, auto, shotgun, multi, etc¿?
-        this.modo = m;
+
         //Otros atributos
+
+        //semiautomatica o automatica
+        this.modo = m;
+        //forma en la que dispara, mono, rafaga, shotgun, multi, //granadas, cohetes, son un tipo de bala no un tipo de arma etc¿?
         this.cadencia = cadence; //en milisegundos
         this.ultimoDisparoTiempo = 0;
         
@@ -30,16 +33,20 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
     }
 
+    esAutomatica(){return (this.modo === "auto");}
+
     shoot(){
         let siguienteDisparo = this.scene.time.now;
         console.log(this.ultimoDisparoTiempo);
         if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
             this.ultimoDisparoTiempo = siguienteDisparo;
-
+            
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
 
             var d = this.tempMatrix.decomposeMatrix();
             
+
+            //instanciar disparos
             let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
             disparo.setRotation(this.rotation);
             disparo.thrust(1);
@@ -47,6 +54,10 @@ export default class Weapon extends Phaser.GameObjects.Container{
             //disparo.rotation = this.rotation;
             //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
             this.scene.cameras.main.shake(100,0.0005);
+            if (this.modo === "mono"){
+
+            }
+
         }
 
     }
