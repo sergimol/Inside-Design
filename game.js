@@ -39,6 +39,8 @@ export default class Game extends Phaser.Scene {
     const colsLayer = map.createStaticLayer('Cols', tileset);
     const boxLayer = map.createStaticLayer('Box', tileset);
 
+    const entityLayer = map.getObjectLayer('Entities').objects
+
     doorsLayer.setCollisionByProperty({collide: true});
     collidersLayer.setCollisionByProperty({collide: true});
     colsLayer.setCollisionByProperty({collide: true});
@@ -61,8 +63,7 @@ export default class Game extends Phaser.Scene {
     
     //WEAPON
     //let gun = this.add.image('gunShootProt');
-    this.cameras.main.zoom = 3;
-    //this.cameras.roundPixels = true; ->No arregla las estrias del tilemap
+    
     //BULLETS
     this.bullets = this.add.group();
     this.bullets.enableBody = true;
@@ -115,40 +116,36 @@ export default class Game extends Phaser.Scene {
       //sound.play(); 
        
        
-      //DISPARO
-      
-      
-      //Personaje
-      this.player = new Player(this, 600, 450, 'player');
-      //Fisicas personaje
-      //this.scene.world.this.player, collidersLayer);
-      //this.physics.add.collider(this.player, colsLayer);
-      //this.physics.add.collider(this.player, boxLayer);
-      
+      //CARGA DE OBJETOS
+      this.loadObjects(map);
+
       //Camara
-
+      this.cameras.main.zoom = 3;
       this.cameras.main.startFollow(this.player.puntero.intermedio);
-      
-      //Enemies        
-       this.enemies = this.add.group();
-       
-       for(let i = 0; i<1; i++){
-         const e = new Enemy(this, 600 + 20*i, 650, 'player', this.player);
-         //e.body.setCollideWorldBounds(true);
-         this.enemies.add(e);
-        }
-
-      //this.physics.add.collider(this.enemies, collidersLayer);
-      //this.physics.add.collider(this.enemies, colsLayer);
-      //this.physics.add.collider(this.enemies, boxLayer);
-      //this.physics.add.collider(this.bullets, this.enemies, this.handleBulletEnemyCollision);
 
   }//End of create
+
+  loadObjects(map){
+    this.enemies = this.add.group();
+      
+      for (const objeto of map.getObjectLayer('Entities').objects) {
+        // `objeto.name` u `objeto.type` nos llegan de las propiedades del
+        // objeto en Tiled
+        if (objeto.name === 'player') {
+          this.player = new Player(this, objeto.x, objeto.y,'player')
+        }
+        else if(objeto.name === 'enemy'){
+          const e = new Enemy(this,  objeto.x, objeto.y, 'player', this.player);
+          this.enemies.add(e);
+        }
+      }
+  }
 
   destroyBullet(b){
     console.log('bullet hit');
     b.destroy();
   }
+
   handleBulletEnemyCollision(e,b){
     console.log('enemy hit');
     //e.die();
