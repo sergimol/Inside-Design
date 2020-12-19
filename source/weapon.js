@@ -37,7 +37,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     shoot(){
         let siguienteDisparo = this.scene.time.now;
-        console.log(this.ultimoDisparoTiempo);
+        //console.log(this.ultimoDisparoTiempo);
         if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
             this.ultimoDisparoTiempo = siguienteDisparo;
             

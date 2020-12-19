@@ -123,6 +123,20 @@ export default class Game extends Phaser.Scene {
       this.cameras.main.zoom = 3;
       this.cameras.main.startFollow(this.player.puntero.intermedio);
 
+      //colisiones
+      /**
+       * 
+       this.matter.world.on("collisionstart", (event, bodyA, bodyB) => {
+         if ((bodyA.label == 'bullet') || (bodyB.label == 'bullet')) {
+           if (bodyA.label == 'bullet')
+           
+           
+           this.matter.world.remove(bodyA);
+           else
+           this.matter.world.remove(bodyB);
+          }
+        })
+        */
   }//End of create
 
   loadObjects(map){
