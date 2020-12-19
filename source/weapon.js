@@ -3,10 +3,18 @@
 import Bullet from "./bullet.js";
 
 export default class Weapon extends Phaser.GameObjects.Container{
-    constructor(scene, x, y, spriteWeapon, spriteBullet){
+    constructor(scene, x, y, spriteWeapon, spriteBullet, m, cadence){
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
         this.spriteBullet = spriteBullet;
+
+        //tipo, mono, rafaga, auto, shotgun, multi, etc¿?
+        this.modo = m;
+        //Otros atributos
+        this.cadencia = cadence; //en milisegundos
+        this.ultimoDisparoTiempo = 0;
+        
+
 
         //imagen del arma
         this.image = scene.add.image(0, 0, spriteWeapon);
@@ -23,17 +31,24 @@ export default class Weapon extends Phaser.GameObjects.Container{
     }
 
     shoot(){
-        this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+        let siguienteDisparo = this.scene.time.now;
+        console.log(this.ultimoDisparoTiempo);
+        if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
+            this.ultimoDisparoTiempo = siguienteDisparo;
 
-        var d = this.tempMatrix.decomposeMatrix();
-        
-       let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
-       disparo.setRotation(this.rotation);
-       disparo.thrust(1);
-       //disparo.applyForce({x: 0, y: 0});
-       //disparo.rotation = this.rotation;
-       //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
-       this.scene.cameras.main.shake(100,0.0005);
+            this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+
+            var d = this.tempMatrix.decomposeMatrix();
+            
+            let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
+            disparo.setRotation(this.rotation);
+            disparo.thrust(1);
+            //disparo.applyForce({x: 0, y: 0});
+            //disparo.rotation = this.rotation;
+            //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
+            this.scene.cameras.main.shake(100,0.0005);
+        }
+
     }
 
     rotateWeapon(angle){

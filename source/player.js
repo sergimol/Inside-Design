@@ -54,7 +54,9 @@ export default class Player extends Humanoid {
     }, this);
 
 
-    
+    this.dir = new Phaser.Math.Vector2();
+    this.dir.normalize();
+
     this.scene.input.on('pointerdown', function (pointer){
       this.shoot();
     },this);
@@ -88,11 +90,11 @@ export default class Player extends Humanoid {
     
     
     playerMove(dirX, dirY) {
-      this.setVelocity(dirX, dirY);
+      this.setVelocity(this.dir.x, this.dir.y);
       //this.body.setVelocityX(this.speed * dirX);
       //this.body.setVelocityY(this.speed * dirY);
       //Animacion
-      if (dirX === 0 && dirY === 0)
+      if (this.dir.x === 0 && this.dir.y === 0)
       this.aspecto.play('idle', true);
       else
       this.aspecto.play('walk', true);
@@ -101,20 +103,21 @@ export default class Player extends Humanoid {
     
     preUpdate() {
       //Idle por defecto
-      this.dirX = 0;
-      this.dirY = 0;
+      this.dir.x = 0;
+      this.dir.y = 0;
       //Movimiento horizontal
-      if (this.cursors.left.isDown || this.cursors.a.isDown) {
-        this.dirX = -1;
-      }
+      if (this.cursors.left.isDown || this.cursors.a.isDown)
+        this.dir.x = -1;
       else if (this.cursors.right.isDown || this.cursors.d.isDown)
-      this.dirX = 1;
+      this.dir.x = 1;
       //Movimiento vertical        
       if (this.cursors.up.isDown || this.cursors.w.isDown)
-      this.dirY = -1;
+      this.dir.y = -1;
       else if (this.cursors.down.isDown || this.cursors.s.isDown)
-      this.dirY = 1;
-      this.playerMove(this.dirX, this.dirY);
+      this.dir.y = 1;
+
+      this.dir.normalize();
+      this.playerMove(this.dir.x, this.dir.y);
       this.puntero.moverconjugador(this);
       this.puntero.updateMiddle(this);     
       
