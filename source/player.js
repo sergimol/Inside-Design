@@ -6,11 +6,12 @@ export default class Player extends Humanoid {
     super(scene, x, y, sprite);
 
     //Atributos
-    let ammo, active;
+    let active;
     //Puntero
     this.puntero = new Puntero(scene,0,0);
     this.add(this.puntero);
-    
+    this.ammo = 100;
+    this.health = 10;
 
     //this.add(sprite);
     /////////////
@@ -62,6 +63,11 @@ export default class Player extends Humanoid {
         this.shoot();
       }
     },this);
+
+    //Carga de datos del hud
+    this.hud = this.scene.scene.get('UIScene');
+    this.hud.setHealth(this.health);
+    this.hud.setAmmo(this.ammo);
   }
 
   
@@ -82,7 +88,12 @@ export default class Player extends Humanoid {
     
     
     shoot(){
-      this.weapon.shoot(this.x,this.y);
+      if(this.ammo > 0){
+        if(this.weapon.shoot(this.x,this.y)){
+          this.ammo--;
+          this.hud.setAmmo(this.ammo);
+        }
+      }
     }
     
     playerMoverPuntero(pointer){
