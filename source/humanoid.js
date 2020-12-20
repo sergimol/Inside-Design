@@ -51,13 +51,13 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         if(this.body.label === 'player')
             this.hud.setHealth(this.health);
         if (this.health === 0) {
-            this.hitState = false;
-            this.body.speed = 0;
             this.isDead = true;
+            this.hitState = false;
+            //this.body.speed = 0;
+            
             this.weapon.destroy();
-            console.log('entity explode');
+            console.log('entityDep');
             this.aspecto.play('enemyDep', true);
-
         }
     }
 

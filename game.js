@@ -87,6 +87,7 @@ export default class Game extends Phaser.Scene {
 
     //Prototipo Musica
     let sound = this.sound.add('mainTheme');
+    sound.setVolume(0.4);
     sound.play(); 
 
 

@@ -4,7 +4,6 @@ export default class Enemy extends Humanoid {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
 
-
         //Atributos
         this.speed = 50;
         this.health = 3;
@@ -27,7 +26,7 @@ export default class Enemy extends Humanoid {
         anims.create({
             key: 'enemyDep',
             frames: anims.generateFrameNumbers(sprite, { start: 16, end: 28 }),
-            frameRate: 7,
+            frameRate: 14,
             repeat: 0
         })
         anims.create({
@@ -74,17 +73,19 @@ export default class Enemy extends Humanoid {
                 this.hitState = false;
         }
         //Comprobamos el movimiento para asignar la animacion
-        else if (this.isDead == false) {
+        else if (this.isDead === false) {
             if (this.body.speed > 0)
                 this.aspecto.play('enemyWalk', true);
             else
                 this.aspecto.play('enemyIdle', true);
         }
         else {
-            if (this.body.speed <= 0)
+            if (this.body.speed <= 5){
+                this.setFrictionAir(0.4);
                 this.setCollisionCategory(null)
+                
+            }
             this.setActive(false);
-            console.log("estoy mimido");
         }
 
         //Para calcular la distancia entre siguientes posiciones   
