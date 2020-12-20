@@ -14,7 +14,7 @@ export default class Enemy extends Humanoid {
         const anims = scene.anims;
         anims.create({
             key: 'enemyWalk',
-            frames: anims.generateFrameNumbers(sprite, { start: 4, end: 9 }), //15
+            frames: anims.generateFrameNumbers(sprite, { start: 4, end: 8 }), //15
             frameRate: 15,
             repeat: -1
         })
@@ -26,8 +26,14 @@ export default class Enemy extends Humanoid {
         })
         anims.create({
             key: 'enemyDep',
-            frames: anims.generateFrameNumbers(sprite, { start: 16, end: 19 }),
+            frames: anims.generateFrameNumbers(sprite, { start: 16, end: 28 }),
             frameRate: 7,
+            repeat: 0
+        })
+        anims.create({
+            key: 'enemyHit',
+            frames: anims.generateFrameNumbers(sprite, { start: 9, end: 14 }),
+            frameRate: 60,
             repeat: 0
         })
 
@@ -61,8 +67,14 @@ export default class Enemy extends Humanoid {
     //PREUPDATE
     preUpdate() {
 
+        if(this.hitState)
+        {
+            this.aspecto.play('enemyHit', true);
+            if(this.aspecto.anims.currentFrame.textureFrame === 14)
+                this.hitState = false;
+        }
         //Comprobamos el movimiento para asignar la animacion
-        if (this.isDead == false) {
+        else if (this.isDead == false) {
             if (this.body.speed > 0)
                 this.aspecto.play('enemyWalk', true);
             else

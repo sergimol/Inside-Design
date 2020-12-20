@@ -13,9 +13,10 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.health = 10;
         this.isDead = false;                            //La entidad está viva
         this.speed = 100;
+        this.hitState = false; //para cambiar a la animacion de hit
 
         //Para añadir hijos
-        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "auto", 100, 20);
+        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "auto", 100, 10);
         this.add(this.weapon);
         this.setSize(16, 16);
 
@@ -44,11 +45,13 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
     }//Fin constructora
 
     damage() {
+        this.hitState = true;
         --this.health;
         console.log(this.health);
         if(this.body.label === 'player')
             this.hud.setHealth(this.health);
         if (this.health === 0) {
+            this.hitState = false;
             this.body.speed = 0;
             this.isDead = true;
             this.weapon.destroy();

@@ -2,9 +2,10 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, sprite){
         super(scene, x, y, sprite);
         
+        this.setScale(0.7);
         this.setSize(8, 8);
         this.scene.matter.add.gameObject(this);
-        this.setOrigin(1);
+        this.setOrigin(4,4);
         this.setMass(50);
         this.scene.add.existing(this);
         this.body.label = 'bullet';
@@ -16,7 +17,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
         //atributos
         this.body.restitution = 1;
-        this.rebotes = 3;
+        this.rebotes = 0;
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
         

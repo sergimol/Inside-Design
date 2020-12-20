@@ -9,10 +9,10 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet('player', './Sprites/character1.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('player', './Sprites/Player.png', {frameWidth: 24, frameHeight: 24});
 
     //Diego
-    this.load.spritesheet('bullet', 'Sprites/bullet2.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bullet', 'Sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.image('crosshair', 'Sprites/crosshair.png');
 
     //Javi
