@@ -1196,6 +1196,19 @@
                         }]
                 }],
          "tilewidth":16
+        }, 
+        {
+         "columns":32,
+         "firstgid":513,
+         "image":"TilesetDEFcrash.png",
+         "imageheight":288,
+         "imagewidth":576,
+         "margin":1,
+         "name":"TilesetBaseCrash",
+         "spacing":2,
+         "tilecount":512,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
