@@ -12,7 +12,6 @@ export default class Player extends Humanoid {
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
     this.ammo = 100;
-    this.health = 10;
 
     //this.add(sprite);
     /////////////

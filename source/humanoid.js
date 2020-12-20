@@ -10,7 +10,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.add(this.aspecto);
 
         //Atributos
-        this.health = 0;
+        this.health = 10;
         this.isDead = false;                            //La entidad está viva
         this.speed = 100;
 
@@ -46,6 +46,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
     damage() {
         --this.health;
         console.log(this.health);
+        if(this.body.label === 'player')
+            this.hud.setHealth(this.health);
         if (this.health === 0) {
             this.body.speed = 0;
             this.isDead = true;

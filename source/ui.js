@@ -40,7 +40,7 @@ export default class UI extends Phaser.Scene {
 
     //Asigna la barra de vida en función de la salud del jugador
     setHealth(playerHealth) {
-        this.healthBar.scaleX *= playerHealth;
+        this.healthBar.scaleX = playerHealth * 10;
     }
 
     //Actualiza el contador de munición
