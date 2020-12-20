@@ -2,6 +2,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, sprite){
         super(scene, x, y, sprite);
         
+        this.depth = 4;
         this.setScale(0.7);
         this.setSize(8, 8);
         this.scene.matter.add.gameObject(this);

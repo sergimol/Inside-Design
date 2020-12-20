@@ -6,7 +6,7 @@ export default class Player extends Humanoid {
     super(scene, x, y, sprite);
     this.body.label = 'player';
     //Atributos
-    this.depth = 3;
+    this.depth = 4;
     let active;
     //Puntero
     this.puntero = new Puntero(scene,0,0);
