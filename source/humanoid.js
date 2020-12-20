@@ -1,12 +1,12 @@
 import Weapon from "./weapon.js";
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
-    constructor(scene, x, y, humanSprite) {
+    constructor(scene, x, y, humanSprite, depth) {
         super(scene, x, y);
         scene.add.existing(this);
 
         this.aspecto = scene.add.sprite(0, 0, humanSprite);
-        this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
+        this.aspecto.depth = depth;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
         this.add(this.aspecto);
 
         //Atributos
@@ -60,9 +60,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
             this.isDead = true;
             this.hitState = false;
-            //this.body.speed = 0;
             
-            this.weapon.destroy();
+            this.weapon.setVisible(false);
             console.log('entityDep');
             this.aspecto.play('enemyDep', true);
         }
