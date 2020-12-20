@@ -3,7 +3,7 @@
 import Bullet from "./bullet.js";
 
 export default class Weapon extends Phaser.GameObjects.Container{
-    constructor(scene, x, y, spriteWeapon, spriteBullet, m, cadence){
+    constructor(scene, x, y, spriteWeapon, spriteBullet, m, cadence, dispersion){
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
         this.spriteBullet = spriteBullet;
@@ -17,6 +17,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.cadencia = cadence; //en milisegundos
         this.ultimoDisparoTiempo = 0;
         
+        //dispersion del arma %
+        this.dispersion = dispersion;
 
 
         //imagen del arma
@@ -45,10 +47,12 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
             var d = this.tempMatrix.decomposeMatrix();
             
+            //calcular dispersion
+            let disp = Phaser.Math.Between(-this.dispersion, this.dispersion);
 
             //instanciar disparos
             let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
-            disparo.setRotation(this.rotation);
+            disparo.setRotation(this.rotation + (disp * Math.PI/200));
             disparo.thrust(1);
             //disparo.applyForce({x: 0, y: 0});
             //disparo.rotation = this.rotation;
