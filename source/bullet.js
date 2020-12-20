@@ -31,7 +31,13 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
                 if (bodyA === wordBody || bodyB === wordBody)
                 {
-                    this.wallhit();
+                    if (bodyA.label === 'enemy' || bodyB.label === 'enemy') {
+                        //TODO
+                        //#Issue
+                        //tiene que pasarle el daño y destruirse
+                        this.destroy();
+                    }
+                    else this.wallhit();
                 }
             }
         });
@@ -39,15 +45,23 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     wallhit(){
         if (this.rebotes > 0 ){
             this.rebotes--;
+            /**
+             * 
+             if (this.body.velocity.x < 0) this.body.scale(this, -1, 1);
+             else this.body.scale(this, -1, 1);
+             
+             if (this.body.velocity.y < 0) this.body.scale(this, 1, -1);
+             else this.body.scale(this, 1, 1);
+             */
         }
         else this.destroy();
     }
     preUpdate(){
-        /**
-         * 
-         if (this.body.velocity.x <= 1 && this.body.velocity.y <= 1) {
+        
+        
+         if (this.body.velocity.x <= 0.8 && this.body.velocity.y <= 0.8 && this.body.velocity.x >= -0.8 && this.body.velocity.y >= -0.8) {
              this.destroy();
             }    
-            */
+            
     }
 }

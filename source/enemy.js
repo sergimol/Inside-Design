@@ -2,6 +2,8 @@ import Humanoid from "./humanoid.js";
 export default class Enemy extends Humanoid {
     constructor(scene, x, y, sprite, player) {
         super(scene, x, y, sprite);
+        this.body.label = 'enemy';
+
 
         //Atributos
         this.speed = 50;
