@@ -82,7 +82,7 @@ export default class Player extends Humanoid {
     
     
     shoot(){
-      this.weapon.shoot(this.x,this.y);
+      this.weapon.shoot();
     }
     
     playerMoverPuntero(pointer){

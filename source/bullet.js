@@ -6,7 +6,16 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         this.scene.matter.add.gameObject(this);
         this.setMass(50);
         this.scene.add.existing(this);
-this.body.label = 'bullet';
+        this.body.label = 'bullet';
+
+        //quitarles la rotacion xd
+        this.scene.matter.body.setInertia(this.body, Infinity);
+
+
+
+        //atributos
+        this.body.restitution = 1;
+        this.rebotes = 3;
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
         
@@ -21,10 +30,15 @@ this.body.label = 'bullet';
 
                 if (bodyA === wordBody || bodyB === wordBody)
                 {
-                    this.destroy();
-                    console.log("destroy bullet");
+                    this.wallhit();
                 }
             }
         });
+    }
+    wallhit(){
+        if (this.rebotes > 0 ){
+            this.rebotes--;
+        }
+        else this.destroy();
     }
 }
