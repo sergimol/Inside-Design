@@ -31,23 +31,35 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
                 if (bodyA === wordBody || bodyB === wordBody)
                 {
-                    this.wallhit();
+                    if (bodyA.label === 'enemy' || bodyB.label === 'enemy' || bodyA.label === 'player' || bodyB.label === 'player') {
+                
+                        //TODO
+                        //#Issue
+                        //tiene que pasarle el daño y destruirse
+                        this.destroy();
+                    }
+                    else this.wallhit();
                 }
             }
         });
     }
     wallhit(){
         if (this.rebotes > 0 ){
+            //im afraid that i will need you to rotate
             this.rebotes--;
+            //this.body.angle = Phaser.Math.Angle.Between(0,0,this.body.velocity.x, this.body.velocity.y);
+            //this.scene.matter.body.setInertia(this.body, Infinity);
+
         }
         else this.destroy();
     }
     preUpdate(){
-        /**
-         * 
-         if (this.body.velocity.x <= 1 && this.body.velocity.y <= 1) {
+        //tengo que hacerlo asi, porque de otra forma al asignarle el angulo y tener otra interaccion empieza a girar como un condenado
+        this.body.angle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
+        
+         if (this.body.velocity.x <= 0.8 && this.body.velocity.y <= 0.8 && this.body.velocity.x >= -0.8 && this.body.velocity.y >= -0.8) {
              this.destroy();
             }    
-            */
+            
     }
 }

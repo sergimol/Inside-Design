@@ -4,11 +4,12 @@ import Puntero from "./puntero.js";
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite) {
     super(scene, x, y, sprite);
+    this.body.label = 'player';
 
     //Atributos
     let active;
     //Puntero
-    this.puntero = new Puntero(scene,0,0);
+    this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
     this.ammo = 100;
     this.health = 10;
@@ -30,7 +31,7 @@ export default class Player extends Humanoid {
       frameRate: 7,
       repeat: -1
     })
-    
+
     //INPUT
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
     this.cursors = scene.input.keyboard.addKeys({
@@ -45,24 +46,24 @@ export default class Player extends Humanoid {
     })
     this.angleToPointer = 0;
     //en la constructora es preferible a tener 2 millones de veces esta llamada al input, de hay el console log de overComplication, solo es para recordarnoslo ejeje
-    this.scene.input.on('pointermove', function (pointer){
+    this.scene.input.on('pointermove', function (pointer) {
       this.playerMoverPuntero(pointer);
       //this.player.
       //      this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
       //    this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
-      this.angleToPointer = Phaser.Math.Angle.Between(this.x, this.y, (pointer.x/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.x, (pointer.y/this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.y);
-      
+      this.angleToPointer = Phaser.Math.Angle.Between(this.x, this.y, (pointer.x / this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.x, (pointer.y / this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.y);
+
     }, this);
 
 
     this.dir = new Phaser.Math.Vector2();
     this.dir.normalize();
 
-    this.scene.input.on('pointerdown', function (pointer){
-      if (!this.weapon.esAutomatica()){
+    this.scene.input.on('pointerdown', function (pointer) {
+      if (!this.weapon.esAutomatica()) {
         this.shoot();
       }
-    },this);
+    }, this);
 
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
@@ -70,85 +71,88 @@ export default class Player extends Humanoid {
     this.hud.setAmmo(this.ammo);
   }
 
-  
+
   //updatear la posicion del puntero si el jugador se mueve
-    /**
-     
-     Ideas
-     
-     calcular la distancia y despues de moverlo ponerlo, como primero s emueve el puntero en caso de moverse no habria problema
-     moverlo junto al jugador, hay encontrar la manera de que si el jugador se mueve tmb lo haga le puntero, el problema es que el metodo move es de3 un game object con fisicas, el punteor no tiene fisicas
-     */
-    
-    
-    
-    // asignar la posicion del puntero
-    
-    
-    
-    
-    shoot(){
-      if(this.ammo > 0){
-        if(this.weapon.shoot(this.x,this.y)){
-          this.ammo--;
-          this.hud.setAmmo(this.ammo);
-        }
+  /**
+   
+   Ideas
+   
+   calcular la distancia y despues de moverlo ponerlo, como primero s emueve el puntero en caso de moverse no habria problema
+   moverlo junto al jugador, hay encontrar la manera de que si el jugador se mueve tmb lo haga le puntero, el problema es que el metodo move es de3 un game object con fisicas, el punteor no tiene fisicas
+   */
+
+
+
+  // asignar la posicion del puntero
+
+
+
+
+  shoot() {
+    //Comprueba que haya munición 
+    if (this.ammo > 0) {
+      //
+      if (this.weapon.shoot(this.x, this.y)) {
+        this.ammo--;
+        this.hud.setAmmo(this.ammo);
       }
     }
-    
-    playerMoverPuntero(pointer){
-      this.puntero.move(pointer,this);
-      this.puntero.updateMiddle(this);
-    }
-    
-    
-    playerMove(dirX, dirY) {
-      this.setVelocity(this.dir.x, this.dir.y);
-      //this.body.setVelocityX(this.speed * dirX);
-      //this.body.setVelocityY(this.speed * dirY);
-      //Animacion
-      if (this.dir.x === 0 && this.dir.y === 0)
+  }
+
+  playerMoverPuntero(pointer) {
+    this.puntero.move(pointer, this);
+    this.puntero.updateMiddle(this);
+  }
+
+
+  playerMove(dirX, dirY) {
+    this.setVelocity(this.dir.x, this.dir.y);
+    //this.body.setVelocityX(this.speed * dirX);
+    //this.body.setVelocityY(this.speed * dirY);
+    //Animacion
+    if (this.dir.x === 0 && this.dir.y === 0)
       this.aspecto.play('idle', true);
-      else
+    else
       this.aspecto.play('walk', true);
-    }
-
-    
-    preUpdate() {
-      
+  }
 
 
-      //Idle por defecto
-      this.dir.x = 0;
-      this.dir.y = 0;
-      //Movimiento horizontal
-      if (this.cursors.left.isDown || this.cursors.a.isDown)
-        this.dir.x = -1;
-      else if (this.cursors.right.isDown || this.cursors.d.isDown)
+  preUpdate() {
+
+
+
+    //Idle por defecto
+    this.dir.x = 0;
+    this.dir.y = 0;
+    //Movimiento horizontal
+    if (this.cursors.left.isDown || this.cursors.a.isDown)
+      this.dir.x = -1;
+    else if (this.cursors.right.isDown || this.cursors.d.isDown)
       this.dir.x = 1;
-      //Movimiento vertical        
-      if (this.cursors.up.isDown || this.cursors.w.isDown)
+    //Movimiento vertical        
+    if (this.cursors.up.isDown || this.cursors.w.isDown)
       this.dir.y = -1;
-      else if (this.cursors.down.isDown || this.cursors.s.isDown)
+    else if (this.cursors.down.isDown || this.cursors.s.isDown)
       this.dir.y = 1;
 
-      this.dir.normalize();
-      this.playerMove(this.dir.x, this.dir.y);
-      this.puntero.moverconjugador(this);
-      this.puntero.updateMiddle(this);     
-      
-      //esto no deberia de ir aqui
-      
-      this.moveRotate(this.puntero.x - this.x);
-      this.rotateWeapon(this.angleToPointer); 
-      //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
-      
-      
-      if (this.weapon.esAutomatica()){
-        var pointer = this.scene.input.activePointer;
-        if (pointer.isDown){
-          this.shoot();
-      }}
-      
-    }   
+    this.dir.normalize();
+    this.playerMove(this.dir.x, this.dir.y);
+    this.puntero.moverconjugador(this);
+    this.puntero.updateMiddle(this);
+
+    //esto no deberia de ir aqui
+
+    this.moveRotate(this.puntero.x - this.x);
+    this.rotateWeapon(this.angleToPointer);
+    //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
+
+
+    if (this.weapon.esAutomatica()) {
+      var pointer = this.scene.input.activePointer;
+      if (pointer.isDown) {
+        this.shoot();
+      }
+    }
+
+  }
 }
