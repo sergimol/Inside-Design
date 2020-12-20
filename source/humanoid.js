@@ -16,7 +16,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.hitState = false; //para cambiar a la animacion de hit
 
         //Para añadir hijos
-        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "auto", 100, 10);
+        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "auto", 200, 5);
         this.add(this.weapon);
         this.setSize(16, 16);
 
@@ -45,12 +45,19 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
     }//Fin constructora
 
     damage() {
+        
+
         this.hitState = true;
         --this.health;
         console.log(this.health);
         if(this.body.label === 'player')
             this.hud.setHealth(this.health);
         if (this.health === 0) {
+
+            let sound = this.scene.sound.add('deadSound');
+            sound.setVolume(1.5);
+             sound.play();
+
             this.isDead = true;
             this.hitState = false;
             //this.body.speed = 0;
@@ -58,6 +65,12 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             this.weapon.destroy();
             console.log('entityDep');
             this.aspecto.play('enemyDep', true);
+        }
+        else{
+            //sonido hit
+            let sound = this.scene.sound.add('hitShootSound');
+            //sound.setVolume(0.1);
+            sound.play();
         }
     }
 

@@ -102,7 +102,7 @@ export default class Player extends Humanoid {
     
     
     playerMove(dirX, dirY) {
-      this.setVelocity(this.dir.x, this.dir.y);
+      this.setVelocity(this.dir.x * 1.3, this.dir.y * 1.3);
       //this.body.setVelocityX(this.speed * dirX);
       //this.body.setVelocityY(this.speed * dirY);
       //Animacion

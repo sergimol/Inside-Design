@@ -47,7 +47,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
             
             //SONIDO
             let sound = this.scene.sound.add('gunShootSound');
-            sound.setVolume(0.1);
+            //sound.setVolume(0);
             sound.play();
 
             this.ultimoDisparoTiempo = siguienteDisparo;
