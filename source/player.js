@@ -4,6 +4,7 @@ import Puntero from "./puntero.js";
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite) {
     super(scene, x, y, sprite);
+    this.body.label = 'player';
 
     //Atributos
     let active;
