@@ -61,9 +61,6 @@ export default class Game extends Phaser.Scene {
       repeat: -1
     })
     
-    //WEAPON
-    //let gun = this.add.image('gunShootProt');
-    
     //BULLETS
     this.bullets = this.add.group();
     this.bullets.enableBody = true;
@@ -79,38 +76,9 @@ export default class Game extends Phaser.Scene {
      this.angleToPointer;
      this.input.on('pointermove', function (pointer){
         this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x, (pointer.y/this.cameras.main.zoom) + this.cameras.main.worldView.y);
-  //this.player.
-        //      this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
-    //    this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
         
       }, this);
 
-    //this.bullets.rotation = this.angleToPointer;
-    /*
-     this.input.on('pointerdown', function (pointer){
-        console.log("shoot");
-        //this.player.shoot();
-       
-        
-        this.bullet = this.physics.add.sprite(this.player.x, this.player.y, 'bullet');
-        this.bullet.setScale(0.6);
-        //= bullets.getFirstDead();
-        this.bullet.play('shot', true);
-        this.bullet.rotation = this.angleToPointer;
-        //this.physics.moveToObject(this.bullet, this.puntero, 400);
-        this.physics.moveTo(this.bullet, pointer.x, pointer.y, 400);
-        
-        this.bullets.add(this.bullet);
-
-        //sonido
-        let sound = this.sound.add('gunShootSound');
-        sound.play(); 
-        //shake
-        this.cameras.main.shake(200, 0.0005);
-        
-        
-      }, this);
-      */
       //Prototipo Musica
       //let sound = this.sound.add('mainTheme');
       //sound.play(); 
@@ -123,20 +91,6 @@ export default class Game extends Phaser.Scene {
       this.cameras.main.zoom = 3;
       this.cameras.main.startFollow(this.player.puntero.intermedio);
 
-      //colisiones
-      /**
-       * 
-       this.matter.world.on("collisionstart", (event, bodyA, bodyB) => {
-         if ((bodyA.label == 'bullet') || (bodyB.label == 'bullet')) {
-           if (bodyA.label == 'bullet')
-           
-           
-           this.matter.world.remove(bodyA);
-           else
-           this.matter.world.remove(bodyB);
-          }
-        })
-        */
   }//End of create
 
   loadObjects(map){
@@ -160,14 +114,6 @@ export default class Game extends Phaser.Scene {
     b.destroy();
   }
 
-  handleBulletEnemyCollision(e,b){
-    console.log('enemy hit');
-    //e.die();
-    //esto no es la manera correcta ni pa tras xd
-    //esto tiene que estar mal ajajajaj
-    b.destroy();
-    //b.setActive(false);
-  }
 
 
   update() {  

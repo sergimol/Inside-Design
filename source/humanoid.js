@@ -3,32 +3,53 @@ import Weapon from "./weapon.js";
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
     constructor(scene, x, y, humanSprite) {
         super(scene, x, y);
-        this.aspecto = scene.add.sprite(0, 0, humanSprite);
         scene.add.existing(this);
-        this.speed = 100;
-        //this.scene.physics.world.enableBody(this, 0);    //le añadimos físicas dinámicas
-        this.isDead = false;                            //La entidad está viva
+
+        this.aspecto = scene.add.sprite(0, 0, humanSprite);
         this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
         this.add(this.aspecto);
-        //this.Sprite.play('idle', true);
+
         //Atributos
         this.health = 0;
+        this.isDead = false;                            //La entidad está viva
+        this.speed = 100;
 
         //Para añadir hijos
         this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "auto", 100, 20);
         this.add(this.weapon);
         this.setSize(16, 16);
+
         this.scene.matter.add.gameObject(this);
         this.scene.matter.body.setInertia(this.body, Infinity);
+
+        this.scene.matter.world.on('collisionstart', (event) => {
+            let wordBody = this.body;
+            for (let i = 0; i < event.pairs.length; i++) {
+                let bodyA = event.pairs[i].bodyA;
+                let bodyB = event.pairs[i].bodyB;
+
+                if (bodyA === wordBody || bodyB === wordBody) {
+                    if (bodyA === wordBody && bodyB.label === 'bullet') {
+                        this.damage();
+                        console.log("enemyHit");
+                    }
+                    else if (bodyA.label === 'bullet' && bodyB === wordBody) {
+                        this.damage();
+                        console.log("enemyHit");
+                    }
+                }
+            }
+        });
+
     }//Fin constructora
 
     damage() {
         --this.health;
-        console.log(thisdws.health);
+        console.log(this.health);
         if (this.health === 0) {
             this.isDead = true;
             this.weapon.destroy();
-            //this.destroy();
+            this.setActive(false);      //.setVisible(false)
             console.log('entity explode');
         }
     }
@@ -41,14 +62,14 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
     // @param {*} dirY
 
     moveRotate(dirX) {
-        if (dirX > 0){
+        if (dirX > 0) {
             //this.each(entity => entity.flipX = false)
             this.aspecto.setFlipX(false);
             this.weapon.image.setFlipY(false);
         }
-        else{
+        else {
             //this.each(entity => entity.flipX = true)
-            this.aspecto.setFlipX(true);    
+            this.aspecto.setFlipX(true);
             this.weapon.image.setFlipY(true);
         }
     }

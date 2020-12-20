@@ -39,8 +39,14 @@ export default class Enemy extends Humanoid {
         this.dir = new Phaser.Math.Vector2();
         this.enemyMove();
 
+        //MOVIMIENTO
         this.enemyTime = 2500;
         this.timerMove = this.scene.time.now + this.enemyTime;
+
+        //DISPARO
+        this.cadenceTime = 1000;
+        this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
+
     }//Fin constructorasd
 
 
@@ -61,8 +67,25 @@ export default class Enemy extends Humanoid {
 
         //ESTADO ATAQUE
         else 
+        {
+            //Movimiento
             this.attackEnemy(distanceBetweenPos);
+            //Disparo
+            if(this.scene.time.now > this.timerShoot)
+            {
+                //Disparamos y reactivamos el timer de disparo con un aleatorio
+                this.weapon.shoot(this.x, this.y);
+                this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
+            }
+        }
                        
+    }
+
+
+    //DEVUELVE UN MULTIPLICADOR PARA LA CADENCIA
+    getShootTime()
+    {
+        return Math.floor(Math.random() * (5 - 1)) + 2;
     }
 
 
