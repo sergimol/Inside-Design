@@ -2,15 +2,16 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, sprite){
         super(scene, x, y, sprite);
         
-        this.setSize(16, 16);
+        this.setSize(8, 8);
         this.scene.matter.add.gameObject(this);
+        this.setOrigin(1);
         this.setMass(50);
         this.scene.add.existing(this);
         this.body.label = 'bullet';
-
+        
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, Infinity);
-
+        
 
 
         //atributos
@@ -40,5 +41,13 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
             this.rebotes--;
         }
         else this.destroy();
+    }
+    preUpdate(){
+        /**
+         * 
+         if (this.body.velocity.x <= 1 && this.body.velocity.y <= 1) {
+             this.destroy();
+            }    
+            */
     }
 }
