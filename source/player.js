@@ -6,7 +6,7 @@ export default class Player extends Humanoid {
     super(scene, x, y, sprite);
     this.body.label = 'player';
     //Atributos
-    this.depth = 3;
+    this.depth = 4;
     let active;
     //Puntero
     this.puntero = new Puntero(scene,0,0);
@@ -67,6 +67,7 @@ export default class Player extends Humanoid {
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
     this.hud.setHealth(this.health);
+    this.hud.setBackground(this.health);
     this.hud.setAmmo(this.ammo);
 
     

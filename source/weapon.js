@@ -8,7 +8,6 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
         this.spriteBullet = spriteBullet;
 
-
         //Otros atributos
 
         //semiautomatica o automatica

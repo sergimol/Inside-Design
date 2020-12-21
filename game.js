@@ -39,6 +39,7 @@ export default class Game extends Phaser.Scene {
     const groundLayer = this.map.createStaticLayer('Ground', this.tileset);
     const detailsLayer = this.map.createStaticLayer('Details', this.tileset);
     const wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
+    const wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
     const colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
     const boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
     const collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
@@ -46,6 +47,18 @@ export default class Game extends Phaser.Scene {
     const boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
 
     const entityLayer = this.map.getObjectLayer('Entities').objects
+    // profundidad
+    groundLayer.setDepth(0);
+    detailsLayer.setDepth(0);
+    wallsLayer.setDepth(1);
+    colsbottomLayer.setDepth(2);
+    boxbottomLayer.setDepth(2);
+    //enemigos          ->3
+    //jugador y balas   ->4
+    wallstopLayer.setDepth(5);
+    collidersLayer.setDepth(5);
+    colstopLayer.setDepth(6);
+    boxtopLayer.setDepth(6);
 
     // colisiones tilemap
     collidersLayer.setCollisionByProperty({ collide: true });

@@ -8,7 +8,7 @@ export default class Enemy extends Humanoid {
         //Atributos
         this.speed = 50;
         this.health = 3;
-        this.depth = 1;
+        this.depth = 3;
         
         
         this.add(this.aspecto);
