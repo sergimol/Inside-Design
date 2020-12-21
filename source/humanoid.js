@@ -1,4 +1,4 @@
-import Weapon from "./weapon.js";
+
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
     constructor(scene, x, y, humanSprite, depth) {
@@ -15,7 +15,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.speed = 100;
         this.hitState = false; //para cambiar a la animacion de hit
 
-        
+
         this.setSize(16, 16);
 
         this.scene.matter.add.gameObject(this);
