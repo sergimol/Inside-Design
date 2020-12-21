@@ -29,6 +29,7 @@ export default class Game extends Phaser.Scene {
     //nuevo
     this.load.audio('mainTheme', './audio/main_theme_v1.0.wav');
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
+    this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
     this.load.audio('hitShootSound', './audio/hitShoot.wav');
     this.load.audio('deadSound', './audio/deadSound.wav');
     this.load.image('gunShoot', './Sprites/gunShootProt.png');

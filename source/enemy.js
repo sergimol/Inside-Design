@@ -118,6 +118,10 @@ export default class Enemy extends Humanoid {
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
                 this.weapon.shoot(true);
+
+                let sound = this.scene.sound.add('gunShootSound');
+                sound.setVolume(0.7);
+                sound.play();
                 this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
             }
         }
@@ -194,7 +198,7 @@ export default class Enemy extends Humanoid {
 
         //Si el enemigo esta en el rango del jugador cambiamos el estado
         let distanceEnemyPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
-        if (distanceEnemyPlayer < 70)
+        if (distanceEnemyPlayer < 100)
             this.attackState = true;
 
         //MOVEMOS AL ENEMIGO

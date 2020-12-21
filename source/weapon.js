@@ -47,9 +47,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         let siguienteDisparo = this.scene.time.now;
         //console.log(this.ultimoDisparoTiempo);
         if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
-            let sound = this.scene.sound.add('gunShootSound');
-            sound.setVolume(0.7);
-            sound.play();
+            
             this.ultimoDisparoTiempo = siguienteDisparo;
             
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
