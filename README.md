@@ -1,8 +1,8 @@
 # Inside Design
 
+Captura del juego:
 
-
-//Captura
+![unnamed](https://user-images.githubusercontent.com/62661210/102732161-3b7acd80-433a-11eb-852b-2926a6d1c410.png)
 
 ## Un juego de Hummus Sapiens
 
@@ -12,13 +12,11 @@ Página de gestión: https://www.pivotaltracker.com/n/projects/2470812
 
 ### GDD:
 
-https://docs.google.com/document/d/1yMrtayUTp4Gg8F9OBfY62ApORQyxJdX7Kd_lLJLypx4
-
 Inside Design
 Documento de diseño de videojuego
 -  Hummus Sapiens -
 Twitter
-Versión 2.0 - 23/11/2020
+Versión 3.0 - 20/12/2020
 
 #### Resumen
 
@@ -162,7 +160,7 @@ El objetivo es conseguir que el jugador se adapte a todos los cambios que suceda
 #### SISTEMA DE IDEAS
 Como se ha explicado antes, las “IDEAS” son las modificaciones que se introducen al juego.
 Las introducen los personajes de los diseñadores con un mensaje en el juego y el jugador tiene que ceñirse a ellas.
-Existen 3 tipos.
+Existen 3 tipos:
 
 ##### ACTIVAS
 Son ideas que afectan al jugador. 
@@ -173,44 +171,47 @@ Durante el primer nivel el jugador no tiene ACTIVA.
 En la primera sala del segundo nivel se le otorga y explicará la ACTIVA y no se le volverá a dar algo relacionado hasta la primera sala del siguiente nivel.
 En las siguientes primeras salas, no se darán nuevas ACTIVAS, sino modificaciones de la primera que se le otorgó.
 Por lo tanto cada ACTIVA tiene su funcionamiento base y como mínimo 3 modificaciones para poder cubrir los siguientes niveles.
-Algunos ejemplos serían estos:
 
+###### -Dash: 
+Al pulsar botón “X” el jugador realiza un dash moderadamente rápido (3 variantes)
+1. Al estar activado, si chocas con un enemigo lo matas
+2. El dash se sustituye por una voltereta, hace el mismo efecto (evitar balas) pero tiene menos alcance
+3. Teletransporte automático en la dirección.
 
--Dash
-Al pulsar botón “X” el jugador realiza un dash moderadamente rápido
-Al estar activado, si chocas con un enemigo lo matas
-El dash se sustituye por una voltereta, hace el mismo efecto (evitar balas) pero tiene menos alcance
-Teletransporte automático en la dirección.
+###### -Escudo:
+Mientras mantengas pulsado “X” pones un escudo al jugador, no le afectan las balas. El escudo dura un par de segundos. (3 variantes)
+1. Al estar activado las balas rebotan.
+2. Mientras estar activado no te puedes mover.
+3. Absorbe las balas y las devuelves cuando te lo quitas o cuando absorbe la cantidad máxima de balas (se desactiva cuando acumula el máximo de balas)
 
--Escudo
-Mientras mantengas pulsado “X” pones un escudo al jugador, no le afectan las balas. El escudo dura un par de segundos.
-Al estar activado las balas rebotan.
-Al estar activado no te puedes mover.
-Absorbe las balas y las devuelves cuando te lo quitas o cuando absorbe la cantidad máxima de balas (se desactiva cuando acumula el máximo de balas)
+###### -Ataque en área:
+Cuando se activa, aplica un efecto en un radio determinado (3 efectos posibles)
+1. Aturde a los enemigos.
+2. Elimina a los enemigos.
+3. Elimina las balas enemigas.
 
-PASIVAS
+##### PASIVAS
 Son IDEAS que se aplican ya sea al jugador, a los enemigos o al entorno pero no es necesario activarlas pulsando nada. Suelen ser modificaciones de atributos, reglas básicas o cambios estéticos.
-Distinguimos 2 grandes grupos.
+Distinguimos 2 grandes grupos:
 
-TEMPORALES
+###### PASIVAS TEMPORALES
 Se otorgan al entrar en una sala de vez en cuando (pongamos que si un nivel tiene 7 salas pueden aparecer en 1 o 2).
 Una vez otorgadas duran x segundos antes de volver al estado normal (se muestra con una barra de tiempo).
 La gracia de que sean temporales reside en que también son modificaciones muy raras y que cambian drásticamente el ritmo de juego durante un pequeño espacio de tiempo.
 Anulan el resto de modificaciones de atributos y mecánicas que tenga el JUGADOR.
 Algunos ejemplos son:
 
-· Ruta pacífica
+###### -Ruta pacífica:
 Se le quitan los brazos y el arma al personaje y sólo se puede mover para esquivar balas.
 
-· Mario kart
-El jugador se convierte en un coche. Este avanza sólo, el jugador controla la dirección de avance. Cuando choca con un enemigo lo atropella y lo mata. No es invulnerable a las balas. ¿Puedes frenar?
+###### -Ruta genocida:
+Los enemigos no atacan y huyen del jugador
 
-· Invertido
+###### -Mario kart
+El jugador se convierte en un coche. Este avanza sólo, el jugador controla la dirección de avance(movimiento estilo snake). Cuando choca con un enemigo lo atropella y lo mata. No es invulnerable a las balas. ¿Puedes frenar?
+
+###### -Borracho
 Se invierten los controles de movimiento del jugador
-
-
-
-
 
 
 ##### NORMALES
@@ -218,75 +219,150 @@ Se otorgan cada vez que el jugador completa una sala, es decir, mata a todos los
 Son ideas que modifican atributos, reglas de gameplay, estética…
 Son las más abundantes.
 Además dentro de este tipo de ideas entran las armas. Su sistema se explicará más adelante.
-Algunos ejemplos:
-Botiquines buena onda
+
+Ideas normales que cambian los atributos del jugador y los drops que recibe:
+
+###### -Botiquines buena onda
 Los botiquines recuperan más vida.
 
-Demasiado fácil
+###### -Botiquines mala onda
+Los botiquines recuperan menos vida.
+
+###### -Me lo tanqueo
+La vida del jugador aumenta.
+
+###### -Demasiado fácil
 Caja de vida a la mitad.
 
-Recargar
-Las balas son infinitas pero cada x disparos se recarga el arma automáticamente, habiendo un cooldown de varios segundos.
+###### -Sanic 
+La velocidad del jugador aumenta.
 
-Enemigos bomba
-Todos los enemigos cuando mueren explotan, afectando la explosión a los demás enemigos y al jugador.
+###### -Cogo
+La velocidad del jugador disminuye.
 
-Oh baby a triple
-Con cualquier arma, cuando disparas, disparas 3 balas.
+###### -Balas más lentas
+La velocidad de las balas disminuye.
 
-Efectos vocales
-Todo el audio del juego se sustituye por audios nuestros intentando replicarlo. piu piu, BSO, sonidos de muerte…
+###### -Balas más rápidas 
+La velocidad de las balas aumenta.
 
-Daltónico
+###### -Ojo de halcón
+La dispersión del disparo respecto del puntero disminuye(mejor puntería).
+
+###### -Stormtrooper
+La dispersión del disparo respecto del puntero aumenta(peor puntería).
+
+###### -Rambo
+Munición infinita.
+
+###### -Cambio de arma
+El arma se sustituye por otra aleatoria.
+
+Ideas normales que modifican o añaden mecánicas:
+
+###### -Siameses
+Aparece un clon pegado al jugador que dispara en dirección contraria a él. La munición se gasta el doble de rápido.
+
+###### -Pinball
+Las balas rebotan en las paredes.
+
+###### -No me pises lo fregao
+El suelo resbala.
+
+###### -Caballero hueco
+Al morir, resucitas con 1 de vida y skin de hueco.
+
+###### -Enemigos bomba
+Todos los enemigos explotan al morir, haciendo daño tanto a otros enemigos como al jugador si les alcanza la explosión.
+
+###### -CRUNCH
+El equipo de desarrollo entra en crunch. El jugador tiene que pasarse el nivel en un tiempo limitado o perderá. 
+Se siguen aplicando ideas exclusivamente sobre atributos.
+
+Ideas normales que modifican la estética del juego.
+
+###### -Efectos vocales
+Todo el audio del juego se sustituye por audios nuestros intentando replicarlo.
+
+###### -Plin plin plon
+La banda sonora pasa a estar tocada en piano.
+
+###### -Hummus Simulator
+La cabeza del jugador se sustituye por un tarro de hummus.
+
+###### -Neon Rider
+El juego se pone en blanco y negro.
+
+###### -Daltónico
 Se cambia la paleta de colores.
 
-Modo cinemático
+###### -Años 30
+Se pone un filtro de dibujos animados antiguos por encima, a lo cuphead, música estilo años 30.
+
+###### -Western
+La ambientación pasa a ser del viejo oeste.
+
+###### -Modo cinemático
 Se ponen las bandas negras, impidiendo ver al jugador ni la munición ni la vida.
 
+###### -El dilema de la barra de vida
+Roja o verde? la gracia de esta ide es que si aparece en una partida se vaya repitiendo. un desarrollador dice rojo, otro verde, uno rojo , otro verde…
+
+###### -HUUUUUUUD
+La interfaz se hace mucho más grande.
+
+###### -"Minimapa"
+Aparece un minimapa en una esquina de la pantalla, aunque no representa el juego ni le es útil al jugador.
+
+###### -Ataques de pánico
+Cuando golpean al personaje, la pantalla se pone borrosa
+
+###### -Juego de miedo
+El juego adopta la estética típica de un juego de mie
+
+###### -Fallo en el push
+Archivos corrompidos, texturas corrompidas o cambiadas.
+
+###### -Cambios en la estética del jugador
+Cambia el sombrero, el pelo, la ropa, el género, etc. del personaje.
 
 #### SISTEMA DE ARMAS Y MUNICIÓN
 El jugador sólo tiene un arma en todo momento.
-Las armas necesitan munición que normálmente soltarán los enemigos al morir.
-Si el jugador se queda sin munición, golpeará con los puños a melee a corta distancia.
+Las armas a distancia necesitan munición que normálmente soltarán los enemigos al morir.
+Si el jugador se queda sin munición, golpeará cuerpo a cuerpo con el arma.
 De forma básica sin ninguna idea añadida, el funcionamiento será ese, y el jugador comenzará siempre con una pistola básica.
 
-A las armas se aplicarán 2 tipos de ideas normales.
-
-
-##### Tipo de arma
-Cambia el arma que tiene el jugador por otra.
 Armas disponibles:
 ###### A DISTANCIA (LAS MÁS COMUNES)
--Único click, cada disparo necesita un click
--Mantener click, mientras mantiendes se disparan balas
+
 -Pistola básica
-Único click
-Cadencia/entre clicks: media
+Semiautomática
+Cadencia: media
 Daño/bala: medio
 
 -Escopeta
-Único click
-Cadencia/entre clicks: baja
+Semiautomática
+Cadencia: baja
 Daño/bala: alto
 
 -Machine Gun
-Mantener click 
+Automática 
 Cadencia/entre disparos mantenidos: muy alta
 Daño/bala: bajo
 
 -Rifle de rafagas
-Único click *cada vez que haces click disparas X balas
-Cadencia/entre clicks:  media
+Semiautomática(ráfagas de 3 balas)
+Cadencia:  media
 Daño/bala: medio
 
 -Rifle de asalto (metralleta)
-Mantener click
-Cadencia/entre disparos mantenido: medio/alta
+Automática
+Cadenciao: medio/alta
 Daño/bala: medio
 
 -Rifle de francotirador
-Único click
-Cadencia/entre clicks: baja 
+Semiautomático
+Cadencia/entre clicks: muy baja 
 Daño/bala: muy alto
 
 -Laser 
@@ -294,61 +370,28 @@ Daño/bala: muy alto
 Cadencia/entre clicks: muy baja (mini cooldown de carga), cuando haces click pasa un pequeño tiempo hasta que sale el rayo
 Daño/bala: muy alto
 
-
-
-
-
-
 ##### A MELEE (CUERPO A CUERO) (MENOS COMUNES)
 -Sólo existe único click
 
--Puños
-Cadencia/entre clicks: alta
-Daño/golpe: bajo 
-
 -Espadón
-Cadencia/entre clicks: baja
+Cadencia: muy baja
 Daño/golpe: muy alto, instakill
 
 -Katana
-Cadencia/entre clicks: alta
-Daño/golpe: alto
-
--Crowbar
-Cadencia/entre clicks: media
-Daño/golpe: media
-
--Sable Laser
-Cadencia/entre clicks: media
-Daño/golpe: media
-
--Trofeo (cluedo)
-Cadencia/entre clicks: baja
-Daño/golpe: instakill
-
--Sartén
-Cadencia/entre clicks: media
-Daño/golpe: muy alto
-
--Matamoscas
-Cadencia/entre clicks: muy alta
-Daño/golpe: bajo
+Cadencia: alta
+Daño/golpe: medio
 
 #### Modificadores
 
 Como las armas son modulares, el siguiente tipo de ideas, afectan a cualquier arma activa (de momento sólo hay pensadas para las a distancia), son modificaciones generales de las armas, atributos, habilidades…
 Algunos ejemplos son:
 
--Coolateral
+-Collateral
 Las balas atraviesan enemigos
 -Rebote
 Las balas rebotan en las paredes
 -Triple
 Todos los disparos disparan 3 balas en direcciones consecutivas.
-
-Puedes ver todas las ideas en el siguiente enlace
-Documento de ideas
-
 
 #### FIN DE PARTIDA
 Se finaliza la partida de 2 formas, muriendo o superando la run.
