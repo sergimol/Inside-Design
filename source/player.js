@@ -1,10 +1,16 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
-
+import Weapon from "./weapon.js";
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, depth) {
     super(scene, x, y, sprite);
     this.body.label = 'player';
+
+    //Arma
+    
+    this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "shotgun", "auto", 300, 20, 8, 0.6, 30);
+    this.add(this.weapon);
+
     //Atributos
     this.depth = 4;
     let active;
