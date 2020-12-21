@@ -33,33 +33,45 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    // colisiones tilemap
     this.map = this.make.tilemap({ key: 'dungeon' })
     this.tileset = this.map.addTilesetImage('TilesetBase', 'tiles', 16, 16, 1, 2);
-    //const tilesetCrash = map.addTilesetImage('TilesetBase', 'tilesCrash', 16, 16, 1, 2);
-    //this.mapCrash = map.add(tilesetCrash);
 
     const groundLayer = this.map.createStaticLayer('Ground', this.tileset);
     const detailsLayer = this.map.createStaticLayer('Details', this.tileset);
     const wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
-    const doorsLayer = this.map.createStaticLayer('Doors', this.tileset);
+    const wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
+    const colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
+    const boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
     const collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
-    const colsLayer = this.map.createStaticLayer('Cols', this.tileset);
-    const boxLayer = this.map.createStaticLayer('Box', this.tileset);
+    const colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
+    const boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
 
     const entityLayer = this.map.getObjectLayer('Entities').objects
+    // profundidad
+    groundLayer.setDepth(0);
+    detailsLayer.setDepth(0);
+    wallsLayer.setDepth(1);
+    colsbottomLayer.setDepth(2);
+    boxbottomLayer.setDepth(2);
+    //enemigos          ->3
+    //jugador y balas   ->4
+    wallstopLayer.setDepth(5);
+    collidersLayer.setDepth(5);
+    colstopLayer.setDepth(6);
+    boxtopLayer.setDepth(6);
 
-    doorsLayer.setCollisionByProperty({ collide: true });
+    // colisiones tilemap
     collidersLayer.setCollisionByProperty({ collide: true });
-    colsLayer.setCollisionByProperty({ collide: true });
-    boxLayer.setCollisionByProperty({ collide: true });
-
-    this.matter.world.convertTilemapLayer(doorsLayer);
+    colsbottomLayer.setCollisionByProperty({ collide: true });
+    boxbottomLayer.setCollisionByProperty({ collide: true });
+    colstopLayer.setCollisionByProperty({ collide: true });
+    boxtopLayer.setCollisionByProperty({ collide: true });
+    // físicas
     this.matter.world.convertTilemapLayer(collidersLayer);
-    this.matter.world.convertTilemapLayer(colsLayer);
-    this.matter.world.convertTilemapLayer(boxLayer);
-
-
+    this.matter.world.convertTilemapLayer(colsbottomLayer);
+    this.matter.world.convertTilemapLayer(boxbottomLayer);
+    this.matter.world.convertTilemapLayer(colstopLayer);
+    this.matter.world.convertTilemapLayer(boxtopLayer);
 
     //BULLET
     this.anims.create({

@@ -1,13 +1,16 @@
 import Humanoid from "./humanoid.js";
 export default class Enemy extends Humanoid {
-    constructor(scene, x, y, sprite, player) {
+    constructor(scene, x, y, sprite, player, depth) {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
 
         //Atributos
         this.speed = 50;
         this.health = 3;
-
+        this.depth = 3;
+        
+        
+        this.add(this.aspecto);
         /////////////
         //Animaciones
         const anims = scene.anims;

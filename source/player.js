@@ -2,10 +2,11 @@ import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 
 export default class Player extends Humanoid {
-  constructor(scene, x, y, sprite) {
+  constructor(scene, x, y, sprite, depth) {
     super(scene, x, y, sprite);
     this.body.label = 'player';
     //Atributos
+    this.depth = 4;
     let active;
     //Puntero
     this.puntero = new Puntero(scene,0,0);
