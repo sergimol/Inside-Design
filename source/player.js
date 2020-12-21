@@ -66,6 +66,7 @@ export default class Player extends Humanoid {
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
     this.hud.setHealth(this.health);
+    this.hud.setBackground(this.health);
     this.hud.setAmmo(this.ammo);
   }
 
