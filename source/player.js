@@ -68,6 +68,18 @@ export default class Player extends Humanoid {
     this.hud = this.scene.scene.get('UIScene');
     this.hud.setHealth(this.health);
     this.hud.setAmmo(this.ammo);
+
+    
+        //Colisiones
+        
+        
+        // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
+        //Aqui se asignan todas las colisiones
+        this.body.collisionFilter = {
+          'category': 1,
+          'mask':-1 | 4,
+          //'group':1 ,  //asi no colisionan entre si estan en la misma categoria si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
+      };
   }
 
   
@@ -89,7 +101,7 @@ export default class Player extends Humanoid {
     
     shoot(){
       if(this.ammo > 0){
-        if(this.weapon.shoot(this.x,this.y)){
+        if(this.weapon.shoot(false)){
           this.ammo--;
           this.hud.setAmmo(this.ammo);
         }

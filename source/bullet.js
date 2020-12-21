@@ -59,7 +59,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         this.body.angle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
         
          if (this.body.velocity.x <= 0.8 && this.body.velocity.y <= 0.8 && this.body.velocity.x >= -0.8 && this.body.velocity.y >= -0.8) {
-             this.destroy();
+             //this.destroy();
             }    
             
     }
