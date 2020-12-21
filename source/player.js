@@ -58,10 +58,10 @@ export default class Player extends Humanoid {
     this.dir = new Phaser.Math.Vector2();
     this.dir.normalize();
 
+
+    this.semiAutomaticaHasShoot = true;
     this.scene.input.on('pointerdown', function (pointer) {
-      if (!this.weapon.esAutomatica()) {
-        this.shoot();
-      }
+      this.semiAutomaticaHasShoot = false;
     }, this);
 
     //Carga de datos del hud
@@ -163,6 +163,10 @@ export default class Player extends Humanoid {
       if (pointer.isDown) {
         this.shoot();
       }
+    }
+    else if (this.semiAutomaticaHasShoot === false){
+      this.semiAutomaticaHasShoot = true;
+      this.shoot();
     }
 
 
