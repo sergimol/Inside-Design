@@ -43,6 +43,9 @@ export default class Weapon extends Phaser.GameObjects.Container{
         let siguienteDisparo = this.scene.time.now;
         //console.log(this.ultimoDisparoTiempo);
         if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
+            let sound = this.scene.sound.add('gunShootSound');
+            sound.setVolume(0.7);
+            sound.play();
             this.ultimoDisparoTiempo = siguienteDisparo;
             
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
@@ -80,7 +83,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     //'collidesWith' : [3,grupoBala]
               };
             disparo.setRotation(this.rotation + (disp * Math.PI/200));
-            disparo.thrust(0.2);
+            disparo.thrust(0.6);
             
             //disparo.applyForce({x: 0, y: 0});
             //disparo.rotation = this.rotation;
