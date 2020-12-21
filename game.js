@@ -9,7 +9,7 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet('player', './Sprites/Player.png', {frameWidth: 24, frameHeight: 24});
+    this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
 
     //Diego
     this.load.spritesheet('bullet', 'Sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
@@ -21,6 +21,8 @@ export default class Game extends Phaser.Scene {
     this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
     this.load.image('door', './Sprites/door.png');
     this.load.image('doorOpen', './Sprites/doorOpen.png');
+    this.load.image('trigger', './Sprites/trigger.png');
+    this.load.image('end', './Sprites/end.jpg');
 
     this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
 
@@ -87,12 +89,15 @@ export default class Game extends Phaser.Scene {
     //Prototipo Musica
     let sound = this.sound.add('mainTheme');
     sound.setVolume(0.7);
-    sound.play(); 
+    sound.play();
 
 
     //CARGA DE OBJETOS
     this.enemyCount = 0;
+    this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
     this.door;
+    this.endZone;
+    this.finish = false;
     this.loadObjects(this.map);
 
     //Camara
@@ -106,10 +111,40 @@ export default class Game extends Phaser.Scene {
       if (this.tilemapState == 0) this.tilemapState++;
       else this.tilemapState--;
       console.log(this.tilemapState);
-    },this);
+    }, this);
 
-    
-    
+    this.matter.world.on('collisionstart', (event) => {
+
+      //  Loop through all of the collision pairs
+      let pairs = event.pairs;
+
+      for (let i = 0; i < pairs.length; i++) {
+        let bodyA = pairs[i].bodyA;
+        let bodyB = pairs[i].bodyB;
+
+        //  We only want sensor collisions
+        if (pairs[i].isSensor) {
+          let blockBody;
+          let playerBody;
+
+          if (bodyA.isSensor) {
+            blockBody = bodyB;
+            playerBody = bodyA;
+          }
+          else if (bodyB.isSensor) {
+            blockBody = bodyA;
+            playerBody = bodyB;
+          }
+          if (playerBody.label === 'endLevel') {
+            console.log("El rap de fernanflo")
+            this.cameras.main.fadeOut(3000);
+            this.time.delayedCall(3000, this.end, [], this);
+          }
+        }
+      }
+
+    });
+
   }//End of create
 
   changeLayer() {
@@ -126,7 +161,7 @@ export default class Game extends Phaser.Scene {
 
   loadObjects(map) {
     this.enemies = this.add.group();
-    
+
     for (const objeto of map.getObjectLayer('Entities').objects) {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
@@ -139,30 +174,49 @@ export default class Game extends Phaser.Scene {
         this.enemies.add(e);
       }
       else if (objeto.name === 'door') {
-        this.door = this.matter.add.image(objeto.x, objeto.y, 'door');
-        this.door.depth = 4;
+        this.door = this.matter.add.image(0, 0, 'door');
+        this.door.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 50, 30));
+        this.door.depth = 0;
         this.door.setStatic(true);
+      }
+      else if (objeto.name === 'endLevel') {
+        this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
+        this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 40, 40, { isSensor: true, label: 'endLevel' }));
+        //!NO BORRAR MESSIrve
+        /* this.endZone = this.Bodies.rectangle(objeto.x,objeto.y,0,0,{ isSensor: true, label: 'left' });
+         this.endZone.depth = 0;
+         this.cameras.main.startFollow(this.endZone);
+         console.log(objeto.x);
+         console.log(objeto.y);
+         console.log(this.player.x);
+         console.log(this.player.y);*/
+        //this.endZone = Phaser.Physics.Matter.Matter.Body.create({});
+        //this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y,50,30,{ isSensor: false, label: 'endLevel' } ));
+        //= this.Bodies.rectangle(objeto.x, objeto.y, 50, 50, { isSensor: false, label: 'endLevel' } );
+
       }
     }
   }
 
-
-
+  /* this.scene.stop('UIScene');
+       this.cameras.main.startFollow(this.finish);
+       if (this.fadeCamera.fadeEffect.alpha >= 1)
+       {
+       this.fadeCamera.fadeEffect.alpha = 0;
+       this.fadeCamera.fade(2000);
+       }*/
+  end() {
+    console.log("se queda");
+    this.finish = this.add.image(3000, 3000, 'end');
+    this.cameras.main.fadeIn(3000);
+    this.scene.stop('UIScene');
+    this.cameras.main.startFollow(this.finish);
+  }
   update() {
     this.changeLayer();
-    if(this.enemyCount === 0){
+    if (this.enemyCount === 0) {
       this.door.setTexture('doorOpen');
       this.door.setCollisionCategory(null);
-      //this.door.collide(false);
-      //console.log(this.door.collide());
     }
-    //Jugador
-    //Enemigos
-    /*this.enemies.children.iterate((child)=>{
-      if(!child.isDead){
-        child.update(this.player);
-      }
-    });*/
-    //console.log(this.angleToPointer);
   }
 }

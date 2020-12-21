@@ -49,14 +49,13 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
         this.hitState = true;
         --this.health;
-        console.log(this.health);
         if(this.body.label === 'player')
             this.hud.setHealth(this.health);
         if (this.health === 0) {
 
             let sound = this.scene.sound.add('deadSound');
             sound.setVolume(1.5);
-             sound.play();
+            sound.play();
 
             this.isDead = true;
             this.hitState = false;
