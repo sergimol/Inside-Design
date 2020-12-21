@@ -68,9 +68,11 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 for (let i = 0; i < this.pellets; ++i){
                     this.instanciarBala(esEnemigo, d);
                 }
-            }
+            } 
+            return true;    
         }
-        
+        else return false;
+            
     }
 
     instanciarBala(esEnemigo, d){
