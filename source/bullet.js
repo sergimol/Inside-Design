@@ -18,7 +18,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
         //atributos
         this.body.restitution = 1;
-        this.rebotes = 0;
+        this.rebotes = 8;
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
         

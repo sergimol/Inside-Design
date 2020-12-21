@@ -16,7 +16,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.hitState = false; //para cambiar a la animacion de hit
 
         //Para añadir hijos
-        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "auto", 200, 5);
+        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "shotgun", "auto", 300, 20, 8, 0.6, 30);
         this.add(this.weapon);
         this.setSize(16, 16);
 

@@ -3,7 +3,7 @@
 import Bullet from "./bullet.js";
 
 export default class Weapon extends Phaser.GameObjects.Container{
-    constructor(scene, x, y, spriteWeapon, spriteBullet, m, cadence, dispersion){
+    constructor(scene, x, y, spriteWeapon, spriteBullet, s, m, cadence, dispersion, pellets, bulletForce, forceDispersion){
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
         this.spriteBullet = spriteBullet;
@@ -13,11 +13,15 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //semiautomatica o automatica
         this.modo = m;
         //forma en la que dispara, mono, rafaga, shotgun, multi, //granadas, cohetes, son un tipo de bala no un tipo de arma etc¿?
+        this.style = s;
         this.cadencia = cadence; //en milisegundos
         this.ultimoDisparoTiempo = 0;
         
         //dispersion del arma %
         this.dispersion = dispersion;
+        this.pellets = pellets;
+        this.bulletForce = bulletForce;
+        this.forceDispersion = forceDispersion; // %
 
 
 
@@ -52,50 +56,59 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
             var d = this.tempMatrix.decomposeMatrix();
             
-            //calcular dispersion
-            let disp = Phaser.Math.Between(-this.dispersion, this.dispersion);
-
-            //instanciar disparos
-            let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
-            //colisiones del disparo
-            //categorias:
-            // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
-            //let categotyDefault = 1, categoryPlayer = 2, categoryEnemy = 3, categoryPlBullet = 4, categoryEnBullet = 5;
-            let grupoBala, colisionHumanoide;
-            //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
-            if (esEnemigo){
-                grupoBala = 4;
-                colisionHumanoide = 1
-            }
-            else{
-                grupoBala = 3;
-                colisionHumanoide = 2
-            }
-
-
-            //Aqui se asignan todas las colisiones
-            disparo.body.collisionFilter = {
-                'group' : -1,
-                'category': grupoBala,
-                'mask': -1 | colisionHumanoide,// & grupoBala,
-                //'category': //aqui decimos cual es su grupito
-                    //'group': grupoBala,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
-                    //'collidesWith' : [3,grupoBala]
-              };
-            disparo.setRotation(this.rotation + (disp * Math.PI/200));
-            disparo.thrust(0.6);
             
             //disparo.applyForce({x: 0, y: 0});
             //disparo.rotation = this.rotation;
             //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
             this.scene.cameras.main.shake(100,0.0005);
-            if (this.modo === "mono"){
-
+            if (this.style === "mono"){
+               this.instanciarBala(esEnemigo, d);
             }
-            return true;
+            else if (this.style === "shotgun"){
+                for (let i = 0; i < this.pellets; ++i){
+                    this.instanciarBala(esEnemigo, d);
+                }
+            }
         }
-        else
-            return false;
+        
+    }
+
+    instanciarBala(esEnemigo, d){
+             
+                //calcular dispersion
+                let disp = Phaser.Math.Between(-this.dispersion, this.dispersion);
+                let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
+
+                //instanciar disparos
+                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
+                //colisiones del disparo
+                //categorias:
+                // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
+                //let categotyDefault = 1, categoryPlayer = 2, categoryEnemy = 3, categoryPlBullet = 4, categoryEnBullet = 5;
+                let grupoBala, colisionHumanoide;
+                //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
+                if (esEnemigo){
+                    grupoBala = 4;
+                    colisionHumanoide = 1
+                }
+                else{
+                    grupoBala = 3;
+                    colisionHumanoide = 2
+                }
+            
+
+
+                //Aqui se asignan todas las colisiones
+                disparo.body.collisionFilter = {
+                    'group' : -1,
+                    'category': grupoBala,
+                    'mask': -1 | colisionHumanoide,// & grupoBala,
+                    //'category': //aqui decimos cual es su grupito
+                        //'group': grupoBala,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
+                        //'collidesWith' : [3,grupoBala]
+                };
+                disparo.setRotation(this.rotation + (disp * Math.PI/200));
+                disparo.thrust(this.bulletForce + (dispForce * this.bulletForce/100));
     }
 
     rotateWeapon(angle) {
