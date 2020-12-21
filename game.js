@@ -19,7 +19,8 @@ export default class Game extends Phaser.Scene {
     //Tiles de estéticas
     this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
     this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
-
+    this.load.image('door', './Sprites/door.png');
+    this.load.image('doorOpen', './Sprites/doorOpen.png');
 
     this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
 
@@ -73,25 +74,9 @@ export default class Game extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(colstopLayer);
     this.matter.world.convertTilemapLayer(boxtopLayer);
 
-    //BULLET
-    this.anims.create({
-      key: 'shot',
-      frames: this.anims.generateFrameNumbers('bullet', { start: 0, end: 3 }),
-      frameRate: 8,
-      repeat: -1
-    })
-
-    //BULLETS
-    this.bullets = this.add.group();
-    this.bullets.enableBody = true;
-    this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-
 
     //PUNTERO
     this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
-    //this.sys.canvas.style.cursor = 'crosshair'
-
-    //    this.puntero = new Puntero(this,400, 450);
 
     this.angleToPointer;
     this.input.on('pointermove', function (pointer) {
@@ -106,6 +91,8 @@ export default class Game extends Phaser.Scene {
 
 
     //CARGA DE OBJETOS
+    this.enemyCount = 0;
+    this.door;
     this.loadObjects(this.map);
 
     //Camara
@@ -120,6 +107,9 @@ export default class Game extends Phaser.Scene {
       else this.tilemapState--;
       console.log(this.tilemapState);
     },this);
+
+    
+    
   }//End of create
 
   changeLayer() {
@@ -136,7 +126,7 @@ export default class Game extends Phaser.Scene {
 
   loadObjects(map) {
     this.enemies = this.add.group();
-
+    
     for (const objeto of map.getObjectLayer('Entities').objects) {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
@@ -144,8 +134,14 @@ export default class Game extends Phaser.Scene {
         this.player = new Player(this, objeto.x, objeto.y, 'player')
       }
       else if (objeto.name === 'enemy') {
+        this.enemyCount++;
         const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player);
         this.enemies.add(e);
+      }
+      else if (objeto.name === 'door') {
+        this.door = this.matter.add.image(objeto.x, objeto.y, 'door');
+        this.door.depth = 4;
+        this.door.setStatic(true);
       }
     }
   }
@@ -154,7 +150,12 @@ export default class Game extends Phaser.Scene {
 
   update() {
     this.changeLayer();
-
+    if(this.enemyCount === 0){
+      this.door.setTexture('doorOpen');
+      this.door.setCollisionCategory(null);
+      //this.door.collide(false);
+      //console.log(this.door.collide());
+    }
     //Jugador
     //Enemigos
     /*this.enemies.children.iterate((child)=>{
