@@ -80,7 +80,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     //'collidesWith' : [3,grupoBala]
               };
             disparo.setRotation(this.rotation + (disp * Math.PI/200));
-            disparo.thrust(0.2);
+            disparo.thrust(0.6);
             
             //disparo.applyForce({x: 0, y: 0});
             //disparo.rotation = this.rotation;
