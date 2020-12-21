@@ -85,13 +85,15 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 //categorias:
                 // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
                 //let categotyDefault = 1, categoryPlayer = 2, categoryEnemy = 3, categoryPlBullet = 4, categoryEnBullet = 5;
-                let grupoBala, colisionHumanoide;
+                let grupoBala, colisionHumanoide,grupoNoColison;
                 //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
                 if (esEnemigo){
+                    grupoNoColison = -3;
                     grupoBala = 4;
                     colisionHumanoide = 1
                 }
                 else{
+                    grupoNoColison = -2;
                     grupoBala = 3;
                     colisionHumanoide = 2
                 }
@@ -100,7 +102,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
                 //Aqui se asignan todas las colisiones
                 disparo.body.collisionFilter = {
-                    'group' : -1,
+                    'group' : -grupoBala,
                     'category': grupoBala,
                     'mask': -1 | colisionHumanoide,// & grupoBala,
                     //'category': //aqui decimos cual es su grupito
