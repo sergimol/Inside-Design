@@ -13,6 +13,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, Infinity);
+        this.setFrictionAir(0);
         
 
 
@@ -47,6 +48,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     }
     wallhit(){
         if (this.rebotes > 0 ){
+            this.setFrictionAir(0.01);
             //im afraid that i will need you to rotate
             this.rebotes--;
             
@@ -64,7 +66,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         //# de esta manera se arreglan varias cossillas
         this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
         
-         if (this.body.velocity.x <= 0.8 && this.body.velocity.y <= 0.8 && this.body.velocity.x >= -0.8 && this.body.velocity.y >= -0.8) {
+         if (this.body.velocity.x <= 3 && this.body.velocity.y <= 3 && this.body.velocity.x >= -3 && this.body.velocity.y >= -3) {
              this.destroy();
             }    
             
