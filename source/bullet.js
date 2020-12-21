@@ -17,7 +17,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
 
         //atributos
-        this.body.restitution = 1;
+        this.body.restitution = 0.8; //fuerza del rebote, momento que mantiene
         this.rebotes = 8;
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
@@ -49,15 +49,20 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         if (this.rebotes > 0 ){
             //im afraid that i will need you to rotate
             this.rebotes--;
+            
             //this.body.angle = Phaser.Math.Angle.Between(0,0,this.body.velocity.x, this.body.velocity.y);
             //this.scene.matter.body.setInertia(this.body, Infinity);
-
+            
         }
         else this.destroy();
     }
     preUpdate(){
         //tengo que hacerlo asi, porque de otra forma al asignarle el angulo y tener otra interaccion empieza a girar como un condenado
-        this.body.angle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
+        //this.body.setAngle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
+        
+        //Sets the angle of the body instantly. Angular velocity, position, force etc. are unchanged.
+        //# de esta manera se arreglan varias cossillas
+        this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
         
          if (this.body.velocity.x <= 0.8 && this.body.velocity.y <= 0.8 && this.body.velocity.x >= -0.8 && this.body.velocity.y >= -0.8) {
              this.destroy();
