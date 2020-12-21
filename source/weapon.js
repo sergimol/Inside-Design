@@ -111,7 +111,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
                         //'group': grupoBala,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
                         //'collidesWith' : [3,grupoBala]
                 };
-                disparo.setRotation(this.rotation + (disp * Math.PI/200));
+                this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI/200)));
+                //disparo.setRotation(this.rotation + (disp * Math.PI/200));
                 disparo.thrust(this.bulletForce + (dispForce * this.bulletForce/100));
     }
 
