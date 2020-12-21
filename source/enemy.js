@@ -4,6 +4,7 @@ export default class Enemy extends Humanoid {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
 
+
         //Atributos
         this.speed = 50;
         this.health = 3;
@@ -63,6 +64,17 @@ export default class Enemy extends Humanoid {
         this.cadenceTime = 1000;
         this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
 
+        //Colisiones
+        
+        
+        // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
+        //Aqui se asignan todas las colisiones
+        this.body.collisionFilter = {
+            'category': 2,
+            'mask': -1 | 3,
+            //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
+        };
+
     }//Fin constructorasd
 
 
@@ -104,7 +116,7 @@ export default class Enemy extends Humanoid {
             //Disparo
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
-                this.weapon.shoot(this.x, this.y);
+                this.weapon.shoot(true);
                 this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
             }
         }

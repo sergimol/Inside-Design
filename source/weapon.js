@@ -26,6 +26,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.image.setOrigin(0.15, 0.5);
         this.add(this.image);
         //this.setScale(1.25);
+        this.bulletCount = 1; 
+        if (this.bulletCount >= 500) this.bulletCount = 1;
 
         //hace falta pasarle a cuanta distancia esta la punta del cañon, para cada arma sera diferente aqsi que habra que pasarselo a la constructora
         //es que voy a pasar numeros magicos xd
@@ -37,18 +39,10 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     esAutomatica(){return (this.modo === "auto");}
 
-    shoot(){
-       ; 
-
+    shoot(esEnemigo){
         let siguienteDisparo = this.scene.time.now;
         //console.log(this.ultimoDisparoTiempo);
         if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
-            
-            //SONIDO
-            let sound = this.scene.sound.add('gunShootSound');
-            //sound.setVolume(0);
-            sound.play();
-
             this.ultimoDisparoTiempo = siguienteDisparo;
             
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
@@ -60,8 +54,34 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
             //instanciar disparos
             let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
+            //colisiones del disparo
+            //categorias:
+            // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
+            //let categotyDefault = 1, categoryPlayer = 2, categoryEnemy = 3, categoryPlBullet = 4, categoryEnBullet = 5;
+            let grupoBala, colisionHumanoide;
+            //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
+            if (esEnemigo){
+                grupoBala = 4;
+                colisionHumanoide = 1
+            }
+            else{
+                grupoBala = 3;
+                colisionHumanoide = 2
+            }
+
+
+            //Aqui se asignan todas las colisiones
+            disparo.body.collisionFilter = {
+                'group' : -1,
+                'category': grupoBala,
+                'mask': -1 | colisionHumanoide,// & grupoBala,
+                //'category': //aqui decimos cual es su grupito
+                    //'group': grupoBala,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
+                    //'collidesWith' : [3,grupoBala]
+              };
             disparo.setRotation(this.rotation + (disp * Math.PI/200));
-            disparo.thrust(1);
+            disparo.thrust(0.2);
+            
             //disparo.applyForce({x: 0, y: 0});
             //disparo.rotation = this.rotation;
             //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
