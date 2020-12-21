@@ -4,7 +4,7 @@ export default class Enemy extends Humanoid {
     constructor(scene, x, y, sprite, player, depth) {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
-        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "mono", "semi", 300, 20, 1, 0.6, 30);
+        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "enemybullet", "mono", "semi", 300, 20, 1, 0.6, 30);
         this.add(this.weapon);
 
         //Atributos
