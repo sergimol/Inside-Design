@@ -110,9 +110,6 @@ export default class Player extends Humanoid {
   shoot() {
     if (this.ammo > 0) {
       if (this.weapon.shoot(false)) {
-        let sound = this.scene.sound.add('gunShootSound2');
-        sound.setVolume(0.7);
-        sound.play();
         this.ammo--;
         this.hud.setAmmo(this.ammo);
       }

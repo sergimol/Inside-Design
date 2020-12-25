@@ -89,6 +89,10 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     instanciarBala(esEnemigo){
         
+        let sound = this.scene.sound.add('gunShootSound2');
+        sound.setVolume(0.1);
+        sound.play();
+        
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
 
                 var d = this.tempMatrix.decomposeMatrix();
