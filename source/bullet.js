@@ -48,7 +48,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     }
     wallhit(){
         if (this.rebotes > 0 ){
-            this.setFrictionAir(0.01);
+            //this.setFrictionAir(0.01); //ME EXPLICAS?¿
             //im afraid that i will need you to rotate
             this.rebotes--;
             

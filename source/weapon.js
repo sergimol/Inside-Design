@@ -3,12 +3,14 @@
 import Bullet from "./bullet.js";
 
 export default class Weapon extends Phaser.GameObjects.Container{
-    constructor(scene, x, y, spriteWeapon, spriteBullet, s, m, cadence, dispersion, pellets, bulletForce, forceDispersion){
+    constructor(scene, x, y, spriteWeapon, spriteBullet, s, m, cadence, dispersion, pellets, bulletForce, forceDispersion, rafagas, rafagasCadence){
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
         this.spriteBullet = spriteBullet;
 
         //Otros atributos
+        this.rafagas = rafagas; //cantidad de veces que se llama al metodo de disparar
+        this.rafagasCadence = rafagasCadence; //intervalo de tiempo entre que se puede disparar una rafaga y otra
 
         //semiautomatica o automatica
         this.modo = m;
@@ -16,6 +18,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.style = s;
         this.cadencia = cadence; //en milisegundos
         this.ultimoDisparoTiempo = 0;
+        this.ultimaRafagaTiempo = 0;
         
         //dispersion del arma %
         this.dispersion = dispersion;
@@ -50,30 +53,45 @@ export default class Weapon extends Phaser.GameObjects.Container{
             
             this.ultimoDisparoTiempo = siguienteDisparo;
             
-            this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+            
 
-            var d = this.tempMatrix.decomposeMatrix();
+            ////////////
+           
+                //console.log(this.ultimoDisparoTiempo);
+                this.c = 0;
+                this.scene.time.addEvent({
+                    delay: this.rafagasCadence,
+                    callback: () => {
+                        this.dispararRafagas(esEnemigo);
+                    },
+                    repeat: this.rafagas}
+                );
             
-            
-            //disparo.applyForce({x: 0, y: 0});
-            //disparo.rotation = this.rotation;
-            //let disparo = new Bullet(this.scene, this.canyon.x, this.canyon.y);
-            this.scene.cameras.main.shake(100,0.0005);
-            if (this.style === "mono"){
-               this.instanciarBala(esEnemigo, d);
-            }
-            else if (this.style === "shotgun"){
-                for (let i = 0; i < this.pellets; ++i){
-                    this.instanciarBala(esEnemigo, d);
-                }
-            } 
             return true;    
         }
         else return false;
             
     }
 
-    instanciarBala(esEnemigo, d){
+    dispararRafagas(esEnemigo){
+            this.scene.cameras.main.shake(100,0.0005);
+            if (this.style === "mono"){
+                this.instanciarBala(esEnemigo);
+            }
+            else if (this.style === "shotgun"){
+                for (let i = 0; i < this.pellets; ++i){
+                    this.instanciarBala(esEnemigo);
+                }
+            } 
+        
+    }
+
+
+    instanciarBala(esEnemigo){
+        
+            this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+
+                var d = this.tempMatrix.decomposeMatrix();
              
                 //calcular dispersion
                 let disp = Phaser.Math.Between(-this.dispersion, this.dispersion);
