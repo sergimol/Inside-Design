@@ -76,9 +76,17 @@ export default class Weapon extends Phaser.GameObjects.Container{
     dispararRafagas(esEnemigo){
             this.scene.cameras.main.shake(100,0.0005);
             if (this.style === "mono"){
+                
+            let sound = this.scene.sound.add('gunShootSound2');
+            sound.setVolume(0.1);
+            sound.play();
                 this.instanciarBala(esEnemigo);
             }
             else if (this.style === "shotgun"){
+                
+            let sound = this.scene.sound.add('gunShootSound2');
+            sound.setVolume(0.1);
+            sound.play();
                 for (let i = 0; i < this.pellets; ++i){
                     this.instanciarBala(esEnemigo);
                 }
@@ -89,9 +97,6 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     instanciarBala(esEnemigo){
         
-        let sound = this.scene.sound.add('gunShootSound2');
-        sound.setVolume(0.1);
-        sound.play();
         
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
 
