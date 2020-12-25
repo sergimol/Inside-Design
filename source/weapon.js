@@ -64,7 +64,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     callback: () => {
                         this.dispararRafagas(esEnemigo);
                     },
-                    repeat: this.rafagas}
+                    repeat: this.rafagas - 1}
                 );
             
             return true;    
