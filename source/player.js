@@ -8,7 +8,7 @@ export default class Player extends Humanoid {
 
     //Arma
     
-    this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "mono", "semi", 300, 0, 1, 0.6, 0, 3, 30);
+    this.weapon = new Weapon(scene, 0, 5, "gunShoot", "bullet", "mono", "semi", 300, 0, 1, 0.6, 0, 3, 80);
     this.add(this.weapon);
 
     //Atributos
