@@ -39,12 +39,43 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                         //TODO
                         //#Issue
                         //tiene que pasarle el daño y destruirse
+                        
+                        this.movimiento_espiral.remove(false);
                         this.destroy();
                     }
                     else this.wallhit();
                 }
             }
         });
+        
+        this.booleanoDeMovimiento = false;
+         var rnd = Math.floor((Math.random() * 2));
+         if (rnd === 1){
+             
+             this.booleanoDeMovimiento = false;
+            }
+            else{
+                
+                this.booleanoDeMovimiento = true;
+            }
+        this.movimiento_espiral = this.scene.time.addEvent({
+            
+            delay: 100,//this.rafagasCadence,
+            callback: () => {
+                
+                if (this.booleanoDeMovimiento){
+                    this.thrustLeft(1);
+                    this.booleanoDeMovimiento = false;
+                }
+                else {
+                    this.thrustRight(1);
+                    this.booleanoDeMovimiento = true;
+                }
+                //this.dispararRafagas(esEnemigo);
+            },
+            //repeat: this.rafagas - 1}
+            loop: true}
+        );
     }
     wallhit(){
         if (this.rebotes > 0 ){
@@ -56,9 +87,15 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
             //this.scene.matter.body.setInertia(this.body, Infinity);
             
         }
-        else this.destroy();
+        else{
+            this.movimiento_espiral.remove(false);
+            this.destroy();
+        } 
+            
     }
     preUpdate(){
+        
+        //disparo.thrustRight(1);
         //tengo que hacerlo asi, porque de otra forma al asignarle el angulo y tener otra interaccion empieza a girar como un condenado
         //this.body.setAngle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
         
@@ -67,6 +104,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
         
          if (this.body.velocity.x <= 3 && this.body.velocity.y <= 3 && this.body.velocity.x >= -3 && this.body.velocity.y >= -3) {
+             
+            this.movimiento_espiral.remove(false);
              this.destroy();
             }    
             
