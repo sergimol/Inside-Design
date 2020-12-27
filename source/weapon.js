@@ -7,7 +7,12 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 spriteBullet, s, m, cadence,
                 dispersion, pellets, bulletForce, forceDispersion,
                 rafagas, rafagasCadence, origenX, origenY, canyonX, canyonY,
-                cuerpoACuerpo, rotationOffSet){
+                cuerpoACuerpo, rotationOffSet,
+                //para bullet a partir de aqui
+                bScale, bSizeX, bSizeY, bOriginX,bOriginY, 
+                bMass, bLabel, bAirFriction, bRebotes, 
+                bFuerzaRebote, bVelocidadMinima
+                ){
 
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
@@ -43,6 +48,20 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.image.setOrigin(origenX, origenY);
         this.add(this.image);
         this.image.rotation = this.rotationOffSet;
+
+        //atributos del disparo
+        this.bScale = bScale;
+         this.bSizeX = bSizeX;
+          this.bSizeY = bSizeY;
+           this.bOriginX = bOriginX;
+           this.bOriginY = bOriginY;
+
+                this.bMass = bMass;
+                 this.bLabel = bLabel;
+                  this.bAirFriction = bAirFriction; 
+                  this.bRebotes = bRebotes; 
+                this.bFuerzaRebote = bAirFriction;
+                 this.bVelocidadMinima = bVelocidadMinima;
         
         
         //this.setScale(1.25);
@@ -139,29 +158,56 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
 
                 //instanciar disparos
-                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, 0.7, 8, 8, 4, 4, 30, 'bullet', 0.3, 0, 0.8, 0.3);
+                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, this.bScale, this.bSizeX, this.bSizeY, this.bOriginX, this.bOriginY, 
+                    this.bMass, this.bLabel, this.bAirFriction, this.bRebotes, 
+                    this.bFuerzaRebote, this.bVelocidadMinima);
                 //colisiones del disparo
                 
                 //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
                 if (esEnemigo){
                     // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
                     //Aqui se asignan todas las colisiones
-                    disparo.body.collisionFilter = {
-                        'group' : -5, 
+                    if (this.cuerpoACuerpo){
                         
-                        'category': 16,
-                        'mask': 1 | 2,
-                    };
+                        disparo.body.collisionFilter = {
+                            'group' : -5, 
+                            
+                            'category': 16,
+                            'mask':2,
+                        };
+                    }
+                    else{
+
+                        disparo.body.collisionFilter = {
+                            'group' : -5, 
+                            
+                            'category': 16,
+                            'mask': 1 | 2,
+                        };
+                    }
                 }
                 else{
                     // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
                     //Aqui se asignan todas las colisiones
-                    disparo.body.collisionFilter = {
-                        'group' : -4, //hara siempre la regla category/mask
-                        
-                        'category': 8,
-                        'mask': 1 | 4,
-                    };
+
+                    if (this.cuerpoACuerpo){
+                        disparo.body.collisionFilter = {
+                            'group' : -4, //hara siempre la regla category/mask
+                            
+                            'category': 8,
+                            'mask':4,
+                        };
+                    }
+                    else{
+
+                        disparo.body.collisionFilter = {
+                            'group' : -4, //hara siempre la regla category/mask
+                            
+                            'category': 8,
+                            'mask': 1 | 4,
+                        };
+                    }
+
                 }
             
 
