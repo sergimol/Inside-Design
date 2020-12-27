@@ -87,12 +87,17 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         if (dirX > 0) {
             //this.each(entity => entity.flipX = false)
             this.aspecto.setFlipX(false);
-            this.weapon.image.setFlipY(false);
+            if (!this.weapon.esMelee()){
+                this.weapon.image.setFlipY(false);
+            }
         }
         else {
             //this.each(entity => entity.flipX = true)
             this.aspecto.setFlipX(true);
+            
+            if (!this.weapon.esMelee()){
             this.weapon.image.setFlipY(true);
+            }
         }
     }
 
@@ -104,8 +109,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
     rotateWeapon(angle) {
         this.weapon.rotateWeapon(angle);
-
-        if (angle < 0)
+        if (this.weapon.rotation< 0)
             this.sendToBack(this.weapon);
 
         else

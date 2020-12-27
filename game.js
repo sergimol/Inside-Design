@@ -34,6 +34,7 @@ export default class Game extends Phaser.Scene {
     this.load.audio('hitShootSound', './audio/hitShoot.wav');
     this.load.audio('deadSound', './audio/deadSound.wav');
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
+    this.load.image('bate', './Sprites/Bate3.png');
 
   }
 

@@ -6,7 +6,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
     constructor(scene, x, y, spriteWeapon,
                 spriteBullet, s, m, cadence,
                 dispersion, pellets, bulletForce, forceDispersion,
-                rafagas, rafagasCadence){
+                rafagas, rafagasCadence, origenX, origenY, canyonX, canyonY,
+                cuerpoACuerpo, rotationOffSet){
 
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
@@ -15,6 +16,9 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //Otros atributos
         this.rafagas = rafagas; //cantidad de veces que se llama al metodo de disparar
         this.rafagasCadence = rafagasCadence; //intervalo de tiempo entre que se puede disparar una rafaga y otra
+        this.cuerpoACuerpo = cuerpoACuerpo; //booleano 
+        this.origenX = origenX;
+        this.origenY = origenY;
 
         //semiautomatica o automatica
         this.modo = m;
@@ -30,25 +34,31 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.bulletForce = bulletForce;
         this.forceDispersion = forceDispersion; // %
 
-
+        //auxiliares
+        this.hasShooted = false; //booleano que indica si ah disparado anteriormente o no, se usa para el giro de la imagen en las armas a meele
+        this.rotationOffSet = rotationOffSet;
 
         //imagen del arma
         this.image = scene.add.image(0, 0, spriteWeapon);
-        this.image.setOrigin(0.15, 0.5);
+        this.image.setOrigin(origenX, origenY);
         this.add(this.image);
+        this.image.rotation = this.rotationOffSet;
+        
+        
         //this.setScale(1.25);
         //this.bulletCount = 1; 
         //if (this.bulletCount >= 500) this.bulletCount = 1;
 
         //hace falta pasarle a cuanta distancia esta la punta del cañon, para cada arma sera diferente aqsi que habra que pasarselo a la constructora
         //es que voy a pasar numeros magicos xd
-        this.canyon = scene.add.image(20, 0);
+        this.canyon = scene.add.image(canyonX,canyonY);
         this.add(this.canyon);
         //this.cadence, this.ammoRate, this.damage;
         this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
     }
 
     esAutomatica(){return (this.modo === "auto");}
+    esMelee(){return this.cuerpoACuerpo;}
 
     shoot(esEnemigo){
         let siguienteDisparo = this.scene.time.now;
@@ -67,6 +77,24 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     delay: this.rafagasCadence,
                     callback: () => {
                         this.dispararRafagas(esEnemigo);
+                         if (this.cuerpoACuerpo){
+                             if (this.hasShooted){
+                                    this.hasShooted = false;
+                                    this.image.setFlipY(false);
+                                    this.image.setOrigin(this.origenX, this.origenY);
+                                    this.image.rotation = this.rotationOffSet;
+                                 
+                                 //console.log("hombro izquierdo");
+                                }
+                                else{ 
+                                    this.hasShooted = true;
+                                    this.image.setFlipY(true);
+                                    this.image.setOrigin(this.origenX, 1 - this.origenY);
+                                    this.image.rotation = - this.rotationOffSet;
+                                }
+                            }
+
+                            
                     },
                     repeat: this.rafagas - 1}
                 );
@@ -119,7 +147,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
                     //Aqui se asignan todas las colisiones
                     disparo.body.collisionFilter = {
-                        'group' : 0, //hara siempre la regla category/mask
+                        'group' : -5, 
                         
                         'category': 16,
                         'mask': 1 | 2,
@@ -129,7 +157,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
                     //Aqui se asignan todas las colisiones
                     disparo.body.collisionFilter = {
-                        'group' : 0, //hara siempre la regla category/mask
+                        'group' : -4, //hara siempre la regla category/mask
                         
                         'category': 8,
                         'mask': 1 | 4,
@@ -144,7 +172,16 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     rotateWeapon(angle) {
 
-        //si el angulo es mas de 45 y (45+90) el sprite deberia de ir debajo0 del de humanoide
         this.rotation = angle;
+        //si el angulo es mas de 45 y (45+90) el sprite deberia de ir debajo0 del de humanoide
+        /**
+         * 
+         if (this.hasShooted){
+             this.image.rotation = angle - this.rotationOffSet;
+            }else{
+                this.image.rotation = angle + this.rotationOffSet; //sumarle un offset rotation dependiendo del arma
+                
+            }
+            */
     }
 }
