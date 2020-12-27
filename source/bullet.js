@@ -1,5 +1,9 @@
 export default class Bullet extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, sprite, scale, sizeX, sizeY, originX,originY, mass, label, airFriction, rebotes, fuerzaRebote, velocidadMinima){
+    constructor(scene, x, y, sprite, 
+        scale, sizeX, sizeY, originX,originY, 
+        mass, label, airFriction, rebotes, 
+        fuerzaRebote, velocidadMinima){
+            
         super(scene, x, y, sprite);
         
         this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco

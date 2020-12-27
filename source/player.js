@@ -80,12 +80,12 @@ export default class Player extends Humanoid {
     //Colisiones
 
 
-    // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
+    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
     //Aqui se asignan todas las colisiones
     this.body.collisionFilter = {
       'group': -3,
-      'category': 1,
-      'mask': -1 | 4,
+      'category': 2,
+      'mask': 1 | 16, //mundo y balas enemigas
       //'group':1 ,  //asi no colisionan entre si estan en la misma categoria si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
     };
   }
