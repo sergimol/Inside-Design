@@ -1,25 +1,30 @@
 export default class Bullet extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, sprite){
+    constructor(scene, x, y, sprite, scale, sizeX, sizeY, originX,originY, mass, label, airFriction, rebotes, fuerzaRebote, velocidadMinima){
         super(scene, x, y, sprite);
         
-        this.depth = 4;
-        this.setScale(0.7);
-        this.setSize(8, 8);
+        this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
+        this.setScale(scale);
+        this.setSize(sizeX,sizeY);
         this.scene.matter.add.gameObject(this);
-        this.setOrigin(4,4);
-        this.setMass(30);
+        this.setOrigin(originX,originY);
+        this.setMass(mass);
         this.scene.add.existing(this);
-        this.body.label = 'bullet';
+        this.body.label = label;
         
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, Infinity);
-        this.setFrictionAir(0);
+        this.setFrictionAir(airFriction);
         
 
 
         //atributos
-        this.body.restitution = 0.8; //fuerza del rebote, momento que mantiene
-        this.rebotes = 0;
+        this.body.restitution = fuerzaRebote; //fuerza del rebote, momento que mantiene
+        this.rebotes = rebotes;
+
+
+        //Otras variables
+        this.velocidadMinima = velocidadMinima;
+
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
         
@@ -66,7 +71,9 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         //# de esta manera se arreglan varias cossillas
         this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
         
-         if (this.body.velocity.x <= 3 && this.body.velocity.y <= 3 && this.body.velocity.x >= -3 && this.body.velocity.y >= -3) {
+        
+        
+         if ( Math.sqrt(Math.pow(this.body.velocity.x, 2) + Math.pow(this.body.velocity.y, 2)) <= this.velocidadMinima) {
              this.destroy();
             }    
             

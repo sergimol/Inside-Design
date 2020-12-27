@@ -33,8 +33,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.image.setOrigin(0.15, 0.5);
         this.add(this.image);
         //this.setScale(1.25);
-        this.bulletCount = 1; 
-        if (this.bulletCount >= 500) this.bulletCount = 1;
+        //this.bulletCount = 1; 
+        //if (this.bulletCount >= 500) this.bulletCount = 1;
 
         //hace falta pasarle a cuanta distancia esta la punta del cañon, para cada arma sera diferente aqsi que habra que pasarselo a la constructora
         //es que voy a pasar numeros magicos xd
@@ -107,7 +107,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
 
                 //instanciar disparos
-                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet);
+                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, 0.7, 8, 8, 4, 4, 30, 'bullet', 0.3, 0, 0.8, 0.3);
                 //colisiones del disparo
                 //categorias:
                 // Default: 1, Player: 2, Enemy: 3, PlayerBullet: 4, Enemy Bullet: 5
