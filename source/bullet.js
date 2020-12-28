@@ -100,7 +100,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                             //bodyB.velocity.x = -bodyB.velocity.x;//Math.cos(anguloAux)* velocidad;
                             //bodyB.velocity.y = -bodyB.velocity.y;//Math.sin(anguloAux)* velocidad;
 
-                            console.log("una bala nano B ");
+                            //console.log("una bala nano B ");
                         }
                         else if (destruyeBalas){
                             bodyB.gameObject.booleanoParaDestruirme = true;
@@ -138,7 +138,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                             //bodyA.velocity.y = -bodyA.velocity.y; //Math.sin(anguloAux)* velocidad;
 
                             
-                            console.log("una bala nano A ");
+                            //console.log("una bala nano A ");
                         }
                         else if (destruyeBalas){
                             bodyA.gameObject.booleanoParaDestruirme = true;
@@ -162,7 +162,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         else this.booleanoParaDestruirme = true;
     }
     preUpdate(){
-        console.log(this.x + " " + this.y);
+        //console.log(this.x + " " + this.y);
         //tengo que hacerlo asi, porque de otra forma al asignarle el angulo y tener otra interaccion empieza a girar como un condenado
         //this.body.setAngle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
         
@@ -175,7 +175,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
          if ( this.body.speed <= this.velocidadMinima) {
              this.booleanoParaDestruirme = true;
             }
-            if (this.booleanoParaDestruirme) this.destroy();    
+        if (this.booleanoParaDestruirme) this.destroy();    
             
     }
 }
