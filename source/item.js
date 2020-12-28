@@ -2,6 +2,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, sprite, playerref) {
         super(scene, x, y, sprite);
         this.depth = 3;
+        this.setSize(1,1);
         this.scene.matter.add.gameObject(this);
         this.scene.add.existing(this);
 
