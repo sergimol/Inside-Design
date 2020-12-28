@@ -7,7 +7,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 spriteBullet, s, m, cadence,
                 dispersion, pellets, bulletForce, forceDispersion,
                 rafagas, rafagasCadence, origenX, origenY, canyonX, canyonY,
-                cuerpoACuerpo, rotationOffSet,
+                cuerpoACuerpo, rotationOffSet, costeMunicionPorBala,
                 //para bullet a partir de aqui
                 bScale, bSizeX, bSizeY, bOriginX,bOriginY, 
                 bMass, bLabel, bAirFriction, bRebotes, 
@@ -49,6 +49,9 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.add(this.image);
         this.image.rotation = this.rotationOffSet;
 
+        //coste de municon de uyna bala
+        this.costeMunicionPorBala = costeMunicionPorBala;
+
         //atributos del disparo
         this.bScale = bScale;
          this.bSizeX = bSizeX;
@@ -60,7 +63,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                  this.bLabel = bLabel;
                   this.bAirFriction = bAirFriction; 
                   this.bRebotes = bRebotes; 
-                this.bFuerzaRebote = bAirFriction;
+                this.bFuerzaRebote = bFuerzaRebote;
                  this.bVelocidadMinima = bVelocidadMinima;
         
         
@@ -231,5 +234,11 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 
             }
             */
+    }
+
+
+    ammoCostPerShoot(){
+
+        return(this.costeMunicionPorBala * this.rafagas)
     }
 }
