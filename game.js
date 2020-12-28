@@ -2,6 +2,7 @@ import Weapon from "./source/weapon.js";
 import Player from "./source/player.js";
 import Puntero from "./source/puntero.js";
 import Enemy from "./source/enemy.js";
+import Item from "./source/item.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -148,7 +149,7 @@ export default class Game extends Phaser.Scene {
       }
 
     });
-
+    this.item = new Item(this, this.player.x+80, this.player.y+80, 'bullet', this.player,'hola');
   }//End of create
 
   changeLayer() {
