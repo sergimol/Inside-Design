@@ -13,10 +13,10 @@ export default class Item extends Phaser.GameObjects.Sprite {
         //this.dir.normalize();
     }
     preUpdate(){
-        this.setAngle(this.body,this.playerRef);
-        //this.thrust(0.00000000000000000000000000000000000001);
+        this.setAngle(this.position,this.playerRef);
+        this.thrust(0.001);
         //this.scene.matter.body.applyForce(this.body,this.angle, 0.003);
-        console.log(this.body.position.x);
+        console.log(this.angle);
         //if ( Math.sqrt(Math.pow(this.body.velocitys.x, 2) + Math.pow(this.body.velocity.y, 2)) <= this.velocidadMinima) {
         //    this.destroy();
         //}    
