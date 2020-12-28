@@ -1,4 +1,4 @@
-
+import Item from "./item.js";
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
     constructor(scene, x, y, humanSprite, depth) {
@@ -11,6 +11,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
         //Atributos
         this.health = 10;
+        this.maxHealth = this.health;
         this.isDead = false;                            //La entidad está viva
         this.speed = 100;
         this.hitState = false; //para cambiar a la animacion de hit
@@ -30,11 +31,11 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                 if (bodyA === wordBody || bodyB === wordBody) {
                     if (bodyA === wordBody && bodyB.label === 'bullet') {
                         //this.damage();
-                        console.log("enemyHit");
+                        //console.log("enemyHit");
                     }
                     else if (bodyA.label === 'bullet' && bodyB === wordBody) {
                         //this.damage();
-                        console.log("enemyHit");
+                        //console.log("enemyHit");
                     }
                 }
             }
@@ -43,12 +44,10 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
     }//Fin constructora
 
     damage(damagePoints) {
-        
-
         this.hitState = true;
         this.health -= damagePoints;
-        console.log(this.health);
-        if(this.body.label === 'player' && !this.isDead)
+        //console.log(this.health);
+        if (this.body.label === 'player' && !this.isDead)
             this.hud.setHealth(this.health);
         if (this.health <= 0) {
 
@@ -58,17 +57,26 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
             this.isDead = true;
             this.hitState = false;
-            
+
             this.weapon.setVisible(false);
-            console.log('entityDep');
+           //console.log('entityDep');
             this.aspecto.play('enemyDep', true);
 
-            if(this.body.label === 'enemy'){
+            if (this.body.label === 'enemy') {
                 this.scene.enemyCount--;
+                let numItems = Phaser.Math.RND.between(0, 4);
+                console.log(numItems);
+                for (let n = 0; n < 150; ++n) {
+                    let chooseItem = Phaser.Math.RND.between(0, 4);
+                    if (chooseItem < 4)
+                        var item = new Item(this.scene, this.x, this.y, 'bulletAmmo', this.scene.player);
+                    else
+                        var item = new Item(this.scene, this.x, this.y, 'medkit', this.scene.player);
+                }
             }
 
         }
-        else{
+        else {
             //sonido hit
             let sound = this.scene.sound.add('hitShootSound');
             //sound.setVolume(0.1);
@@ -87,16 +95,16 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         if (dirX > 0) {
             //this.each(entity => entity.flipX = false)
             this.aspecto.setFlipX(false);
-            if (!this.weapon.esMelee()){
+            if (!this.weapon.esMelee()) {
                 this.weapon.image.setFlipY(false);
             }
         }
         else {
             //this.each(entity => entity.flipX = true)
             this.aspecto.setFlipX(true);
-            
-            if (!this.weapon.esMelee()){
-            this.weapon.image.setFlipY(true);
+
+            if (!this.weapon.esMelee()) {
+                this.weapon.image.setFlipY(true);
             }
         }
     }
@@ -109,7 +117,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
     rotateWeapon(angle) {
         this.weapon.rotateWeapon(angle);
-        if (this.weapon.rotation< 0)
+        if (this.weapon.rotation < 0)
             this.sendToBack(this.weapon);
 
         else

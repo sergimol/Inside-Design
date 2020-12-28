@@ -7,19 +7,20 @@ export default class Player extends Humanoid {
     this.body.label = 'player';
 
     //Arma
-    
     this.weapon = new Weapon(scene, 0, 5, "bate", "swing", "mono", "semi", 300, 0, 1, 0.6, 0, 1, 80, 0, 1, 0, 0, true, -0.5, 3,
-    //la parte de bullet del arma
-    1, 64, 64, 0.5, 0.5, 30, 'bullet', 0.3, 0, 0.8, 0.3, 3);
+      //la parte de bullet del arma
+      1, 64, 64, 0.5, 0.5, 30, 'bullet', 0.3, 0, 0.8, 0.3, 3);
     this.add(this.weapon);
 
     //Atributos
     this.depth = 4;
     let active;
+    this.ammo = 100;
+
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
-    this.ammo = 100;
+    
 
     //this.add(sprite);
     /////////////
@@ -59,7 +60,7 @@ export default class Player extends Humanoid {
       //      this.puntero.x = (pointer.x/this.cameras.main.zoom) + this.cameras.main.worldView.x;
       //    this.puntero.y = (pointer.y/this.cameras.main.zoom)  + this.cameras.main.worldView.y;
       this.angleToPointer = Phaser.Math.Angle.Between(this.x, this.y, (pointer.x / this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.x, (pointer.y / this.scene.cameras.main.zoom) + this.scene.cameras.main.worldView.y);
-      
+
     }, this);
 
 
@@ -107,7 +108,10 @@ export default class Player extends Humanoid {
   // asignar la posicion del puntero
 
 
-
+  giveAmmo(amount){
+    this.ammo += amount;
+    this.hud.setAmmo(this.ammo);
+  }
 
   shoot() {
     if (this.ammo > this.weapon.ammoCostPerShoot()) {
@@ -172,7 +176,7 @@ export default class Player extends Humanoid {
         this.shoot();
       }
     }
-    else if (this.semiAutomaticaHasShoot === false){
+    else if (this.semiAutomaticaHasShoot === false) {
       this.semiAutomaticaHasShoot = true;
       this.shoot();
     }

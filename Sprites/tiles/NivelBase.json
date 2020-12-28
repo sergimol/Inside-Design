@@ -113,13 +113,85 @@
                 {
                  "gid":323,
                  "height":16,
+                 "id":41,
+                 "name":"enemy",
+                 "properties":[
+                        {
+                         "name":"Sala",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":649,
+                 "y":488
+                }, 
+                {
+                 "gid":323,
+                 "height":16,
+                 "id":42,
+                 "name":"enemy",
+                 "properties":[
+                        {
+                         "name":"Sala",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":649,
+                 "y":648.5
+                }, 
+                {
+                 "gid":323,
+                 "height":16,
+                 "id":43,
+                 "name":"enemy",
+                 "properties":[
+                        {
+                         "name":"Sala",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":518,
+                 "y":600
+                }, 
+                {
+                 "gid":323,
+                 "height":16,
+                 "id":44,
+                 "name":"enemy",
+                 "properties":[
+                        {
+                         "name":"Sala",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":772.5,
+                 "y":645.5
+                }, 
+                {
+                 "gid":323,
+                 "height":16,
                  "id":46,
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -135,9 +207,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -153,9 +225,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -171,9 +243,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -189,9 +261,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -207,9 +279,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -225,9 +297,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -243,9 +315,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -261,9 +333,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -279,9 +351,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",

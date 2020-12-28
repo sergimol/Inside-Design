@@ -25,6 +25,8 @@ export default class Game extends Phaser.Scene {
     this.load.image('doorOpen', './Sprites/doorOpen.png');
     this.load.image('trigger', './Sprites/trigger.png');
     this.load.image('end', './Sprites/end.jpg');
+    this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
+    this.load.image('medkit', './Sprites/medkit.png');
 
     this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
 
@@ -149,7 +151,6 @@ export default class Game extends Phaser.Scene {
       }
 
     });
-    this.item = new Item(this, this.player.x+80, this.player.y+80, 'bullet', this.player,'hola');
   }//End of create
 
   changeLayer() {
