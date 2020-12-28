@@ -3,7 +3,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         scale, sizeX, sizeY, originX,originY, 
         mass, label, airFriction, rebotes, 
         fuerzaRebote, velocidadMinima,
-        damage){
+        damage, devulveBalas, destruyeBalas, isSensor){
             
         super(scene, x, y, sprite);
         
@@ -11,6 +11,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         this.setScale(scale);
         this.setSize(sizeX,sizeY);
         this.scene.matter.add.gameObject(this);
+        this.body.isSensor = isSensor;
         this.setOrigin(originX,originY);
         this.setMass(mass);
         this.scene.add.existing(this);
@@ -35,6 +36,10 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         //scene.physics.add.existing(this);
         
         //this.physicsBodyType = Phaser.Physics.ARCADE;
+
+            this.booleanoParaDestruirme = false;
+
+
         //this.setVelocity(800);
         this.scene.matter.world.on('collisionstart', (event)=>{
             let wordBody = this.body;
@@ -49,7 +54,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                         //como le digo que ejecute el comando de humanoide si lo que tengo es una body, como se a que pertenece ese body? dios es demasiado esto?
 
                         bodyA.gameObject.damage(this.damage);  
-                        if (this.body.isSensor === false) this.destroy();
+                        if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
                     }
                     else if (bodyB.label === 'player' || bodyB.label === 'enemy') { 
                         
@@ -58,11 +63,11 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                         //tiene que pasarle el daño y destruirse
                         
                         bodyB.gameObject.damage(this.damage);
-                        if (this.body.isSensor === false) this.destroy();
+                        if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
                     }
                     else if (bodyB.label === 'bullet' && bodyB !== wordBody && (this.body.isSensor === true || bodyB.isSensor == true)){ //para las armas a meele que devuelvan al bicho
                         //DARLE LA VUELTA  ALA BALA
-                        if (this.body.isSensor === true){
+                        if (devulveBalas){
                             //let velocidad = Math.sqrt(Math.pow(bodyB.velocity.x, 2) + Math.pow(bodyB.velocity.y, 2));
 
                             let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyB.gameObject.x, bodyB.gameObject.y);
@@ -100,7 +105,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                     }
                     else if (bodyA.label === 'bullet' && bodyA !== wordBody && (this.body.isSensor === true || bodyA.isSensor == true) ){
                         //DARLE LA VUELTA  ALA BALA
-                        if (this.body.isSensor === true){
+                        if (devulveBalas){
                             //let velocidad = Math.sqrt(Math.pow(bodyA.velocity.x, 2) + Math.pow(bodyA.velocity.y, 2));
 
                             let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyA.gameObject.x, bodyA.gameObject.y);
@@ -148,7 +153,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
             //this.scene.matter.body.setInertia(this.body, Infinity);
             
         }
-        else this.destroy();
+        else this.booleanoParaDestruirme = true;
     }
     preUpdate(){
         console.log(this.x + " " + this.y);
@@ -162,8 +167,9 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         
         
          if ( this.body.speed <= this.velocidadMinima) {
-             this.destroy();
-            }    
+             this.booleanoParaDestruirme = true;
+            }
+            if (this.booleanoParaDestruirme) this.destroy();    
             
     }
 }

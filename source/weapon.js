@@ -11,8 +11,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 //para bullet a partir de aqui
                 bScale, bSizeX, bSizeY, bOriginX,bOriginY, 
                 bMass, bLabel, bAirFriction, bRebotes, 
-                bFuerzaRebote, bVelocidadMinima, bDamage
-                ){
+                bFuerzaRebote, bVelocidadMinima, bDamage,
+                bDevuelveBalas, bDestruyeBalas){
 
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
@@ -66,6 +66,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 this.bFuerzaRebote = bFuerzaRebote;
                  this.bVelocidadMinima = bVelocidadMinima;
                  this.bDamage = bDamage;
+                 this.bDevuelveBalas = bDevuelveBalas;
+                 this.bDestruyeBalas = bDestruyeBalas;
         
         
         //this.setScale(1.25);
@@ -164,7 +166,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 //instanciar disparos
                 let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, this.bScale, this.bSizeX, this.bSizeY, this.bOriginX, this.bOriginY, 
                     this.bMass, this.bLabel, this.bAirFriction, this.bRebotes, 
-                    this.bFuerzaRebote, this.bVelocidadMinima, this.bDamage);
+                    this.bFuerzaRebote, this.bVelocidadMinima, this.bDamage,
+                    this.bDevuelveBalas, this.bDestruyeBalas, this.cuerpoACuerpo);
                 //colisiones del disparo
                 
                 //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
@@ -179,7 +182,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                             'category': 16,
                             'mask':2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
                         };
-                        disparo.body.isSensor = true;
+                        //disparo.body.isSensor = true;
                     }
                     else{
 
@@ -202,7 +205,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                             'category': 8,
                             'mask':4 | 16, //PORa que detecte la colision del jugador tmb
                         };
-                        disparo.body.isSensor = true;
+                        //disparo.body.isSensor = true;
                     }
                     else{
 
