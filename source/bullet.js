@@ -2,7 +2,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, sprite, 
         scale, sizeX, sizeY, originX,originY, 
         mass, label, airFriction, rebotes, 
-        fuerzaRebote, velocidadMinima){
+        fuerzaRebote, velocidadMinima,
+        damage){
             
         super(scene, x, y, sprite);
         
@@ -24,6 +25,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         //atributos
         this.body.restitution = fuerzaRebote; //fuerza del rebote, momento que mantiene
         this.rebotes = rebotes;
+        this.damage = damage;
 
 
         //Otras variables
@@ -43,11 +45,19 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
                 if (bodyA === wordBody || bodyB === wordBody)
                 {
-                    if (bodyA.label === 'enemy' || bodyB.label === 'enemy' || bodyA.label === 'player' || bodyB.label === 'player') {
-                
+                    if (bodyA.label === 'enemy' || bodyA.label === 'player'){ 
+                        //como le digo que ejecute el comando de humanoide si lo que tengo es una body, como se a que pertenece ese body? dios es demasiado esto?
+
+                        bodyA.gameObject.damage(this.damage);  
+                        if (this.body.isSensor === false) this.destroy();
+                    }
+                    else if (bodyB.label === 'player' || bodyB.label === 'enemy') { 
+                        
                         //TODO
                         //#Issue
                         //tiene que pasarle el daño y destruirse
+                        
+                        bodyB.gameObject.damage(this.damage);
                         if (this.body.isSensor === false) this.destroy();
                     }
                     else this.wallhit();

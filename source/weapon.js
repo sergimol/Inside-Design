@@ -11,7 +11,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 //para bullet a partir de aqui
                 bScale, bSizeX, bSizeY, bOriginX,bOriginY, 
                 bMass, bLabel, bAirFriction, bRebotes, 
-                bFuerzaRebote, bVelocidadMinima
+                bFuerzaRebote, bVelocidadMinima, bDamage
                 ){
 
         super(scene, x, y);
@@ -65,6 +65,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                   this.bRebotes = bRebotes; 
                 this.bFuerzaRebote = bFuerzaRebote;
                  this.bVelocidadMinima = bVelocidadMinima;
+                 this.bDamage = bDamage;
         
         
         //this.setScale(1.25);
@@ -163,7 +164,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 //instanciar disparos
                 let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, this.bScale, this.bSizeX, this.bSizeY, this.bOriginX, this.bOriginY, 
                     this.bMass, this.bLabel, this.bAirFriction, this.bRebotes, 
-                    this.bFuerzaRebote, this.bVelocidadMinima);
+                    this.bFuerzaRebote, this.bVelocidadMinima, this.bDamage);
                 //colisiones del disparo
                 
                 //si en vez de esta categoria s epone un 0, no colisionara con ese objeto

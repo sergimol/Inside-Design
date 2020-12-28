@@ -29,11 +29,11 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
                 if (bodyA === wordBody || bodyB === wordBody) {
                     if (bodyA === wordBody && bodyB.label === 'bullet') {
-                        this.damage();
+                        //this.damage();
                         console.log("enemyHit");
                     }
                     else if (bodyA.label === 'bullet' && bodyB === wordBody) {
-                        this.damage();
+                        //this.damage();
                         console.log("enemyHit");
                     }
                 }
@@ -42,11 +42,11 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
     }//Fin constructora
 
-    damage() {
+    damage(damagePoints) {
         
 
         this.hitState = true;
-        --this.health;
+        this.health -= damagePoints;
         console.log(this.health);
         if(this.body.label === 'player' && !this.isDead)
             this.hud.setHealth(this.health);
