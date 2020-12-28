@@ -177,7 +177,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                             'group' : -5, 
                             
                             'category': 16,
-                            'mask':2,
+                            'mask':2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
                         };
                         disparo.body.isSensor = true;
                     }
@@ -187,7 +187,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                             'group' : -5, 
                             
                             'category': 16,
-                            'mask': 1 | 2,
+                            'mask': 1 | 2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
                         };
                     }
                 }
@@ -200,7 +200,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                             'group' : -4, //hara siempre la regla category/mask
                             
                             'category': 8,
-                            'mask':4,
+                            'mask':4 | 16, //PORa que detecte la colision del jugador tmb
                         };
                         disparo.body.isSensor = true;
                     }
