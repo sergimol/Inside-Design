@@ -168,7 +168,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
         
         //Sets the angle of the body instantly. Angular velocity, position, force etc. are unchanged.
         //# de esta manera se arreglan varias cossillas
-        //this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
+        this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
         
         
         
