@@ -175,6 +175,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                             'category': 16,
                             'mask':2,
                         };
+                        disparo.body.isSensor = true;
                     }
                     else{
 
@@ -197,6 +198,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                             'category': 8,
                             'mask':4,
                         };
+                        disparo.body.isSensor = true;
                     }
                     else{
 

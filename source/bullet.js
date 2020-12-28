@@ -48,7 +48,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                         //TODO
                         //#Issue
                         //tiene que pasarle el daño y destruirse
-                        this.destroy();
+                        if (this.body.isSensor === false) this.destroy();
                     }
                     else this.wallhit();
                 }
