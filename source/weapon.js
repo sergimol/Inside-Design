@@ -218,12 +218,12 @@ export default class Weapon extends Phaser.GameObjects.Container{
             
 
                 this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI/200)));
+                
                 //disparo.setRotation(this.rotation + (disp * Math.PI/200));
                 disparo.thrust(this.bulletForce + (dispForce * this.bulletForce/100));
     }
 
     rotateWeapon(angle) {
-
         this.rotation = angle;
         //si el angulo es mas de 45 y (45+90) el sprite deberia de ir debajo0 del de humanoide
         /**
