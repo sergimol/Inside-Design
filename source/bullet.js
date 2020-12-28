@@ -102,6 +102,9 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
                             console.log("una bala nano B ");
                         }
+                        else if (destruyeBalas){
+                            bodyB.gameObject.booleanoParaDestruirme = true;
+                        }
                     }
                     else if (bodyA.label === 'bullet' && bodyA !== wordBody && (this.body.isSensor === true || bodyA.isSensor == true) ){
                         //DARLE LA VUELTA  ALA BALA
@@ -136,6 +139,9 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
                             
                             console.log("una bala nano A ");
+                        }
+                        else if (destruyeBalas){
+                            bodyA.gameObject.booleanoParaDestruirme = true;
                         }
                     }
                     else this.wallhit();
