@@ -12,7 +12,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
         this.playerRef = playerref;
 
         //Constantes
-        this.fuerza = 0.00002;
+        this.fuerza = 0.000002;
         this.setFrictionAir(0.03);
 
         this.scene.matter.world.on('collisionstart', (event) => {

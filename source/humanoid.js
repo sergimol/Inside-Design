@@ -65,8 +65,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             if (this.body.label === 'enemy') {
                 this.scene.enemyCount--;
                 let numItems = Phaser.Math.RND.between(0, 4);
-                console.log(numItems);
-                for (let n = 0; n < 150; ++n) {
+                //console.log(numItems);
+                for (let n = 0; n < numItems; ++n) {
                     let chooseItem = Phaser.Math.RND.between(0, 4);
                     if (chooseItem < 4)
                         var item = new Item(this.scene, this.x, this.y, 'bulletAmmo', this.scene.player);

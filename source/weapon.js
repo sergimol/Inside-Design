@@ -2,17 +2,17 @@
 //import Bullet from "./bullet.js";
 import Bullet from "./bullet.js";
 
-export default class Weapon extends Phaser.GameObjects.Container{
+export default class Weapon extends Phaser.GameObjects.Container {
     constructor(scene, x, y, spriteWeapon,
-                spriteBullet, s, m, cadence,
-                dispersion, pellets, bulletForce, forceDispersion,
-                rafagas, rafagasCadence, origenX, origenY, canyonX, canyonY,
-                cuerpoACuerpo, rotationOffSet, costeMunicionPorBala,
-                //para bullet a partir de aqui
-                bScale, bSizeX, bSizeY, bOriginX,bOriginY, 
-                bMass, bLabel, bAirFriction, bRebotes, 
-                bFuerzaRebote, bVelocidadMinima, bDamage
-                ){
+        spriteBullet, s, m, cadence,
+        dispersion, pellets, bulletForce, forceDispersion,
+        rafagas, rafagasCadence, origenX, origenY, canyonX, canyonY,
+        cuerpoACuerpo, rotationOffSet, costeMunicionPorBala,
+        //para bullet a partir de aqui
+        bScale, bSizeX, bSizeY, bOriginX, bOriginY,
+        bMass, bLabel, bAirFriction, bRebotes,
+        bFuerzaRebote, bVelocidadMinima, bDamage
+    ) {
 
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
@@ -32,7 +32,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.cadencia = cadence; //en milisegundos
         this.ultimoDisparoTiempo = 0;
         this.ultimaRafagaTiempo = 0;
-        
+
         //dispersion del arma %
         this.dispersion = dispersion;
         this.pellets = pellets;
@@ -54,173 +54,174 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
         //atributos del disparo
         this.bScale = bScale;
-         this.bSizeX = bSizeX;
-          this.bSizeY = bSizeY;
-           this.bOriginX = bOriginX;
-           this.bOriginY = bOriginY;
+        this.bSizeX = bSizeX;
+        this.bSizeY = bSizeY;
+        this.bOriginX = bOriginX;
+        this.bOriginY = bOriginY;
 
-                this.bMass = bMass;
-                 this.bLabel = bLabel;
-                  this.bAirFriction = bAirFriction; 
-                  this.bRebotes = bRebotes; 
-                this.bFuerzaRebote = bFuerzaRebote;
-                 this.bVelocidadMinima = bVelocidadMinima;
-                 this.bDamage = bDamage;
-        
-        
+        this.bMass = bMass;
+        this.bLabel = bLabel;
+        this.bAirFriction = bAirFriction;
+        this.bRebotes = bRebotes;
+        this.bFuerzaRebote = bFuerzaRebote;
+        this.bVelocidadMinima = bVelocidadMinima;
+        this.bDamage = bDamage;
+
+
         //this.setScale(1.25);
         //this.bulletCount = 1; 
         //if (this.bulletCount >= 500) this.bulletCount = 1;
 
         //hace falta pasarle a cuanta distancia esta la punta del cañon, para cada arma sera diferente aqsi que habra que pasarselo a la constructora
         //es que voy a pasar numeros magicos xd
-        this.canyon = scene.add.image(canyonX,canyonY);
+        this.canyon = scene.add.image(canyonX, canyonY);
         this.add(this.canyon);
         //this.cadence, this.ammoRate, this.damage;
         this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
     }
 
-    esAutomatica(){return (this.modo === "auto");}
-    esMelee(){return this.cuerpoACuerpo;}
+    esAutomatica() { return (this.modo === "auto"); }
+    esMelee() { return this.cuerpoACuerpo; }
 
-    shoot(esEnemigo){
+    shoot(esEnemigo) {
         let siguienteDisparo = this.scene.time.now;
         //console.log(this.ultimoDisparoTiempo);
-        if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
-            
+        if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia) {
+
             this.ultimoDisparoTiempo = siguienteDisparo;
-            
-            
+
+
 
             ////////////
-           
-                //console.log(this.ultimoDisparoTiempo);
-                this.c = 0;
-                this.scene.time.addEvent({
-                    delay: this.rafagasCadence,
-                    callback: () => {
-                        this.dispararRafagas(esEnemigo);
-                         if (this.cuerpoACuerpo){
-                             if (this.hasShooted){
-                                    this.hasShooted = false;
-                                    this.image.setFlipY(false);
-                                    this.image.setOrigin(this.origenX, this.origenY);
-                                    this.image.rotation = this.rotationOffSet;
-                                 
-                                 //console.log("hombro izquierdo");
-                                }
-                                else{ 
-                                    this.hasShooted = true;
-                                    this.image.setFlipY(true);
-                                    this.image.setOrigin(this.origenX, 1 - this.origenY);
-                                    this.image.rotation = - this.rotationOffSet;
-                                }
-                            }
 
-                            
-                    },
-                    repeat: this.rafagas - 1}
-                );
-            
-            return true;    
+            //console.log(this.ultimoDisparoTiempo);
+            this.c = 0;
+            this.scene.time.addEvent({
+                delay: this.rafagasCadence,
+                callback: () => {
+                    this.dispararRafagas(esEnemigo);
+                    if (this.cuerpoACuerpo) {
+                        if (this.hasShooted) {
+                            this.hasShooted = false;
+                            this.image.setFlipY(false);
+                            this.image.setOrigin(this.origenX, this.origenY);
+                            this.image.rotation = this.rotationOffSet;
+
+                            //console.log("hombro izquierdo");
+                        }
+                        else {
+                            this.hasShooted = true;
+                            this.image.setFlipY(true);
+                            this.image.setOrigin(this.origenX, 1 - this.origenY);
+                            this.image.rotation = - this.rotationOffSet;
+                        }
+                    }
+
+
+                },
+                repeat: this.rafagas - 1
+            }
+            );
+
+            return true;
         }
         else return false;
-            
+
     }
 
-    dispararRafagas(esEnemigo){
-            this.scene.cameras.main.shake(100,0.0005);
-            if (this.style === "mono"){
-                
+    dispararRafagas(esEnemigo) {
+        this.scene.cameras.main.shake(100, 0.0005);
+        if (this.style === "mono") {
+
             let sound = this.scene.sound.add('gunShootSound2');
             sound.setVolume(0.1);
             sound.play();
+            this.instanciarBala(esEnemigo);
+        }
+        else if (this.style === "shotgun") {
+
+            let sound = this.scene.sound.add('gunShootSound2');
+            sound.setVolume(0.1);
+            sound.play();
+            for (let i = 0; i < this.pellets; ++i) {
                 this.instanciarBala(esEnemigo);
             }
-            else if (this.style === "shotgun"){
-                
-            let sound = this.scene.sound.add('gunShootSound2');
-            sound.setVolume(0.1);
-            sound.play();
-                for (let i = 0; i < this.pellets; ++i){
-                    this.instanciarBala(esEnemigo);
-                }
-            } 
-        
+        }
+
     }
 
 
-    instanciarBala(esEnemigo){
-        
-        
-            this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+    instanciarBala(esEnemigo) {
 
-                var d = this.tempMatrix.decomposeMatrix();
-             
-                //calcular dispersion
-                let disp = Phaser.Math.Between(-this.dispersion, this.dispersion);
-                let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
 
-                //instanciar disparos
-                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, this.bScale, this.bSizeX, this.bSizeY, this.bOriginX, this.bOriginY, 
-                    this.bMass, this.bLabel, this.bAirFriction, this.bRebotes, 
-                    this.bFuerzaRebote, this.bVelocidadMinima, this.bDamage);
-                //colisiones del disparo
-                
-                //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
-                if (esEnemigo){
-                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
-                    //Aqui se asignan todas las colisiones
-                    if (this.cuerpoACuerpo){
-                        
-                        disparo.body.collisionFilter = {
-                            'group' : -5, 
-                            
-                            'category': 16,
-                            'mask':2,
-                        };
-                        disparo.body.isSensor = true;
-                    }
-                    else{
+        this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
 
-                        disparo.body.collisionFilter = {
-                            'group' : -5, 
-                            
-                            'category': 16,
-                            'mask': 1 | 2,
-                        };
-                    }
-                }
-                else{
-                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
-                    //Aqui se asignan todas las colisiones
+        var d = this.tempMatrix.decomposeMatrix();
 
-                    if (this.cuerpoACuerpo){
-                        disparo.body.collisionFilter = {
-                            'group' : -4, //hara siempre la regla category/mask
-                            
-                            'category': 8,
-                            'mask':4,
-                        };
-                        disparo.body.isSensor = true;
-                    }
-                    else{
+        //calcular dispersion
+        let disp = Phaser.Math.Between(-this.dispersion, this.dispersion);
+        let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
 
-                        disparo.body.collisionFilter = {
-                            'group' : -4, //hara siempre la regla category/mask
-                            
-                            'category': 8,
-                            'mask': 1 | 4,
-                        };
-                    }
+        //instanciar disparos
+        let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, this.bScale, this.bSizeX, this.bSizeY, this.bOriginX, this.bOriginY,
+            this.bMass, this.bLabel, this.bAirFriction, this.bRebotes,
+            this.bFuerzaRebote, this.bVelocidadMinima, this.bDamage);
+        //colisiones del disparo
 
-                }
-            
+        //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
+        if (esEnemigo) {
+            // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
+            //Aqui se asignan todas las colisiones
+            if (this.cuerpoACuerpo) {
 
-                this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI/200)));
-                
-                //disparo.setRotation(this.rotation + (disp * Math.PI/200));
-                disparo.thrust(this.bulletForce + (dispForce * this.bulletForce/100));
+                disparo.body.collisionFilter = {
+                    'group': -5,
+
+                    'category': 16,
+                    'mask': 2,
+                };
+                disparo.body.isSensor = true;
+            }
+            else {
+
+                disparo.body.collisionFilter = {
+                    'group': -5,
+
+                    'category': 16,
+                    'mask': 1 | 2,
+                };
+            }
+        }
+        else {
+            // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
+            //Aqui se asignan todas las colisiones
+
+            if (this.cuerpoACuerpo) {
+                disparo.body.collisionFilter = {
+                    'group': -4, //hara siempre la regla category/mask
+
+                    'category': 8,
+                    'mask': 4,
+                };
+                disparo.body.isSensor = true;
+            }
+            else {
+
+                disparo.body.collisionFilter = {
+                    'group': -4, //hara siempre la regla category/mask
+
+                    'category': 8,
+                    'mask': 1 | 4,
+                };
+            }
+
+        }
+
+
+        this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI / 200)));
+
+        //disparo.setRotation(this.rotation + (disp * Math.PI/200));
+        disparo.thrust(this.bulletForce + (dispForce * this.bulletForce / 100));
     }
 
     rotateWeapon(angle) {
@@ -238,8 +239,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
     }
 
 
-    ammoCostPerShoot(){
+    ammoCostPerShoot() {
 
-        return(this.costeMunicionPorBala * this.rafagas)
+        return (this.costeMunicionPorBala * this.rafagas)
     }
 }

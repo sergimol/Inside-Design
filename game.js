@@ -3,6 +3,7 @@ import Player from "./source/player.js";
 import Puntero from "./source/puntero.js";
 import Enemy from "./source/enemy.js";
 import Item from "./source/item.js";
+import Doors from "./source/doors.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -96,7 +97,7 @@ export default class Game extends Phaser.Scene {
     //Prototipo Musica
     let sound = this.sound.add('mainTheme');
     sound.setVolume(0.7);
-    sound.play();
+    //sound.play();
 
 
     //CARGA DE OBJETOS
@@ -150,6 +151,7 @@ export default class Game extends Phaser.Scene {
         }
       }
 
+      this.doorSystem;
     });
   }//End of create
 
@@ -167,7 +169,7 @@ export default class Game extends Phaser.Scene {
 
   loadObjects(map) {
     this.enemies = this.add.group();
-
+    this.doorSystem = new Doors(this,'door','doorOpen',1);
     for (const objeto of map.getObjectLayer('Entities').objects) {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
@@ -180,10 +182,7 @@ export default class Game extends Phaser.Scene {
         this.enemies.add(e);
       }
       else if (objeto.name === 'door') {
-        this.door = this.matter.add.image(0, 0, 'door');
-        this.door.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 50, 30));
-        this.door.depth = 0;
-        this.door.setStatic(true);
+        this.doorSystem.addDoor(objeto.x, objeto.y);
       }
       else if (objeto.name === 'endLevel') {
         this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
@@ -220,9 +219,5 @@ export default class Game extends Phaser.Scene {
   }
   update() {
     this.changeLayer();
-    if (this.enemyCount === 0) {
-      this.door.setTexture('doorOpen');
-      this.door.setCollisionCategory(null);
-    }
   }
 }
