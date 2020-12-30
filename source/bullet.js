@@ -1,36 +1,34 @@
+import config from './bulletsFolder/defaultBullet.js'
+
 export default class Bullet extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, sprite, 
-        scale, sizeX, sizeY, originX,originY, 
-        mass, label, airFriction, rebotes, 
-        fuerzaRebote, velocidadMinima,
-        damage, devulveBalas, destruyeBalas, isSensor){
+    constructor(scene, x, y){
             
-        super(scene, x, y, sprite);
+        super(scene, x, y, config.sprite);
         
         this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
-        this.setScale(scale);
-        this.setSize(sizeX,sizeY);
+        this.setScale(config.scale);
+        this.setSize(config.sizeX, config.sizeY);
         this.scene.matter.add.gameObject(this);
-        this.body.isSensor = isSensor;
-        this.setOrigin(originX,originY);
-        this.setMass(mass);
+        this.body.isSensor = config.isSensor;
+        this.setOrigin(config.originX, config.originY);
+        this.setMass(config.mass);
         this.scene.add.existing(this);
-        this.body.label = label;
+        this.body.label = config.label;
         
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, Infinity);
-        this.setFrictionAir(airFriction);
+        this.setFrictionAir(config.airFriction);
         
 
 
         //atributos
-        this.body.restitution = fuerzaRebote; //fuerza del rebote, momento que mantiene
-        this.rebotes = rebotes;
-        this.damage = damage;
+        this.body.restitution = config.fuerzaRebote; //fuerza del rebote, momento que mantiene
+        this.rebotes = config.rebotes;
+        this.damage = config.damage;
 
 
         //Otras variables
-        this.velocidadMinima = velocidadMinima;
+        this.velocidadMinima = config.velocidadMinima;
 
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
@@ -67,7 +65,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                     }
                     else if (bodyB.label === 'bullet' && bodyB !== wordBody && (this.body.isSensor === true || bodyB.isSensor == true)){ //para las armas a meele que devuelvan al bicho
                         //DARLE LA VUELTA  ALA BALA
-                        if (devulveBalas){
+                        if (config.devulveBalas){
                             //let velocidad = Math.sqrt(Math.pow(bodyB.velocity.x, 2) + Math.pow(bodyB.velocity.y, 2));
 
                             let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyB.gameObject.x, bodyB.gameObject.y);
@@ -102,13 +100,13 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
 
                             //console.log("una bala nano B ");
                         }
-                        else if (destruyeBalas){
+                        else if (config.destruyeBalas){
                             bodyB.gameObject.booleanoParaDestruirme = true;
                         }
                     }
                     else if (bodyA.label === 'bullet' && bodyA !== wordBody && (this.body.isSensor === true || bodyA.isSensor == true) ){
                         //DARLE LA VUELTA  ALA BALA
-                        if (devulveBalas){
+                        if (config.devulveBalas){
                             //let velocidad = Math.sqrt(Math.pow(bodyA.velocity.x, 2) + Math.pow(bodyA.velocity.y, 2));
 
                             let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyA.gameObject.x, bodyA.gameObject.y);
@@ -140,7 +138,7 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                             
                             //console.log("una bala nano A ");
                         }
-                        else if (destruyeBalas){
+                        else if (config.destruyeBalas){
                             bodyA.gameObject.booleanoParaDestruirme = true;
                         }
                     }
