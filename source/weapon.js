@@ -11,12 +11,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 spriteBullet, s, m, cadence,
                 dispersion, pellets, bulletForce, forceDispersion,
                 rafagas, rafagasCadence, origenX, origenY, canyonX, canyonY,
-                cuerpoACuerpo, rotationOffSet, costeMunicionPorBala,
-                //para bullet a partir de aqui
-                bScale, bSizeX, bSizeY, bOriginX,bOriginY, 
-                bMass, bLabel, bAirFriction, bRebotes, 
-                bFuerzaRebote, bVelocidadMinima, bDamage,
-                bDevuelveBalas, bDestruyeBalas){
+                cuerpoACuerpo, rotationOffSet, costeMunicionPorBala){
 
         super(scene, x, y);
         //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
@@ -56,22 +51,6 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //coste de municon de uyna bala
         this.costeMunicionPorBala = costeMunicionPorBala;
 
-        //atributos del disparo
-        this.bScale = bScale;
-         this.bSizeX = bSizeX;
-          this.bSizeY = bSizeY;
-           this.bOriginX = bOriginX;
-           this.bOriginY = bOriginY;
-
-                this.bMass = bMass;
-                 this.bLabel = bLabel;
-                  this.bAirFriction = bAirFriction; 
-                  this.bRebotes = bRebotes; 
-                this.bFuerzaRebote = bFuerzaRebote;
-                 this.bVelocidadMinima = bVelocidadMinima;
-                 this.bDamage = bDamage;
-                 this.bDevuelveBalas = bDevuelveBalas;
-                 this.bDestruyeBalas = bDestruyeBalas;
         
         
         //this.setScale(1.25);
