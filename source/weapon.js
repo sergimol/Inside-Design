@@ -1,3 +1,7 @@
+import defaultBulletConfig from './bulletsFolder/defaultBullet.js'
+
+
+
 //import Bullet from "./bullet.js";
 //import Bullet from "./bullet.js";
 import Bullet from "./bullet.js";
@@ -164,10 +168,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
 
                 //instanciar disparos
-                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.spriteBullet, this.bScale, this.bSizeX, this.bSizeY, this.bOriginX, this.bOriginY, 
-                    this.bMass, this.bLabel, this.bAirFriction, this.bRebotes, 
-                    this.bFuerzaRebote, this.bVelocidadMinima, this.bDamage,
-                    this.bDevuelveBalas, this.bDestruyeBalas, this.cuerpoACuerpo);
+                let disparo = new Bullet(this.scene, d.translateX, d.translateY, defaultBulletConfig);
                 //colisiones del disparo
                 
                 //si en vez de esta categoria s epone un 0, no colisionara con ese objeto

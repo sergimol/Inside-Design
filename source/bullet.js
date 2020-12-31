@@ -1,7 +1,7 @@
-import config from './bulletsFolder/defaultBullet.js'
+
 
 export default class Bullet extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y){
+    constructor(scene, x, y, config){
             
         super(scene, x, y, config.sprite);
         
