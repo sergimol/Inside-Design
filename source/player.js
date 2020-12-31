@@ -69,8 +69,23 @@ export default class Player extends Humanoid {
 
     this.semiAutomaticaHasShoot = true;
     this.scene.input.on('pointerdown', function (pointer) {
-      this.semiAutomaticaHasShoot = false;
+      if (pointer.leftButtonDown())
+        this.semiAutomaticaHasShoot = false;
     }, this);
+
+
+
+    //PRUEBAS ACTIVA
+    this.setMass(50);
+    this.inDash = false;
+    this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+    this.scene.input.keyboard.on('keydown-SHIFT', function (event){
+        this.scene.matter.body.setAngle(this.body, (this.rotation + (1 * Math.PI/200)));
+        this.thrust(50);
+        //this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+        //this.dashDir.normalize();
+        //this.inDash = true;
+  }, this);
 
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
@@ -90,6 +105,21 @@ export default class Player extends Humanoid {
       'mask': 1 | 16, //mundo y balas enemigas
       //'group':1 ,  //asi no colisionan entre si estan en la misma categoria si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
     };
+
+    //PRUEBA PARTICULAS
+    let particles = this.scene.add.particles('walkParticle');
+
+    this.emitter = particles.createEmitter({
+        speed: 20,
+        scale: { start: 1.5, end: 1 },
+        gravityY: 100,
+        frequency: 150,
+        lifespan: 300,
+        blendMode: 'ADD'
+    });
+
+    this.emitter.startFollow(this);
+    
   }
 
 
@@ -108,6 +138,9 @@ export default class Player extends Humanoid {
 
 
 
+  dash(){
+    this.setVelocity(this.dashDir.x * 2, this.dashDir.y *2);
+  }
 
   shoot() {
     if (this.ammo > this.weapon.ammoCostPerShoot()) {
@@ -125,14 +158,25 @@ export default class Player extends Humanoid {
 
 
   playerMove(dirX, dirY) {
-    this.setVelocity(this.dir.x * 1.5, this.dir.y * 1.5);
-    //this.body.setVelocityX(this.speed * dirX);
-    //this.body.setVelocityY(this.speed * dirY);
-    //Animacion
-    if (this.dir.x === 0 && this.dir.y === 0)
-      this.aspecto.play('idle', true);
+    if(!this.inDash){
+      this.setVelocity(this.dir.x * 1.5, this.dir.y * 1.5);
+      //this.body.setVelocityX(this.speed * dirX);
+      //this.body.setVelocityY(this.speed * dirY);
+      
+      //Animacion
+      if (this.dir.x === 0 && this.dir.y === 0){
+        
+        this.emitter.stopFollow(this);
+        this.aspecto.play('idle', true);
+      }
+      else{
+        this.emitter.startFollow(this); 
+        this.aspecto.play('walk', true);
+      }
+    }
     else
-      this.aspecto.play('walk', true);
+      this.dash();
+
   }
 
 
@@ -140,6 +184,7 @@ export default class Player extends Humanoid {
 
 
 
+    this.speed
     //Idle por defecto
     this.dir.x = 0;
     this.dir.y = 0;
