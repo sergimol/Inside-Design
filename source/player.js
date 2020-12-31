@@ -76,16 +76,36 @@ export default class Player extends Humanoid {
 
 
     //PRUEBAS ACTIVA
-    this.setMass(50);
+    let dashParticles = this.scene.add.particles('dashParticle');
+
+    this.dashEmitter = dashParticles.createEmitter({
+        speed: 20,
+        scale: { start: 3, end: 0 },
+        //gravityY: 100,
+        //frequency: 1,
+        lifespan: 300,
+        blendMode: 'ADD'
+    });
+    this.dashTime = 50;
+    this.setMass(10);
     this.inDash = false;
+    this.dashPos;
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
     this.scene.input.keyboard.on('keydown-SHIFT', function (event){
-        this.scene.matter.body.setAngle(this.body, (this.rotation + (1 * Math.PI/200)));
-        this.thrust(50);
-        //this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
-        //this.dashDir.normalize();
-        //this.inDash = true;
+        this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+        this.dashPos = new Phaser.Math.Vector2(this.puntero.x, this.puntero.y);
+        this.dashDir.normalize();
+        this.inDash = true;
+
+        this.timerDash = this.scene.time.now + this.dashTime;
+        this.dashEmitter.startFollow(this);
+        this.aspecto.setTint(0x00ff1e);
+        let sound = this.scene.sound.add('dashSound');
+            //sound.setVolume();
+            sound.play();
   }, this);
+
+    
 
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
@@ -111,7 +131,7 @@ export default class Player extends Humanoid {
 
     this.emitter = particles.createEmitter({
         speed: 20,
-        scale: { start: 1.5, end: 1 },
+        scale: { start: 0.5, end: 0 },
         gravityY: 100,
         frequency: 150,
         lifespan: 300,
@@ -139,8 +159,14 @@ export default class Player extends Humanoid {
 
 
   dash(){
-    this.setVelocity(this.dashDir.x * 2, this.dashDir.y *2);
+    let distanceBetweenPos = Phaser.Math.Distance.Between(this.x, this.y, this.dashPos.x, this.dashPos.y);
+    this.setVelocity(this.dashDir.x * 15, this.dashDir.y *15);
+    if (distanceBetweenPos < 4 || this.scene.time.now > this.timerDash) {
+      this.inDash=false;
+    }    
   }
+   
+
 
   shoot() {
     if (this.ammo > this.weapon.ammoCostPerShoot()) {
@@ -159,6 +185,8 @@ export default class Player extends Humanoid {
 
   playerMove(dirX, dirY) {
     if(!this.inDash){
+      this.aspecto.setTint(0xFFFFFF);
+      this.dashEmitter.stopFollow(this);
       this.setVelocity(this.dir.x * 1.5, this.dir.y * 1.5);
       //this.body.setVelocityX(this.speed * dirX);
       //this.body.setVelocityY(this.speed * dirY);

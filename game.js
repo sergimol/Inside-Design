@@ -36,7 +36,9 @@ export default class Game extends Phaser.Scene {
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
     this.load.image('bate', './Sprites/Bate3.png');
     this.load.image('swing', './Sprites/swing.png');
-    this.load.image('walkParticle','./Sprites/particula.png');
+    this.load.image('walkParticle','./Sprites/walkParticulas.png');
+    this.load.image('dashParticle', './Sprites/dashParticula.png')
+    this.load.audio('dashSound', './audio/dashSound.wav');
 
   }
 
