@@ -5,6 +5,9 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
             
         super(scene, x, y, config.sprite);
         
+
+this.config = config;
+
         this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
         this.setScale(config.scale);
         this.setSize(config.sizeX, config.sizeY);
@@ -173,7 +176,14 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
          if ( this.body.speed <= this.velocidadMinima) {
              this.booleanoParaDestruirme = true;
             }
-        if (this.booleanoParaDestruirme) this.destroy();    
+        if (this.booleanoParaDestruirme){
+            
+            let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config);
+            disparoHijo.setAngle(this.angle + Math.PI);
+            disparoHijo.thrust(1);
+            
+            this.destroy();    
+        } 
             
     }
 }
