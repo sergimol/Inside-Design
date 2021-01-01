@@ -1,4 +1,4 @@
-import defaultBulletConfig from './bulletsFolder/defaultBullet.js'
+import defaultBulletConfig from './bulletsFolder/defaultBullet.js';
 
 
 
@@ -7,49 +7,43 @@ import defaultBulletConfig from './bulletsFolder/defaultBullet.js'
 import Bullet from "./bullet.js";
 
 export default class Weapon extends Phaser.GameObjects.Container{
-    constructor(scene, x, y, spriteWeapon,
-                spriteBullet, s, m, cadence,
-                dispersion, pellets, bulletForce, forceDispersion,
-                rafagas, rafagasCadence, origenX, origenY, canyonX, canyonY,
-                cuerpoACuerpo, rotationOffSet, costeMunicionPorBala){
+    constructor(scene, x, y, config){
 
         super(scene, x, y);
-        //al parecer necesito guardar el sprite aqui porque de otra forma no me lo detecta en otros metodos, ejem: shoot
-        this.spriteBullet = spriteBullet;
 
         //Otros atributos
-        this.rafagas = rafagas; //cantidad de veces que se llama al metodo de disparar
-        this.rafagasCadence = rafagasCadence; //intervalo de tiempo entre que se puede disparar una rafaga y otra
-        this.cuerpoACuerpo = cuerpoACuerpo; //booleano 
-        this.origenX = origenX;
-        this.origenY = origenY;
+        this.rafagas = config.rafagas; //cantidad de veces que se llama al metodo de disparar
+        this.rafagasCadence = config.rafagasCadence; //intervalo de tiempo entre que se puede disparar una rafaga y otra
+        this.cuerpoACuerpo = config.cuerpoACuerpo; //booleano 
+        this.origenX = config.origenX;
+        this.origenY = config.origenY;
 
         //semiautomatica o automatica
-        this.modo = m;
+        this.modo = config.m;
         //forma en la que dispara, mono, rafaga, shotgun, multi, //granadas, cohetes, son un tipo de bala no un tipo de arma etc¿?
-        this.style = s;
-        this.cadencia = cadence; //en milisegundos
+        this.style = config.s;
+        this.cadencia = config.cadence; //en milisegundos
         this.ultimoDisparoTiempo = 0;
         this.ultimaRafagaTiempo = 0;
         
         //dispersion del arma %
-        this.dispersion = dispersion;
-        this.pellets = pellets;
-        this.bulletForce = bulletForce;
-        this.forceDispersion = forceDispersion; // %
+        this.dispersion = config.dispersion;
+        this.pellets = config.pellets;
+        this.bulletForce = config.bulletForce;
+        this.forceDispersion = config.forceDispersion; // %
 
         //auxiliares
         this.hasShooted = false; //booleano que indica si ah disparado anteriormente o no, se usa para el giro de la imagen en las armas a meele
-        this.rotationOffSet = rotationOffSet;
+        this.rotationOffSet = config.rotationOffSet;
 
         //imagen del arma
-        this.image = scene.add.image(0, 0, spriteWeapon);
-        this.image.setOrigin(origenX, origenY);
+        this.image = scene.add.image(0, 0, config.spriteWeapon);
+        this.image.setOrigin(config.origenX, config.origenY);
         this.add(this.image);
         this.image.rotation = this.rotationOffSet;
 
         //coste de municon de uyna bala
-        this.costeMunicionPorBala = costeMunicionPorBala;
+        this.costeMunicionPorBala = config.costeMunicionPorBala;
 
         
         
@@ -59,7 +53,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
         //hace falta pasarle a cuanta distancia esta la punta del cañon, para cada arma sera diferente aqsi que habra que pasarselo a la constructora
         //es que voy a pasar numeros magicos xd
-        this.canyon = scene.add.image(canyonX,canyonY);
+        this.canyon = scene.add.image(config.canyonX, config.canyonY);
         this.add(this.canyon);
         //this.cadence, this.ammoRate, this.damage;
         this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
