@@ -1,9 +1,7 @@
-import hijaConfig from "./defaultEnemyBullet.js";
-
 
 const BulletConfig = {
 
-    sprite: "bullet", 
+    sprite: "enemybullet", 
     scale: 0.7,
     sizeX: 8,
     sizeY: 8,
@@ -19,7 +17,7 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
-    balaHija: hijaConfig
+    balaHija: null
 }
 
 export default BulletConfig

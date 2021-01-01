@@ -178,9 +178,12 @@ this.config = config;
             }
         if (this.booleanoParaDestruirme){
             
-            let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config);
-            disparoHijo.setAngle(this.angle + Math.PI);
-            disparoHijo.thrust(1);
+            if (this.config.balaHija !== null){
+
+                let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija);
+                disparoHijo.setAngle(this.angle + Math.PI);
+                disparoHijo.thrust(1);
+            }
             
             this.destroy();    
         } 
