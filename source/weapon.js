@@ -1,6 +1,5 @@
-//import Bullet from "./bullet.js";
-//import Bullet from "./bullet.js";
 import Bullet from "./bullet.js";
+import config from "./config.js";
 
 export default class Weapon extends Phaser.GameObjects.Container{
     constructor(scene, x, y, spriteWeapon,
@@ -131,18 +130,18 @@ export default class Weapon extends Phaser.GameObjects.Container{
     }
 
     dispararRafagas(esEnemigo){
-            this.scene.cameras.main.shake(100,0.0005);
+            this.scene.cameras.main.shake(config.weapon.shakeDur ,config.weapon.shakeInt);
             if (this.style === "mono"){
                 
             let sound = this.scene.sound.add('gunShootSound2');
-            sound.setVolume(0.1);
+            sound.setVolume(config.weapon.shotVolume);
             sound.play();
                 this.instanciarBala(esEnemigo);
             }
             else if (this.style === "shotgun"){
                 
             let sound = this.scene.sound.add('gunShootSound2');
-            sound.setVolume(0.1);
+            sound.setVolume(config.weapon.shotVolume);
             sound.play();
                 for (let i = 0; i < this.pellets; ++i){
                     this.instanciarBala(esEnemigo);

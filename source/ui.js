@@ -1,3 +1,5 @@
+import config from "./config.js";
+
 export default class UI extends Phaser.Scene {
     constructor() {
         super({ key: 'UIScene', active: true });
@@ -21,24 +23,23 @@ export default class UI extends Phaser.Scene {
         this.healthBackground.fillRect(0, 0, 1, 1);
         //Barra de vida
         this.healthBar = this.add.graphics();
-        this.healthBar.fillStyle(0xf91010, 1);
+        this.healthBar.fillStyle(config.ui.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 1, 1);
 
         //Posición de las barras
-        this.healthBar.x = 50;
-        this.healthBar.y = 30;
-        this.healthBackground.x = 50;
-        this.healthBackground.y = 30;
+        this.healthBar.x = config.ui.barPosX;
+        this.healthBar.y = config.ui.barPosY;
+        this.healthBackground.x = config.ui.barPosX;
+        this.healthBackground.y = config.ui.barPosY;
         //Escala de las barras
-        this.healthBar.scaleY = 15;
-        this.healthBackground.scaleY = 15;
+        this.healthBar.scaleY = config.ui.barScaleY;
+        this.healthBackground.scaleY = config.ui.barScaleY;
 
-        this.weapon = this.add.image(70, 85, 'gunshotsilhouette');
-        this.weapon.scale = 3;        
+        this.weapon = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
+        this.weapon.scale = config.ui.weaponScl;        
 
         //Contador de munición
-        //Creación de texto con bitmap 
-        //this.ammo = this.add.bitmapText(50, 50, 'inversionz', '')
+        //Creación de texto con bitmap
         
         //creacion de texto con webfont
         WebFont.load({
@@ -46,16 +47,16 @@ export default class UI extends Phaser.Scene {
                 families: [ 'Permanent Marker']
             }
         })
-        this.ammo = this.add.text(110, 65, '', {fontFamily: 'Permanent Marker', fontSize: 38, color: '#ffffff'});
+        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', {fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff'});
     }
 
     //Cambia el tamaño de la barra de vida en función de la salud del jugador
     setHealth(playerHealth) {
-        this.healthBar.scaleX = playerHealth * 20;
+        this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
     }
 
     setBackground(playerMaxHP){
-        this.healthBackground.scaleX = playerMaxHP * 20;
+        this.healthBackground.scaleX = playerMaxHP * config.ui.barScaleX;
     }
 
     //Actualiza el contador de munición

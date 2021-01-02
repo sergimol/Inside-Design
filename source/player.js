@@ -1,6 +1,8 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
+import config from "./config.js";
+
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, depth) {
     super(scene, x, y, sprite);
@@ -14,12 +16,12 @@ export default class Player extends Humanoid {
     this.add(this.weapon);
 
     //Atributos
-    this.depth = 4;
+    this.depth = config.player.depth;
     let active;
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
-    this.ammo = 100;
+    this.ammo = config.player.baseAmmo;
 
     //this.add(sprite);
     /////////////
@@ -91,8 +93,8 @@ export default class Player extends Humanoid {
         lifespan: 300,
         blendMode: 'ADD'
     });
-    this.dashTime = 50;
-    this.setMass(25);
+    this.dashTime = config.player.dashTime;
+    this.setMass(config.player.mass);
     this.inDash = false;
     this.dashPos;
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
@@ -113,7 +115,7 @@ export default class Player extends Humanoid {
           
           this.timerDash = this.scene.time.now + this.dashTime;
           this.dashEmitter.startFollow(this);
-          this.aspecto.setTint(0x00ff1e);
+          this.aspecto.setTint(config.player.dashTint);
           let sound = this.scene.sound.add('dashSound');
           sound.play();
 
@@ -210,9 +212,9 @@ export default class Player extends Humanoid {
 
   playerMove() {
     if(!this.inDash){
-      this.aspecto.setTint(0xFFFFFF);
+      this.aspecto.setTint(config.player.baseTint);
       this.dashEmitter.stopFollow(this);
-      this.setVelocity(this.dir.x * 1.5, this.dir.y * 1.5);
+      this.setVelocity(this.dir.x * config.player.baseVelFactor, this.dir.y * config.player.baseVelFactor);
       //this.body.setVelocityX(this.speed * dirX);
       //this.body.setVelocityY(this.speed * dirY);
       
