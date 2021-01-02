@@ -92,7 +92,7 @@ export default class Player extends Humanoid {
         blendMode: 'ADD'
     });
     this.dashTime = 50;
-    this.setMass(10);
+    this.setMass(25);
     this.inDash = false;
     this.dashPos;
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
@@ -116,6 +116,9 @@ export default class Player extends Humanoid {
           this.aspecto.setTint(0x00ff1e);
           let sound = this.scene.sound.add('dashSound');
           sound.play();
+
+          if (this.inDash)
+            this.dash();
         }
         //ESCUDO
         else if(this.actualACTIVE === actives.SHIELD)
@@ -184,10 +187,8 @@ export default class Player extends Humanoid {
 
 
   dash(){
-    this.setVelocity(this.dashDir.x * 15, this.dashDir.y *15);
-    if (this.scene.time.now > this.timerDash) {
-      this.inDash=false;
-    }    
+    this.applyForce({x: this.dashDir.x, y: this.dashDir.y});
+    
   }
    
 
@@ -226,13 +227,15 @@ export default class Player extends Humanoid {
         this.aspecto.play('walk', true);
       }
     }
-    else
-      this.dash();
 
   }
 
 
   preUpdate() {
+
+    if (this.scene.time.now > this.timerDash) {
+      this.inDash=false;
+    }    
     //Idle por defecto
     this.dir.x = 0;
     this.dir.y = 0;
