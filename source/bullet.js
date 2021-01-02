@@ -1,39 +1,40 @@
 
 
-export default class Bullet extends Phaser.GameObjects.Sprite{
+export default class Bullet extends Phaser.GameObjects.Container{
     constructor(scene, x, y, config, esEnemigo){
             
-        super(scene, x, y, config.sprite);
+        super(scene, x, y);
 
-        this.aspecto = config.sprite;
-        
+        this.aspecto = scene.add.sprite(0,0, config.sprite);
+        this.add(this.aspecto);
 
         //animacion
 
-        const anims = scene.anims;
+        const anims = this.scene.anims;
 
         anims.create({
-          key: 'start',
-          frames: anims.generateFrameNumbers(config.sprite, { start: 4, end: 8 }), //15
-          frameRate: 15,
-          repeat: -1
-        })
+            key: config.key,
+            frameRate: config.frameRate,
+            repeat: config.repeat,
+            frames: anims.generateFrameNumbers(config.sprite, config.frames)
+            
+        });
         
         
-
-
+        
         this.config = config;
-
-        this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
-        this.setScale(config.scale);
+        
+        this.aspecto.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
+        this.aspecto.setScale(config.scale);
         this.setSize(config.sizeX, config.sizeY);
         this.scene.matter.add.gameObject(this);
         this.body.isSensor = config.isSensor;
-        this.setOrigin(config.originX, config.originY);
+        //this.setOrigin(config.originX, config.originY);
         this.setMass(config.mass);
         this.scene.add.existing(this);
         this.body.label = config.label;
         
+        this.aspecto.play(config.key);
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, Infinity);
         this.setFrictionAir(config.airFriction);
@@ -226,6 +227,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
                 }
             }
         });
+
+        
     }
     wallhit(){
         if (this.rebotes > 0 ){
@@ -241,7 +244,6 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
     }
     preUpdate(){
         
-        this.play('start', true);
         //console.log(this.x + " " + this.y);
         //tengo que hacerlo asi, porque de otra forma al asignarle el angulo y tener otra interaccion empieza a girar como un condenado
         //this.body.setAngle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
@@ -264,8 +266,8 @@ export default class Bullet extends Phaser.GameObjects.Sprite{
             if (this.config.balaHija !== null){
 
                 let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija);
-                disparoHijo.setAngle(this.angle + Math.PI);
-                disparoHijo.thrust(1);
+                //disparoHijo.setAngle(this.angle + Math.PI);
+                //disparoHijo.thrust(1);
             }
             
             this.destroy();    

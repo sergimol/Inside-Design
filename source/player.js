@@ -2,7 +2,7 @@ import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
 
-import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
+import granade__launcher from "./weaponsFolder/granade_launcher.js";
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, depth) {
@@ -11,7 +11,7 @@ export default class Player extends Humanoid {
 
     //Arma
     
-    this.weapon = new Weapon(scene, 0, 5, defaultWeapon)
+    this.weapon = new Weapon(scene, 0, 5, granade__launcher)
     this.add(this.weapon);
 
     //Atributos

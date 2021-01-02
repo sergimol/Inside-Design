@@ -9,8 +9,10 @@ import Bullet from "./bullet.js";
 export default class Weapon extends Phaser.GameObjects.Container{
     constructor(scene, x, y, config){
 
+        
         super(scene, x, y);
-
+        
+        this.config = config;
         //Otros atributos
         this.rafagas = config.rafagas; //cantidad de veces que se llama al metodo de disparar
         this.rafagasCadence = config.rafagasCadence; //intervalo de tiempo entre que se puede disparar una rafaga y otra
@@ -141,7 +143,9 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
 
                 //instanciar disparos
-                let disparo = new Bullet(this.scene, d.translateX, d.translateY, defaultBulletConfig, esEnemigo);
+                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.config.bullet, esEnemigo);
+                
+                //disparo.play("start");
                 
             
 
