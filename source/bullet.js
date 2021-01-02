@@ -1,12 +1,28 @@
 
 
 export default class Bullet extends Phaser.GameObjects.Sprite{
-    constructor(scene, x, y, config){
+    constructor(scene, x, y, config, esEnemigo){
             
         super(scene, x, y, config.sprite);
+
+        this.aspecto = config.sprite;
         
 
-this.config = config;
+        //animacion
+
+        const anims = scene.anims;
+
+        anims.create({
+          key: 'start',
+          frames: anims.generateFrameNumbers(config.sprite, { start: 4, end: 8 }), //15
+          frameRate: 15,
+          repeat: -1
+        })
+        
+        
+
+
+        this.config = config;
 
         this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
         this.setScale(config.scale);
@@ -32,6 +48,67 @@ this.config = config;
 
         //Otras variables
         this.velocidadMinima = config.velocidadMinima;
+        this.lifeTime = this.scene.time.now + config.lifeTime;
+
+
+        //Definir las colisones de la bala
+
+        //colisiones del disparo
+                
+                //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
+                if (esEnemigo){
+                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
+                    //Aqui se asignan todas las colisiones
+                    if (config.isSensor){
+                        
+                        this.body.collisionFilter = {
+                            'group' : -5, 
+                            
+                            'category': 16,
+                            'mask':2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
+                        };
+                        //disparo.body.isSensor = true;
+                    }
+                    else{
+
+                        this.body.collisionFilter = {
+                            'group' : -5, 
+                            
+                            'category': 16,
+                            'mask': 1 | 2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
+                        };
+                    }
+                }
+                else{
+                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
+                    //Aqui se asignan todas las colisiones
+
+                    if (config.isSensor){
+                        this.body.collisionFilter = {
+                            'group' : -4, //hara siempre la regla category/mask
+                            
+                            'category': 8,
+                            'mask':4 | 16, //PORa que detecte la colision del jugador tmb
+                        };
+                        //disparo.body.isSensor = true;
+                    }
+                    else{
+
+                        this.body.collisionFilter = {
+                            'group' : -4, //hara siempre la regla category/mask
+                            
+                            'category': 8,
+                            'mask': 1 | 4,
+                        };
+                    }
+
+                }
+
+
+
+
+
+
 
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
@@ -163,12 +240,18 @@ this.config = config;
         else this.booleanoParaDestruirme = true;
     }
     preUpdate(){
+        
+        this.play('start', true);
         //console.log(this.x + " " + this.y);
         //tengo que hacerlo asi, porque de otra forma al asignarle el angulo y tener otra interaccion empieza a girar como un condenado
         //this.body.setAngle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
         
         //Sets the angle of the body instantly. Angular velocity, position, force etc. are unchanged.
         //# de esta manera se arreglan varias cossillas
+        if (this.scene.time.now >= this.lifeTime){
+            this.booleanoParaDestruirme = true;
+        } 
+
         this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
         
         
@@ -186,7 +269,8 @@ this.config = config;
             }
             
             this.destroy();    
-        } 
+        }
+       
             
     }
 }

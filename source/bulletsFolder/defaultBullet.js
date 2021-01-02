@@ -19,7 +19,13 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
-    balaHija: hijaConfig
+    balaHija: null,
+    lifeTime: Infinity, //milisegundos
+
+    //para la animacion
+    frameRate: 2
+
+
 }
 
 export default BulletConfig

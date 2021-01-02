@@ -141,57 +141,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 let dispForce = Phaser.Math.Between(-this.forceDispersion, this.forceDispersion);
 
                 //instanciar disparos
-                let disparo = new Bullet(this.scene, d.translateX, d.translateY, defaultBulletConfig);
-                //colisiones del disparo
+                let disparo = new Bullet(this.scene, d.translateX, d.translateY, defaultBulletConfig, esEnemigo);
                 
-                //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
-                if (esEnemigo){
-                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
-                    //Aqui se asignan todas las colisiones
-                    if (this.cuerpoACuerpo){
-                        
-                        disparo.body.collisionFilter = {
-                            'group' : -5, 
-                            
-                            'category': 16,
-                            'mask':2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
-                        };
-                        //disparo.body.isSensor = true;
-                    }
-                    else{
-
-                        disparo.body.collisionFilter = {
-                            'group' : -5, 
-                            
-                            'category': 16,
-                            'mask': 1 | 2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
-                        };
-                    }
-                }
-                else{
-                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
-                    //Aqui se asignan todas las colisiones
-
-                    if (this.cuerpoACuerpo){
-                        disparo.body.collisionFilter = {
-                            'group' : -4, //hara siempre la regla category/mask
-                            
-                            'category': 8,
-                            'mask':4 | 16, //PORa que detecte la colision del jugador tmb
-                        };
-                        //disparo.body.isSensor = true;
-                    }
-                    else{
-
-                        disparo.body.collisionFilter = {
-                            'group' : -4, //hara siempre la regla category/mask
-                            
-                            'category': 8,
-                            'mask': 1 | 4,
-                        };
-                    }
-
-                }
             
 
                 this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI/200)));
