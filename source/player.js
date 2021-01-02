@@ -76,13 +76,18 @@ export default class Player extends Humanoid {
 
 
     //PRUEBAS ACTIVA
+    const actives = {
+      NONE : 'none',
+      DASH : 'dash',
+      SHIELD : 'shield',
+      BOMB : 'bomb'
+    };
+    this.actualACTIVE = actives.DASH;
     let dashParticles = this.scene.add.particles('dashParticle');
 
     this.dashEmitter = dashParticles.createEmitter({
         speed: 20,
         scale: { start: 3, end: 0 },
-        //gravityY: 100,
-        //frequency: 1,
         lifespan: 300,
         blendMode: 'ADD'
     });
@@ -91,21 +96,41 @@ export default class Player extends Humanoid {
     this.inDash = false;
     this.dashPos;
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
-    this.scene.input.keyboard.on('keydown-SHIFT', function (event){
-        this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
-        this.dashPos = new Phaser.Math.Vector2(this.puntero.x, this.puntero.y);
-        this.dashDir.normalize();
-        this.inDash = true;
+    this.scene.input.on('pointerdown', function (pointer){
+      //Comprobamos que sea el click derecho
+      if (pointer.rightButtonDown())
+      {
+        //DASH
+        if (this.actualACTIVE === actives.DASH){
+          
+          if(this.dir.x === 0 && this.dir.y === 0)
+            this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+          else
+            this.dashDir = new Phaser.Math.Vector2(this.dir.x, this.dir.y);
 
-        this.timerDash = this.scene.time.now + this.dashTime;
-        this.dashEmitter.startFollow(this);
-        this.aspecto.setTint(0x00ff1e);
-        let sound = this.scene.sound.add('dashSound');
-            //sound.setVolume();
-            sound.play();
-  }, this);
+          this.dashDir.normalize();
+          this.inDash = true;
+          
+          this.timerDash = this.scene.time.now + this.dashTime;
+          this.dashEmitter.startFollow(this);
+          this.aspecto.setTint(0x00ff1e);
+          let sound = this.scene.sound.add('dashSound');
+          sound.play();
+        }
+        //ESCUDO
+        else if(this.actualACTIVE === actives.SHIELD)
+        {
 
-    
+        }
+        //BOMBAS
+        else if(this.actualACTIVE === actives.BOMB)
+        {
+
+        }
+      }
+    }, this);
+      
+      
 
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
@@ -159,9 +184,8 @@ export default class Player extends Humanoid {
 
 
   dash(){
-    let distanceBetweenPos = Phaser.Math.Distance.Between(this.x, this.y, this.dashPos.x, this.dashPos.y);
     this.setVelocity(this.dashDir.x * 15, this.dashDir.y *15);
-    if (distanceBetweenPos < 4 || this.scene.time.now > this.timerDash) {
+    if (this.scene.time.now > this.timerDash) {
       this.inDash=false;
     }    
   }
@@ -183,7 +207,7 @@ export default class Player extends Humanoid {
   }
 
 
-  playerMove(dirX, dirY) {
+  playerMove() {
     if(!this.inDash){
       this.aspecto.setTint(0xFFFFFF);
       this.dashEmitter.stopFollow(this);
@@ -209,10 +233,6 @@ export default class Player extends Humanoid {
 
 
   preUpdate() {
-
-
-
-    this.speed
     //Idle por defecto
     this.dir.x = 0;
     this.dir.y = 0;
@@ -228,7 +248,7 @@ export default class Player extends Humanoid {
       this.dir.y = 1;
 
     this.dir.normalize();
-    this.playerMove(this.dir.x, this.dir.y);
+    this.playerMove();
     this.puntero.moverconjugador(this);
     this.puntero.updateMiddle(this);
 
