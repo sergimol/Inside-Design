@@ -67,6 +67,14 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
             if(this.body.label === 'enemy'){
                 this.scene.enemyCount--;
+
+                this.body.collisionFilter = {
+                    'group': -2,
+                    'category': 4,
+                    'mask': 1 , //mundo y balas jugador
+                    //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
+                };
+
             }
 
         }

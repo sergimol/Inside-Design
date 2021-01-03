@@ -1,7 +1,7 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
-import config from "./config.js";
+import granade__launcher from "./weaponsFolder/granade_launcher.js";
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, depth) {
@@ -10,13 +10,13 @@ export default class Player extends Humanoid {
 
     //Arma
     
-    this.weapon = new Weapon(scene, 0, 5, "bate", "swing", "mono", "semi", 300, 0, 1, 0.6, 0, 1, 80, 0, 1, 0, 0, true, -0.5, 0,
-    //la parte de bullet del arma
-    1, 64, 64, 0.5, 0.5, 30, 'bullet', 0.3, 0, 0.8, 0.3, 1, true, false);
+    this.weapon = new Weapon(scene, 0, 5, granade__launcher)
     this.add(this.weapon);
 
     //Atributos
-    this.depth = config.player.depth;
+    this.body.mass = 900;
+    this.body.frictionAir = 0.1;
+    this.depth = 4;
     let active;
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
@@ -152,7 +152,7 @@ export default class Player extends Humanoid {
     this.body.collisionFilter = {
       'group': -3,
       'category': 2,
-      'mask': 1 | 16, //mundo y balas enemigas
+      'mask': 1 | 16 | 32, //mundo y balas enemigas
       //'group':1 ,  //asi no colisionan entre si estan en la misma categoria si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
     };
 
@@ -214,7 +214,10 @@ export default class Player extends Humanoid {
     if(!this.inDash){
       this.aspecto.setTint(config.player.baseTint);
       this.dashEmitter.stopFollow(this);
-      this.setVelocity(this.dir.x * config.player.baseVelFactor, this.dir.y * config.player.baseVelFactor);
+    if (this.body.speed < 1.5){
+
+      this.applyForce({x:this.dir.x * 1.5, y:this.dir.y * 1.5});
+    }
       //this.body.setVelocityX(this.speed * dirX);
       //this.body.setVelocityY(this.speed * dirY);
       
@@ -229,6 +232,7 @@ export default class Player extends Humanoid {
         this.aspecto.play('walk', true);
       }
     }
+
 
   }
 

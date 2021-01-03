@@ -1,20 +1,22 @@
 import Humanoid from "./humanoid.js";
 import Weapon from "./weapon.js";
-import config from "./config.js";
+
+import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
 
 export default class Enemy extends Humanoid {
     constructor(scene, x, y, sprite, player, depth) {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
-        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "enemybullet", "mono", "semi", 300, 20, 1, 0.3, 30, 8, 200, 0.15, 0.5, 20, 0, false, 0, 0,
-        //la parte de bullet del arma
-        0.7, 8, 8, 4, 4, 30, 'bullet', 0.01, 0, 0.8, 1.0, 2, false, false);
+        this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
         this.add(this.weapon);
 
         //Atributos
-        this.speed = config.enemy.speed;
-        this.health = config.enemy.health;
-        this.depth = config.enemy.depth;
+        this.speed = 50;
+        this.health = 3;
+        this.depth = 3;
+
+        this.body.frictionAir = 0.05;
+        this.body.mass = 300;
         
         
         this.add(this.aspecto);
@@ -78,7 +80,7 @@ export default class Enemy extends Humanoid {
         this.body.collisionFilter = {
             'group': -2,
             'category': 4,
-            'mask': 1 | 8, //mundo y balas jugador
+            'mask': 1 | 8 | 32, //mundo y balas jugador
             //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
         };
 
@@ -104,7 +106,7 @@ export default class Enemy extends Humanoid {
         else {
             if (this.body.speed <= 5){
                 this.setFrictionAir(0.4);
-                this.setCollisionCategory(null)
+                //this.setCollisionCategory(null)
                 
             }
             this.setActive(false);
@@ -208,7 +210,10 @@ export default class Enemy extends Humanoid {
             this.attackState = true;
 
         //MOVEMOS AL ENEMIGO
-        this.setVelocity(this.dir.x * config.enemy.idleVelFactor, this.dir.y * config.enemy.idleVelFactor);
+        if (this.body.speed < 1 && !this.isDead){
+
+            this.setVelocity(this.dir.x * 0.3, this.dir.y * 0.3);
+        }
 
     }
     //Calculos auxiliares del movimiento en reposo
@@ -255,6 +260,10 @@ export default class Enemy extends Humanoid {
         this.moveRotate((this.playerRef.x - this.x));
 
         //MOVEMOS AL ENEMIGO
+        if (this.body.speed < 1 && !this.isDead){
+            this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
+
+        }
         this.setVelocity(this.dir.x * config.enemy.aggroVelFactor, this.dir.y * config.enemy.aggroVelFactor);
     }
 
