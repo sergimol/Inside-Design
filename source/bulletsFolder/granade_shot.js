@@ -23,6 +23,8 @@ const BulletConfig = {
     hijaFaction: null, //si es true, usara el filtro de la bala padre para ser enemiga o amiga, si es null sera neutra (ejemplo la explosion)
     lifeTime: Infinity, //milisegundos
 
+    pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
+
     //para la animacion
     
     key: "granade_shot_anims",
@@ -31,7 +33,7 @@ const BulletConfig = {
     repeat: -1,
     
     inertia: 2700,
-    angularVelocity: Math.random(),
+    angularVelocity: Math.random()
 
 
 }

@@ -22,6 +22,9 @@ const BulletConfig = {
     balaHija: null,
     lifeTime: 500, //milisegundos
 
+    
+    pushback: 6, //fuerza con la que empuja la bala al chocar con un objetivo
+
     //para la animacion
     
         key: "granade_shot_explosion_anims",
@@ -30,8 +33,8 @@ const BulletConfig = {
         repeat: 0,
     
 
-        inertia: Infinity,
-        angularVelocity: 1
+    inertia: Infinity,
+    angularVelocity: 1
 
 }
 

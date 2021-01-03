@@ -15,6 +15,8 @@ export default class Player extends Humanoid {
     this.add(this.weapon);
 
     //Atributos
+    this.body.mass = 900;
+    this.body.frictionAir = 0.1;
     this.depth = 4;
     let active;
     //Puntero
@@ -126,20 +128,24 @@ export default class Player extends Humanoid {
 
 
   playerMove(dirX, dirY) {
-    this.setVelocity(this.dir.x * 1.5, this.dir.y * 1.5);
-    //this.body.setVelocityX(this.speed * dirX);
-    //this.body.setVelocityY(this.speed * dirY);
-    //Animacion
-    if (this.dir.x === 0 && this.dir.y === 0)
+    //console.log(this.body.speed);
+    if (this.body.speed < 1.5){
+
+      this.applyForce({x:this.dir.x * 1.5, y:this.dir.y * 1.5});
+    }
+      //this.body.setVelocityX(this.speed * dirX);
+      //this.body.setVelocityY(this.speed * dirY);
+      //Animacion
+      if (this.dir.x === 0 && this.dir.y === 0)
       this.aspecto.play('idle', true);
-    else
+      else
       this.aspecto.play('walk', true);
   }
 
 
   preUpdate() {
 
-
+    //this.applyForce(this.scene.matter.vector.create(1,1));
 
     //Idle por defecto
     this.dir.x = 0;

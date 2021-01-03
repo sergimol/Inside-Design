@@ -19,6 +19,9 @@ const BulletConfig = {
     isSensor: false,
     balaHija: null,
     lifeTime: Infinity, //milisegundos
+
+    
+    pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
     
     //para la animacion
     

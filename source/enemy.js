@@ -13,6 +13,10 @@ export default class Enemy extends Humanoid {
         this.speed = 50;
         this.health = 3;
         this.depth = 3;
+
+        this.body.frictionAir = 0.05;
+        this.body.mass = 300;
+        
         
         
         this.add(this.aspecto);
@@ -102,7 +106,7 @@ export default class Enemy extends Humanoid {
         else {
             if (this.body.speed <= 5){
                 this.setFrictionAir(0.4);
-                this.setCollisionCategory(null)
+                //this.setCollisionCategory(null)
                 
             }
             this.setActive(false);
@@ -206,7 +210,10 @@ export default class Enemy extends Humanoid {
             this.attackState = true;
 
         //MOVEMOS AL ENEMIGO
-        this.setVelocity(this.dir.x * 0.3, this.dir.y * 0.3);
+        if (this.body.speed < 1 && !this.isDead){
+
+            this.setVelocity(this.dir.x * 0.3, this.dir.y * 0.3);
+        }
 
     }
     //Calculos auxiliares del movimiento en reposo
@@ -253,7 +260,10 @@ export default class Enemy extends Humanoid {
         this.moveRotate((this.playerRef.x - this.x));
 
         //MOVEMOS AL ENEMIGO
-        this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
+        if (this.body.speed < 1 && !this.isDead){
+            this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
+
+        }
     }
 
 }

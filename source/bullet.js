@@ -161,6 +161,28 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //como le digo que ejecute el comando de humanoide si lo que tengo es una body, como se a que pertenece ese body? dios es demasiado esto?
 
                         bodyA.gameObject.damage(this.damage);  
+                        //añadamos el puchback de la bala,
+                        //primero calcular el vector y normalizarlo
+
+                        let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyA.gameObject.x, bodyA.gameObject.y);
+                        let vectorDeDireccion = this.scene.matter.vector.create(Math.cos(anguloAux) * config.pushback, Math.sin(anguloAux) * config.pushback);
+                        
+                        
+                        
+                        //this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
+                        
+                        console.log(bodyA.speed);
+                        
+
+                        //TODO
+                        //me gustaria que funcionase con un applyForce pero parece ser que no quiere realizar este comando, asique lo dejare cableado como un applyForce,
+                        //pero esto quiere decir que no importa lo que pese el mmuñeco siempre empujara la misam distacia
+                        //I dont like that
+                        this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
+                        //this.scene.matter.body.applyForce(bodyA, {x: bodyB.gameObject.x, y: bodyB.gameObject.y } ,10000000000);
+                        //bodyA.gameObject.applyForce(vectorDeDireccion);
+                        console.log(bodyA.speed);
+
                         if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
                     }
                     else if (bodyB.label === 'player' || bodyB.label === 'enemy') { 
@@ -169,7 +191,25 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //#Issue
                         //tiene que pasarle el daño y destruirse
                         
-                        bodyB.gameObject.damage(this.damage);
+                        bodyB.gameObject.gameObject.damage(this.damage);
+
+                        
+                        //añadamos el puchback de la bala,
+                        //primero calcular el vector y normalizarlo
+
+                        let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyB.gameObject.x, bodyB.gameObject.y);
+                        let vectorDeDireccion = this.scene.matter.vector.create(Math.cos(anguloAux) * config.pushback, Math.sin(anguloAux) * config.pushback);
+                        
+
+                        
+                        //this.scene.matter.body.setVelocity(bodyB, vectorDeDireccion);
+                        console.log(bodyB.speed);
+                        
+                        this.scene.matter.body.setVelocity(bodyB, vectorDeDireccion);
+                        //this.scene.matter.body.applyForce(bodyB, {x:bodyA.gameObject.x, y: bodyA.gameObject.y},1000000000);
+                        //bodyB.gameObject.applyForce(vectorDeDireccion);
+                        console.log(bodyB.speed);
+
                         if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
                     }
                     else if (bodyB.label === 'bullet' && bodyB !== wordBody && (this.body.isSensor === true || bodyB.isSensor == true)){ //para las armas a meele que devuelvan al bicho
