@@ -88,7 +88,7 @@ export default class Player extends Humanoid {
     this.body.collisionFilter = {
       'group': -3,
       'category': 2,
-      'mask': 1 | 16, //mundo y balas enemigas
+      'mask': 1 | 16 | 32, //mundo y balas enemigas
       //'group':1 ,  //asi no colisionan entre si estan en la misma categoria si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
     };
   }

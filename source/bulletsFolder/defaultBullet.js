@@ -23,8 +23,11 @@ const BulletConfig = {
     lifeTime: Infinity, //milisegundos
 
     //para la animacion
-    frameRate: 2
-
+    
+    key: "defaultBullet_anims",
+    frameRate: 15,
+    frames: {start: 0 , end:2 },//{start: 1 , end:1 }), //15
+    repeat: -1
 
 }
 

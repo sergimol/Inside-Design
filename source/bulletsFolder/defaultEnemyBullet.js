@@ -17,7 +17,16 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
-    balaHija: null
+    balaHija: null,
+    lifeTime: Infinity, //milisegundos
+    
+    //para la animacion
+    
+    key: "defaultBullet_anims",
+    frameRate: 15,
+    frames: {start: 0 , end:2 },//{start: 1 , end:1 }), //15
+    repeat: -1
+
 }
 
 export default BulletConfig

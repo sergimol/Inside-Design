@@ -20,6 +20,7 @@ const BulletConfig = {
     destruyeBalas: false, 
     isSensor: false,
     balaHija: hijaConfig,
+    hijaFaction: null, //si es true, usara el filtro de la bala padre para ser enemiga o amiga, si es null sera neutra (ejemplo la explosion)
     lifeTime: Infinity, //milisegundos
 
     //para la animacion

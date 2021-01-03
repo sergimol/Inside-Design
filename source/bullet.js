@@ -23,6 +23,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         
         
         this.config = config;
+        this.esEnemigo = esEnemigo;
         
         this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
         this.aspecto.setScale(config.scale);
@@ -57,7 +58,29 @@ export default class Bullet extends Phaser.GameObjects.Container{
         //colisiones del disparo
                 
                 //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
-                if (esEnemigo){
+                if(esEnemigo === null){
+                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16, Neutral Bullet: 32
+                    if (config.isSensor){
+                        
+                        this.body.collisionFilter = {
+                            'group' : -5, 
+                            
+                            'category': 32,
+                            'mask':2 | 8 | 4 | 16, //choca con todos menos default
+                        };
+                        //disparo.body.isSensor = true;
+                    }
+                    else{
+
+                        this.body.collisionFilter = {
+                            'group' : -5, 
+                            
+                            'category': 32,
+                            'mask': 1 | 2 | 8 | 4 | 16, //POR SI CHOCA CON el swing de un arma a meele del jugador
+                        };
+                    }
+                }
+                else if (esEnemigo){
                     // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
                     //Aqui se asignan todas las colisiones
                     if (config.isSensor){
@@ -265,7 +288,13 @@ export default class Bullet extends Phaser.GameObjects.Container{
             
             if (this.config.balaHija !== null){
 
-                let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija);
+                if (this.config.hijaFaction === true){
+                    let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, this.esEnemigo);
+                }
+                else{
+                    let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, null);
+                }
+
                 //disparoHijo.setAngle(this.angle + Math.PI);
                 //disparoHijo.thrust(1);
             }
