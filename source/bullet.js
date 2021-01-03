@@ -42,7 +42,9 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.setFrictionAir(config.airFriction);
 
         if (config.inertia !== Infinity){
-            this.scene.matter.body.setAngularVelocity(this.body, config.angularVelocity);
+            let angularAux = ((Math.random() * config.angularVelocityMultiply) + config.angularVelocitySuma) * config.angularVelocityResultadoMultiply;
+            console.log(angularAux);
+            this.scene.matter.body.setAngularVelocity(this.body, angularAux);
         }
         
 

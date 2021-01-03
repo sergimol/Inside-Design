@@ -22,7 +22,9 @@ const BulletConfig = {
     
     
     inertia: 2700, //2700 es el valor default
-    angularVelocity: Math.random(),
+    angularVelocityMultiply: 2, //multiplicara un valor aleatorio de entre 0 y 1 
+    angularVelocitySuma: -1, //samara la valor aleatorio multiplicado
+    angularVelocityResultadoMultiply: 1, //multiplicara el resultado de todo lo anterior
     lifeTime: Infinity, //milisegundos
     pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
 
