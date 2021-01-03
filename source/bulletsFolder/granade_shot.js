@@ -19,32 +19,32 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
-
+    
+    
+    inertia: 2700, //2700 es el valor default
+    angularVelocity: Math.random(),
     lifeTime: Infinity, //milisegundos
+    pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
 
-    balaHija: hijaConfig,
+    balaHija: hijaConfig, //Todo a partir de aqui pertenece a la hija
 
     bulletPelletHija:2, //cantidad de veces que debe instanciar hija
 
 
     hijaFaction: null, //si es true, usara el filtro de la bala padre para ser enemiga o amiga, si es null sera neutra (ejemplo la explosion)
-    dispersionHija: 0,
-    forceDispersionHija: 0,
+    dispersionHija: 0, //dispersion en porcetaje/2 que se le aplicara a la bala al instanciarse
+    forceDispersionHija: 0, //
     hijaUsaAnguloPadre: 0, //1 utilizara el angulo del padre, 0 no,
     hijaOffsetAngulo: 0, //Math.Pi es lo que se le sumara al angulo en radianes al instanciarse la bala
     bulletForceHija: 0,
 
-    pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
 
     //para la animacion
     
     key: "granade_shot_anims",
     frameRate: 1,
     frames: {start: 0 , end:0 },//{start: 1 , end:1 }), //15
-    repeat: -1,
-    
-    inertia: 2700, //2700 es el valor default
-    angularVelocity: Math.random()
+    repeat: -1
 
 
 }

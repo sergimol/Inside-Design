@@ -17,7 +17,10 @@ export default class Game extends Phaser.Scene {
     this.load.image('crosshair', 'Sprites/crosshair.png');
     this.load.image('granade_launcher', 'Sprites/granade_launcher.png');
     
+    this.load.image('escopeta_lanzable', 'Sprites/escopeta_lanzable.png');
+    
     this.load.spritesheet('granade__launcher_shoot', 'Sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
+    this.load.spritesheet('escopeta_lanzable_shoot', 'Sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('granade_launcher_shoot_explosion', 'Sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
     //Javi
