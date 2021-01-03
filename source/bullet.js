@@ -24,7 +24,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         
         this.config = config;
         
-        this.aspecto.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
+        this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
         this.aspecto.setScale(config.scale);
         this.setSize(config.sizeX, config.sizeY);
         this.scene.matter.add.gameObject(this);
