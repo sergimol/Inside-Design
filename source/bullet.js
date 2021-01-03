@@ -310,6 +310,37 @@ export default class Bullet extends Phaser.GameObjects.Container{
         }
         else this.booleanoParaDestruirme = true;
     }
+
+
+
+    instanciarBala(esEnemigo){
+        
+        
+        //this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+
+        //var d = this.tempMatrix.decomposeMatrix();
+        
+        //calcular dispersion
+        let disp = Phaser.Math.Between(-this.config.dispersionHija, this.config.dispersionHija);
+        let dispForce = Phaser.Math.Between(-this.config.forceDispersionHija, this.config.forceDispersionHija);
+
+        //instanciar disparos
+        
+        let disparo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, esEnemigo);
+        
+        //disparo.play("start");
+        
+    
+
+        this.scene.matter.body.setAngle(disparo.body, ((this.rotation * this.config.hijaUsaAnguloPadre) + (disp * Math.PI/200) + this.config.hijaOffsetAngulo));
+        //disparo.setRotation(this.rotation + (disp * Math.PI/200));
+        disparo.thrust(this.config.bulletForceHija + (dispForce * this.config.bulletForceHija/100));
+    }
+
+
+
+
+
     preUpdate(){
         
         //console.log(this.x + " " + this.y);
@@ -336,10 +367,16 @@ export default class Bullet extends Phaser.GameObjects.Container{
             if (this.config.balaHija !== null){
 
                 if (this.config.hijaFaction === true){
-                    let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, this.esEnemigo);
+                    for (let i = 0; i < this.config.bulletPelletHija; ++i){
+                    this.instanciarBala(this.esEnemigo);
+                    }
+                    //let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, this.esEnemigo);
                 }
                 else{
-                    let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, null);
+                    for (let i = 0; i < this.config.bulletPelletHija; ++i){
+                    this.instanciarBala(null);
+                    }
+                    //let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, null);
                 }
 
                 //disparoHijo.setAngle(this.angle + Math.PI);

@@ -9,7 +9,7 @@ const BulletConfig = {
     sizeY: 83,
     originX: 0,
     originY: 0, 
-    mass: 10,
+    mass: 50,
     label: 'bullet',
     airFriction: 0.01,
     rebotes: 0, 

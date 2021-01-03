@@ -19,9 +19,20 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
+
+
     balaHija: hijaConfig,
+
+    bulletPelletHija:2, //cantidad de veces que debe instanciar hija
+
+
     hijaFaction: null, //si es true, usara el filtro de la bala padre para ser enemiga o amiga, si es null sera neutra (ejemplo la explosion)
     lifeTime: Infinity, //milisegundos
+    dispersionHija: 200,
+    forceDispersionHija: 1,
+    hijaUsaAnguloPadre: 1, //1 utilizara el angulo del padre, 0 no,
+    hijaOffsetAngulo: Math.PI, //Math.Pi es lo que se le sumara al angulo en radianes al instanciarse la bala
+    bulletForceHija: 1,
 
     pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
 
@@ -32,7 +43,7 @@ const BulletConfig = {
     frames: {start: 0 , end:0 },//{start: 1 , end:1 }), //15
     repeat: -1,
     
-    inertia: 2700,
+    inertia: Infinity,
     angularVelocity: Math.random()
 
 
