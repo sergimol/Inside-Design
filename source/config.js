@@ -11,7 +11,7 @@ const Config = {
         depth: 4,
         baseAmmo: 100,
         dashTime: 50,
-        mass: 25,
+        mass: 800,
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5

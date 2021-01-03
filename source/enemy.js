@@ -1,5 +1,6 @@
 import Humanoid from "./humanoid.js";
 import Weapon from "./weapon.js";
+import config from "./config.js";
 
 import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
 

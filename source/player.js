@@ -2,6 +2,7 @@ import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
 import granade__launcher from "./weaponsFolder/granade_launcher.js";
+import config from "./config.js";
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, depth) {
@@ -14,7 +15,7 @@ export default class Player extends Humanoid {
     this.add(this.weapon);
 
     //Atributos
-    this.body.mass = 900;
+    //this.body.mass = 900;
     this.body.frictionAir = 0.1;
     this.depth = 4;
     let active;
@@ -189,7 +190,7 @@ export default class Player extends Humanoid {
 
 
   dash(){
-    this.applyForce({x: this.dashDir.x, y: this.dashDir.y});
+    this.applyForce({x: this.dashDir.x * 20, y: this.dashDir.y * 20});
     
   }
    
