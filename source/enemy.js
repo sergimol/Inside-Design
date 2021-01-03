@@ -2,7 +2,7 @@ import Humanoid from "./humanoid.js";
 import Weapon from "./weapon.js";
 import config from "./config.js";
 
-import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
+import defaultWeapon from "./weaponsFolder/defaultEnemyWeapon.js";
 
 export default class Enemy extends Humanoid {
     constructor(scene, x, y, sprite, player, depth) {

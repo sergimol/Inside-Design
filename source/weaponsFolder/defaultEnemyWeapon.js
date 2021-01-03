@@ -1,13 +1,13 @@
-import disparo from "./../bulletsFolder/escopeta_lanzable_shoot.js";
+import disparo from "./../bulletsFolder/defaultEnemyBullet.js";
 
 const WeaponConfig = {
-    spriteWeapon: "escopeta_lanzable",
+    spriteWeapon: "gunShoot",
     s: "mono",
     m: "semi", 
     cadence: 300,
     dispersion: 20, 
     pellets: 1, 
-    bulletForce: 1, 
+    bulletForce: 0.3, 
     forceDispersion: 30,
     rafagas: 1, 
     rafagasCadence: 200,
@@ -15,8 +15,8 @@ const WeaponConfig = {
     origenY: 0.5, 
     canyonX: 20, 
     canyonY: 0,
-    cuerpoACuerpo: true, 
-    rotationOffSet: 1, 
+    cuerpoACuerpo: false, 
+    rotationOffSet: 0, 
     costeMunicionPorBala: 1,
     bullet: disparo
 }
