@@ -1,7 +1,7 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
-import granade__launcher from "./weaponsFolder/escopeta_lanzable.js";
+import granade__launcher from "./weaponsFolder/granade_launcher.js";
 import config from "./config.js";
 
 export default class Player extends Humanoid {
@@ -16,7 +16,7 @@ export default class Player extends Humanoid {
 
     //Atributos
     //this.body.mass = 900;
-    this.body.frictionAir = 0.1;
+    this.body.frictionAir = 0.15;
     this.depth = 4;
     let active;
     //Puntero
