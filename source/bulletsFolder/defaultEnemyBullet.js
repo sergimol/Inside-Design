@@ -25,7 +25,7 @@ const BulletConfig = {
     
     //para la animacion
     
-    key: "defaultBullet_anims",
+    key: "defaultEnemyBullet_anims",
     frameRate: 15,
     frames: {start: 0 , end:2 },//{start: 1 , end:1 }), //15
     repeat: -1,

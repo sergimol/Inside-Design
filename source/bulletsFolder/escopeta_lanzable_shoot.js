@@ -41,7 +41,7 @@ const BulletConfig = {
 
     //para la animacion
     
-    key: "granade_shot_anims",
+    key: "escopeta_lanzable_shot_anims",
     frameRate: 1,
     frames: {start: 0 , end:0 },//{start: 1 , end:1 }), //15
     repeat: -1
