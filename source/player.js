@@ -1,7 +1,6 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
-
 import granade__launcher from "./weaponsFolder/granade_launcher.js";
 
 export default class Player extends Humanoid {
@@ -22,7 +21,7 @@ export default class Player extends Humanoid {
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
-    this.ammo = 100;
+    this.ammo = config.player.baseAmmo;
 
     //this.add(sprite);
     /////////////
@@ -72,8 +71,71 @@ export default class Player extends Humanoid {
 
     this.semiAutomaticaHasShoot = true;
     this.scene.input.on('pointerdown', function (pointer) {
-      this.semiAutomaticaHasShoot = false;
+      if (pointer.leftButtonDown())
+        this.semiAutomaticaHasShoot = false;
     }, this);
+
+
+
+    //PRUEBAS ACTIVA
+    const actives = {
+      NONE : 'none',
+      DASH : 'dash',
+      SHIELD : 'shield',
+      BOMB : 'bomb'
+    };
+    this.actualACTIVE = actives.DASH;
+    let dashParticles = this.scene.add.particles('dashParticle');
+
+    this.dashEmitter = dashParticles.createEmitter({
+        speed: 20,
+        scale: { start: 3, end: 0 },
+        lifespan: 300,
+        blendMode: 'ADD'
+    });
+    this.dashTime = config.player.dashTime;
+    this.setMass(config.player.mass);
+    this.inDash = false;
+    this.dashPos;
+    this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+    this.scene.input.on('pointerdown', function (pointer){
+      //Comprobamos que sea el click derecho
+      if (pointer.rightButtonDown())
+      {
+        //DASH
+        if (this.actualACTIVE === actives.DASH){
+          
+          if(this.dir.x === 0 && this.dir.y === 0)
+            this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+          else
+            this.dashDir = new Phaser.Math.Vector2(this.dir.x, this.dir.y);
+
+          this.dashDir.normalize();
+          this.inDash = true;
+          
+          this.timerDash = this.scene.time.now + this.dashTime;
+          this.dashEmitter.startFollow(this);
+          this.aspecto.setTint(config.player.dashTint);
+          let sound = this.scene.sound.add('dashSound');
+          sound.play();
+
+          if (this.inDash)
+            this.dash();
+        }
+        //ESCUDO
+        else if(this.actualACTIVE === actives.SHIELD)
+        {
+
+        }
+        //BOMBAS
+        else if(this.actualACTIVE === actives.BOMB)
+        {
+
+        }
+      }
+    }, this);
+      
+      
 
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
@@ -93,6 +155,21 @@ export default class Player extends Humanoid {
       'mask': 1 | 16 | 32, //mundo y balas enemigas
       //'group':1 ,  //asi no colisionan entre si estan en la misma categoria si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
     };
+
+    //PRUEBA PARTICULAS
+    let particles = this.scene.add.particles('walkParticle');
+
+    this.emitter = particles.createEmitter({
+        speed: 20,
+        scale: { start: 0.5, end: 0 },
+        gravityY: 100,
+        frequency: 150,
+        lifespan: 300,
+        blendMode: 'ADD'
+    });
+
+    this.emitter.startFollow(this);
+    
   }
 
 
@@ -111,6 +188,12 @@ export default class Player extends Humanoid {
 
 
 
+  dash(){
+    this.applyForce({x: this.dashDir.x, y: this.dashDir.y});
+    
+  }
+   
+
 
   shoot() {
     if (this.ammo > this.weapon.ammoCostPerShoot()) {
@@ -127,26 +210,38 @@ export default class Player extends Humanoid {
   }
 
 
-  playerMove(dirX, dirY) {
-    //console.log(this.body.speed);
+  playerMove() {
+    if(!this.inDash){
+      this.aspecto.setTint(config.player.baseTint);
+      this.dashEmitter.stopFollow(this);
     if (this.body.speed < 1.5){
 
       this.applyForce({x:this.dir.x * 1.5, y:this.dir.y * 1.5});
     }
       //this.body.setVelocityX(this.speed * dirX);
       //this.body.setVelocityY(this.speed * dirY);
+      
       //Animacion
-      if (this.dir.x === 0 && this.dir.y === 0)
-      this.aspecto.play('idle', true);
-      else
-      this.aspecto.play('walk', true);
+      if (this.dir.x === 0 && this.dir.y === 0){
+        
+        this.emitter.stopFollow(this);
+        this.aspecto.play('idle', true);
+      }
+      else{
+        this.emitter.startFollow(this); 
+        this.aspecto.play('walk', true);
+      }
+    }
+
+
   }
 
 
   preUpdate() {
 
-    //this.applyForce(this.scene.matter.vector.create(1,1));
-
+    if (this.scene.time.now > this.timerDash) {
+      this.inDash=false;
+    }    
     //Idle por defecto
     this.dir.x = 0;
     this.dir.y = 0;
@@ -162,7 +257,7 @@ export default class Player extends Humanoid {
       this.dir.y = 1;
 
     this.dir.normalize();
-    this.playerMove(this.dir.x, this.dir.y);
+    this.playerMove();
     this.puntero.moverconjugador(this);
     this.puntero.updateMiddle(this);
 

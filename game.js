@@ -40,6 +40,9 @@ export default class Game extends Phaser.Scene {
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
     this.load.image('bate', './Sprites/Bate3.png');
     this.load.image('swing', './Sprites/swing.png');
+    this.load.image('walkParticle','./Sprites/walkParticulas.png');
+    this.load.image('dashParticle', './Sprites/dashParticula.png')
+    this.load.audio('dashSound', './audio/dashSound.wav');
 
   }
 
@@ -115,12 +118,14 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.tilemapState = 0;
+    /*
     this.input.keyboard.on('keydown-SHIFT', function (event) {
       if (this.tilemapState == 0) this.tilemapState++;
       else this.tilemapState--;
       console.log(this.tilemapState);
     }, this);
-
+    */
+    
     this.matter.world.on('collisionstart', (event) => {
 
       //  Loop through all of the collision pairs

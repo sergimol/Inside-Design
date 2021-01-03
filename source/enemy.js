@@ -1,5 +1,6 @@
 import Humanoid from "./humanoid.js";
 import Weapon from "./weapon.js";
+
 import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
 
 export default class Enemy extends Humanoid {
@@ -16,7 +17,6 @@ export default class Enemy extends Humanoid {
 
         this.body.frictionAir = 0.05;
         this.body.mass = 300;
-        
         
         
         this.add(this.aspecto);
@@ -65,11 +65,11 @@ export default class Enemy extends Humanoid {
         this.enemyMove();
 
         //MOVIMIENTO
-        this.enemyTime = 2500;
+        this.enemyTime = config.enemy.idleMovTime;
         this.timerMove = this.scene.time.now + this.enemyTime;
 
         //DISPARO
-        this.cadenceTime = 1000;
+        this.cadenceTime = config.enemy.cadenceTime;
         this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
 
         //Colisiones
@@ -165,13 +165,13 @@ export default class Enemy extends Humanoid {
         if (wichMove < 5) {
             this.nextX = this.x + newX;
             this.nextY = this.y + newY;
-            this.enemyTime = 2500; //Modificamos el margen del timer
+            this.enemyTime = config.enemy.idleMovTime; //Modificamos el margen del timer
         }
         //Ataque al jugador
         else {
             this.nextX = this.playerRef.x;
             this.nextY = this.playerRef.y;
-            this.enemyTime = 500; //Modificamos el margen del timer
+            this.enemyTime = config.enemy.aggroMovTime; //Modificamos el margen del timer
         }
     }
 
@@ -186,7 +186,7 @@ export default class Enemy extends Humanoid {
     //METODO QUE CALCULA LO RELACIONADO AL MOVIMIENTO EN ESTADO REPOSO
     restEnemy(distanceBetweenPos) {
         //Si llega a la siguiente pos
-        if (distanceBetweenPos < 4) {
+        if (distanceBetweenPos < config.enemy.minDistance) {
             //Nueva pos y mov
             this.newNextPos();
             this.auxRest();
@@ -206,7 +206,7 @@ export default class Enemy extends Humanoid {
 
         //Si el enemigo esta en el rango del jugador cambiamos el estado
         let distanceEnemyPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
-        if (distanceEnemyPlayer < 100)
+        if (distanceEnemyPlayer < config.enemy.aggroDistance)
             this.attackState = true;
 
         //MOVEMOS AL ENEMIGO
@@ -237,7 +237,7 @@ export default class Enemy extends Humanoid {
     //METODO QUE CALCULA LO RELACIONADO AL MOVIMIENTO EN ESTADO ATAQUE
     attackEnemy(distanceBetweenPos) {
         //Si llega a la siguiente pos
-        if (distanceBetweenPos < 4) {
+        if (distanceBetweenPos < config.enemy.minDistance) {
 
             //Elegimos entre una posicion aleatoria y que se acerque al jugador
             this.newNextPos();
@@ -264,6 +264,7 @@ export default class Enemy extends Humanoid {
             this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
 
         }
+        this.setVelocity(this.dir.x * config.enemy.aggroVelFactor, this.dir.y * config.enemy.aggroVelFactor);
     }
 
 }

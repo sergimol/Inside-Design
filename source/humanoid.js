@@ -1,4 +1,4 @@
-
+import config from "./config.js";
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
     constructor(scene, x, y, humanSprite, depth) {
@@ -10,13 +10,13 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.add(this.aspecto);
 
         //Atributos
-        this.health = 10;
+        this.health = config.humanoid.health;
         this.isDead = false;                            //La entidad está viva
-        this.speed = 100;
+        this.speed = config.humanoid.speed;
         this.hitState = false; //para cambiar a la animacion de hit
 
 
-        this.setSize(16, 16);
+        this.setSize(config.humanoid.size, config.humanoid.size);
 
         this.scene.matter.add.gameObject(this);
         this.scene.matter.body.setInertia(this.body, Infinity);
