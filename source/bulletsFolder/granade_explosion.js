@@ -27,9 +27,11 @@ const BulletConfig = {
         key: "granade_shot_explosion_anims",
         frameRate: 18,
         frames: {start: 0 , end:9 },//{start: 1 , end:1 }), //15
-        repeat: 0
+        repeat: 0,
     
 
+        inertia: Infinity,
+        angularVelocity: 1
 
 }
 

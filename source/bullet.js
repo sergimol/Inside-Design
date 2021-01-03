@@ -35,10 +35,15 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.scene.add.existing(this);
         this.body.label = config.label;
         
+        
         this.aspecto.play(config.key);
         //quitarles la rotacion xd
-        this.scene.matter.body.setInertia(this.body, Infinity);
+        this.scene.matter.body.setInertia(this.body, config.inertia);
         this.setFrictionAir(config.airFriction);
+
+        if (config.inertia !== Infinity){
+            this.scene.matter.body.setAngularVelocity(this.body, config.angularVelocity);
+        }
         
 
 
@@ -277,7 +282,9 @@ export default class Bullet extends Phaser.GameObjects.Container{
             this.booleanoParaDestruirme = true;
         } 
 
-        this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
+        if (this.config.inertia === Infinity){
+            this.scene.matter.body.setAngle(this.body, Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y));
+        }
         
         
         
