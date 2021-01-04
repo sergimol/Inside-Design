@@ -248,20 +248,22 @@ export default class Player extends Humanoid {
   //Método para añadir una pasiva aleatoria
   addPasive(){
     //Elige un número aleatorio
-    let id = Math.floor(Math.random() * 10);
+    let id = Math.floor(Math.random() * config.player.passiveCount);
     
     //Aplica la pasiva correspondiente
     switch(id){
       //Aumenta la vida
       case(0):
         console.log('Me lo tanqueo')
-        this.maxHealth = Math.floor(this.maxHealth * 1.5);
+        this.health += this.health / 2;
+        this.maxHealth += this.maxHealth / 2;
+        this.hud.setHealth(this.health);
         this.hud.setBackground(this.maxHealth);
         break;
       //Disminuye la vida
       case(1):
         console.log('Demasiado facil')
-        this.maxHealth = Math.floor(this.maxHealth / 2);
+        this.maxHealth /= 2;
         if(this.maxHealth < this.health){
           this.health = this.maxHealth;
           this.hud.setHealth(this.health);
@@ -291,12 +293,15 @@ export default class Player extends Humanoid {
         console.log('Cogo');
         this.velFactor /= 2;
         break;
+      //Cambio de arma
       case(7):
         console.log('Cambio de arma');
-        id = Math.floor(Math.random() * 3);
+        id = Math.floor(Math.random() * config.player.weaponCount);
         this.changeWeapon(id);
         break;
-    }
+    }              //temporal  temporal    temporal (no tienen imagenes)
+    if(id !== 7 && id !== 3 && id !== 4 && id != 1) //Distinto de 7 porque el cambio de arma no tiene indicador en el hud
+      this.hud.addPassiveImg(id);
   }
 
   changeWeapon(id){

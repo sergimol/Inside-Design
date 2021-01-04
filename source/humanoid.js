@@ -50,8 +50,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.hitState = true;
         this.health -= damagePoints;
         console.log(this.health);
-        if(this.body.label === 'player' && !this.isDead)
-            this.hud.setHealth(this.health);
         if (this.health <= 0) {
 
             let sound = this.scene.sound.add('deadSound');
@@ -84,6 +82,11 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             //sound.setVolume(0.1);
             sound.play();
         }
+        if(this.body.label === 'player')
+            if(this.isDead)
+                this.hud.setHealth(0);
+            else
+                this.hud.setHealth(this.health);
     }
 
 

@@ -14,7 +14,9 @@ const Config = {
         mass: 800,
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
-        baseVelFactor: 1.5
+        baseVelFactor: 1.5,
+        passiveCount: 8,
+        weaponCount: 3
     },
     
     //Configuración específica de los enemigos 
@@ -50,7 +52,11 @@ const Config = {
         weaponScl: 3,
         ammoPosX: 110,
         ammoPosY: 65,
-        ammoFontSize: 35
+        ammoFontSize: 35,
+        passivePosX: 50,
+        passivePosY: 130,
+        passiveOffset: 40,
+        passiveImgs: ['tanqueo', 'facil', 'rambo', 'buenaonda', 'malaonda', 'sanic', 'cogo'] 
     }
 }
 

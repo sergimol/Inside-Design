@@ -9,6 +9,13 @@ export default class UI extends Phaser.Scene {
     preload(){
         //Carga de imagenes
         this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
+        this.load.image('tanqueo', 'Sprites/pixel-tank.png');
+        //this.load.image('facil', 'Sprites/');
+        this.load.image('rambo', 'Sprites/rambo.png');
+        //this.load.image('buenaonda', 'Sprites/');
+        //this.load.image('malaonda', 'Sprites/');
+        this.load.image('sanic', 'Sprites/sanic.png');
+        this.load.image('cogo', 'Sprites/ferrari.png');
         //Carga de fuentes con bitmap
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
@@ -22,6 +29,8 @@ export default class UI extends Phaser.Scene {
         this.healthBar = this.add.graphics();
         this.healthBar.fillStyle(config.ui.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 1, 1);
+
+        this.passiveCount = 0;
 
         //Posición de las barras
         this.healthBar.x = config.ui.barPosX;
@@ -62,5 +71,10 @@ export default class UI extends Phaser.Scene {
             this.ammo.text = playerAmmo;
         else
             this.ammo.text = '∞';
+    }
+
+    addPassiveImg(id){
+        this.add.image(config.ui.passivePosX + (this.passiveCount * config.ui.passiveOffset), config.ui.passivePosY, config.ui.passiveImgs[id]);
+        this.passiveCount++;
     }
 }
