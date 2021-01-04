@@ -8,11 +8,8 @@ export default class UI extends Phaser.Scene {
     
     preload(){
         //Carga de imagenes
-        //this.load.image('healthbar', 'Sprites/healthbar.png');
-        //this.load.image('hpbackground', 'Sprites/healthbackground.png');
         this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
         //Carga de fuentes con bitmap
-        //this.load.bitmapFont('inversionz', 'Sprites/fonts/inversionz_0.png', 'Sprites/fonts/inversionz.fnt')
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
     
@@ -29,11 +26,11 @@ export default class UI extends Phaser.Scene {
         //Posición de las barras
         this.healthBar.x = config.ui.barPosX;
         this.healthBar.y = config.ui.barPosY;
-        this.healthBackground.x = config.ui.barPosX;
-        this.healthBackground.y = config.ui.barPosY;
+        this.healthBackground.x = config.ui.barPosX - 5;
+        this.healthBackground.y = config.ui.barPosY - 5;
         //Escala de las barras
         this.healthBar.scaleY = config.ui.barScaleY;
-        this.healthBackground.scaleY = config.ui.barScaleY;
+        this.healthBackground.scaleY = config.ui.barScaleY + 10;
 
         this.weapon = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
         this.weapon.scale = config.ui.weaponScl;        
@@ -56,11 +53,14 @@ export default class UI extends Phaser.Scene {
     }
 
     setBackground(playerMaxHP){
-        this.healthBackground.scaleX = playerMaxHP * config.ui.barScaleX;
+        this.healthBackground.scaleX = playerMaxHP * config.ui.barScaleX + 10;
     }
 
     //Actualiza el contador de munición
     setAmmo(playerAmmo) {
-        this.ammo.text = playerAmmo;
+        if(playerAmmo > -1)
+            this.ammo.text = playerAmmo;
+        else
+            this.ammo.text = '∞';
     }
 }

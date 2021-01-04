@@ -1,7 +1,9 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
-import granade__launcher from "./weaponsFolder/escopeta_lanzable.js";
+import granade__launcher from "./weaponsFolder/granade_launcher.js";
+import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
+import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
 import config from "./config.js";
 
 export default class Player extends Humanoid {
@@ -13,6 +15,7 @@ export default class Player extends Humanoid {
     
     this.weapon = new Weapon(scene, 0, 5, granade__launcher)
     this.add(this.weapon);
+    this.maxHealth = config.humanoid.health;
 
     //Atributos
     //this.body.mass = 900;
@@ -23,6 +26,8 @@ export default class Player extends Humanoid {
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
     this.ammo = config.player.baseAmmo;
+    this.hasInfiniteAmmo = false;
+    this.velFactor = config.player.baseVelFactor
 
     //this.add(sprite);
     /////////////
@@ -141,8 +146,11 @@ export default class Player extends Humanoid {
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
     this.hud.setHealth(this.health);
-    this.hud.setBackground(this.health);
+    this.hud.setBackground(this.maxHealth);
     this.hud.setAmmo(this.ammo);
+
+    //Pasivas
+    this.scene.input.keyboard.on('keydown_SPACE', this.addPasive, this);
 
 
     //Colisiones
@@ -174,7 +182,7 @@ export default class Player extends Humanoid {
   }
 
 
-  //updatear la posicion del puntero si el jugador se mueve
+  //updatear la posicion del puntero si el jugador se mueve.
   /**
    
    Ideas
@@ -197,8 +205,8 @@ export default class Player extends Humanoid {
 
 
   shoot() {
-    if (this.ammo > this.weapon.ammoCostPerShoot()) {
-      if (this.weapon.shoot(false)) {
+    if (this.ammo > this.weapon.ammoCostPerShoot() || this.hasInfiniteAmmo) {
+      if (this.weapon.shoot(false) && !this.hasInfiniteAmmo) {
         this.ammo -= this.weapon.ammoCostPerShoot();
         this.hud.setAmmo(this.ammo);
       }
@@ -215,9 +223,9 @@ export default class Player extends Humanoid {
     if(!this.inDash){
       this.aspecto.setTint(config.player.baseTint);
       this.dashEmitter.stopFollow(this);
-    if (this.body.speed < 1.5){
+    if (this.body.speed < this.velFactor){
 
-      this.applyForce({x:this.dir.x * 1.5, y:this.dir.y * 1.5});
+      this.applyForce({x:this.dir.x * this.velFactor, y:this.dir.y * this.velFactor});
     }
       //this.body.setVelocityX(this.speed * dirX);
       //this.body.setVelocityY(this.speed * dirY);
@@ -235,6 +243,76 @@ export default class Player extends Humanoid {
     }
 
 
+  }
+
+  //Método para añadir una pasiva aleatoria
+  addPasive(){
+    //Elige un número aleatorio
+    let id = Math.floor(Math.random() * 10);
+    
+    //Aplica la pasiva correspondiente
+    switch(id){
+      //Aumenta la vida
+      case(0):
+        console.log('Me lo tanqueo')
+        this.maxHealth = Math.floor(this.maxHealth * 1.5);
+        this.hud.setBackground(this.maxHealth);
+        break;
+      //Disminuye la vida
+      case(1):
+        console.log('Demasiado facil')
+        this.maxHealth = Math.floor(this.maxHealth / 2);
+        if(this.maxHealth < this.health){
+          this.health = this.maxHealth;
+          this.hud.setHealth(this.health);
+        }
+        this.hud.setBackground(this.maxHealth);
+        break;
+      //Munición infinita
+      case(2):
+        console.log('Rambo');
+        this.hasInfiniteAmmo = true;
+        this.hud.setAmmo(-1);
+        break;
+      //Botiquines
+      case(3):
+        console.log('Botiquines buena onda');
+        ///////////////////////////////////
+        break;
+      case(4):
+        console.log('Botiquines mala onda');
+        ///////////////////////////////////
+        break;
+      case(5):
+        console.log('Sanic');
+        this.velFactor *= 2;
+        break;
+      case(6):
+        console.log('Cogo');
+        this.velFactor /= 2;
+        break;
+      case(7):
+        console.log('Cambio de arma');
+        id = Math.floor(Math.random() * 3);
+        this.changeWeapon(id);
+        break;
+    }
+  }
+
+  changeWeapon(id){
+    this.weapon.destroy();
+    switch(id){
+      case(0):
+        this.weapon = new Weapon(this.scene, 0, 5, defaultWeapon);
+        break;
+      case(1):
+        this.weapon = new Weapon(this.scene, 0, 5, granade__launcher);
+        break;
+      case(2):
+        this.weapon = new Weapon(this.scene, 0, 5, escopeta_lanzable);
+        break;
+    }
+    this.add(this.weapon);
   }
 
 
