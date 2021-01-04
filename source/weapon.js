@@ -172,4 +172,5 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
         return(this.costeMunicionPorBala * this.rafagas)
     }
+
 }

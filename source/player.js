@@ -1,3 +1,4 @@
+
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
@@ -318,6 +319,11 @@ export default class Player extends Humanoid {
         break;
     }
     this.add(this.weapon);
+  }
+  
+  giveAmmo(amount){
+    this.ammo += amount;
+    this.hud.setAmmo(this.ammo);
   }
 
 

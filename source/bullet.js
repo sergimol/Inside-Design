@@ -1,5 +1,6 @@
 
 
+
 export default class Bullet extends Phaser.GameObjects.Container{
     constructor(scene, x, y, config, esEnemigo){
             
@@ -47,6 +48,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
             this.scene.matter.body.setAngularVelocity(this.body, angularAux);
         }
         
+
 
 
         //atributos
@@ -143,24 +145,23 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
         //this.body.thrust(1);
         //scene.physics.add.existing(this);
-        
+
         //this.physicsBodyType = Phaser.Physics.ARCADE;
 
             this.booleanoParaDestruirme = false;
 
 
         //this.setVelocity(800);
-        this.scene.matter.world.on('collisionstart', (event)=>{
+        this.scene.matter.world.on('collisionstart', (event) => {
             let wordBody = this.body;
-            for (let i = 0; i < event.pairs.length; i++)
-            {
+            for (let i = 0; i < event.pairs.length; i++) {
                 let bodyA = event.pairs[i].bodyA;
                 let bodyB = event.pairs[i].bodyB;
 
-                if (bodyA === wordBody || bodyB === wordBody)
-                {
-                    if (bodyA.label === 'enemy' || bodyA.label === 'player'){ 
+                if (bodyA === wordBody || bodyB === wordBody) {
+                    if (bodyA.label === 'enemy' || bodyA.label === 'player') {
                         //como le digo que ejecute el comando de humanoide si lo que tengo es una body, como se a que pertenece ese body? dios es demasiado esto?
+
 
                         bodyA.gameObject.damage(this.damage);  
                         //añadamos el puchback de la bala,
@@ -186,12 +187,14 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         console.log(bodyA.speed);
 
                         if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
+
                     }
-                    else if (bodyB.label === 'player' || bodyB.label === 'enemy') { 
-                        
+                    else if (bodyB.label === 'player' || bodyB.label === 'enemy') {
+
                         //TODO
                         //#Issue
                         //tiene que pasarle el daño y destruirse
+
                         
                         bodyB.gameObject.gameObject.damage(this.damage);
 
@@ -292,6 +295,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         else if (config.destruyeBalas){
                             bodyA.gameObject.booleanoParaDestruirme = true;
                         }
+
                     }
                     else this.wallhit();
                 }
@@ -300,15 +304,15 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
         
     }
-    wallhit(){
-        if (this.rebotes > 0 ){
+    wallhit() {
+        if (this.rebotes > 0) {
             //this.setFrictionAir(0.01); //ME EXPLICAS?¿
             //im afraid that i will need you to rotate
             this.rebotes--;
-            
+
             //this.body.angle = Phaser.Math.Angle.Between(0,0,this.body.velocity.x, this.body.velocity.y);
             //this.scene.matter.body.setInertia(this.body, Infinity);
-            
+
         }
         else this.booleanoParaDestruirme = true;
     }
@@ -346,11 +350,13 @@ export default class Bullet extends Phaser.GameObjects.Container{
     preUpdate(){
         
         //console.log(this.x + " " + this.y);
+
         //tengo que hacerlo asi, porque de otra forma al asignarle el angulo y tener otra interaccion empieza a girar como un condenado
         //this.body.setAngle = Phaser.Math.Angle.Between(0,0, this.body.velocity.x, this.body.velocity.y);
-        
+
         //Sets the angle of the body instantly. Angular velocity, position, force etc. are unchanged.
         //# de esta manera se arreglan varias cossillas
+
         if (this.scene.time.now >= this.lifeTime){
             this.booleanoParaDestruirme = true;
         } 
@@ -389,5 +395,6 @@ export default class Bullet extends Phaser.GameObjects.Container{
         }
        
             
+
     }
 }

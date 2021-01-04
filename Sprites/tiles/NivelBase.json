@@ -117,9 +117,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -135,9 +135,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -153,9 +153,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -171,9 +171,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -189,9 +189,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -207,9 +207,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -225,9 +225,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -243,9 +243,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -261,9 +261,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -279,9 +279,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -297,9 +297,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -315,9 +315,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -333,9 +333,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -351,9 +351,9 @@
                  "name":"enemy",
                  "properties":[
                         {
-                         "name":"vida",
+                         "name":"Sala",
                          "type":"int",
-                         "value":3
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
