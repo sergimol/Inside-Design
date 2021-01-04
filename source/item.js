@@ -46,7 +46,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
         });
     }
     actualizaPos() {
-        if (Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y) < 80) {
+        if (Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y) < 30) {
             let angle = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
             this.scene.matter.body.setAngle(this.body, angle);
             this.thrust(this.fuerza);
