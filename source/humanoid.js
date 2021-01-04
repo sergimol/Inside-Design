@@ -1,4 +1,8 @@
+
 import Item from "./item.js";
+
+import config from "./config.js";
+
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
     constructor(scene, x, y, humanSprite, depth) {
@@ -10,14 +14,14 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.add(this.aspecto);
 
         //Atributos
-        this.health = 10;
-        this.maxHealth = this.health;
+        this.health = config.humanoid.health;
+
         this.isDead = false;                            //La entidad está viva
-        this.speed = 100;
+        this.speed = config.humanoid.speed;
         this.hitState = false; //para cambiar a la animacion de hit
 
 
-        this.setSize(16, 16);
+        this.setSize(config.humanoid.size, config.humanoid.size);
 
         this.scene.matter.add.gameObject(this);
         this.scene.matter.body.setInertia(this.body, Infinity);
@@ -28,6 +32,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                 let bodyA = event.pairs[i].bodyA;
                 let bodyB = event.pairs[i].bodyB;
 
+                //TODO
+                //#Issue esto ya no hace falta en ninguno de los sentidos
                 if (bodyA === wordBody || bodyB === wordBody) {
                     if (bodyA === wordBody && bodyB.label === 'bullet') {
                         //this.damage();
@@ -46,9 +52,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
     damage(damagePoints) {
         this.hitState = true;
         this.health -= damagePoints;
-        //console.log(this.health);
-        if (this.body.label === 'player' && !this.isDead)
-            this.hud.setHealth(this.health);
         if (this.health <= 0) {
 
             let sound = this.scene.sound.add('deadSound');
@@ -73,6 +76,14 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                     else
                         var item = new Item(this.scene, this.x, this.y, 'medkit', this.scene.player);
                 }
+
+                this.body.collisionFilter = {
+                    'group': -2,
+                    'category': 4,
+                    'mask': 1 , //mundo y balas jugador
+                    //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
+                };
+
             }
 
         }
@@ -82,6 +93,11 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             //sound.setVolume(0.1);
             sound.play();
         }
+        if(this.body.label === 'player')
+            if(this.isDead)
+                this.hud.setHealth(0);
+            else
+                this.hud.setHealth(this.health);
     }
 
 
