@@ -1,21 +1,26 @@
 import Humanoid from "./humanoid.js";
 import Doors from "./doors.js";
 import Weapon from "./weapon.js";
+import config from "./config.js";
+
+import defaultWeapon from "./weaponsFolder/defaultEnemyWeapon.js";
+
 export default class Enemy extends Humanoid {
     constructor(scene, x, y, sprite, player, doorN, doorS) {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
-        this.weapon = new Weapon(scene, 0, 5, "gunShoot", "enemybullet", "mono", "semi", 300, 20, 1, 0.6, 30, 3, 300, 0.15, 0.5, 20, 0, false, 0, 0,
-            //la parte de bullet del arma
-            0.7, 8, 8, 4, 4, 30, 'bullet', 0.01, 0, 0.8, 0.3, 1);
+        this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
         this.add(this.weapon);
 
         //Atributos
         this.speed = 50;
         this.health = 3;
         this.depth = 3;
-       
 
+        this.body.frictionAir = 0.05;
+        this.body.mass = 300;
+        
+        
         this.add(this.aspecto);
         /////////////
         //Animaciones
@@ -65,11 +70,11 @@ export default class Enemy extends Humanoid {
         this.enemyMove();
 
         //MOVIMIENTO
-        this.enemyTime = 2500;
+        this.enemyTime = config.enemy.idleMovTime;
         this.timerMove = this.scene.time.now + this.enemyTime;
 
         //DISPARO
-        this.cadenceTime = 1000;
+        this.cadenceTime = config.enemy.cadenceTime;
         this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
 
         //Colisiones
@@ -80,7 +85,7 @@ export default class Enemy extends Humanoid {
         this.body.collisionFilter = {
             'group': -2,
             'category': 4,
-            'mask': 1 | 8, //mundo y balas jugador
+            'mask': 1 | 8 | 32, //mundo y balas jugador
             //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
         };
 
@@ -105,8 +110,8 @@ export default class Enemy extends Humanoid {
         else {
             if (this.body.speed <= 5) {
                 this.setFrictionAir(0.4);
-                this.setCollisionCategory(null)
-
+                //this.setCollisionCategory(null)
+                
             }
             this.setActive(false);
         }
@@ -164,13 +169,13 @@ export default class Enemy extends Humanoid {
         if (wichMove < 5) {
             this.nextX = this.x + newX;
             this.nextY = this.y + newY;
-            this.enemyTime = 2500; //Modificamos el margen del timer
+            this.enemyTime = config.enemy.idleMovTime; //Modificamos el margen del timer
         }
         //Ataque al jugador
         else {
             this.nextX = this.playerRef.x;
             this.nextY = this.playerRef.y;
-            this.enemyTime = 500; //Modificamos el margen del timer
+            this.enemyTime = config.enemy.aggroMovTime; //Modificamos el margen del timer
         }
     }
 
@@ -185,7 +190,7 @@ export default class Enemy extends Humanoid {
     //METODO QUE CALCULA LO RELACIONADO AL MOVIMIENTO EN ESTADO REPOSO
     restEnemy(distanceBetweenPos) {
         //Si llega a la siguiente pos
-        if (distanceBetweenPos < 4) {
+        if (distanceBetweenPos < config.enemy.minDistance) {
             //Nueva pos y mov
             this.newNextPos();
             this.auxRest();
@@ -205,11 +210,14 @@ export default class Enemy extends Humanoid {
 
         //Si el enemigo esta en el rango del jugador cambiamos el estado
         let distanceEnemyPlayer = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
-        if (distanceEnemyPlayer < 100)
+        if (distanceEnemyPlayer < config.enemy.aggroDistance)
             this.attackState = true;
 
         //MOVEMOS AL ENEMIGO
-        this.setVelocity(this.dir.x * 0.3, this.dir.y * 0.3);
+        if (this.body.speed < 1 && !this.isDead){
+
+            this.setVelocity(this.dir.x * 0.3, this.dir.y * 0.3);
+        }
 
     }
     //Calculos auxiliares del movimiento en reposo
@@ -233,7 +241,7 @@ export default class Enemy extends Humanoid {
     //METODO QUE CALCULA LO RELACIONADO AL MOVIMIENTO EN ESTADO ATAQUE
     attackEnemy(distanceBetweenPos) {
         //Si llega a la siguiente pos
-        if (distanceBetweenPos < 4) {
+        if (distanceBetweenPos < config.enemy.minDistance) {
 
             //Elegimos entre una posicion aleatoria y que se acerque al jugador
             this.newNextPos();
@@ -256,7 +264,11 @@ export default class Enemy extends Humanoid {
         this.moveRotate((this.playerRef.x - this.x));
 
         //MOVEMOS AL ENEMIGO
-        this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
+        if (this.body.speed < 1 && !this.isDead){
+            this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
+
+        }
+        this.setVelocity(this.dir.x * config.enemy.aggroVelFactor, this.dir.y * config.enemy.aggroVelFactor);
     }
 
 }

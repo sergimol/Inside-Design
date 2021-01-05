@@ -1,3 +1,5 @@
+import config from "./config.js";
+
 export default class UI extends Phaser.Scene {
     constructor() {
         super({ key: 'UIScene', active: true });
@@ -6,11 +8,15 @@ export default class UI extends Phaser.Scene {
     
     preload(){
         //Carga de imagenes
-        //this.load.image('healthbar', 'Sprites/healthbar.png');
-        //this.load.image('hpbackground', 'Sprites/healthbackground.png');
         this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
+        this.load.image('tanqueo', 'Sprites/pixel-tank.png');
+        //this.load.image('facil', 'Sprites/');
+        this.load.image('rambo', 'Sprites/rambo.png');
+        //this.load.image('buenaonda', 'Sprites/');
+        //this.load.image('malaonda', 'Sprites/');
+        this.load.image('sanic', 'Sprites/sanic.png');
+        this.load.image('cogo', 'Sprites/ferrari.png');
         //Carga de fuentes con bitmap
-        //this.load.bitmapFont('inversionz', 'Sprites/fonts/inversionz_0.png', 'Sprites/fonts/inversionz.fnt')
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
     
@@ -21,24 +27,25 @@ export default class UI extends Phaser.Scene {
         this.healthBackground.fillRect(0, 0, 1, 1);
         //Barra de vida
         this.healthBar = this.add.graphics();
-        this.healthBar.fillStyle(0xf91010, 1);
+        this.healthBar.fillStyle(config.ui.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 1, 1);
 
-        //Posición de las barras
-        this.healthBar.x = 50;
-        this.healthBar.y = 30;
-        this.healthBackground.x = 50;
-        this.healthBackground.y = 30;
-        //Escala de las barras
-        this.healthBar.scaleY = 15;
-        this.healthBackground.scaleY = 15;
+        this.passiveCount = 0;
 
-        this.weapon = this.add.image(70, 85, 'gunshotsilhouette');
-        this.weapon.scale = 3;        
+        //Posición de las barras
+        this.healthBar.x = config.ui.barPosX;
+        this.healthBar.y = config.ui.barPosY;
+        this.healthBackground.x = config.ui.barPosX - 5;
+        this.healthBackground.y = config.ui.barPosY - 5;
+        //Escala de las barras
+        this.healthBar.scaleY = config.ui.barScaleY;
+        this.healthBackground.scaleY = config.ui.barScaleY + 10;
+
+        this.weapon = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
+        this.weapon.scale = config.ui.weaponScl;        
 
         //Contador de munición
-        //Creación de texto con bitmap 
-        //this.ammo = this.add.bitmapText(50, 50, 'inversionz', '')
+        //Creación de texto con bitmap
         
         //creacion de texto con webfont
         WebFont.load({
@@ -46,20 +53,28 @@ export default class UI extends Phaser.Scene {
                 families: [ 'Permanent Marker']
             }
         })
-        this.ammo = this.add.text(110, 65, '', {fontFamily: 'Permanent Marker', fontSize: 38, color: '#ffffff'});
+        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', {fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff'});
     }
 
     //Cambia el tamaño de la barra de vida en función de la salud del jugador
     setHealth(playerHealth) {
-        this.healthBar.scaleX = playerHealth * 20;
+        this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
     }
 
     setBackground(playerMaxHP){
-        this.healthBackground.scaleX = playerMaxHP * 20;
+        this.healthBackground.scaleX = playerMaxHP * config.ui.barScaleX + 10;
     }
 
     //Actualiza el contador de munición
     setAmmo(playerAmmo) {
-        this.ammo.text = playerAmmo;
+        if(playerAmmo > -1)
+            this.ammo.text = playerAmmo;
+        else
+            this.ammo.text = '∞';
+    }
+
+    addPassiveImg(id){
+        this.add.image(config.ui.passivePosX + (this.passiveCount * config.ui.passiveOffset), config.ui.passivePosY, config.ui.passiveImgs[id]);
+        this.passiveCount++;
     }
 }

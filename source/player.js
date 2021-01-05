@@ -1,26 +1,34 @@
+
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
 import Weapon from "./weapon.js";
+import granade__launcher from "./weaponsFolder/granade_launcher.js";
+import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
+import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
+import config from "./config.js";
+
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, depth) {
     super(scene, x, y, sprite);
     this.body.label = 'player';
 
     //Arma
-    this.weapon = new Weapon(scene, 0, 5, "bate", "swing", "mono", "semi", 300, 0, 1, 0.6, 0, 1, 80, 0, 1, 0, 0, true, -0.5, 3,
-      //la parte de bullet del arma
-      1, 64, 64, 0.5, 0.5, 30, 'bullet', 0.3, 0, 0.8, 0.3, 3);
+    
+    this.weapon = new Weapon(scene, 0, 5, granade__launcher)
     this.add(this.weapon);
+    this.maxHealth = config.humanoid.health;
 
     //Atributos
+    //this.body.mass = 900;
+    this.body.frictionAir = 0.15;
     this.depth = 4;
     let active;
-    this.ammo = 100;
-
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
-    
+    this.ammo = config.player.baseAmmo;
+    this.hasInfiniteAmmo = false;
+    this.velFactor = config.player.baseVelFactor
 
     //this.add(sprite);
     /////////////
@@ -70,14 +78,80 @@ export default class Player extends Humanoid {
 
     this.semiAutomaticaHasShoot = true;
     this.scene.input.on('pointerdown', function (pointer) {
-      this.semiAutomaticaHasShoot = false;
+      if (pointer.leftButtonDown())
+        this.semiAutomaticaHasShoot = false;
     }, this);
+
+
+
+    //PRUEBAS ACTIVA
+    const actives = {
+      NONE : 'none',
+      DASH : 'dash',
+      SHIELD : 'shield',
+      BOMB : 'bomb'
+    };
+    this.actualACTIVE = actives.DASH;
+    let dashParticles = this.scene.add.particles('dashParticle');
+
+    this.dashEmitter = dashParticles.createEmitter({
+        speed: 20,
+        scale: { start: 3, end: 0 },
+        lifespan: 300,
+        blendMode: 'ADD'
+    });
+    this.dashTime = config.player.dashTime;
+    this.setMass(config.player.mass);
+    this.inDash = false;
+    this.dashPos;
+    this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+    this.scene.input.on('pointerdown', function (pointer){
+      //Comprobamos que sea el click derecho
+      if (pointer.rightButtonDown())
+      {
+        //DASH
+        if (this.actualACTIVE === actives.DASH){
+          
+          if(this.dir.x === 0 && this.dir.y === 0)
+            this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x,  this.puntero.y - this.y);
+          else
+            this.dashDir = new Phaser.Math.Vector2(this.dir.x, this.dir.y);
+
+          this.dashDir.normalize();
+          this.inDash = true;
+          
+          this.timerDash = this.scene.time.now + this.dashTime;
+          this.dashEmitter.startFollow(this);
+          this.aspecto.setTint(config.player.dashTint);
+          let sound = this.scene.sound.add('dashSound');
+          sound.play();
+
+          if (this.inDash)
+            this.dash();
+        }
+        //ESCUDO
+        else if(this.actualACTIVE === actives.SHIELD)
+        {
+
+        }
+        //BOMBAS
+        else if(this.actualACTIVE === actives.BOMB)
+        {
+
+        }
+      }
+    }, this);
+      
+      
 
     //Carga de datos del hud
     this.hud = this.scene.scene.get('UIScene');
     this.hud.setHealth(this.health);
-    this.hud.setBackground(this.health);
+    this.hud.setBackground(this.maxHealth);
     this.hud.setAmmo(this.ammo);
+
+    //Pasivas
+    this.scene.input.keyboard.on('keydown_SPACE', this.addPasive, this);
 
 
     //Colisiones
@@ -88,13 +162,28 @@ export default class Player extends Humanoid {
     this.body.collisionFilter = {
       'group': -3,
       'category': 2,
-      'mask': 1 | 16, //mundo y balas enemigas
+      'mask': 1 | 16 | 32, //mundo y balas enemigas
       //'group':1 ,  //asi no colisionan entre si estan en la misma categoria si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
     };
+
+    //PRUEBA PARTICULAS
+    let particles = this.scene.add.particles('walkParticle');
+
+    this.emitter = particles.createEmitter({
+        speed: 20,
+        scale: { start: 0.5, end: 0 },
+        gravityY: 100,
+        frequency: 150,
+        lifespan: 300,
+        blendMode: 'ADD'
+    });
+
+    this.emitter.startFollow(this);
+    
   }
 
 
-  //updatear la posicion del puntero si el jugador se mueve
+  //updatear la posicion del puntero si el jugador se mueve.
   /**
    
    Ideas
@@ -108,14 +197,17 @@ export default class Player extends Humanoid {
   // asignar la posicion del puntero
 
 
-  giveAmmo(amount){
-    this.ammo += amount;
-    this.hud.setAmmo(this.ammo);
+
+  dash(){
+    this.applyForce({x: this.dashDir.x * 20, y: this.dashDir.y * 20});
+    
   }
+   
+
 
   shoot() {
-    if (this.ammo > this.weapon.ammoCostPerShoot()) {
-      if (this.weapon.shoot(false)) {
+    if (this.ammo > this.weapon.ammoCostPerShoot() || this.hasInfiniteAmmo) {
+      if (this.weapon.shoot(false) && !this.hasInfiniteAmmo) {
         this.ammo -= this.weapon.ammoCostPerShoot();
         this.hud.setAmmo(this.ammo);
       }
@@ -128,22 +220,118 @@ export default class Player extends Humanoid {
   }
 
 
-  playerMove(dirX, dirY) {
-    this.setVelocity(this.dir.x * 1.5, this.dir.y * 1.5);
-    //this.body.setVelocityX(this.speed * dirX);
-    //this.body.setVelocityY(this.speed * dirY);
-    //Animacion
-    if (this.dir.x === 0 && this.dir.y === 0)
-      this.aspecto.play('idle', true);
-    else
-      this.aspecto.play('walk', true);
+  playerMove() {
+    if(!this.inDash){
+      this.aspecto.setTint(config.player.baseTint);
+      this.dashEmitter.stopFollow(this);
+    if (this.body.speed < this.velFactor){
+
+      this.applyForce({x:this.dir.x * this.velFactor, y:this.dir.y * this.velFactor});
+    }
+      //this.body.setVelocityX(this.speed * dirX);
+      //this.body.setVelocityY(this.speed * dirY);
+      
+      //Animacion
+      if (this.dir.x === 0 && this.dir.y === 0){
+        
+        this.emitter.stopFollow(this);
+        this.aspecto.play('idle', true);
+      }
+      else{
+        this.emitter.startFollow(this); 
+        this.aspecto.play('walk', true);
+      }
+    }
+
+
+  }
+
+  //Método para añadir una pasiva aleatoria
+  addPasive(){
+    //Elige un número aleatorio
+    let id = Math.floor(Math.random() * config.player.passiveCount);
+    
+    //Aplica la pasiva correspondiente
+    switch(id){
+      //Aumenta la vida
+      case(0):
+        console.log('Me lo tanqueo')
+        this.health += this.health / 2;
+        this.maxHealth += this.maxHealth / 2;
+        this.hud.setHealth(this.health);
+        this.hud.setBackground(this.maxHealth);
+        break;
+      //Disminuye la vida
+      case(1):
+        console.log('Demasiado facil')
+        this.maxHealth /= 2;
+        if(this.maxHealth < this.health){
+          this.health = this.maxHealth;
+          this.hud.setHealth(this.health);
+        }
+        this.hud.setBackground(this.maxHealth);
+        break;
+      //Munición infinita
+      case(2):
+        console.log('Rambo');
+        this.hasInfiniteAmmo = true;
+        this.hud.setAmmo(-1);
+        break;
+      //Botiquines
+      case(3):
+        console.log('Botiquines buena onda');
+        ///////////////////////////////////
+        break;
+      case(4):
+        console.log('Botiquines mala onda');
+        ///////////////////////////////////
+        break;
+      case(5):
+        console.log('Sanic');
+        this.velFactor *= 2;
+        break;
+      case(6):
+        console.log('Cogo');
+        this.velFactor /= 2;
+        break;
+      //Cambio de arma
+      case(7):
+        console.log('Cambio de arma');
+        id = Math.floor(Math.random() * config.player.weaponCount);
+        this.changeWeapon(id);
+        break;
+    }              //temporal  temporal    temporal (no tienen imagenes)
+    if(id !== 7 && id !== 3 && id !== 4 && id != 1) //Distinto de 7 porque el cambio de arma no tiene indicador en el hud
+      this.hud.addPassiveImg(id);
+  }
+
+  changeWeapon(id){
+    this.weapon.destroy();
+    switch(id){
+      case(0):
+        this.weapon = new Weapon(this.scene, 0, 5, defaultWeapon);
+        break;
+      case(1):
+        this.weapon = new Weapon(this.scene, 0, 5, granade__launcher);
+        break;
+      case(2):
+        this.weapon = new Weapon(this.scene, 0, 5, escopeta_lanzable);
+        break;
+    }
+    this.add(this.weapon);
+  }
+  
+  giveAmmo(amount){
+    this.ammo += amount;
+    this.hud.setAmmo(this.ammo);
   }
 
 
   preUpdate() {
 
-
-
+    if (this.scene.time.now > this.timerDash) {
+      this.inDash=false;
+    }    
     //Idle por defecto
     this.dir.x = 0;
     this.dir.y = 0;
@@ -159,7 +347,7 @@ export default class Player extends Humanoid {
       this.dir.y = 1;
 
     this.dir.normalize();
-    this.playerMove(this.dir.x, this.dir.y);
+    this.playerMove();
     this.puntero.moverconjugador(this);
     this.puntero.updateMiddle(this);
 
@@ -176,7 +364,7 @@ export default class Player extends Humanoid {
         this.shoot();
       }
     }
-    else if (this.semiAutomaticaHasShoot === false) {
+    else if (this.semiAutomaticaHasShoot === false){
       this.semiAutomaticaHasShoot = true;
       this.shoot();
     }

@@ -17,6 +17,13 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('bullet', 'Sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('enemybullet', 'Sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.image('crosshair', 'Sprites/crosshair.png');
+    this.load.image('granade_launcher', 'Sprites/granade_launcher.png');
+    
+    this.load.image('escopeta_lanzable', 'Sprites/escopeta_lanzable.png');
+    
+    this.load.spritesheet('granade__launcher_shoot', 'Sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
+    this.load.spritesheet('escopeta_lanzable_shoot', 'Sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('granade_launcher_shoot_explosion', 'Sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
     //Javi
     //Tiles de estéticas
@@ -40,6 +47,9 @@ export default class Game extends Phaser.Scene {
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
     this.load.image('bate', './Sprites/Bate3.png');
     this.load.image('swing', './Sprites/swing.png');
+    this.load.image('walkParticle','./Sprites/walkParticulas.png');
+    this.load.image('dashParticle', './Sprites/dashParticula.png')
+    this.load.audio('dashSound', './audio/dashSound.wav');
 
   }
 
@@ -115,12 +125,14 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.tilemapState = 0;
+    /*
     this.input.keyboard.on('keydown-SHIFT', function (event) {
       if (this.tilemapState == 0) this.tilemapState++;
       else this.tilemapState--;
       console.log(this.tilemapState);
     }, this);
-
+    */
+    
     this.matter.world.on('collisionstart', (event) => {
 
       //  Loop through all of the collision pairs
