@@ -62,7 +62,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             this.hitState = false;
 
             this.weapon.setVisible(false);
-           //console.log('entityDep');
+            //console.log('entityDep');
             this.aspecto.play('enemyDep', true);
 
             if (this.body.label === 'enemy') {
@@ -76,11 +76,14 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                     else
                         var item = new Item(this.scene, this.x, this.y, 'medkit', this.scene.player);
                 }
+                //Decrementa en 1 EnemyCountDoor de la sala en la que se encuentra el enemigo
+                --this.doorRef.EnemyCountDoor[this.doorNum];    //El -1 es porque la puerta inicial es 1, pero el array empieza en 0
+                console.log(this.doorRef.EnemyCountDoor[this.doorNum]);
 
                 this.body.collisionFilter = {
                     'group': -2,
                     'category': 4,
-                    'mask': 1 , //mundo y balas jugador
+                    'mask': 1, //mundo y balas jugador
                     //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
                 };
 
@@ -93,8 +96,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             //sound.setVolume(0.1);
             sound.play();
         }
-        if(this.body.label === 'player')
-            if(this.isDead)
+        if (this.body.label === 'player')
+            if (this.isDead)
                 this.hud.setHealth(0);
             else
                 this.hud.setHealth(this.health);

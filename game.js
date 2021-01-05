@@ -68,6 +68,7 @@ export default class Game extends Phaser.Scene {
     const boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
 
     const entityLayer = this.map.getObjectLayer('Entities').objects
+    const DoorsentityLayer = this.map.getObjectLayer('Doors').objects
     // profundidad
     groundLayer.setDepth(0);
     detailsLayer.setDepth(0);
@@ -111,12 +112,11 @@ export default class Game extends Phaser.Scene {
 
 
     //CARGA DE OBJETOS
-    this.enemyCount = 0;
     this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
     this.door;
     this.endZone;
     this.finish = false;
-    this.loadObjects(this.map);
+    this.loadObjects(entityLayer, DoorsentityLayer);
 
     //Camara
     this.cameras.main.zoom = 3;
@@ -179,38 +179,43 @@ export default class Game extends Phaser.Scene {
     }
   }
 
-  loadObjects(map) {
+  loadObjects(entityLayer, DoorsentityLayer) {
+    this.doorSystem = new Doors(this, 'doorOpen');
+
     this.enemies = this.add.group();
-    this.doorSystem = new Doors(this,'door','doorOpen',1);
-    for (const objeto of map.getObjectLayer('Entities').objects) {
+    let doorNum = {}; //Guarda la cantidad de enemigos por sala
+    var enemyCount = 0;
+    let x = 0;
+
+    for (const objeto of entityLayer) {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
       if (objeto.name === 'player') {
         this.player = new Player(this, objeto.x, objeto.y, 'player')
       }
       else if (objeto.name === 'enemy') {
-        this.enemyCount++;
-        const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player);
+        const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player, objeto.properties[0].value - 1, this.doorSystem);
         this.enemies.add(e);
-      }
-      else if (objeto.name === 'door') {
-        this.doorSystem.addDoor(objeto.x, objeto.y);
+
+        if (doorNum[objeto.properties[0].value - 1] != x)
+          enemyCount = 0;
+
+        ++enemyCount;
+        doorNum[objeto.properties[0].value - 1] = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
+
+        x = doorNum[objeto.properties[0].value - 1];
       }
       else if (objeto.name === 'endLevel') {
         this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
         this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 40, 40, { isSensor: true, label: 'endLevel' }));
-        //!NO BORRAR MESSIrve
-        /* this.endZone = this.Bodies.rectangle(objeto.x,objeto.y,0,0,{ isSensor: true, label: 'left' });
-         this.endZone.depth = 0;
-         this.cameras.main.startFollow(this.endZone);
-         console.log(objeto.x);
-         console.log(objeto.y);
-         console.log(this.player.x);
-         console.log(this.player.y);*/
-        //this.endZone = Phaser.Physics.Matter.Matter.Body.create({});
-        //this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y,50,30,{ isSensor: false, label: 'endLevel' } ));
-        //= this.Bodies.rectangle(objeto.x, objeto.y, 50, 50, { isSensor: false, label: 'endLevel' } );
+      }
+    }
 
+    for (const objeto of DoorsentityLayer) {
+      if (objeto.name === 'door') {
+        var door = this.matter.add.image(objeto.x, objeto.y, 'door');
+        //Creamos una puerta con la posicion y el numero necesario de enemigos que hacen falta matar para que se abra
+        this.doorSystem.addDoor(door, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1);
       }
     }
   }

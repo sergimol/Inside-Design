@@ -1,11 +1,12 @@
 import Humanoid from "./humanoid.js";
+import Doors from "./doors.js";
 import Weapon from "./weapon.js";
 import config from "./config.js";
 
 import defaultWeapon from "./weaponsFolder/defaultEnemyWeapon.js";
 
 export default class Enemy extends Humanoid {
-    constructor(scene, x, y, sprite, player, depth) {
+    constructor(scene, x, y, sprite, player, doorN, doorS) {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
         this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
@@ -51,6 +52,9 @@ export default class Enemy extends Humanoid {
 
         //Referencia al player
         this.playerRef = player;
+        //Referencia al DoorSystem
+        this.doorRef = doorS;
+        this.doorNum = doorN;   //Sala en la que se encuentra
 
         //Cambiar color "placeholder"
         this.aspecto.setTint(0x9999ff);
@@ -74,9 +78,9 @@ export default class Enemy extends Humanoid {
         this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
 
         //Colisiones
-        
-        
-         // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
+
+
+        // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
         //Aqui se asignan todas las colisiones
         this.body.collisionFilter = {
             'group': -2,
@@ -91,10 +95,9 @@ export default class Enemy extends Humanoid {
     //PREUPDATE
     preUpdate() {
 
-        if(this.hitState)
-        {
+        if (this.hitState) {
             this.aspecto.play('enemyHit', true);
-            if(this.aspecto.anims.currentFrame.textureFrame === 14)
+            if (this.aspecto.anims.currentFrame.textureFrame === 14)
                 this.hitState = false;
         }
         //Comprobamos el movimiento para asignar la animacion
@@ -105,7 +108,7 @@ export default class Enemy extends Humanoid {
                 this.aspecto.play('enemyIdle', true);
         }
         else {
-            if (this.body.speed <= 5){
+            if (this.body.speed <= 5) {
                 this.setFrictionAir(0.4);
                 //this.setCollisionCategory(null)
                 

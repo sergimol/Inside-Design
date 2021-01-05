@@ -2,7 +2,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, sprite, playerref) {
         super(scene, x, y, sprite);
         this.depth = 3;
-        this.setSize(1,1);
+        this.setSize(1, 1);
         this.scene.matter.add.gameObject(this);
         this.scene.add.existing(this);
 
@@ -12,8 +12,8 @@ export default class Item extends Phaser.GameObjects.Sprite {
         this.playerRef = playerref;
 
         //Constantes
-        this.fuerza = 0.000002;
-        this.setFrictionAir(0.03);
+        this.fuerza = 0.0000002;
+       // this.setFrictionAir(0.03);
 
         this.scene.matter.world.on('collisionstart', (event) => {
             let wordBody = this.body;
@@ -29,16 +29,12 @@ export default class Item extends Phaser.GameObjects.Sprite {
                             if (bodyA.gameObject.health < bodyA.gameObject.maxHealth)
                                 bodyA.gameObject.damage(-3);
                         this.eliminaItem();
-                        //console.log(bodyA.gameObject.health)
-                        //console.log(bodyA.gameObject.maxHealth)
                     } else if (bodyB.label === 'player') {
                         if (this.body.label === 'bulletAmmo')
                             bodyB.gameObject.giveAmmo(5);
                         else if (this.body.label === 'medkit')
                             if (bodyB.gameObject.health < bodyB.gameObject.maxHealth)
                                 bodyB.gameObject.damage(-3);
-                        //console.log(bodyB.gameObject.health)
-                        //console.log(bodyB.gameObject.maxHealth)
                         this.eliminaItem();
                     }
                 }
@@ -58,7 +54,5 @@ export default class Item extends Phaser.GameObjects.Sprite {
 
     preUpdate() {
         this.actualizaPos();
-
-
     }
 }
