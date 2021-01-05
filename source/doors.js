@@ -20,7 +20,7 @@ export default class Doors extends Phaser.GameObjects.Container {
     //Abro las puertas en orden (this.contador)
     openDoor() {
         //console.log(this.doors[this.contador].properties)
-        if ( this.EnemyCountDoor[this.contador] === 0) {                //Si EnemyCountDoor === 0, la puerta se tiene que abrir
+        if ( this.EnemyCountDoor[this.contador] <= 0) {                //Si EnemyCountDoor === 0, la puerta se tiene que abrir
             this.doors[this.contador].setTexture(this.spriteOpened);
             this.doors[this.contador].setCollisionCategory(null);
             ++this.contador;

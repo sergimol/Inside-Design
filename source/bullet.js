@@ -44,7 +44,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
         if (config.inertia !== Infinity){
             let angularAux = ((Math.random() * config.angularVelocityMultiply) + config.angularVelocitySuma) * config.angularVelocityResultadoMultiply;
-            console.log(angularAux);
+            //console.log(angularAux);
             this.scene.matter.body.setAngularVelocity(this.body, angularAux);
         }
         
@@ -174,7 +174,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         
                         //this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
                         
-                        console.log(bodyA.speed);
+                        //console.log(bodyA.speed);
                         
 
                         //TODO
@@ -184,7 +184,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
                         //this.scene.matter.body.applyForce(bodyA, {x: bodyB.gameObject.x, y: bodyB.gameObject.y } ,10000000000);
                         //bodyA.gameObject.applyForce(vectorDeDireccion);
-                        console.log(bodyA.speed);
+                        //console.log(bodyA.speed);
 
                         if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
 
@@ -208,12 +208,12 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
                         
                         //this.scene.matter.body.setVelocity(bodyB, vectorDeDireccion);
-                        console.log(bodyB.speed);
+                       // console.log(bodyB.speed);
                         
                         this.scene.matter.body.setVelocity(bodyB, vectorDeDireccion);
                         //this.scene.matter.body.applyForce(bodyB, {x:bodyA.gameObject.x, y: bodyA.gameObject.y},1000000000);
                         //bodyB.gameObject.applyForce(vectorDeDireccion);
-                        console.log(bodyB.speed);
+                        //console.log(bodyB.speed);
 
                         if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
                     }
