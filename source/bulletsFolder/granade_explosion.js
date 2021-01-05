@@ -23,7 +23,7 @@ const BulletConfig = {
     lifeTime: 500, //milisegundos
 
     
-    pushback: 6, //fuerza con la que empuja la bala al chocar con un objetivo
+    pushback: 5, //fuerza con la que empuja la bala al chocar con un objetivo
 
     //para la animacion
     

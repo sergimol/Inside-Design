@@ -329,6 +329,9 @@ export default class Player extends Humanoid {
 
   preUpdate() {
 
+    this.applyForce(this.forceSaved);
+    this.forceSaved = { x: 0, y: 0};
+
     if (this.scene.time.now > this.timerDash) {
       this.inDash=false;
     }    

@@ -19,6 +19,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.isDead = false;                            //La entidad está viva
         this.speed = config.humanoid.speed;
         this.hitState = false; //para cambiar a la animacion de hit
+        //vector que acumula el empuje que s ele tiene que aplicar
+        this.forceSaved = { x: 1, y: 0};
 
 
         this.setSize(config.humanoid.size, config.humanoid.size);

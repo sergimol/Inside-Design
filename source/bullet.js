@@ -168,7 +168,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //primero calcular el vector y normalizarlo
 
                         let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyA.gameObject.x, bodyA.gameObject.y);
-                        let vectorDeDireccion = this.scene.matter.vector.create(Math.cos(anguloAux) * config.pushback, Math.sin(anguloAux) * config.pushback);
+                        let vectorDeDireccion = ({x: Math.cos(anguloAux) * config.pushback, y: Math.sin(anguloAux) * config.pushback});
                         
                         
                         
@@ -181,7 +181,11 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //me gustaria que funcionase con un applyForce pero parece ser que no quiere realizar este comando, asique lo dejare cableado como un applyForce,
                         //pero esto quiere decir que no importa lo que pese el mmuñeco siempre empujara la misam distacia
                         //I dont like that
-                        this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
+                        //this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
+                        bodyA.gameObject.forceSaved.x += vectorDeDireccion.x;
+                        bodyA.gameObject.forceSaved.y += vectorDeDireccion.y;
+                        
+                        
                         //this.scene.matter.body.applyForce(bodyA, {x: bodyB.gameObject.x, y: bodyB.gameObject.y } ,10000000000);
                         //bodyA.gameObject.applyForce(vectorDeDireccion);
                         //console.log(bodyA.speed);
@@ -203,14 +207,17 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //primero calcular el vector y normalizarlo
 
                         let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyB.gameObject.x, bodyB.gameObject.y);
-                        let vectorDeDireccion = this.scene.matter.vector.create(Math.cos(anguloAux) * config.pushback, Math.sin(anguloAux) * config.pushback);
+                        let vectorDeDireccion = ({x: Math.cos(anguloAux) * config.pushback, y: Math.sin(anguloAux) * config.pushback});
                         
 
                         
                         //this.scene.matter.body.setVelocity(bodyB, vectorDeDireccion);
                        // console.log(bodyB.speed);
                         
-                        this.scene.matter.body.setVelocity(bodyB, vectorDeDireccion);
+                        //this.scene.matter.body.setVelocity(bodyB, vectorDeDireccion);
+                        
+                        bodyB.gameObject.forceSaved.x += vectorDeDireccion.x;
+                        bodyB.gameObject.forceSaved.y += vectorDeDireccion.y;
                         //this.scene.matter.body.applyForce(bodyB, {x:bodyA.gameObject.x, y: bodyA.gameObject.y},1000000000);
                         //bodyB.gameObject.applyForce(vectorDeDireccion);
                         //console.log(bodyB.speed);

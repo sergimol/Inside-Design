@@ -95,6 +95,10 @@ export default class Enemy extends Humanoid {
     //PREUPDATE
     preUpdate() {
 
+        
+    this.applyForce(this.forceSaved);
+    this.forceSaved = { x: 0, y: 0};
+
         if (this.hitState) {
             this.aspecto.play('enemyHit', true);
             if (this.aspecto.anims.currentFrame.textureFrame === 14)
