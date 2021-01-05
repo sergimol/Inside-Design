@@ -17,8 +17,8 @@ export default class Enemy extends Humanoid {
         this.health = 3;
         this.depth = 3;
 
-        this.body.frictionAir = 0.05;
-        this.body.mass = 300;
+        this.body.frictionAir = 0.15;
+        this.body.mass = 800;
         
         
         this.add(this.aspecto);
@@ -216,7 +216,7 @@ export default class Enemy extends Humanoid {
         //MOVEMOS AL ENEMIGO
         if (this.body.speed < 1 && !this.isDead){
 
-            this.setVelocity(this.dir.x * 0.3, this.dir.y * 0.3);
+            this.applyForce({x: this.dir.x * 0.3, y: this.dir.y * 0.3});
         }
 
     }
@@ -265,10 +265,12 @@ export default class Enemy extends Humanoid {
 
         //MOVEMOS AL ENEMIGO
         if (this.body.speed < 1 && !this.isDead){
-            this.setVelocity(this.dir.x * 0.6, this.dir.y * 0.6);
+            this.applyForce({x: this.dir.x * 0.6, y: this.dir.y * 0.6});
 
         }
-        this.setVelocity(this.dir.x * config.enemy.aggroVelFactor, this.dir.y * config.enemy.aggroVelFactor);
+        
+        if (this.body.speed < 1)
+        this.applyForce({x: this.dir.x * config.enemy.aggroVelFactor, y: this.dir.y * config.enemy.aggroVelFactor});
     }
 
 }
