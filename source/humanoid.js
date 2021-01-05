@@ -1,5 +1,6 @@
 import Item from "./item.js";
 
+
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
     constructor(scene, x, y, humanSprite, depth) {
         super(scene, x, y);
@@ -40,8 +41,9 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                 }
             }
         });
-
     }//Fin constructora
+
+
 
     damage(damagePoints) {
         this.hitState = true;
@@ -59,7 +61,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             this.hitState = false;
 
             this.weapon.setVisible(false);
-           //console.log('entityDep');
+            //console.log('entityDep');
             this.aspecto.play('enemyDep', true);
 
             if (this.body.label === 'enemy') {
@@ -73,6 +75,10 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                     else
                         var item = new Item(this.scene, this.x, this.y, 'medkit', this.scene.player);
                 }
+
+                //Decrementa en 1 EnemyCountDoor de la sala en la que se encuentra el enemigo
+                --this.doorRef.EnemyCountDoor[this.doorNum];    //El -1 es porque la puerta inicial es 1, pero el array empieza en 0
+                console.log(this.doorRef.EnemyCountDoor[this.doorNum])
             }
 
         }
@@ -123,8 +129,4 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         else
             this.bringToTop(this.weapon);
     }
-
-
-
 }
-

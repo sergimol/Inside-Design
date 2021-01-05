@@ -1,20 +1,21 @@
 import Humanoid from "./humanoid.js";
+import Doors from "./doors.js";
 import Weapon from "./weapon.js";
 export default class Enemy extends Humanoid {
-    constructor(scene, x, y, sprite, player, depth) {
+    constructor(scene, x, y, sprite, player, doorN, doorS) {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
         this.weapon = new Weapon(scene, 0, 5, "gunShoot", "enemybullet", "mono", "semi", 300, 20, 1, 0.6, 30, 3, 300, 0.15, 0.5, 20, 0, false, 0, 0,
-        //la parte de bullet del arma
-        0.7, 8, 8, 4, 4, 30, 'bullet', 0.01, 0, 0.8, 0.3, 1);
+            //la parte de bullet del arma
+            0.7, 8, 8, 4, 4, 30, 'bullet', 0.01, 0, 0.8, 0.3, 1);
         this.add(this.weapon);
 
         //Atributos
         this.speed = 50;
         this.health = 3;
         this.depth = 3;
-        
-        
+       
+
         this.add(this.aspecto);
         /////////////
         //Animaciones
@@ -46,6 +47,9 @@ export default class Enemy extends Humanoid {
 
         //Referencia al player
         this.playerRef = player;
+        //Referencia al DoorSystem
+        this.doorRef = doorS;
+        this.doorNum = doorN;   //Sala en la que se encuentra
 
         //Cambiar color "placeholder"
         this.aspecto.setTint(0x9999ff);
@@ -69,9 +73,9 @@ export default class Enemy extends Humanoid {
         this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
 
         //Colisiones
-        
-        
-         // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
+
+
+        // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
         //Aqui se asignan todas las colisiones
         this.body.collisionFilter = {
             'group': -2,
@@ -86,10 +90,9 @@ export default class Enemy extends Humanoid {
     //PREUPDATE
     preUpdate() {
 
-        if(this.hitState)
-        {
+        if (this.hitState) {
             this.aspecto.play('enemyHit', true);
-            if(this.aspecto.anims.currentFrame.textureFrame === 14)
+            if (this.aspecto.anims.currentFrame.textureFrame === 14)
                 this.hitState = false;
         }
         //Comprobamos el movimiento para asignar la animacion
@@ -100,10 +103,10 @@ export default class Enemy extends Humanoid {
                 this.aspecto.play('enemyIdle', true);
         }
         else {
-            if (this.body.speed <= 5){
+            if (this.body.speed <= 5) {
                 this.setFrictionAir(0.4);
                 this.setCollisionCategory(null)
-                
+
             }
             this.setActive(false);
         }
