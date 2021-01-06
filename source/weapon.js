@@ -62,7 +62,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
     esAutomatica(){return (this.modo === "auto");}
     esMelee(){return this.cuerpoACuerpo;}
 
-    shoot(esEnemigo){
+    shoot(esEnemigo, humanoide){
         let siguienteDisparo = this.scene.time.now;
         //console.log(this.ultimoDisparoTiempo);
         if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
@@ -78,7 +78,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 this.scene.time.addEvent({
                     delay: this.rafagasCadence,
                     callback: () => {
-                        this.dispararRafagas(esEnemigo);
+                        this.dispararRafagas(esEnemigo, humanoide);
                          if (this.cuerpoACuerpo){
                              if (this.hasShooted){
                                     this.hasShooted = false;
@@ -107,7 +107,19 @@ export default class Weapon extends Phaser.GameObjects.Container{
             
     }
 
-    dispararRafagas(esEnemigo){
+    dispararRafagas(esEnemigo, humanoide){
+
+        //añadir empuje al humanoide
+
+        
+        let vectorDeDireccion = ({x: Math.cos(this.rotation) * this.config.retroceso, y: Math.sin(this.rotation) * this.config.retroceso});
+                        
+        humanoide.forceSaved.x += vectorDeDireccion.x;
+        humanoide.forceSaved.y += vectorDeDireccion.y;
+
+
+
+
             this.scene.cameras.main.shake(config.weapon.shakeDur ,config.weapon.shakeInt);
             if (this.style === "mono"){
                 

@@ -207,7 +207,7 @@ export default class Player extends Humanoid {
 
   shoot() {
     if (this.ammo > this.weapon.ammoCostPerShoot() || this.hasInfiniteAmmo) {
-      if (this.weapon.shoot(false) && !this.hasInfiniteAmmo) {
+      if (this.weapon.shoot(false, this) && !this.hasInfiniteAmmo) {
         this.ammo -= this.weapon.ammoCostPerShoot();
         this.hud.setAmmo(this.ammo);
       }

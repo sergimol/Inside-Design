@@ -170,6 +170,8 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         let anguloAux = Phaser.Math.Angle.Between(this.x,this.y, bodyA.gameObject.x, bodyA.gameObject.y);
                         let vectorDeDireccion = ({x: Math.cos(anguloAux) * config.pushback, y: Math.sin(anguloAux) * config.pushback});
                         
+                        bodyA.gameObject.forceSaved.x += vectorDeDireccion.x;
+                        bodyA.gameObject.forceSaved.y += vectorDeDireccion.y;
                         
                         
                         //this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
@@ -182,8 +184,6 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //pero esto quiere decir que no importa lo que pese el mmuñeco siempre empujara la misam distacia
                         //I dont like that
                         //this.scene.matter.body.setVelocity(bodyA, vectorDeDireccion);
-                        bodyA.gameObject.forceSaved.x += vectorDeDireccion.x;
-                        bodyA.gameObject.forceSaved.y += vectorDeDireccion.y;
                         
                         
                         //this.scene.matter.body.applyForce(bodyA, {x: bodyB.gameObject.x, y: bodyB.gameObject.y } ,10000000000);

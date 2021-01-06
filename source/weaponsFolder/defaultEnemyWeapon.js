@@ -18,6 +18,7 @@ const WeaponConfig = {
     cuerpoACuerpo: false, 
     rotationOffSet: 0, 
     costeMunicionPorBala: 1,
+    retroceso: -1,
     bullet: disparo
 }
 

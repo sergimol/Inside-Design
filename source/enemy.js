@@ -133,7 +133,7 @@ export default class Enemy extends Humanoid {
             //Disparo
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
-                this.weapon.shoot(true);
+                this.weapon.shoot(true,this);
 
                 let sound = this.scene.sound.add('gunShootSound');
                 sound.setVolume(0.7);
