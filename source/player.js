@@ -306,7 +306,7 @@ export default class Player extends Humanoid {
   }
 
   changeWeapon(id){
-    this.weapon.destroy();
+    this.weapon.destructora();
     switch(id){
       case(0):
         this.weapon = new Weapon(this.scene, 0, 5, defaultWeapon);

@@ -9,7 +9,7 @@ const WeaponConfig = {
     pellets: 1, 
     bulletForce: 0.3, 
     forceDispersion: 30,
-    rafagas: 1, 
+    rafagas: 0, 
     rafagasCadence: 200,
     origenX: 0.15, 
     origenY: 0.5, 

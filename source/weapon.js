@@ -35,6 +35,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //auxiliares
         this.hasShooted = false; //booleano que indica si ah disparado anteriormente o no, se usa para el giro de la imagen en las armas a meele
         this.rotationOffSet = config.rotationOffSet;
+        this.rafagasArray = [];
 
         //imagen del arma
         this.image = scene.add.image(0, 0, config.spriteWeapon);
@@ -74,8 +75,10 @@ export default class Weapon extends Phaser.GameObjects.Container{
             ////////////
            
                 //console.log(this.ultimoDisparoTiempo);
-                this.c = 0;
-                this.scene.time.addEvent({
+                //this.c = 0;
+
+                
+                this.rafagasArray.push(this.scene.time.addEvent({
                     delay: this.rafagasCadence,
                     callback: () => {
                         this.dispararRafagas(esEnemigo, humanoide);
@@ -98,8 +101,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
                             
                     },
-                    repeat: this.rafagas - 1}
-                );
+                    repeat: this.rafagas}
+                )); 
             
             return true;    
         }
@@ -183,6 +186,17 @@ export default class Weapon extends Phaser.GameObjects.Container{
     ammoCostPerShoot(){
 
         return(this.costeMunicionPorBala * this.rafagas)
+    }
+
+    pararRafagasCola(){
+        
+        this.rafagasArray.forEach(element => element.remove());
+    }
+
+    destructora(){
+
+        this.pararRafagasCola();
+        this.destroy();
     }
 
 }
