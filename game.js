@@ -180,7 +180,7 @@ export default class Game extends Phaser.Scene {
   }
 
   loadObjects(entityLayer, DoorsentityLayer) {
-    this.doorSystem = new Doors(this, 'doorOpen');
+    this.doorSystem = new Doors(this, 'doorOpen','door');
 
     this.enemies = this.add.group();
     let doorNum = {}; //Guarda la cantidad de enemigos por sala
@@ -214,8 +214,14 @@ export default class Game extends Phaser.Scene {
     for (const objeto of DoorsentityLayer) {
       if (objeto.name === 'door') {
         var door = this.matter.add.image(objeto.x, objeto.y, 'door');
+        door.body.label = "door";
         //Creamos una puerta con la posicion y el numero necesario de enemigos que hacen falta matar para que se abra
         this.doorSystem.addDoor(door, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1);
+      }
+      else if(objeto.name === 'doorTrigger'){
+        var door = this.matter.add.image(objeto.x, objeto.y, 'door');
+        door.body.label = "doorTrigger";
+        this.doorSystem.addDoor(door, 0, objeto.properties[0].value - 1);
       }
     }
   }
