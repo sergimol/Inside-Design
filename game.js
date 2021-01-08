@@ -241,6 +241,6 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.finish);
   }
   update() {
-    this.changeLayer();
+    //this.changeLayer();
   }
 }
