@@ -106,7 +106,7 @@ export default class Enemy extends Humanoid {
         }
         //Comprobamos el movimiento para asignar la animacion
         else if (this.isDead === false) {
-            if (this.body.speed > 0)
+            if (this.dir.x !== 0 || this.dir.y !== 0)
                 this.aspecto.play('enemyWalk', true);
             else
                 this.aspecto.play('enemyIdle', true);
