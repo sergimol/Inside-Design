@@ -20,7 +20,7 @@ export default class Player extends Humanoid {
 
     //Atributos
     //this.body.mass = 900;
-    this.body.frictionAir = 0.15;
+    this.body.frictionAir = 0.25;
     this.depth = 4;
     let active;
     //Puntero

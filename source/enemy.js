@@ -17,7 +17,7 @@ export default class Enemy extends Humanoid {
         this.health = 3;
         this.depth = 3;
 
-        this.body.frictionAir = 0.15;
+        this.body.frictionAir = 0.25;
         this.body.mass = 800;
         
         

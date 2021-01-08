@@ -24,13 +24,13 @@ const Config = {
         health: 3,
         speed: 50,
         depth: 3,
-        idleMovTime: 2500,
+        idleMovTime: 1000,
         aggroMovTime: 500,
         cadenceTime: 1000,
         minDistance: 4,
         aggroDistance: 100,
-        idleVelFactor: 0.3,
-        aggroVelFactor: 0.6
+        idleVelFactor: 0.1,
+        aggroVelFactor: 0.4
     },
 
     //Configuración base de las armas
