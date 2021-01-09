@@ -8,7 +8,9 @@ export default class UI extends Phaser.Scene {
     
     preload(){
         //Carga de imagenes
+            //Armas
         this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
+            //Pasivas
         this.load.image('tanqueo', 'Sprites/pixel-tank.png');
         //this.load.image('facil', 'Sprites/');
         this.load.image('rambo', 'Sprites/rambo.png');
@@ -16,6 +18,8 @@ export default class UI extends Phaser.Scene {
         //this.load.image('malaonda', 'Sprites/');
         this.load.image('sanic', 'Sprites/sanic.png');
         this.load.image('cogo', 'Sprites/ferrari.png');
+            //Activas
+        this.load.image('dash', 'Sprites/Dash-1.png');
         //Carga de fuentes con bitmap
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
@@ -45,7 +49,6 @@ export default class UI extends Phaser.Scene {
         this.weapon.scale = config.ui.weaponScl;        
 
         //Contador de munición
-        //Creación de texto con bitmap
         
         //creacion de texto con webfont
         WebFont.load({
@@ -53,7 +56,10 @@ export default class UI extends Phaser.Scene {
                 families: [ 'Permanent Marker']
             }
         })
-        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', {fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff'});
+        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', {fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff'});        
+        
+        //Activa
+        this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[0]);
     }
 
     //Cambia el tamaño de la barra de vida en función de la salud del jugador
@@ -71,6 +77,11 @@ export default class UI extends Phaser.Scene {
             this.ammo.text = playerAmmo;
         else
             this.ammo.text = '∞';
+    }
+
+    setPassiveImg(id){
+        this.activeImg.destroy();
+        this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[id]);
     }
 
     addPassiveImg(id){
