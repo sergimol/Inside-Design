@@ -332,7 +332,7 @@ export default class Game extends Phaser.Scene {
   loadFile(){
     var file = JSON.parse(localStorage.getItem('insideDesignSaveFile'));
     //cargar las cosas de file
-    this.disparosRealizados = parseInt(localStorage.getItem('disparos')) || 0;
-    this.enemiesKilled = parseInt(localStorage.getItem('enemigos')) || 0;
+    this.disparosRealizados = file.disparos || 0;
+    this.enemiesKilled = file.enemigos || 0;
   }
 }
