@@ -16,10 +16,10 @@ export default class Enemy extends Humanoid {
         //comportamientos
         this.Idle = false;
         this.acercarse = true;
-        this.alejarse = false;
-        this.strafe = false;
+        this.alejarse = true;
+        this.strafe = true;
 
-        this.strafeAngle = Math.PI; //izquierda o derecha del strafe
+        this.strafeAngle = Math.PI/2; //izquierda o derecha del strafe
         if (Phaser.Math.RND.between(0, 1) != 0) 
         this.angleAcercarse = Math.PI/4; //preferencia para acercarse sobre el lado izquierdo o el derecho
         else 
@@ -176,10 +176,10 @@ export default class Enemy extends Humanoid {
             let vectorAux = new Phaser.Math.Vector2(0,0);
 
         
-            if(this.acercarse && distanciaentrejugador >= 10){
+            if(this.acercarse && distanciaentrejugador >= 100){
                 
-                vectorAux.add( new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y));
-                vectorAux.rotate(this.angleAcercarse);//todo
+                vectorAux.add( new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y).rotate(this.angleAcercarse));
+                //vectorAux.rotate(this.angleAcercarse);//todo
                 //this.dir.normalize();
             }
             //else  if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0}; //esta en 0,0 para asegurarse de que
