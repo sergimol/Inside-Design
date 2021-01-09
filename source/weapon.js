@@ -145,7 +145,13 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
 
     instanciarBala(esEnemigo){
-        
+
+        if(!esEnemigo){
+            this.scene.disparosRealizados++;
+            this.scene.saveFile();
+
+            console.log(localStorage);
+        }
         
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
 
@@ -185,7 +191,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     ammoCostPerShoot(){
 
-        return(this.costeMunicionPorBala * this.rafagas)
+        return(this.costeMunicionPorBala * (this.rafagas + 1))
     }
 
     pararRafagasCola(){

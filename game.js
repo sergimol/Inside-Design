@@ -9,6 +9,11 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: "main" });
   }
+  init(data) {
+    this.health = data.health,
+      this.ammo = data.ammo;
+  }
+
 
   preload() {
     this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
@@ -18,9 +23,9 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('enemybullet', 'Sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.image('crosshair', 'Sprites/crosshair.png');
     this.load.image('granade_launcher', 'Sprites/granade_launcher.png');
-    
+
     this.load.image('escopeta_lanzable', 'Sprites/escopeta_lanzable.png');
-    
+
     this.load.spritesheet('granade__launcher_shoot', 'Sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet('escopeta_lanzable_shoot', 'Sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('granade_launcher_shoot_explosion', 'Sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
@@ -28,15 +33,19 @@ export default class Game extends Phaser.Scene {
     //Javi
     //Tiles de estéticas
     this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
+    this.load.image('tileSala1', './Sprites/tiles/TilesetDEF.png');
     this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
-    this.load.image('door', './Sprites/door.png');
-    this.load.image('doorOpen', './Sprites/doorOpen.png');
+    this.load.image('doorV', './Sprites/doorV.png');
+    this.load.image('doorOpenV', './Sprites/doorOpenV.png');
+    this.load.image('doorH', './Sprites/doorH.png');
+    this.load.image('doorOpenH', './Sprites/doorOpenH.png');
     this.load.image('trigger', './Sprites/trigger.png');
     this.load.image('end', './Sprites/end.jpg');
     this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
     this.load.image('medkit', './Sprites/medkit.png');
 
     this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
+    this.load.tilemapTiledJSON('sala1', './Sprites/tiles/Sala1.json');
 
     //nuevo
     this.load.audio('mainTheme', './audio/main_theme_v1.0.wav');
@@ -47,13 +56,25 @@ export default class Game extends Phaser.Scene {
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
     this.load.image('bate', './Sprites/Bate3.png');
     this.load.image('swing', './Sprites/swing.png');
-    this.load.image('walkParticle','./Sprites/walkParticulas.png');
+    this.load.image('walkParticle', './Sprites/walkParticulas.png');
     this.load.image('dashParticle', './Sprites/dashParticula.png')
     this.load.audio('dashSound', './audio/dashSound.wav');
 
   }
 
   create() {
+
+    this.disparosRealizados = 0;
+    this.enemiesKilled = 0;
+
+    this.loadFile();
+
+    //ARRAY DE HABITACIONES
+    this.arrayRooms = [];
+    //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
+    this.map = this.make.tilemap({ key: 'sala1' });
+    this.loadTileMapRoom();
+    /*
     this.map = this.make.tilemap({ key: 'dungeon' })
     this.tileset = this.map.addTilesetImage('TilesetBase', 'tiles', 16, 16, 1, 2);
 
@@ -94,7 +115,7 @@ export default class Game extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(boxbottomLayer);
     this.matter.world.convertTilemapLayer(colstopLayer);
     this.matter.world.convertTilemapLayer(boxtopLayer);
-
+    */
 
     //PUNTERO
     this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
@@ -112,11 +133,11 @@ export default class Game extends Phaser.Scene {
 
 
     //CARGA DE OBJETOS
-    this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
-    this.door;
-    this.endZone;
-    this.finish = false;
-    this.loadObjects(entityLayer, DoorsentityLayer);
+    //this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
+    //this.door;
+    //this.endZone;
+    //this.finish = false;
+    //this.loadObjects(entityLayer, DoorsentityLayer);
 
     //Camara
     this.cameras.main.zoom = 3;
@@ -132,7 +153,7 @@ export default class Game extends Phaser.Scene {
       console.log(this.tilemapState);
     }, this);
     */
-    
+
     this.matter.world.on('collisionstart', (event) => {
 
       //  Loop through all of the collision pairs
@@ -156,9 +177,9 @@ export default class Game extends Phaser.Scene {
             playerBody = bodyB;
           }
           if (playerBody.label === 'endLevel') {
-            console.log("El rap de fernanflo")
             this.cameras.main.fadeOut(3000);
-            this.time.delayedCall(3000, this.end, [], this);
+            //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
+            this.scene.start('sceneManager', { health: this.player.health, ammo: this.player.ammo });
           }
         }
       }
@@ -180,7 +201,7 @@ export default class Game extends Phaser.Scene {
   }
 
   loadObjects(entityLayer, DoorsentityLayer) {
-    this.doorSystem = new Doors(this, 'doorOpen','door');
+    this.doorSystem = new Doors(this, 'doorOpenV', 'doorV','doorOpenH', 'doorH');
 
     this.enemies = this.add.group();
     let doorNum = {}; //Guarda la cantidad de enemigos por sala
@@ -191,7 +212,7 @@ export default class Game extends Phaser.Scene {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
       if (objeto.name === 'player') {
-        this.player = new Player(this, objeto.x, objeto.y, 'player')
+        this.player = new Player(this, objeto.x, objeto.y, 'player', this.health, this.ammo)
       }
       else if (objeto.name === 'enemy') {
         const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player, objeto.properties[0].value - 1, this.doorSystem);
@@ -212,17 +233,8 @@ export default class Game extends Phaser.Scene {
     }
 
     for (const objeto of DoorsentityLayer) {
-      if (objeto.name === 'door') {
-        var door = this.matter.add.image(objeto.x, objeto.y, 'door');
-        door.body.label = "door";
-        //Creamos una puerta con la posicion y el numero necesario de enemigos que hacen falta matar para que se abra
-        this.doorSystem.addDoor(door, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1);
-      }
-      else if(objeto.name === 'doorTrigger'){
-        var door = this.matter.add.image(objeto.x, objeto.y, 'door');
-        door.body.label = "doorTrigger";
-        this.doorSystem.addDoor(door, 0, objeto.properties[0].value - 1);
-      }
+      //Creamos una puerta con la posicion y el numero necesario de enemigos  y la rotacion que hacen falta matar para que se abra
+      this.doorSystem.addDoor(objeto, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1, objeto.properties[1].value);
     }
   }
 
@@ -233,14 +245,87 @@ export default class Game extends Phaser.Scene {
        this.fadeCamera.fadeEffect.alpha = 0;
        this.fadeCamera.fade(2000);
        }*/
-  end() {
+  /*end() {
     console.log("se queda");
     this.finish = this.add.image(3000, 3000, 'end');
     this.cameras.main.fadeIn(3000);
     this.scene.stop('UIScene');
     this.cameras.main.startFollow(this.finish);
-  }
+  }*/
   update() {
     //this.changeLayer();
+    //console.log(this.player.ammo)
+  }
+
+  //SE CARGA UNA HABITACION
+  loadTileMapRoom() {
+
+    //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
+    //this.make.tilemap({ key: 'sala1' })
+    this.tileset = this.map.addTilesetImage('TilesetBase', 'tileSala1', 16, 16, 1, 2);
+
+    this.map.createBlankDynamicLayer('sala1', this.tileset);
+
+    let groundLayer = this.map.createStaticLayer('Ground', this.tileset);
+    let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
+    let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
+    let wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
+    let colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
+    let boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
+    let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
+    let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
+    let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
+
+    let entityLayer = this.map.getObjectLayer('Entities').objects
+    let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
+    // profundidad
+    groundLayer.setDepth(0);
+    detailsLayer.setDepth(0);
+    wallsLayer.setDepth(1);
+    colsbottomLayer.setDepth(2);
+    boxbottomLayer.setDepth(2);
+    //enemigos          ->3
+    //jugador y balas   ->4
+    wallstopLayer.setDepth(5);
+    collidersLayer.setDepth(5);
+    colstopLayer.setDepth(6);
+    boxtopLayer.setDepth(6);
+
+    // colisiones tilemap
+    collidersLayer.setCollisionByProperty({ collide: true });
+    colsbottomLayer.setCollisionByProperty({ collide: true });
+    boxbottomLayer.setCollisionByProperty({ collide: true });
+    colstopLayer.setCollisionByProperty({ collide: true });
+    boxtopLayer.setCollisionByProperty({ collide: true });
+    // físicas
+    this.matter.world.convertTilemapLayer(collidersLayer);
+    this.matter.world.convertTilemapLayer(colsbottomLayer);
+    this.matter.world.convertTilemapLayer(boxbottomLayer);
+    this.matter.world.convertTilemapLayer(colstopLayer);
+    this.matter.world.convertTilemapLayer(boxtopLayer);
+
+    //CARGA DE OBJETOS NOSEQUE
+    this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
+    this.door;
+    this.endZone;
+    this.finish = false;
+    this.loadObjects(entityLayer, DoorsentityLayer);
+
+
+  }
+  saveFile(){
+    var file = {
+      disparos:this.disparosRealizados,
+      enemigos:this.enemiesKilled
+      //que tiene que gaurdar el file¿?
+    };
+    localStorage.setItem('insideDesignSaveFile',JSON.stringify(file));
+  }
+
+  loadFile(){
+    var file = JSON.parse(localStorage.getItem('insideDesignSaveFile'));
+    //cargar las cosas de file
+    this.disparosRealizados = file.disparos || 0;
+    this.enemiesKilled = file.enemigos || 0;
   }
 }
