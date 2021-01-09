@@ -28,6 +28,7 @@ export default class Game extends Phaser.Scene {
     //Javi
     //Tiles de estéticas
     this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
+    this.load.image('tileSala1', './Sprites/tiles/TilesetDEF.png');
     this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
     this.load.image('door', './Sprites/door.png');
     this.load.image('doorOpen', './Sprites/doorOpen.png');
@@ -37,6 +38,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('medkit', './Sprites/medkit.png');
 
     this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
+    this.load.tilemapTiledJSON('sala1', './Sprites/tiles/Sala1.json');
 
     //nuevo
     this.load.audio('mainTheme', './audio/main_theme_v1.0.wav');
@@ -54,6 +56,13 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+
+    //ARRAY DE HABITACIONES
+    this.arrayRooms = [];
+    //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
+    this.map = this.make.tilemap({ key: 'sala1' });
+    this.loadTileMapRoom();
+    /*
     this.map = this.make.tilemap({ key: 'dungeon' })
     this.tileset = this.map.addTilesetImage('TilesetBase', 'tiles', 16, 16, 1, 2);
 
@@ -94,7 +103,7 @@ export default class Game extends Phaser.Scene {
     this.matter.world.convertTilemapLayer(boxbottomLayer);
     this.matter.world.convertTilemapLayer(colstopLayer);
     this.matter.world.convertTilemapLayer(boxtopLayer);
-
+    */
 
     //PUNTERO
     this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
@@ -112,11 +121,11 @@ export default class Game extends Phaser.Scene {
 
 
     //CARGA DE OBJETOS
-    this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
-    this.door;
-    this.endZone;
-    this.finish = false;
-    this.loadObjects(entityLayer, DoorsentityLayer);
+    //this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
+    //this.door;
+    //this.endZone;
+    //this.finish = false;
+    //this.loadObjects(entityLayer, DoorsentityLayer);
 
     //Camara
     this.cameras.main.zoom = 3;
@@ -242,5 +251,62 @@ export default class Game extends Phaser.Scene {
   }
   update() {
     //this.changeLayer();
+  }
+
+  //SE CARGA UNA HABITACION
+  loadTileMapRoom(){
+    
+    //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
+    //this.make.tilemap({ key: 'sala1' })
+    this.tileset = this.map.addTilesetImage('TilesetBase', 'tileSala1', 16, 16, 1, 2);
+
+    //this.map.createBlankDynamicLayer('sala1', this.tileset);
+
+    let groundLayer = this.map.createStaticLayer('Ground', this.tileset);
+    let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
+    let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
+    let wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
+    let colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
+    let boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
+    let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
+    let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
+    let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
+
+    let entityLayer = this.map.getObjectLayer('Entities').objects
+    let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
+    // profundidad
+    groundLayer.setDepth(0);
+    detailsLayer.setDepth(0);
+    wallsLayer.setDepth(1);
+    colsbottomLayer.setDepth(2);
+    boxbottomLayer.setDepth(2);
+    //enemigos          ->3
+    //jugador y balas   ->4
+    wallstopLayer.setDepth(5);
+    collidersLayer.setDepth(5);
+    colstopLayer.setDepth(6);
+    boxtopLayer.setDepth(6);
+
+    // colisiones tilemap
+    collidersLayer.setCollisionByProperty({ collide: true });
+    colsbottomLayer.setCollisionByProperty({ collide: true });
+    boxbottomLayer.setCollisionByProperty({ collide: true });
+    colstopLayer.setCollisionByProperty({ collide: true });
+    boxtopLayer.setCollisionByProperty({ collide: true });
+    // físicas
+    this.matter.world.convertTilemapLayer(collidersLayer);
+    this.matter.world.convertTilemapLayer(colsbottomLayer);
+    this.matter.world.convertTilemapLayer(boxbottomLayer);
+    this.matter.world.convertTilemapLayer(colstopLayer);
+    this.matter.world.convertTilemapLayer(boxtopLayer);
+
+    //CARGA DE OBJETOS NOSEQUE
+    this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
+    this.door;
+    this.endZone;
+    this.finish = false;
+    this.loadObjects(entityLayer, DoorsentityLayer);
+
+    
   }
 }
