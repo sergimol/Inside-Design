@@ -72,7 +72,7 @@ export default class Doors extends Phaser.GameObjects.Container {
         } else if (objeto.body.label === 'doorTrigger') {
             var rect = Bodies.rectangle(objeto.x, objeto.y, 48, 16);
             var zoneA = Bodies.rectangle(objeto.x, objeto.y - 32, 48, 16, { isSensor: true, label: 'top' });
-            var zoneB = Bodies.rectangle(objeto.x, objeto.y + 32, 48, 16, { isSensor: true, label: 'bottom' })
+            var zoneB = Bodies.rectangle(objeto.x, objeto.y + 48, 48, 16, { isSensor: true, label: 'bottom' })
             var compoundBody = Phaser.Physics.Matter.Matter.Body.create({
                 parts: [rect, zoneA, zoneB]
             })
@@ -95,11 +95,18 @@ export default class Doors extends Phaser.GameObjects.Container {
         this.doorsTrigger[this.contador - 1].setTexture(this.spriteOpened);
         console.log(this.doorsTrigger[this.contador - 1].body.parts[1])
         this.doorsTrigger[this.contador - 1].body.parts[1].isSensor = true;
+        /*this.doorsTrigger[this.contador - 1].body.parts[1].collisionFilter = {
+            'category': 8
+        };*/
+        console.log
     }
     closeTriggerDoor() {
         if (this.doorsTrigger[this.contador - 1] != null) {
             this.doorsTrigger[this.contador - 1].setTexture(this.spriteClosed);
             this.doorsTrigger[this.contador - 1].body.parts[1].isSensor = false;
+            /*this.doorsTrigger[this.contador - 1].body.parts[1].collisionFilter = {
+                'category': 1
+            };*/
         }
     }
 

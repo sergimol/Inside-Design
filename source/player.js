@@ -8,8 +8,8 @@ import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
 import config from "./config.js";
 
 export default class Player extends Humanoid {
-  constructor(scene, x, y, sprite, depth) {
-    super(scene, x, y, sprite);
+  constructor(scene, x, y, sprite, health,ammo) {
+    super(scene, x, y, sprite, health);
     this.body.label = 'player';
 
     //Arma
@@ -26,7 +26,7 @@ export default class Player extends Humanoid {
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
-    this.ammo = config.player.baseAmmo;
+    this.ammo = ammo;//config.player.baseAmmo;
     this.hasInfiniteAmmo = false;
     this.velFactor = config.player.baseVelFactor
 

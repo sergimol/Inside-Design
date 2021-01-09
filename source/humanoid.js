@@ -5,7 +5,7 @@ import config from "./config.js";
 
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
-    constructor(scene, x, y, humanSprite) {
+    constructor(scene, x, y, humanSprite,health) {
         super(scene, x, y);
         scene.add.existing(this);
 
@@ -14,7 +14,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.add(this.aspecto);
 
         //Atributos
-        this.health = config.humanoid.health;
+        this.health = health;//config.humanoid.health;
 
         this.isDead = false;                            //La entidad está viva
         this.speed = config.humanoid.speed;
