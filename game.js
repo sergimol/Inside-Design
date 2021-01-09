@@ -67,6 +67,7 @@ export default class Game extends Phaser.Scene {
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
 
+    //localStorage.clear();
     this.loadFile();
 
     //ARRAY DE HABITACIONES
@@ -318,14 +319,21 @@ export default class Game extends Phaser.Scene {
       disparos:this.disparosRealizados,
       enemigos:this.enemiesKilled
       //que tiene que gaurdar el file¿?
-    };
+    }
     localStorage.setItem('insideDesignSaveFile',JSON.stringify(file));
   }
 
   loadFile(){
     var file = JSON.parse(localStorage.getItem('insideDesignSaveFile'));
     //cargar las cosas de file
-    this.disparosRealizados = file.disparos || 0;
-    this.enemiesKilled = file.enemigos || 0;
+
+    if (file !== null){
+      this.disparosRealizados = file.disparos;
+      this.enemiesKilled = file.enemigos;
+    }
+    else{
+      this.disparosRealizados = 0;
+      this.enemiesKilled = 0;
+    }
   }
 }
