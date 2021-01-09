@@ -160,6 +160,10 @@ export default class Enemy extends Humanoid {
         //ESTADO ATAQUE
         else {
             //Movimiento
+            
+            let angulo = Phaser.Math.Angle.Between(this.x,this.y, this.playerRef.x, this.playerRef.y);
+            this.moveRotate(this.playerRef.x -this.x);
+            this.weapon.rotateWeapon(angulo);
 
             let vectorAux = new Phaser.Math.Vector2(0,0);
 
@@ -170,35 +174,39 @@ export default class Enemy extends Humanoid {
                 //this.dir.normalize();
             }
             //else  if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0}; //esta en 0,0 para asegurarse de que
-                
             
-                
+            
+            
             if (this.alejarse && distanciaentrejugador < 95){
                 
                 vectorAux.add( new Phaser.Math.Vector2(-this.playerRef.x + this.x, -this.playerRef.y + this.y));
                 //this.dir.normalize();
             } //else if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0};
-                
-                
+            
+            
             if(this.strafe){
                 vectorAux.add( new Phaser.Math.Vector2(this.playerRef.y - this.y, -(this.playerRef.x - this.x)));
                 //this.dir.normalize();
             }
-
+            
             vectorAux.normalize();
             this.dir = vectorAux;
             
-                
-        
+            
+            
             //if(distanciaentrejugador >= 100){
-
-            //} else this.dir = {x:0, y:0};
+                
+                //} else this.dir = {x:0, y:0};
                 
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
 
-                let angulo = Phaser.Math.Angle.Between(this.x,this.y, this.playerRef.x, this.playerRef.y);
-                this.weapon.rotateWeapon(angulo);
+
+
+
+                
+                
+                
                 this.weapon.shoot(true,this);
 
                 let sound = this.scene.sound.add('gunShootSound');
