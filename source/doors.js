@@ -1,10 +1,12 @@
 export default class Doors extends Phaser.GameObjects.Container {
-    constructor(scene, spriteO, spriteC) {
+    constructor(scene, spriteOV, spriteCV, spriteOH, spriteCH) {
         super(scene);
         //this.scene.matter.add.gameObject(this);
         this.scene.add.existing(this);
-        this.spriteOpened = spriteO;
-        this.spriteClosed = spriteC;
+        this.spriteOpenedH = spriteOH;
+        this.spriteClosedH = spriteCH;
+        this.spriteOpenedV = spriteOV;
+        this.spriteClosedV = spriteCV;
 
         this.doors = {};            //Guarda las puertas que se van añadiendo a la clase
         this.doorsTrigger = {};
@@ -50,7 +52,6 @@ export default class Doors extends Phaser.GameObjects.Container {
                         }
                         else if (playerBody.label === 'top') {
                             this.openTriggerDoor();
-                            //this.closeTriggerDoor();
                         }
                         else if (playerBody.label === 'bottom') {
                             this.closeTriggerDoor();
@@ -61,48 +62,95 @@ export default class Doors extends Phaser.GameObjects.Container {
         });
     }
     //Añado la puerta al array de puertas en la posición que le pase para que estén ordenadas (1,2,3...)
-    addDoor(objeto, numDoor, objectNum) {
+    addDoor(objeto, numDoor, objectNum, rotation) {
         var Bodies = Phaser.Physics.Matter.Matter.Bodies;
 
-        if (objeto.body.label === 'door') {
-            this.doors[objectNum] = objeto;             //Guardo la puerta en el array de puertas
+        if (objeto.name === 'door') {
+            if (objeto.properties[1].value === "horizontal") {
+                var door = this.scene.matter.add.image(objeto.x, objeto.y, this.spriteClosedH);
+                door.label = 'horizontal';
+            }
+            else if (objeto.properties[1].value === "vertical") {
+                var door = this.scene.matter.add.image(objeto.x, objeto.y, this.spriteClosedV);
+                door.label = 'vertical';
+            }
+            this.doors[objectNum] = door;             //Guardo la puerta en el array de puertas
+
             this.EnemyCountDoor[objectNum] = numDoor;   //Guardo el numero de enemigos que hay que matar para que se abra la puerta
             this.doors[objectNum].setStatic(true);
             this.doors[objectNum].depth = 4;
-        } else if (objeto.body.label === 'doorTrigger') {
-            var rect = Bodies.rectangle(objeto.x, objeto.y, 48, 16);
-            var zoneA = Bodies.rectangle(objeto.x, objeto.y - 32, 48, 16, { isSensor: true, label: 'top' });
-            var zoneB = Bodies.rectangle(objeto.x, objeto.y + 48, 48, 16, { isSensor: true, label: 'bottom' })
+        } else if (objeto.name === 'doorTrigger') {
+            if (objeto.properties[2].value === "horizontal") {
+                var door = this.scene.matter.add.image(objeto.x, objeto.y, this.spriteClosedH);
+                door.label = 'horizontal';
+
+                var rect = Bodies.rectangle(door.x, door.y, 16, 48);
+                if (objeto.properties[1].value === 0) {
+                    var zoneA = Bodies.rectangle(door.x - 32, door.y, 16, 48, { isSensor: true, label: 'top' });
+                    var zoneB = Bodies.rectangle(door.x + 32, door.y, 16, 48, { isSensor: true, label: 'bottom' });
+                } else if (objeto.properties[1].value === 1) {
+                    var zoneA = Bodies.rectangle(door.x - 32, door.y, 16, 48, { isSensor: true, label: 'bottom' });
+                    var zoneB = Bodies.rectangle(door.x + 32, door.y, 16, 48, { isSensor: true, label: 'top' });
+                }
+            }
+            else if (objeto.properties[2].value === "vertical") {
+                var door = this.scene.matter.add.image(objeto.x, objeto.y, this.spriteClosedV);
+                door.label = 'vertical';
+
+                var rect = Bodies.rectangle(door.x, door.y, 48, 16);
+
+                if (objeto.properties[1].value === 0) {
+                    var zoneA = Bodies.rectangle(door.x, door.y - 32, 48, 16, { isSensor: true, label: 'top' });
+                    var zoneB = Bodies.rectangle(door.x, door.y + 32, 48, 16, { isSensor: true, label: 'bottom' });
+                } else if (objeto.properties[1].value === 1) {
+                    var zoneA = Bodies.rectangle(door.x, door.y - 32, 48, 16, { isSensor: true, label: 'bottom' });
+                    var zoneB = Bodies.rectangle(door.x, door.y + 32, 48, 16, { isSensor: true, label: 'top' });
+                }
+            }
+
             var compoundBody = Phaser.Physics.Matter.Matter.Body.create({
                 parts: [rect, zoneA, zoneB]
             })
-            objeto.setExistingBody(compoundBody);
-            this.doorsTrigger[objectNum] = objeto;
+            door.setExistingBody(compoundBody);
+            this.doorsTrigger[objectNum] = door;
             this.doorsTrigger[objectNum].depth = 4;
             this.doorsTrigger[objectNum].setStatic(true);
         }
     }
     //Abro las puertas en orden (this.contador)
     openDoor() {
-        //console.log(this.doors[this.contador].properties)
         if (this.EnemyCountDoor[this.contador] <= 0) {                //Si EnemyCountDoor === 0, la puerta se tiene que abrir
-            this.doors[this.contador].setTexture(this.spriteOpened);
+            if (this.doors[this.contador].label === "horizontal")
+                this.doors[this.contador].setTexture(this.spriteOpenedH);
+            else if (this.doors[this.contador].label === "vertical")
+                this.doors[this.contador].setTexture(this.spriteOpenedV);
+
             this.doors[this.contador].setCollisionCategory(null);
             ++this.contador;
         }
     }
     openTriggerDoor() {
-        this.doorsTrigger[this.contador - 1].setTexture(this.spriteOpened);
+        if (this.doorsTrigger[this.contador - 1].label === "horizontal") {
+            this.doorsTrigger[this.contador - 1].setTexture(this.spriteOpenedH);
+        }
+        else if (this.doorsTrigger[this.contador - 1].label === "vertical") {
+            this.doorsTrigger[this.contador - 1].setTexture(this.spriteOpenedV);
+        }
+
         console.log(this.doorsTrigger[this.contador - 1].body.parts[1])
         this.doorsTrigger[this.contador - 1].body.parts[1].isSensor = true;
+
         /*this.doorsTrigger[this.contador - 1].body.parts[1].collisionFilter = {
             'category': 8
         };*/
-        console.log
     }
     closeTriggerDoor() {
         if (this.doorsTrigger[this.contador - 1] != null) {
-            this.doorsTrigger[this.contador - 1].setTexture(this.spriteClosed);
+            if (this.doorsTrigger[this.contador - 1].label === "horizontal")
+                this.doorsTrigger[this.contador - 1].setTexture(this.spriteClosedH);
+            else if (this.doorsTrigger[this.contador - 1].label === "vertical")
+                this.doorsTrigger[this.contador - 1].setTexture(this.spriteClosedV);
+
             this.doorsTrigger[this.contador - 1].body.parts[1].isSensor = false;
             /*this.doorsTrigger[this.contador - 1].body.parts[1].collisionFilter = {
                 'category': 1
