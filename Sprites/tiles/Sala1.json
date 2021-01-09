@@ -110,9 +110,9 @@
                          "value":1
                         }, 
                         {
-                         "name":"collide",
-                         "type":"bool",
-                         "value":true
+                         "name":"rotation",
+                         "type":"string",
+                         "value":"horizontal"
                         }],
                  "rotation":0,
                  "type":"",
@@ -133,9 +133,9 @@
                          "value":1
                         }, 
                         {
-                         "name":"collide",
-                         "type":"bool",
-                         "value":true
+                         "name":"rotation",
+                         "type":"string",
+                         "value":"horizontal"
                         }],
                  "rotation":0,
                  "type":"",
