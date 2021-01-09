@@ -266,7 +266,7 @@ export default class Game extends Phaser.Scene {
     //this.make.tilemap({ key: 'sala1' })
     this.tileset = this.map.addTilesetImage('TilesetBase', 'tileSala1', 16, 16, 1, 2);
 
-    //this.map.createBlankDynamicLayer('sala1', this.tileset);
+    this.map.createBlankDynamicLayer('sala1', this.tileset);
 
     let groundLayer = this.map.createStaticLayer('Ground', this.tileset);
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);

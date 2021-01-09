@@ -189,13 +189,13 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":16,
+                 "width":0,
                  "x":304.5,
                  "y":196.25
                 }, 
                 {
                  "gid":89,
-                 "height":16,
+                 "height":0,
                  "id":125,
                  "name":"doorTrigger",
                  "properties":[
@@ -212,7 +212,7 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":16,
+                 "width":0,
                  "x":0,
                  "y":80
                 }],

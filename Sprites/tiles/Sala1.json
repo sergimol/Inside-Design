@@ -99,78 +99,6 @@
          "name":"Doors",
          "objects":[
                 {
-                 "gid":22,
-                 "height":16,
-                 "id":108,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":296,
-                 "y":205
-                }, 
-                {
-                 "gid":22,
-                 "height":16,
-                 "id":109,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":303,
-                 "y":185.333333333333
-                }, 
-                {
-                 "gid":22,
-                 "height":16,
-                 "id":110,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":312,
-                 "y":187.666666666667
-                }, 
-                {
-                 "gid":22,
-                 "height":16,
-                 "id":111,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":302.666666666667,
-                 "y":184.666666666667
-                }, 
-                {
-                 "gid":22,
-                 "height":16,
-                 "id":112,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":305,
-                 "y":183.333333333333
-                }, 
-                {
-                 "gid":86,
-                 "height":16,
-                 "id":113,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":307.666666666667,
-                 "y":182
-                }, 
-                {
                  "gid":89,
                  "height":16,
                  "id":120,
@@ -182,16 +110,16 @@
                          "value":1
                         }, 
                         {
-                         "name":"collide",
-                         "type":"bool",
-                         "value":true
+                         "name":"rotation",
+                         "type":"string",
+                         "value":"horizontal"
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":304.5,
-                 "y":196.25
+                 "x":303.954545454545,
+                 "y":196.522727272727
                 }, 
                 {
                  "gid":89,
@@ -205,9 +133,9 @@
                          "value":1
                         }, 
                         {
-                         "name":"collide",
-                         "type":"bool",
-                         "value":true
+                         "name":"rotation",
+                         "type":"string",
+                         "value":"horizontal"
                         }],
                  "rotation":0,
                  "type":"",
