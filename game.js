@@ -62,6 +62,11 @@ export default class Game extends Phaser.Scene {
 
   create() {
 
+    this.disparosRealizados = 0;
+    this.enemiesKilled = 0;
+
+    this.loadFile();
+
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
@@ -315,16 +320,19 @@ export default class Game extends Phaser.Scene {
 
     
   }
-  saveFile = function(){
+  saveFile(){
     var file = {
+      disparos:this.disparosRealizados,
+      enemigos:this.enemiesKilled
       //que tiene que gaurdar el file¿?
     };
     localStorage.setItem('insideDesignSaveFile',JSON.stringify(file));
-  };
+  }
 
-  loadFile = function(){
+  loadFile(){
     var file = JSON.parse(localStorage.getItem('insideDesignSaveFile'));
     //cargar las cosas de file
-
-  };
+    this.disparosRealizados = parseInt(localStorage.getItem('disparos')) || 0;
+    this.enemiesKilled = parseInt(localStorage.getItem('enemigos')) || 0;
+  }
 }
