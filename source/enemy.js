@@ -18,6 +18,8 @@ export default class Enemy extends Humanoid {
         this.acercarse = true;
         this.alejarse = true;
         this.strafe = true;
+
+        this.strafeAngle = 0;
       
 
       this.arrayBehaviorStates = []; //array con arrais que cambian los booleanos de comportamientos (se pueden combinar)
@@ -185,7 +187,9 @@ export default class Enemy extends Humanoid {
             
             
             if(this.strafe){
-                vectorAux.add( new Phaser.Math.Vector2(this.playerRef.y - this.y, -(this.playerRef.x - this.x)));
+                let vectorStrafe = new Phaser.Math.Vector2(this.playerRef.y - this.y, -(this.playerRef.x - this.x));
+                vectorStrafe.rotate(this.strafeAngle);
+                vectorAux.add(vectorStrafe);
                 //this.dir.normalize();
             }
             
@@ -201,6 +205,10 @@ export default class Enemy extends Humanoid {
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
 
+                if (this.strafeAngle != 0){
+                    this.strafeAngle = 0;
+                } else this.strafeAngle = Math.PI;
+                //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
 
 
 
