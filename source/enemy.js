@@ -16,10 +16,16 @@ export default class Enemy extends Humanoid {
         //comportamientos
         this.Idle = false;
         this.acercarse = true;
-        this.alejarse = true;
-        this.strafe = true;
+        this.alejarse = false;
+        this.strafe = false;
 
-        this.strafeAngle = 0;
+        this.strafeAngle = Math.PI; //izquierda o derecha del strafe
+        if (Phaser.Math.RND.between(0, 1) != 0) 
+        this.angleAcercarse = Math.PI/4; //preferencia para acercarse sobre el lado izquierdo o el derecho
+        else 
+        this.angleAcercarse = -Math.PI/4; //preferencia para acercarse sobre el lado izquierdo o el derecho
+
+        //this.angleAcercarse = this.angleAcercarse * Math.random()/2; //para que no sea un movimiento perfecto
       
 
       this.arrayBehaviorStates = []; //array con arrais que cambian los booleanos de comportamientos (se pueden combinar)
@@ -170,9 +176,10 @@ export default class Enemy extends Humanoid {
             let vectorAux = new Phaser.Math.Vector2(0,0);
 
         
-            if(this.acercarse && distanciaentrejugador >= 100){
+            if(this.acercarse && distanciaentrejugador >= 10){
                 
                 vectorAux.add( new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y));
+                vectorAux.rotate(this.angleAcercarse);//todo
                 //this.dir.normalize();
             }
             //else  if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0}; //esta en 0,0 para asegurarse de que
@@ -187,7 +194,7 @@ export default class Enemy extends Humanoid {
             
             
             if(this.strafe){
-                let vectorStrafe = new Phaser.Math.Vector2(this.playerRef.y - this.y, -(this.playerRef.x - this.x));
+                let vectorStrafe = new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y);
                 vectorStrafe.rotate(this.strafeAngle);
                 vectorAux.add(vectorStrafe);
                 //this.dir.normalize();
@@ -205,9 +212,7 @@ export default class Enemy extends Humanoid {
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
 
-                if (this.strafeAngle != 0){
-                    this.strafeAngle = 0;
-                } else this.strafeAngle = Math.PI;
+                this.strafeAngle = -this.strafeAngle;
                 //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
 
 
