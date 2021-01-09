@@ -1,4 +1,5 @@
 import config from "./config.js";
+import dialogues from "./dialogues.js";
 
 export default class UI extends Phaser.Scene {
     constructor() {
@@ -8,7 +9,9 @@ export default class UI extends Phaser.Scene {
     
     preload(){
         //Carga de imagenes
+            //Armas
         this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
+            //Pasivas
         this.load.image('tanqueo', 'Sprites/pixel-tank.png');
         //this.load.image('facil', 'Sprites/');
         this.load.image('rambo', 'Sprites/rambo.png');
@@ -16,6 +19,10 @@ export default class UI extends Phaser.Scene {
         //this.load.image('malaonda', 'Sprites/');
         this.load.image('sanic', 'Sprites/sanic.png');
         this.load.image('cogo', 'Sprites/ferrari.png');
+            //Activas
+        this.load.image('dash', 'Sprites/dash-1.png');
+            //Dialogos
+        this.load.image('dialogbox', 'Sprites/dialogbox.png');
         //Carga de fuentes con bitmap
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
@@ -45,7 +52,6 @@ export default class UI extends Phaser.Scene {
         this.weapon.scale = config.ui.weaponScl;        
 
         //Contador de munición
-        //Creación de texto con bitmap
         
         //creacion de texto con webfont
         WebFont.load({
@@ -53,7 +59,23 @@ export default class UI extends Phaser.Scene {
                 families: [ 'Permanent Marker']
             }
         })
-        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', {fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff'});
+        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', {fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff'});        
+        
+        //Activa
+        this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[0]);
+
+        //Dialogo
+        this.dialogBox = this.add.image(400, 400, 'dialogbox');
+        this.dialogBox.setVisible(false);
+
+        this.dialog = this.add.text(400, 400);
+
+        //Variables para el control de los diálogos
+        this.dialogState = 0;
+        this.onDialog = false;
+        this.strings;
+
+        this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);
     }
 
     //Cambia el tamaño de la barra de vida en función de la salud del jugador
@@ -73,8 +95,50 @@ export default class UI extends Phaser.Scene {
             this.ammo.text = '∞';
     }
 
+    setPassiveImg(id){
+        this.activeImg.destroy();
+        this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[id]);
+    }
+
     addPassiveImg(id){
         this.add.image(config.ui.passivePosX + (this.passiveCount * config.ui.passiveOffset), config.ui.passivePosY, config.ui.passiveImgs[id]);
         this.passiveCount++;
+    }
+
+    //Hace visible el cuadro de diálogo y el primer texto de este
+    startDialog(type, id){
+        //Pausa el juego
+        this.scene.pause('main');
+        this.dialogBox.setVisible(true);
+        
+        //Recoge el array con los diálogos      
+        if(type === 'passive'){
+            this.strings = dialogues.passives[id];
+        }
+
+        else if(type === 'active'){
+            this.strings = dialogues.actives[id];
+        }
+        
+        this.onDialog = true;
+        this.dialog.text = this.strings[0];
+    }
+
+    advanceDialog(){
+        if(this.onDialog){
+            this.dialogState++;
+            if(this.dialogState < this.strings.length)
+                this.dialog.text = this.strings[this.dialogState];
+            else
+                this.endDialog()
+        }
+    }
+    
+    endDialog(){
+        this.dialogState = 0;
+        this.onDialog = false;
+        this.dialogBox.setVisible(false);
+        this.dialog.text = '';
+        this.scene.resume('main');
     }
 }

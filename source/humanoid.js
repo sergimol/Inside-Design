@@ -71,6 +71,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
                 if (this.body.label === 'enemy') {
                     this.scene.enemyCount--;
+                    this.scene.enemiesKilled++;
+                    this.scene.saveFile();
                     let numItems = Phaser.Math.RND.between(0, 4);
                     this.weapon.pararRafagasCola();
                     //console.log(numItems);

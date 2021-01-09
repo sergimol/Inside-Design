@@ -9,9 +9,9 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: "main" });
   }
-  init(data){
+  init(data) {
     this.health = data.health,
-    this.ammo = data.ammo;
+      this.ammo = data.ammo;
   }
 
 
@@ -35,8 +35,10 @@ export default class Game extends Phaser.Scene {
     this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
     this.load.image('tileSala1', './Sprites/tiles/TilesetDEF.png');
     this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
-    this.load.image('door', './Sprites/door.png');
-    this.load.image('doorOpen', './Sprites/doorOpen.png');
+    this.load.image('doorV', './Sprites/doorV.png');
+    this.load.image('doorOpenV', './Sprites/doorOpenV.png');
+    this.load.image('doorH', './Sprites/doorH.png');
+    this.load.image('doorOpenH', './Sprites/doorOpenH.png');
     this.load.image('trigger', './Sprites/trigger.png');
     this.load.image('end', './Sprites/end.jpg');
     this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
@@ -61,6 +63,12 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+
+    this.disparosRealizados = 0;
+    this.enemiesKilled = 0;
+
+    //localStorage.clear();
+    this.loadFile();
 
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
@@ -172,7 +180,7 @@ export default class Game extends Phaser.Scene {
           if (playerBody.label === 'endLevel') {
             this.cameras.main.fadeOut(3000);
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
-            this.scene.start('sceneManager',{ health: this.player.health, ammo: this.player.ammo });
+            this.scene.start('sceneManager', { health: this.player.health, ammo: this.player.ammo });
           }
         }
       }
@@ -194,7 +202,7 @@ export default class Game extends Phaser.Scene {
   }
 
   loadObjects(entityLayer, DoorsentityLayer) {
-    this.doorSystem = new Doors(this, 'doorOpen', 'door');
+    this.doorSystem = new Doors(this, 'doorOpenV', 'doorV','doorOpenH', 'doorH');
 
     this.enemies = this.add.group();
     let doorNum = {}; //Guarda la cantidad de enemigos por sala
@@ -226,17 +234,8 @@ export default class Game extends Phaser.Scene {
     }
 
     for (const objeto of DoorsentityLayer) {
-      if (objeto.name === 'door') {
-        var door = this.matter.add.image(objeto.x, objeto.y, 'door');
-        door.body.label = "door";
-        //Creamos una puerta con la posicion y el numero necesario de enemigos que hacen falta matar para que se abra
-        this.doorSystem.addDoor(door, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1);
-      }
-      else if (objeto.name === 'doorTrigger') {
-        var door = this.matter.add.image(objeto.x, objeto.y, 'door');
-        door.body.label = "doorTrigger";
-        this.doorSystem.addDoor(door, 0, objeto.properties[0].value - 1);
-      }
+      //Creamos una puerta con la posicion y el numero necesario de enemigos  y la rotacion que hacen falta matar para que se abra
+      this.doorSystem.addDoor(objeto, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1, objeto.properties[1].value);
     }
   }
 
@@ -256,12 +255,12 @@ export default class Game extends Phaser.Scene {
   }*/
   update() {
     //this.changeLayer();
-    console.log(this.player.ammo)
+    //console.log(this.player.ammo)
   }
 
   //SE CARGA UNA HABITACION
-  loadTileMapRoom(){
-    
+  loadTileMapRoom() {
+
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
     this.tileset = this.map.addTilesetImage('TilesetBase', 'tileSala1', 16, 16, 1, 2);
@@ -313,6 +312,28 @@ export default class Game extends Phaser.Scene {
     this.finish = false;
     this.loadObjects(entityLayer, DoorsentityLayer);
 
-    
+
+  }
+  saveFile(){
+    var file = {
+      disparos:this.disparosRealizados,
+      enemigos:this.enemiesKilled
+      //que tiene que gaurdar el file¿?
+    }
+    localStorage.setItem('insideDesignSaveFile',JSON.stringify(file));
+  }
+
+  loadFile(){
+    var file = JSON.parse(localStorage.getItem('insideDesignSaveFile'));
+    //cargar las cosas de file
+
+    if (file !== null){
+      this.disparosRealizados = file.disparos;
+      this.enemiesKilled = file.enemigos;
+    }
+    else{
+      this.disparosRealizados = 0;
+      this.enemiesKilled = 0;
+    }
   }
 }

@@ -56,7 +56,10 @@ const Config = {
         passivePosX: 50,
         passivePosY: 130,
         passiveOffset: 40,
-        passiveImgs: ['tanqueo', 'facil', 'rambo', 'buenaonda', 'malaonda', 'sanic', 'cogo'] 
+        passiveImgs: ['tanqueo', 'facil', 'rambo', 'buenaonda', 'malaonda', 'sanic', 'cogo'], 
+        activePosX: 1300,
+        activePosY: 50,
+        activeImgs: ['dash', 'escudo', 'area']
     }
 }
 
