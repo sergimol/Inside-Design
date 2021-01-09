@@ -315,4 +315,16 @@ export default class Game extends Phaser.Scene {
 
     
   }
+  saveFile = function(){
+    var file = {
+      //que tiene que gaurdar el file¿?
+    };
+    localStorage.setItem('insideDesignSaveFile',JSON.stringify(file));
+  };
+
+  loadFile = function(){
+    var file = JSON.parse(localStorage.getItem('insideDesignSaveFile'));
+    //cargar las cosas de file
+
+  };
 }
