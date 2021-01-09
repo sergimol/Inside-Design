@@ -9,6 +9,11 @@ export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: "main" });
   }
+  init(data){
+    this.health = data.health,
+    this.ammo = data.ammo;
+  }
+
 
   preload() {
     this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
@@ -18,9 +23,9 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('enemybullet', 'Sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.image('crosshair', 'Sprites/crosshair.png');
     this.load.image('granade_launcher', 'Sprites/granade_launcher.png');
-    
+
     this.load.image('escopeta_lanzable', 'Sprites/escopeta_lanzable.png');
-    
+
     this.load.spritesheet('granade__launcher_shoot', 'Sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet('escopeta_lanzable_shoot', 'Sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('granade_launcher_shoot_explosion', 'Sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
@@ -47,7 +52,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('gunShoot', './Sprites/gunShootProt.png');
     this.load.image('bate', './Sprites/Bate3.png');
     this.load.image('swing', './Sprites/swing.png');
-    this.load.image('walkParticle','./Sprites/walkParticulas.png');
+    this.load.image('walkParticle', './Sprites/walkParticulas.png');
     this.load.image('dashParticle', './Sprites/dashParticula.png')
     this.load.audio('dashSound', './audio/dashSound.wav');
 
@@ -132,7 +137,7 @@ export default class Game extends Phaser.Scene {
       console.log(this.tilemapState);
     }, this);
     */
-    
+
     this.matter.world.on('collisionstart', (event) => {
 
       //  Loop through all of the collision pairs
@@ -156,9 +161,9 @@ export default class Game extends Phaser.Scene {
             playerBody = bodyB;
           }
           if (playerBody.label === 'endLevel') {
-            console.log("El rap de fernanflo")
             this.cameras.main.fadeOut(3000);
-            this.time.delayedCall(3000, this.end, [], this);
+            //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
+            this.scene.start('sceneManager',{ health: this.player.health, ammo: this.player.ammo });
           }
         }
       }
@@ -180,7 +185,7 @@ export default class Game extends Phaser.Scene {
   }
 
   loadObjects(entityLayer, DoorsentityLayer) {
-    this.doorSystem = new Doors(this, 'doorOpen','door');
+    this.doorSystem = new Doors(this, 'doorOpen', 'door');
 
     this.enemies = this.add.group();
     let doorNum = {}; //Guarda la cantidad de enemigos por sala
@@ -191,7 +196,7 @@ export default class Game extends Phaser.Scene {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
       if (objeto.name === 'player') {
-        this.player = new Player(this, objeto.x, objeto.y, 'player')
+        this.player = new Player(this, objeto.x, objeto.y, 'player', this.health, this.ammo)
       }
       else if (objeto.name === 'enemy') {
         const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player, objeto.properties[0].value - 1, this.doorSystem);
@@ -218,7 +223,7 @@ export default class Game extends Phaser.Scene {
         //Creamos una puerta con la posicion y el numero necesario de enemigos que hacen falta matar para que se abra
         this.doorSystem.addDoor(door, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1);
       }
-      else if(objeto.name === 'doorTrigger'){
+      else if (objeto.name === 'doorTrigger') {
         var door = this.matter.add.image(objeto.x, objeto.y, 'door');
         door.body.label = "doorTrigger";
         this.doorSystem.addDoor(door, 0, objeto.properties[0].value - 1);
@@ -233,14 +238,15 @@ export default class Game extends Phaser.Scene {
        this.fadeCamera.fadeEffect.alpha = 0;
        this.fadeCamera.fade(2000);
        }*/
-  end() {
+  /*end() {
     console.log("se queda");
     this.finish = this.add.image(3000, 3000, 'end');
     this.cameras.main.fadeIn(3000);
     this.scene.stop('UIScene');
     this.cameras.main.startFollow(this.finish);
-  }
+  }*/
   update() {
     //this.changeLayer();
+    console.log(this.player.ammo)
   }
 }

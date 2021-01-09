@@ -185,7 +185,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     ammoCostPerShoot(){
 
-        return(this.costeMunicionPorBala * this.rafagas)
+        return(this.costeMunicionPorBala * (this.rafagas + 1))
     }
 
     pararRafagasCola(){
