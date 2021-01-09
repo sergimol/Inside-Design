@@ -49,7 +49,7 @@ export default class Player extends Humanoid {
     })
 
     //INPUT
-    const { LEFT, RIGHT, UP, DOWN, W, A, S, D } = Phaser.Input.Keyboard.KeyCodes
+    const { LEFT, RIGHT, UP, DOWN, W, A, S, D, ENTER } = Phaser.Input.Keyboard.KeyCodes
     this.cursors = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
@@ -58,7 +58,8 @@ export default class Player extends Humanoid {
       w: W,
       a: A,
       s: S,
-      d: D
+      d: D,
+      enter: ENTER
     })
     this.angleToPointer = 0;
     //en la constructora es preferible a tener 2 millones de veces esta llamada al input, de hay el console log de overComplication, solo es para recordarnoslo ejeje
@@ -152,7 +153,6 @@ export default class Player extends Humanoid {
 
     //Pasivas
     this.scene.input.keyboard.on('keydown_SPACE', this.addPasive, this);
-
 
     //Colisiones
 
@@ -300,7 +300,10 @@ export default class Player extends Humanoid {
         id = Math.floor(Math.random() * config.player.weaponCount);
         this.changeWeapon(id);
         break;
-    }              //temporal  temporal    temporal (no tienen imagenes)
+    }
+    
+    this.hud.startDialog('passive', 0);
+                  //temporal  temporal    temporal (no tienen imagenes)
     if(id !== 7 && id !== 3 && id !== 4 && id != 1) //Distinto de 7 porque el cambio de arma no tiene indicador en el hud
       this.hud.addPassiveImg(id);
   }
@@ -324,6 +327,10 @@ export default class Player extends Humanoid {
   giveAmmo(amount){
     this.ammo += amount;
     this.hud.setAmmo(this.ammo);
+  }
+
+  addToState(){
+    this.dialogState++;
   }
 
 
