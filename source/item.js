@@ -15,6 +15,16 @@ export default class Item extends Phaser.GameObjects.Sprite {
         this.fuerza = 0.000002;
        // this.setFrictionAir(0.03);
 
+       
+       
+       // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16, Neutral Bullet: 32, item: 64
+        this.body.collisionFilter = {
+            'group' : -5, 
+            
+            'category': 64,
+            'mask':2 | 1, //choca con player y escenario
+        };
+
         this.scene.matter.world.on('collisionstart', (event) => {
             let wordBody = this.body;
             for (let i = 0; i < event.pairs.length; i++) {

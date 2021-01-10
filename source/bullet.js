@@ -91,7 +91,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                 
                 //si en vez de esta categoria s epone un 0, no colisionara con ese objeto
                 if(esEnemigo === null){
-                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16, Neutral Bullet: 32
+                    // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16, Neutral Bullet: 32, item:64
                     if (config.isSensor){
                         
                         this.body.collisionFilter = {
