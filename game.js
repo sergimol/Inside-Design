@@ -184,9 +184,12 @@ export default class Game extends Phaser.Scene {
           }
         }
       }
-
-      this.doorSystem;
     });
+    this.doorSystem;
+    this.pause = false;
+    this.events.on('shutdown', this.shutdown, this);
+
+    this.input.keyboard.on('keydown_ESC', this.pauseGame, this);
   }//End of create
 
   changeLayer() {
@@ -202,7 +205,7 @@ export default class Game extends Phaser.Scene {
   }
 
   loadObjects(entityLayer, DoorsentityLayer) {
-    this.doorSystem = new Doors(this, 'doorOpenV', 'doorV','doorOpenH', 'doorH');
+    this.doorSystem = new Doors(this, 'doorOpenV', 'doorV', 'doorOpenH', 'doorH');
 
     this.enemies = this.add.group();
     let doorNum = {}; //Guarda la cantidad de enemigos por sala
@@ -253,10 +256,7 @@ export default class Game extends Phaser.Scene {
     this.scene.stop('UIScene');
     this.cameras.main.startFollow(this.finish);
   }*/
-  update() {
-    //this.changeLayer();
-    //console.log(this.player.ammo)
-  }
+
 
   //SE CARGA UNA HABITACION
   loadTileMapRoom() {
@@ -314,26 +314,36 @@ export default class Game extends Phaser.Scene {
 
 
   }
-  saveFile(){
+  saveFile() {
     var file = {
-      disparos:this.disparosRealizados,
-      enemigos:this.enemiesKilled
+      disparos: this.disparosRealizados,
+      enemigos: this.enemiesKilled
       //que tiene que gaurdar el file¿?
     }
-    localStorage.setItem('insideDesignSaveFile',JSON.stringify(file));
+    localStorage.setItem('insideDesignSaveFile', JSON.stringify(file));
   }
 
-  loadFile(){
+  loadFile() {
     var file = JSON.parse(localStorage.getItem('insideDesignSaveFile'));
     //cargar las cosas de file
 
-    if (file !== null){
+    if (file !== null) {
       this.disparosRealizados = file.disparos;
       this.enemiesKilled = file.enemigos;
     }
-    else{
+    else {
       this.disparosRealizados = 0;
       this.enemiesKilled = 0;
     }
+  }
+
+  shutdown() {
+    //  We need to clear keyboard events, or they'll stack up when the Menu is re-run
+    this.input.keyboard.shutdown();
+  }
+
+  pauseGame(){
+      this.scene.launch('pause');
+      this.scene.pause('main');
   }
 }

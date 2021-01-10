@@ -48,7 +48,7 @@ export default class Player extends Humanoid {
     })
 
     //INPUT
-    const { LEFT, RIGHT, UP, DOWN, W, A, S, D, ENTER } = Phaser.Input.Keyboard.KeyCodes
+    const { LEFT, RIGHT, UP, DOWN, W, A, S, D, ENTER, ESC } = Phaser.Input.Keyboard.KeyCodes
     this.cursors = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
@@ -58,7 +58,8 @@ export default class Player extends Humanoid {
       a: A,
       s: S,
       d: D,
-      enter: ENTER
+      enter: ENTER,
+      escape: ESC
     })
     this.angleToPointer = 0;
     //en la constructora es preferible a tener 2 millones de veces esta llamada al input, de hay el console log de overComplication, solo es para recordarnoslo ejeje
@@ -181,7 +182,7 @@ export default class Player extends Humanoid {
     for (let i = 0; i < config.player.passiveCount; i++)
       this.activePassives[i] = false;
 
-  }
+  }//End of create
 
 
   //updatear la posicion del puntero si el jugador se mueve.
@@ -262,7 +263,7 @@ export default class Player extends Humanoid {
       if (id !== 3 && id !== 4 && id !== 1)  //temporal (no tienen imagenes)
         this.hud.addPassiveImg(id);
     }
-    
+
     //Aplica la pasiva correspondiente
     switch (id) {
       //Aumenta la vida
@@ -393,6 +394,7 @@ export default class Player extends Humanoid {
       this.shoot();
     }
 
-
+    //Llamada al menu de pausa
+    //console.log(this.cursors.escape.isDown)
   }
 }
