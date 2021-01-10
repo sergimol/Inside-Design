@@ -1,4 +1,4 @@
-import hijaConfig from "./defaultBullet.js";
+import hijaConfig from "./granade_explosion.js";
 
 
 const BulletConfig = {

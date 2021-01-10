@@ -13,14 +13,17 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
         const anims = this.scene.anims;
 
-        anims.create({
-            key: config.key,
-            frameRate: config.frameRate,
-            repeat: config.repeat,
-            frames: anims.generateFrameNumbers(config.sprite, config.frames)
+        if (!anims.exists(config.key)){
+
+            anims.create({
+                key: config.key,
+                frameRate: config.frameRate,
+                repeat: config.repeat,
+                frames: anims.generateFrameNumbers(config.sprite, config.frames)
+                
+            });
+        }
             
-        });
-        
         
         
         this.config = config;
