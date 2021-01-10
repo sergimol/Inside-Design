@@ -148,7 +148,7 @@ export default class Player extends Humanoid {
     this.hud.setAmmo(this.ammo);
 
     //Pasivas
-    this.scene.input.keyboard.on('keydown_SPACE', this.addPasive, this);
+    //this.scene.input.keyboard.on('keydown_SPACE', this.addPassive, this);
 
     //Colisiones
 
@@ -248,69 +248,77 @@ export default class Player extends Humanoid {
   }
 
   //Método para añadir una pasiva aleatoria
-  addPasive() {
-    //Elige un número aleatorio
-    let id = Math.floor(Math.random() * config.player.passiveCount);
+  addPassive() {
+    //Elige una pasiv
+    let id;
 
-    if (!this.activePassives[id] || id == 7) {
+    do {
+      id = Math.floor(Math.random() * config.player.passiveCount);
+    } while (this.activePassives[id])
+
+    this.hud.startDialog('passive', id);
+    if (id !== 7) { //Distinto de 7 porque el cambio de arma no tiene indicador en el hud ni tiene que ser controlado por los booleanos
       this.activePassives[id] = true;
-      
-      //Aplica la pasiva correspondiente
-      switch (id) {
-        //Aumenta la vida
-        case (0):
-          console.log('Me lo tanqueo')
-          this.health += this.health / 2;
-          this.maxHealth += this.maxHealth / 2;
-          this.hud.setHealth(this.health);
-          this.hud.setBackground(this.maxHealth);
-          break;
-        //Disminuye la vida
-        case (1):
-          console.log('Demasiado facil')
-          this.maxHealth /= 2;
-          if (this.maxHealth < this.health) {
-            this.health = this.maxHealth;
-            this.hud.setHealth(this.health);
-          }
-          this.hud.setBackground(this.maxHealth);
-          break;
-        //Munición infinita
-        case (2):
-          console.log('Rambo');
-          this.hasInfiniteAmmo = true;
-          this.hud.setAmmo(-1);
-          break;
-        //Botiquines
-        case (3):
-          console.log('Botiquines buena onda');
-          ///////////////////////////////////
-          break;
-        case (4):
-          console.log('Botiquines mala onda');
-          ///////////////////////////////////
-          break;
-        case (5):
-          console.log('Sanic');
-          this.velFactor *= 2;
-          break;
-        case (6):
-          console.log('Cogo');
-          this.velFactor /= 2;
-          break;
-        //Cambio de arma
-        case (7):
-          console.log('Cambio de arma');
-          id = Math.floor(Math.random() * config.player.weaponCount);
-          this.changeWeapon(id);
-          break;
-      }
-      
-      this.hud.startDialog('passive', 0);
-                     //temporal  temporal    temporal (no tienen imagenes)
-      if (id !== 7 && id !== 3 && id !== 4 && id != 1) //Distinto de 7 porque el cambio de arma no tiene indicador en el hud
+      if (id !== 3 && id !== 4 && id !== 1)  //temporal (no tienen imagenes)
         this.hud.addPassiveImg(id);
     }
+    
+    //Aplica la pasiva correspondiente
+    switch (id) {
+      //Aumenta la vida
+      case (0):
+        console.log('Me lo tanqueo')
+        this.health += this.health / 2;
+        this.maxHealth += this.maxHealth / 2;
+        this.hud.setHealth(this.health);
+        this.hud.setBackground(this.maxHealth);
+        break;
+      //Disminuye la vida
+      case (1):
+        console.log('Demasiado facil')
+        this.maxHealth /= 2;
+        if (this.maxHealth < this.health) {
+          this.health = this.maxHealth;
+          this.hud.setHealth(this.health);
+        }
+        this.hud.setBackground(this.maxHealth);
+        break;
+      //Munición infinita
+      case (2):
+        console.log('Rambo');
+        this.hasInfiniteAmmo = true;
+        this.hud.setAmmo(-1);
+        break;
+      //Botiquines
+      case (3):
+        console.log('Botiquines buena onda');
+        ///////////////////////////////////
+        break;
+      case (4):
+        console.log('Botiquines mala onda');
+        ///////////////////////////////////
+        break;
+      case (5):
+        console.log('Sanic');
+        this.velFactor *= 2;
+        break;
+      case (6):
+        console.log('Cogo');
+        this.velFactor /= 2;
+        break;
+      //Cambio de arma
+      case (7):
+        console.log('Cambio de arma');
+        id = Math.floor(Math.random() * config.player.weaponCount);
+        this.changeWeapon(id);
+        break;
+    }
+
+  }
+
+  removePassive(id) {
+    this.activePassives[id] = false;
+
   }
 
   changeWeapon(id) {
