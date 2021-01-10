@@ -91,6 +91,7 @@ export default class Enemy extends Humanoid {
         //MOVIMIENTO
         this.enemyTime = config.enemy.idleMovTime;
         this.timerMove = this.scene.time.now + this.enemyTime;
+        this.timerStrafe = this.scene.time.now + 3000;
 
         //DISPARO
         this.cadenceTime = config.enemy.cadenceTime;
@@ -107,6 +108,31 @@ export default class Enemy extends Humanoid {
             'mask': 1 | 8 | 32, //mundo y balas jugador
             //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
         };
+
+        this.scene.matter.world.on('collisionstart', (event) => {
+            let wordBody = this.body;
+            for (let i = 0; i < event.pairs.length - 1; i++) {
+                let bodyA = event.pairs[i].bodyA;
+                let bodyB = event.pairs[i].bodyB;
+
+                if (bodyA === wordBody || bodyB === wordBody) {
+                    if (bodyA.label !== "bullet" || bodyB.label !== "bullet"){
+                        this.angleAcercarse = -this.angleAcercarse;
+                        this.strafeAngle = -this.strafeAngle;
+                        console.log(this.strafeAngle);
+                        
+                        this.timerStrafe = this.scene.time.now + (10000 * Math.random());
+                    }
+                    
+
+
+                }
+            }
+        });
+
+      
+        /** */
+        
 
     }//Fin constructorasd
 
@@ -203,16 +229,23 @@ export default class Enemy extends Humanoid {
             vectorAux.normalize();
             this.dir = vectorAux;
             
+                //cambiar la direccion de rotacion del strafe
+            if (this.scene.time.now > this.timerStrafe) {
+                //Disparamos y reactivamos el timer de disparo con un aleatorio
+
+                this.strafeAngle = -this.strafeAngle;
+                this.timerStrafe = this.scene.time.now + (10000 * Math.random());
             
+            }
             
             //if(distanciaentrejugador >= 100){
                 
-                //} else this.dir = {x:0, y:0};
+            //} else this.dir = {x:0, y:0};
                 
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
 
-                this.strafeAngle = -this.strafeAngle;
+                //this.strafeAngle = -this.strafeAngle;
                 //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
 
 
