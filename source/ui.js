@@ -65,10 +65,10 @@ export default class UI extends Phaser.Scene {
         this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[0]);
 
         //Dialogo
-        this.dialogBox = this.add.image(400, 400, 'dialogbox');
+        this.dialogBox = this.add.image(800, 600, 'dialogbox');
         this.dialogBox.setVisible(false);
 
-        this.dialog = this.add.text(400, 400);
+        this.dialog = this.add.text(500, 600);
 
         //Variables para el control de los diálogos
         this.dialogState = 0;
@@ -105,10 +105,14 @@ export default class UI extends Phaser.Scene {
         this.passiveCount++;
     }
 
+    removePassiveImg(){
+        
+    }
+
     //Hace visible el cuadro de diálogo y el primer texto de este
     startDialog(type, id){
         //Pausa el juego
-        this.scene.pause('main');
+        //this.scene.pause('main');
         this.dialogBox.setVisible(true);
         
         //Recoge el array con los diálogos      
@@ -121,7 +125,8 @@ export default class UI extends Phaser.Scene {
         }
         
         this.onDialog = true;
-        this.dialog.text = this.strings[0];
+        this.dialogState = 0;
+        this.dialog.text = this.strings[this.dialogState];
     }
 
     advanceDialog(){
@@ -135,10 +140,9 @@ export default class UI extends Phaser.Scene {
     }
     
     endDialog(){
-        this.dialogState = 0;
         this.onDialog = false;
         this.dialogBox.setVisible(false);
         this.dialog.text = '';
-        this.scene.resume('main');
+        //this.scene.resume('main');
     }
 }

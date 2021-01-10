@@ -88,9 +88,22 @@ export default class Enemy extends Humanoid {
         this.dir = new Phaser.Math.Vector2();
         //this.enemyMove();
 
-        //MOVIMIENTO
+        //MOVIMIENTO IDLE
         this.enemyTime = config.enemy.idleMovTime;
+
+        this.timerMove = this.scene.time.now + this.enemyTime + 200;
+        //Para la nueva posicion
+        let vectorAux = new Phaser.Math.Vector2(0,0);
+        let xRestOffset = Math.floor(Math.random() * (30 + 30)) - 30;
+        let yRestOffset = Math.floor(Math.random() * (30 + 30)) - 30;
+        this.nextRestPos = new Phaser.Math.Vector2(this.x + xRestOffset , this.y + yRestOffset);
+        vectorAux.normalize();
+        this.dir = vectorAux;
+       
+
         this.timerMove = this.scene.time.now + this.enemyTime;
+        this.timerStrafe = this.scene.time.now + 3000;
+
 
         //DISPARO
         this.cadenceTime = config.enemy.cadenceTime;
@@ -108,15 +121,39 @@ export default class Enemy extends Humanoid {
             //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
         };
 
+        this.scene.matter.world.on('collisionstart', (event) => {
+            let wordBody = this.body;
+            for (let i = 0; i < event.pairs.length - 1; i++) {
+                let bodyA = event.pairs[i].bodyA;
+                let bodyB = event.pairs[i].bodyB;
+
+                if (bodyA === wordBody || bodyB === wordBody) {
+                    if (bodyA.label !== "bullet" || bodyB.label !== "bullet"){
+                        this.angleAcercarse = -this.angleAcercarse;
+                        this.strafeAngle = -this.strafeAngle;
+                        console.log(this.strafeAngle);
+                        
+                        this.timerStrafe = this.scene.time.now + (10000 * Math.random());
+                    }
+                    
+
+
+                }
+            }
+        });
+
+      
+        /** */
+        
+
     }//Fin constructorasd
 
 
     //PREUPDATE
     preUpdate() {
 
-        
-    this.applyForce(this.forceSaved);
-    this.forceSaved = { x: 0, y: 0};
+        this.applyForce(this.forceSaved);
+        this.forceSaved = { x: 0, y: 0};
 
         if (this.hitState) {
             this.aspecto.play('enemyHit', true);
@@ -141,13 +178,14 @@ export default class Enemy extends Humanoid {
 
 
         //MOVEMOS AL ENEMIGO
-        if (this.body.speed < 1 && !this.isDead){
-            this.applyForce({x: this.dir.x * 0.6, y: this.dir.y * 0.6});
-            this.dir = {x:0,y:0};
+        //Estado reposo
+        if (this.body.speed < 1 && !this.attackState){
+            this.applyForce({x: this.dir.x * config.enemy.idleVelFactor, y: this.dir.y * config.enemy.idleVelFactor});
+            //this.dir = {x:0,y:0};
 
         }
-        
-        if (this.body.speed < 1){
+        //Estado ataque
+        else if (this.body.speed < 1 && this.attackState){
             this.applyForce({x: this.dir.x * config.enemy.aggroVelFactor, y: this.dir.y * config.enemy.aggroVelFactor});
             this.dir = {x:0,y:0};
         }
@@ -161,20 +199,37 @@ export default class Enemy extends Humanoid {
 
         //Para calcular la distancia entre siguientes posiciones   
         //ESTADO REPOSO
+        
         if (!this.attackState){
-            //comportamiento iddle
+            //LO DEJO COMENTADO POR SI HAY QUE AJUSTAR COSAS
+            /*
+            let distanceBetweenPos = Phaser.Math.Distance.Between(this.x, this.y, this.nextRestPos.x, this.nextRestPos.y);
+            //Si no llega a la pos pero el tiempo llega a su maximo cambia de pos 
+            if(distanceBetweenPos < config.enemy.minDistance)
+            {
+                this.dir = {x:0, y:0};
+                this.auxRest();
+                //AQUI INICILIZAMOS EL TIMER CADA VEZ
+                this.timerMove = this.scene.time.now + this.enemyTime + 700;
+            }*/
+            /*else*/ 
+            if (this.scene.time.now > this.timerMove) {
+                this.dir = {x:0, y:0};
+                this.auxRest();
+                //AQUI INICILIZAMOS EL TIMER CADA VEZ
+                this.timerMove = this.scene.time.now + this.enemyTime + 700;
+            }
         }
 
         //ESTADO ATAQUE
         else {
             //Movimiento
-            
+            let vectorAux = new Phaser.Math.Vector2(0,0);
             let angulo = Phaser.Math.Angle.Between(this.x,this.y, this.playerRef.x, this.playerRef.y);
             this.moveRotate(this.playerRef.x -this.x);
             this.weapon.rotateWeapon(angulo);
 
-            let vectorAux = new Phaser.Math.Vector2(0,0);
-
+            
         
             if(this.acercarse && distanciaentrejugador >= 100){
                 
@@ -183,7 +238,6 @@ export default class Enemy extends Humanoid {
                 //this.dir.normalize();
             }
             //else  if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0}; //esta en 0,0 para asegurarse de que
-            
             
             
             if (this.alejarse && distanciaentrejugador < 95){
@@ -203,23 +257,26 @@ export default class Enemy extends Humanoid {
             vectorAux.normalize();
             this.dir = vectorAux;
             
+                //cambiar la direccion de rotacion del strafe
+            if (this.scene.time.now > this.timerStrafe) {
+                //Disparamos y reactivamos el timer de disparo con un aleatorio
+
+                this.strafeAngle = -this.strafeAngle;
+                this.timerStrafe = this.scene.time.now + (10000 * Math.random());
             
+            }
             
             //if(distanciaentrejugador >= 100){
                 
-                //} else this.dir = {x:0, y:0};
+            //} else this.dir = {x:0, y:0};
                 
             if (this.scene.time.now > this.timerShoot) {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
 
-                this.strafeAngle = -this.strafeAngle;
+                //this.strafeAngle = -this.strafeAngle;
                 //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
 
 
-
-                
-                
-                
                 this.weapon.shoot(true,this);
 
                 let sound = this.scene.sound.add('gunShootSound');
@@ -232,6 +289,42 @@ export default class Enemy extends Humanoid {
 
         
 
+    }
+
+    //Calculos auxiliares del movimiento en reposo
+    auxRest() 
+    {
+        this.scene.time.delayedCall(500, this.restMove, [], this); //Lo movemos
+        this.scene.time.delayedCall(500, this.rotateRest, [], this); //Lo giramos 
+    }
+
+    //Auxiliar para rest, gira arma y enemigo
+    rotateRest() {
+        if (this.nextRestPos.x > this.x) {
+            this.moveRotate((1));
+            this.rotateWeapon((0 * Math.PI) / 180.0);
+        }
+        else {
+            this.moveRotate((-1));
+            this.rotateWeapon((180 * Math.PI) / 180.0);
+        }
+    }
+
+    //Elige la nueva direccion
+    restMove(){
+        //Para la nueva posicion
+        let xRestOffset = Math.floor(Math.random() * (30 + 30)) - 30;
+        let yRestOffset = Math.floor(Math.random() * (30 + 30)) - 30;
+        this.nextRestPos = new Phaser.Math.Vector2(this.x + xRestOffset , this.y + yRestOffset);
+        
+        this.scene.time.delayedCall(500, this.restVector, [], this); //Lo giramos 
+    }
+
+    //Cambia la direccion
+    restVector(){
+        let vectorAux = new Phaser.Math.Vector2(this.nextRestPos.x - this.x, this.nextRestPos.y - this.y);
+        vectorAux.normalize();
+        this.dir = vectorAux;
     }
 
 
