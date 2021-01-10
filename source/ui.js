@@ -108,7 +108,7 @@ export default class UI extends Phaser.Scene {
     //Hace visible el cuadro de diálogo y el primer texto de este
     startDialog(type, id){
         //Pausa el juego
-        this.scene.pause('main');
+        //this.scene.pause('main');
         this.dialogBox.setVisible(true);
         
         //Recoge el array con los diálogos      
@@ -139,6 +139,6 @@ export default class UI extends Phaser.Scene {
         this.onDialog = false;
         this.dialogBox.setVisible(false);
         this.dialog.text = '';
-        this.scene.resume('main');
+        //this.scene.resume('main');
     }
 }
