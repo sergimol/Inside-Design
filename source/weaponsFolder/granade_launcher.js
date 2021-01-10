@@ -2,7 +2,7 @@ import disparo from "./../bulletsFolder/granade_shot.js";
 
 const WeaponConfig = {
     spriteWeapon: "granade_launcher",
-    s: "mono",
+    s: "shotgun",
     m: "semi", 
     cadence: 500,
     dispersion: 3, 
@@ -18,6 +18,11 @@ const WeaponConfig = {
     cuerpoACuerpo: false, 
     rotationOffSet: 0, 
     costeMunicionPorBala: 3,
+
+    fixedDisp:{
+        start: 0,
+        end: 0
+    },
     
     retroceso: -5,
     bullet: disparo

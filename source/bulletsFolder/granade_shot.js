@@ -1,4 +1,4 @@
-import hijaConfig from "./granade_explosion.js";
+import hijaConfig from "./defaultBullet.js";
 
 
 const BulletConfig = {
@@ -38,7 +38,7 @@ const BulletConfig = {
 
     balaHija: hijaConfig, //Todo a partir de aqui pertenece a la hija
 
-    bulletPelletHija:1, //cantidad de veces que debe instanciar hija
+    bulletPelletHija:10, //cantidad de veces que debe instanciar hija
 
 
     hijaFaction: null, //si es true, usara el filtro de la bala padre para ser enemiga o amiga, si es null sera neutra (ejemplo la explosion)
@@ -46,8 +46,13 @@ const BulletConfig = {
     forceDispersionHija: 0, //
     hijaUsaAnguloPadre: 0, //1 utilizara el angulo del padre, 0 no,
     hijaOffsetAngulo: 0, //Math.Pi es lo que se le sumara al angulo en radianes al instanciarse la bala
-    bulletForceHija: 0,
+    bulletForceHija: 1,
 
+    
+    fixedDisp:{
+        start: Math.PI,
+        end: -Math.PI
+    },
 
     //para la animacion
     

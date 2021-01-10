@@ -18,8 +18,17 @@ const WeaponConfig = {
     cuerpoACuerpo: false, 
     rotationOffSet: 0, 
     costeMunicionPorBala: 1,
+
+
+    fixedDisp:{
+        start: 0,
+        end:0
+    },
+
     retroceso: -1,
     bullet: disparo
+
+
 }
 
 export default WeaponConfig

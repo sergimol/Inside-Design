@@ -129,7 +129,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
             let sound = this.scene.sound.add('gunShootSound2');
             sound.setVolume(config.weapon.shotVolume);
             sound.play();
-                this.instanciarBala(esEnemigo);
+                this.instanciarBala(esEnemigo, 0);
             }
             else if (this.style === "shotgun"){
                 
@@ -137,14 +137,14 @@ export default class Weapon extends Phaser.GameObjects.Container{
             sound.setVolume(config.weapon.shotVolume);
             sound.play();
                 for (let i = 0; i < this.pellets; ++i){
-                    this.instanciarBala(esEnemigo);
+                    this.instanciarBala(esEnemigo, i);
                 }
             } 
         
     }
 
 
-    instanciarBala(esEnemigo){
+    instanciarBala(esEnemigo, pelletNumber){
 
         if(!esEnemigo){
             this.scene.disparosRealizados++;
@@ -166,9 +166,9 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 
                 //disparo.play("start");
                 
-            
+                let fixAngle = this.config.fixedDisp.start + (((this.config.fixedDisp.end - this.config.fixedDisp.start) * pelletNumber)/this.pellets);
 
-                this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI/200)));
+                this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI/200) + fixAngle));
                 //disparo.setRotation(this.rotation + (disp * Math.PI/200));
                 disparo.thrust(this.bulletForce + (dispForce * this.bulletForce/100));
     }

@@ -349,7 +349,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
 
 
-    instanciarBala(esEnemigo){
+    instanciarBala(esEnemigo, pelletNumber){
         
         
         //this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
@@ -367,8 +367,9 @@ export default class Bullet extends Phaser.GameObjects.Container{
         //disparo.play("start");
         
     
+        let fixAngle = this.config.fixedDisp.start + (((this.config.fixedDisp.end - this.config.fixedDisp.start) * pelletNumber)/this.config.bulletPelletHija);
 
-        this.scene.matter.body.setAngle(disparo.body, ((this.rotation * this.config.hijaUsaAnguloPadre) + (disp * Math.PI/200) + this.config.hijaOffsetAngulo));
+        this.scene.matter.body.setAngle(disparo.body, ((this.rotation * this.config.hijaUsaAnguloPadre) + (disp * Math.PI/200) + this.config.hijaOffsetAngulo) + fixAngle);
         //disparo.setRotation(this.rotation + (disp * Math.PI/200));
         disparo.thrust(this.config.bulletForceHija + (dispForce * this.config.bulletForceHija/100));
     }
@@ -406,13 +407,13 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
                 if (this.config.hijaFaction === true){
                     for (let i = 0; i < this.config.bulletPelletHija; ++i){
-                    this.instanciarBala(this.esEnemigo);
+                    this.instanciarBala(this.esEnemigo, i);
                     }
                     //let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, this.esEnemigo);
                 }
                 else{
                     for (let i = 0; i < this.config.bulletPelletHija; ++i){
-                    this.instanciarBala(null);
+                    this.instanciarBala(null, i);
                     }
                     //let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, null);
                 }
