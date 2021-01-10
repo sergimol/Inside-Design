@@ -19,6 +19,11 @@ const WeaponConfig = {
     rotationOffSet: 1, 
     costeMunicionPorBala: 1,
     
+    fixedDisp:{
+        start: 0,
+        end:0
+    },
+    
     retroceso: 2,
     bullet: disparo
 }

@@ -19,6 +19,8 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: true,
+    pierce: Infinity,
+    destroyOnWall: false, //si true, ignorara rebotes y si es sensor cuando choque con una pared se destruira
     balaHija: null,
     lifeTime: 500, //milisegundos
 

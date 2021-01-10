@@ -14,11 +14,14 @@ const BulletConfig = {
     airFriction: 0.01,
     rebotes: 0, 
     fuerzaRebote: 0.8, 
+
     velocidadMinima: 1.0,
     damage: 2, 
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
+    pierce: 0,
+    destroyOnWall: false, //si true, ignorara rebotes y si es sensor cuando choque con una pared se destruira
     balaHija: null,
     lifeTime: Infinity, //milisegundos
 

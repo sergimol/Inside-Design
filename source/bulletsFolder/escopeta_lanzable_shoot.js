@@ -19,6 +19,8 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
+    pierce: 0,
+    destroyOnWall: false, //si true, ignorara rebotes y si es sensor cuando choque con una pared se destruira
 
     form:"rectangle",
     customForm: {

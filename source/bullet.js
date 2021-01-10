@@ -81,6 +81,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.body.restitution = config.fuerzaRebote; //fuerza del rebote, momento que mantiene
         this.rebotes = config.rebotes;
         this.damage = config.damage;
+        this.pierce = config.pierce;
 
 
         //Otras variables
@@ -97,13 +98,25 @@ export default class Bullet extends Phaser.GameObjects.Container{
                     // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16, Neutral Bullet: 32, item:64
                     if (config.isSensor){
                         
-                        this.body.collisionFilter = {
-                            'group' : -5, 
+                        if (!config.destroyOnWall) {
+
+                            this.body.collisionFilter = {
+                                'group' : -5, 
+                                
+                                'category': 32,
+                                'mask':2 | 8 | 4 | 16, //choca con todos menos default
+                            };
+                        }
+                        else {
                             
-                            'category': 32,
-                            'mask':2 | 8 | 4 | 16, //choca con todos menos default
-                        };
-                        //disparo.body.isSensor = true;
+                            this.body.collisionFilter = {
+                                'group' : -5, 
+                                
+                                'category': 32,
+                                'mask':1 | 2 | 8 | 4 | 16, //choca con todos
+                            };
+                        }
+                            //disparo.body.isSensor = true;
                     }
                     else{
 
@@ -216,8 +229,11 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //bodyA.gameObject.applyForce(vectorDeDireccion);
                         //console.log(bodyA.speed);
 
-                        if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
-
+                        if (!this.body.isSensor) this.booleanoParaDestruirme = true;
+                        if (this.pierce <= 0) 
+                        this.booleanoParaDestruirme = true;
+                        else 
+                        this.pierce--;
                     }
                     else if (bodyB.label === 'player' || bodyB.label === 'enemy') {
 
@@ -248,7 +264,11 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //bodyB.gameObject.applyForce(vectorDeDireccion);
                         //console.log(bodyB.speed);
 
-                        if (this.body.isSensor === false) this.booleanoParaDestruirme = true;
+                        if (!this.body.isSensor) this.booleanoParaDestruirme = true;
+                        if (this.pierce <= 0) 
+                        this.booleanoParaDestruirme = true;
+                        else 
+                        this.pierce--;
                     }
                     else if (bodyB.label === 'bullet' && bodyB !== wordBody && (this.body.isSensor === true || bodyB.isSensor == true)){ //para las armas a meele que devuelvan al bicho
                         //DARLE LA VUELTA  ALA BALA
@@ -348,6 +368,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
         }
         else this.booleanoParaDestruirme = true;
+        if (this.config.destroyOnWall) this.booleanoParaDestruirme = true;
     }
 
 
