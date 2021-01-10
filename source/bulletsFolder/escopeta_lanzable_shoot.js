@@ -19,6 +19,13 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,
+
+    form:"rectangle",
+    customForm: {
+        //rectangle x, y widht, height
+        width: 16,
+        height: 8,
+    },
     
     
     inertia: 2700, //2700 es el valor default

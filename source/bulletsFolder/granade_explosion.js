@@ -5,8 +5,8 @@ const BulletConfig = {
 
     sprite: "granade_launcher_shoot_explosion", 
     scale: 1,
-    sizeX: 83,
-    sizeY: 83,
+    //sizeX: 83,
+    //sizeY: 83,
     originX: 0,
     originY: 0, 
     mass: 50,
@@ -22,6 +22,11 @@ const BulletConfig = {
     balaHija: null,
     lifeTime: 500, //milisegundos
 
+    form:"circle",
+    customForm: {
+        //circle x, y, radius
+        radius: 83/2,
+    },
     
     pushback: 5, //fuerza con la que empuja la bala al chocar con un objetivo
 

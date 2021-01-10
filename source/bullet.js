@@ -29,8 +29,31 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
         this.aspecto.setScale(config.scale);
         this.setSize(config.sizeX, config.sizeY);
-        this.scene.matter.add.gameObject(this);
-        this.body.isSensor = config.isSensor;
+
+             if (config.form === "circle"){
+                 this.scene.matter.add.gameObject(this,
+                    this.scene.matter.bodies.circle(this.x, this.y, config.customForm.radius));
+                }
+                else if (config.form === "rectangle"){
+                    this.scene.matter.add.gameObject(this,
+                        this.scene.matter.bodies.rectangle(x, y, config.customForm.width, config.customForm.height));
+                    }
+                    else if (config.form === "trapezoid"){
+                        this.scene.matter.add.gameObject(this,
+                            this.scene.matter.bodies.circle(x, y, 10));
+                        }
+                        else if (config.form === "polygon"){
+                            this.scene.matter.add.gameObject(this,
+                                this.scene.matter.bodies.circle(x, y, 10));
+                            }
+                            else if (config.form === "vertices"){
+                                this.scene.matter.add.gameObject(this,
+                                    this.scene.matter.bodies.circle(x, y, 10));
+                                    
+            }
+            
+            
+            this.body.isSensor = config.isSensor;
         //this.setOrigin(config.originX, config.originY);
         this.setMass(config.mass);
         this.scene.add.existing(this);

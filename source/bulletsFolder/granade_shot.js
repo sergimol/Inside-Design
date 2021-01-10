@@ -5,8 +5,8 @@ const BulletConfig = {
 
     sprite: "granade__launcher_shoot", 
     scale: 3/4,
-    sizeX: 12 * 3/4,
-    sizeY: 12* 3/4,
+    //sizeX: 12 * 3/4,
+    //sizeY: 12* 3/4,
     originX: 0,
     originY: 0, 
     mass: 50,
@@ -20,6 +20,14 @@ const BulletConfig = {
     destruyeBalas: false, 
     isSensor: false,
     
+//aqui va toda la informacion sobre la forma del proyerctil
+//formas posibles circle, rectangle, polygon, trapezoid, fromVertices
+//(cada forma requerira una configurarion customForm distinca)
+    form:"circle",
+    customForm: {
+        //circle x, y, radius
+        radius: 6* 3/4,
+    },
     
     inertia: 2700, //2700 es el valor default
     angularVelocityMultiply: 2, //multiplicara un valor aleatorio de entre 0 y 1 
@@ -30,7 +38,7 @@ const BulletConfig = {
 
     balaHija: hijaConfig, //Todo a partir de aqui pertenece a la hija
 
-    bulletPelletHija:2, //cantidad de veces que debe instanciar hija
+    bulletPelletHija:1, //cantidad de veces que debe instanciar hija
 
 
     hijaFaction: null, //si es true, usara el filtro de la bala padre para ser enemiga o amiga, si es null sera neutra (ejemplo la explosion)

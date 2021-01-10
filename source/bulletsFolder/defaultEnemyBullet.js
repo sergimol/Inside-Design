@@ -20,6 +20,13 @@ const BulletConfig = {
     balaHija: null,
     lifeTime: Infinity, //milisegundos
 
+    form:"rectangle",
+    customForm: {
+        //rectangle x, y widht, height
+        width: 8,
+        height: 8,
+    },
+
     
     pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
     
