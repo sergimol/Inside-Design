@@ -1,6 +1,7 @@
 import disparo from "./../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
+    id: 0,
     spriteWeapon: "gunShoot",
     s: "mono",
     m: "semi", 

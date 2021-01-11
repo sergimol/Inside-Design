@@ -9,6 +9,7 @@ export default class Game extends Phaser.Scene {
     init(data) {
         this.health = data.health,
             this.ammo = data.ammo;
+            this.weapom = data.weapon;
     }
     preload() {
         this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });

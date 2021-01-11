@@ -1,6 +1,7 @@
 import disparo from "./../bulletsFolder/granade_shot.js";
 
 const WeaponConfig = {
+    id: 2,
     spriteWeapon: "granade_launcher",
     s: "shotgun",
     m: "semi", 

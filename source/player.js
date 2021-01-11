@@ -13,7 +13,7 @@ export default class Player extends Humanoid {
 
     //Arma
 
-    this.weapon = new Weapon(scene, 0, 5, granade__launcher)
+    this.weapon = new Weapon(scene, 0, 5, granade__launcher);
     this.add(this.weapon);
     this.maxHealth = config.humanoid.health;
 
@@ -256,6 +256,7 @@ export default class Player extends Humanoid {
     do {
       id = Math.floor(Math.random() * config.player.passiveCount);
     } while (this.activePassives[id])
+    id = 7;
 
     this.hud.startDialog('passive', id);
     if (id !== 7) { //Distinto de 7 porque el cambio de arma no tiene indicador en el hud ni tiene que ser controlado por los booleanos

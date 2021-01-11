@@ -26,9 +26,9 @@ export default class Button extends Phaser.GameObjects.Image {
     enterActiveState() {
         if (this.label === 'play') {
             if (this.scene.health != undefined)
-            this.scene.scene.start('main', { health: this.health, ammo: this.ammo });
+            this.scene.scene.start('main', { health: this.health, ammo: this.ammo});
         else
-            this.scene.scene.start('main', { health: 10, ammo: 100 });
+            this.scene.scene.start('main', { health: 10, ammo: 100 , weaponID: 0});
         }
     }
 }

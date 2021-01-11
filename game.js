@@ -12,6 +12,7 @@ export default class Game extends Phaser.Scene {
   init(data) {
     this.health = data.health,
       this.ammo = data.ammo;
+      this.weaponID = data.weaponID;
   }
 
 
@@ -44,8 +45,14 @@ export default class Game extends Phaser.Scene {
     this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
     this.load.image('medkit', './Sprites/medkit.png');
 
+    //TODAS LAS SALAS
     this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
     this.load.tilemapTiledJSON('sala1', './Sprites/tiles/Sala1.json');
+    this.load.tilemapTiledJSON('sala2', './Sprites/tiles/Sala2.json');
+    this.load.tilemapTiledJSON('sala3', './Sprites/tiles/Sala3.json');
+    this.load.tilemapTiledJSON('sala4', './Sprites/tiles/Sala4.json');
+    this.load.tilemapTiledJSON('sala5', './Sprites/tiles/Sala5.json');
+    this.load.tilemapTiledJSON('sala6', './Sprites/tiles/Sala6.json');
 
     //nuevo
     this.load.audio('mainTheme', './audio/main_theme_v1.0.wav');
@@ -72,9 +79,14 @@ export default class Game extends Phaser.Scene {
 
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
+    let numRoom = Phaser.Math.RND.between(1, 6);
+    let nameRoom = 'sala' + numRoom.toString();
+
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
-    this.map = this.make.tilemap({ key: 'sala1' });
+    this.map = this.make.tilemap({ key: nameRoom });
     this.loadTileMapRoom();
+
+
     /*
     this.map = this.make.tilemap({ key: 'dungeon' })
     this.tileset = this.map.addTilesetImage('TilesetBase', 'tiles', 16, 16, 1, 2);
@@ -180,7 +192,7 @@ export default class Game extends Phaser.Scene {
           if (playerBody.label === 'endLevel') {
             this.cameras.main.fadeOut(3000);
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
-            this.scene.start('sceneManager', { health: this.player.health, ammo: this.player.ammo });
+            this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID });
           }
         }
       }
@@ -216,7 +228,8 @@ export default class Game extends Phaser.Scene {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
       if (objeto.name === 'player') {
-        this.player = new Player(this, objeto.x, objeto.y, 'player', this.health, this.ammo)
+        this.player = new Player(this, objeto.x, objeto.y, 'player', this.health, this.ammo);
+        this.player.changeWeapon(this.weaponID);
       }
       else if (objeto.name === 'enemy') {
         const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player, objeto.properties[0].value - 1, this.doorSystem);

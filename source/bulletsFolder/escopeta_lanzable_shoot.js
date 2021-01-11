@@ -29,6 +29,11 @@ const BulletConfig = {
         height: 8,
     },
     
+
+    fixedDisp:{
+        start: 0,
+        end: 0
+    },
     
     inertia: 2700, //2700 es el valor default
     angularVelocityMultiply: 2, //multiplicara un valor aleatorio de entre 0 y 1 
