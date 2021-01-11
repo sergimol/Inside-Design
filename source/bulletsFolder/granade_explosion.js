@@ -30,6 +30,13 @@ const BulletConfig = {
         radius: 83/2,
     },
     
+
+    cameraShake:{
+        duration: 100, 
+        intensity: 0.001, 
+        force:true
+    },
+
     pushback: 5, //fuerza con la que empuja la bala al chocar con un objetivo
 
     //para la animacion
