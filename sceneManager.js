@@ -29,7 +29,7 @@ export default class Game extends Phaser.Scene {
         //Javi
         //Tiles de estéticas
         //this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
-        this.load.image('TileJavi', './Sprites/tiles/TileJavi.png');
+        this.load.image('tileBase', './Sprites/tiles/TileJavi.png');
         //this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
         this.load.image('doorV', './Sprites/doorV.png');
         this.load.image('doorOpenV', './Sprites/doorOpenV.png');
@@ -169,9 +169,9 @@ export default class Game extends Phaser.Scene {
 
         //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
         //this.make.tilemap({ key: 'sala1' })
-        this.tileset = this.map.addTilesetImage('TileJavi', 'TileJavi', 16, 16);
+        this.tileset = this.map.addTilesetImage('TileJavi', 'tileBase', 16, 16);
 
-        this.map.createBlankDynamicLayer('menu', this.tileset);
+        //this.map.createBlankDynamicLayer('menu', this.tileset);
 
         let backgroundLayer = this.map.createStaticLayer('Background', this.tileset);
         let groundLayer = this.map.createStaticLayer('Ground', this.tileset);

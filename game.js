@@ -12,7 +12,7 @@ export default class Game extends Phaser.Scene {
   init(data) {
     this.health = data.health,
       this.ammo = data.ammo;
-      this.weaponID = data.weaponID;
+    this.weaponID = data.weaponID;
   }
 
 
@@ -33,9 +33,17 @@ export default class Game extends Phaser.Scene {
 
     //Javi
     //Tiles de estéticas
-    this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
-    this.load.image('tileSala1', './Sprites/tiles/TilesetDEF.png');
-    this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
+    this.load.image('tileBase', './Sprites/tiles/TileJavi.png');
+    this.load.image('tileSetBaseEx', './Sprites/tiles/tileSetBaseEx.png');
+    this.load.image('tileSetDoomEx', './Sprites/tiles/tileSetDoomEx.png');
+    this.load.image('tileSetMiedoEx', './Sprites/tiles/tileSetMiedoEx.png');
+    this.load.image('tileSetMinecraftEx', './Sprites/tiles/tileSetMinecraftEx.png');
+    this.load.image('tileSetNavidadEx', './Sprites/tiles/tileSetNavidadEx.png');
+    this.load.image('tileSetPiratasEx', './Sprites/tiles/tileSetPiratasEx.png');
+    this.load.image('tileSetRayTracingEx', './Sprites/tiles/tileSetRayTracingEx.png');
+    this.load.image('tileSetWestEx', './Sprites/tiles/tileSetWestEx.png');
+    this.load.image('tileSetZeldaEx', './Sprites/tiles/tileSetZeldaEx.png');
+
     this.load.image('doorV', './Sprites/doorV.png');
     this.load.image('doorOpenV', './Sprites/doorOpenV.png');
     this.load.image('doorH', './Sprites/doorH.png');
@@ -44,8 +52,6 @@ export default class Game extends Phaser.Scene {
     this.load.image('end', './Sprites/end.jpg');
     this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
     this.load.image('medkit', './Sprites/medkit.png');
-    this.load.image('baseTile', './Sprites/tiles/tileSetBase.png');
-    this.load.image('westTile', './Sprites/tiles/tileSetWest.png');
 
     //TODAS LAS SALAS
     this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
@@ -85,7 +91,6 @@ export default class Game extends Phaser.Scene {
     let nameRoom = 'sala' + numRoom.toString();
 
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
-    //this.map = this.make.tilemap({ key: nameRoom });
     this.map = this.make.tilemap({ key: 'sala1' });
     this.loadTileMapRoom();
 
@@ -210,11 +215,11 @@ export default class Game extends Phaser.Scene {
   changeLayer() {
     switch (this.tilemapState) {
       case 0:
-        this.tileset = this.map.addTilesetImage('TilesetBase', 'baseTile', 16, 16, 1, 2);
+        this.tileset = this.map.addTilesetImage('TilesetBase', 'tiles', 16, 16, 1, 2);
         break;
 
       case 1:
-        this.tileset = this.map.addTilesetImage('TilesetBase', 'westTile', 16, 16, 1, 2);
+        this.tileset = this.map.addTilesetImage('TilesetBase', 'tilesCrash', 16, 16, 1, 2);
         break;
     }
   }
@@ -279,9 +284,9 @@ export default class Game extends Phaser.Scene {
 
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
-    this.tileset = this.map.addTilesetImage('TilesetBase', 'baseTile', 16, 16, 1, 2);
+    this.tileset = this.map.addTilesetImage('tileSetBaseEx', 'tileSetWestEx', 16, 16);
 
-    this.map.createBlankDynamicLayer('sala1', this.tileset);
+    //this.map.createBlankDynamicLayer('sala1', this.tileset);
 
     let groundLayer = this.map.createStaticLayer('Ground', this.tileset);
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
@@ -358,8 +363,8 @@ export default class Game extends Phaser.Scene {
     this.input.keyboard.shutdown();
   }
 
-  pauseGame(){
-      this.scene.launch('pause');
-      this.scene.pause('main');
+  pauseGame() {
+    this.scene.launch('pause');
+    this.scene.pause('main');
   }
 }
