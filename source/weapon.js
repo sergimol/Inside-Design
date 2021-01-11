@@ -93,6 +93,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     delay: this.rafagasCadence,
                     callback: () => {
                         this.dispararRafagas(esEnemigo, humanoide);
+                        
+                        if(this.rafagasArray[0].repeatCount === 0) this.rafagasArray.shift();
                          if (this.cuerpoACuerpo){
                              if (this.hasShooted){
                                     this.hasShooted = false;
@@ -221,6 +223,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     delay: this.rafagasCadenceAlternative,
                     callback: () => {
                         this.dispararRafagasAlternative(esEnemigo, humanoide);
+                        if(this.rafagasArray[0].repeatCount === 0) this.rafagasArray.shift();
                     },
                     repeat: this.rafagasAlternative}
                 )); 

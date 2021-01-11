@@ -34,7 +34,7 @@ const WeaponConfig = {
     //disparo alternativo/sin ammo
     cadenciaAlternative:100,
     rafagasCadenceAlternative:100,
-    rafagasAlternative:1,
+    rafagasAlternative:0,
     retrocesoAlternative:1,
     pelletsAlternative:1,
     dispersionAlternative:0,
