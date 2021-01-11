@@ -25,7 +25,6 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.style = config.s;
         this.cadencia = config.cadence; //en milisegundos
         this.ultimoDisparoTiempo = 0;
-        this.ultimaRafagaTiempo = 0;
         
         //dispersion del arma %
         this.dispersion = config.dispersion;
@@ -47,7 +46,18 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //coste de municon de uyna bala
         this.costeMunicionPorBala = config.costeMunicionPorBala;
 
-        
+        //disparo alternativo/sin ammo
+        this.ultimoDisparoTiempoAlternative = 0;
+        this.cadenciaAlternative = config.cadenciaAlternative;
+        this.rafagasCadenceAlternative = config.rafagasCadenceAlternative;
+        this.rafagasAlternative = config.rafagasAlternative;
+        //this.config.retrocesoAlternative
+        this.pelletsAlternative = config.pelletsAlternative;
+        this.dispersionAlternative = config.dispersionAlternative;
+        this.forceDispersionAlternative = config.forceDispersionAlternative;
+        //this.config.bulletAlternative
+        //this.config.fixedDispAlternative
+        this.bulletForceAlternative = config.bulletForceAlternative;
         
         //this.setScale(1.25);
         //this.bulletCount = 1; 
@@ -104,10 +114,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
                     },
                     repeat: this.rafagas}
                 )); 
-            
-            return true;    
-        }
-        else return false;
+             return true;
+        } else return false;
             
     }
 
@@ -187,6 +195,103 @@ export default class Weapon extends Phaser.GameObjects.Container{
                 
             }
             */
+    }
+
+
+
+    //disparo alternativo/sin municion
+
+
+    shootAlternative(esEnemigo, humanoide){
+        let siguienteDisparo = this.scene.time.now;
+        //console.log(this.ultimoDisparoTiempo);
+        if (siguienteDisparo >= this.ultimoDisparoTiempoAlternative + this.cadenciaAlternative){
+            
+            this.ultimoDisparoTiempoAlternative = siguienteDisparo;
+            
+            
+
+            ////////////
+           
+                //console.log(this.ultimoDisparoTiempo);
+                //this.c = 0;
+
+                
+                this.rafagasArray.push(this.scene.time.addEvent({
+                    delay: this.rafagasCadenceAlternative,
+                    callback: () => {
+                        this.dispararRafagasAlternative(esEnemigo, humanoide);
+                    },
+                    repeat: this.rafagasAlternative}
+                )); 
+            
+            return true;    
+        }
+        else return false;
+            
+    }
+
+    dispararRafagasAlternative(esEnemigo, humanoide){
+
+        //añadir empuje al humanoide
+
+        
+        let vectorDeDireccion = ({x: Math.cos(this.rotation) * this.config.retrocesoAlternative, y: Math.sin(this.rotation) * this.config.retrocesoAlternative});
+                        
+        humanoide.forceSaved.x += vectorDeDireccion.x;
+        humanoide.forceSaved.y += vectorDeDireccion.y;
+
+
+
+//TODO pasar esto a config weapon
+            this.scene.cameras.main.shake(config.weapon.shakeDur ,config.weapon.shakeInt);
+            if (this.style === "mono"){
+                
+            let sound = this.scene.sound.add('gunShootSound2');
+            sound.setVolume(config.weapon.shotVolume);
+            sound.play();
+                this.instanciarBalaAlternative(esEnemigo, 0);
+            }
+            else if (this.style === "shotgun"){
+                
+            let sound = this.scene.sound.add('gunShootSound2');
+            sound.setVolume(config.weapon.shotVolume);
+            sound.play();
+                for (let i = 0; i < this.pelletsAlternative; ++i){
+                    this.instanciarBalaAlternative(esEnemigo, i);
+                }
+            } 
+        
+    }
+
+
+    instanciarBalaAlternative(esEnemigo, pelletNumber){
+
+        if(!esEnemigo){
+            this.scene.disparosRealizados++;
+            this.scene.saveFile();
+
+            console.log(localStorage);
+        }
+        
+                this.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
+
+                var d = this.tempMatrix.decomposeMatrix();
+             
+                //calcular dispersion
+                let disp = Phaser.Math.Between(-this.dispersionAlternative, this.dispersionAlternative);
+                let dispForce = Phaser.Math.Between(-this.forceDispersionAlternative, this.forceDispersionAlternative);
+
+                //instanciar disparos
+                let disparo = new Bullet(this.scene, d.translateX, d.translateY, this.config.bulletAlternative, esEnemigo);
+                
+                //disparo.play("start");
+                
+                let fixAngle = this.config.fixedDispAlternative.start + (((this.config.fixedDispAlternative.end - this.config.fixedDispAlternative.start) * pelletNumber)/this.pelletsAlternative);
+
+                this.scene.matter.body.setAngle(disparo.body, (this.rotation + (disp * Math.PI/200) + fixAngle));
+                //disparo.setRotation(this.rotation + (disp * Math.PI/200));
+                disparo.thrust(this.bulletForceAlternative + (dispForce * this.bulletForceAlternative/100));
     }
 
 

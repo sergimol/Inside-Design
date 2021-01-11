@@ -1,4 +1,5 @@
 import disparo from "./../bulletsFolder/escopeta_lanzable_shoot.js";
+import disparoAlternativo from "./../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
     id: 1,
@@ -26,7 +27,23 @@ const WeaponConfig = {
     },
     
     retroceso: 2,
-    bullet: disparo
+    bullet: disparo,
+
+    
+    //disparo alternativo/sin ammo
+    cadenciaAlternative:100,
+    rafagasCadenceAlternative:100,
+    rafagasAlternative:1,
+    retrocesoAlternative:1,
+    pelletsAlternative:1,
+    dispersionAlternative:0,
+    forceDispersionAlternative:0,
+    bulletAlternative: disparoAlternativo,
+    fixedDispAlternative:{
+        start:0,
+        end:0
+    },
+    bulletForceAlternative:0.3,
 }
 
 export default WeaponConfig

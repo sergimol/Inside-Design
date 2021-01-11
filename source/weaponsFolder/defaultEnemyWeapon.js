@@ -1,4 +1,5 @@
 import disparo from "./../bulletsFolder/defaultEnemyBullet.js";
+import disparoAlternativo from "./../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
     id: 0,
@@ -18,7 +19,7 @@ const WeaponConfig = {
     canyonY: 0,
     cuerpoACuerpo: false, 
     rotationOffSet: 0, 
-    costeMunicionPorBala: 1,
+    costeMunicionPorBala: 100,
 
 
     fixedDisp:{
@@ -27,7 +28,23 @@ const WeaponConfig = {
     },
 
     retroceso: -1,
-    bullet: disparo
+    bullet: disparo,
+
+    
+    //disparo alternativo/sin ammo
+    cadenciaAlternative:100,
+    rafagasCadenceAlternative:100,
+    rafagasAlternative:1,
+    retrocesoAlternative:1,
+    pelletsAlternative:1,
+    dispersionAlternative:0,
+    forceDispersionAlternative:0,
+    bulletAlternative: disparoAlternativo,
+    fixedDispAlternative:{
+        start:0,
+        end:0
+    },
+    bulletForceAlternative:0.3,
 
 
 }

@@ -1,4 +1,5 @@
 import disparo from "./../bulletsFolder/granade_shot.js";
+import disparoAlternativo from "./../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
     id: 2,
@@ -26,7 +27,23 @@ const WeaponConfig = {
     },
     
     retroceso: -5,
-    bullet: disparo
+    bullet: disparo,
+
+    
+    //disparo alternativo/sin ammo
+    cadenciaAlternative:100,
+    rafagasCadenceAlternative:100,
+    rafagasAlternative:1,
+    retrocesoAlternative:1,
+    pelletsAlternative:1,
+    dispersionAlternative:0,
+    forceDispersionAlternative:0,
+    bulletAlternative: disparoAlternativo,
+    fixedDispAlternative:{
+        start:0,
+        end:0
+    },
+    bulletForceAlternative:0.3,
 }
 
 export default WeaponConfig
