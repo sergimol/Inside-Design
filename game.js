@@ -224,7 +224,7 @@ export default class Game extends Phaser.Scene {
     }
   }
 
-  loadObjects(entityLayer, DoorsentityLayer) {
+  loadObjects(entityLayer, DoorsentityLayer, groundLayer) {
     this.doorSystem = new Doors(this, 'doorOpenV', 'doorV', 'doorOpenH', 'doorH');
 
     this.enemies = this.add.group();
@@ -255,6 +255,20 @@ export default class Game extends Phaser.Scene {
         this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
         this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 40, 40, { isSensor: true, label: 'endLevel' }));
       }
+    }
+
+
+    for(let i = 0; i <= 3; i++){
+
+      let tileX = Phaser.Math.RND.between(0, this.map.width);
+      let tileY = Phaser.Math.RND.between(0, this.map.height);
+
+        if (this.map.hasTileAt(tileX,tileY, groundLayer)){
+          let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, 'player', this.player, 0, this.doorSystem);
+          this.enemies.add(e);
+        }
+        else i--;
+
     }
 
     for (const objeto of DoorsentityLayer) {
@@ -331,7 +345,7 @@ export default class Game extends Phaser.Scene {
     this.door;
     this.endZone;
     this.finish = false;
-    this.loadObjects(entityLayer, DoorsentityLayer);
+    this.loadObjects(entityLayer, DoorsentityLayer, groundLayer);
 
 
   }
