@@ -258,7 +258,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for(let i = 0; i <= 3; i++){
+    for(let i = 0; i <= 10; i++){
 
       let tileX = Phaser.Math.RND.between(0, this.map.width);
       let tileY = Phaser.Math.RND.between(0, this.map.height);
@@ -266,6 +266,15 @@ export default class Game extends Phaser.Scene {
         if (this.map.hasTileAt(tileX,tileY, groundLayer)){
           let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, 'player', this.player, 0, this.doorSystem);
           this.enemies.add(e);
+
+
+          if (doorNum[0] != x)
+          enemyCount = 0;
+
+        ++enemyCount;
+        doorNum[0] = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
+
+        x = doorNum[0];
         }
         else i--;
 
