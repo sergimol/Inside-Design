@@ -152,6 +152,12 @@ export default class Enemy extends Humanoid {
     //PREUPDATE
     preUpdate() {
 
+
+        //console.log(this.body.force);
+        //console.log(this.forceSaved);
+
+        
+
         this.applyForce(this.forceSaved);
         this.forceSaved = { x: 0, y: 0 };
 
