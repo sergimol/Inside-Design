@@ -2,7 +2,7 @@ import disparo from "./../bulletsFolder/escopeta_lanzable_shoot.js";
 import disparoAlternativo from "./../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
-    id: 1,
+    id: 4,
     spriteWeapon: "escopeta_lanzable",
     s: "mono",
     m: "semi", 

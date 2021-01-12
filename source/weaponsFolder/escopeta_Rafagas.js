@@ -2,7 +2,7 @@ import disparo from "../bulletsFolder/shotgunBullet.js";
 import disparoAlternativo from "../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
-    id: 0,
+    id: 3,
     spriteWeapon: "gunShoot",
     s: "shotgun",
     m: "semi", 
