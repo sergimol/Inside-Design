@@ -9,7 +9,7 @@ export default class Game extends Phaser.Scene {
     init(data) {
         this.health = data.health,
             this.ammo = data.ammo;
-            this.weapom = data.weapon;
+        this.weapom = data.weapon;
     }
     preload() {
         this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
@@ -28,9 +28,7 @@ export default class Game extends Phaser.Scene {
 
         //Javi
         //Tiles de estéticas
-        //this.load.image('tiles', './Sprites/tiles/TilesetDEF.png');
         this.load.image('tileBase', './Sprites/tiles/TileJavi.png');
-        //this.load.image('tilesCrash', './Sprites/tiles/TilesetDEFcrash.png');
         this.load.image('doorV', './Sprites/doorV.png');
         this.load.image('doorOpenV', './Sprites/doorOpenV.png');
         this.load.image('doorH', './Sprites/doorH.png');
@@ -40,7 +38,6 @@ export default class Game extends Phaser.Scene {
         this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
         this.load.image('medkit', './Sprites/medkit.png');
 
-        //this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
         this.load.tilemapTiledJSON('menu', './Sprites/tiles/menu.json');
 
         //nuevo
@@ -67,18 +64,12 @@ export default class Game extends Phaser.Scene {
     }
 
     create() {
-        this.point;
+        //this.point;
         this.map = this.make.tilemap({ key: 'menu' });
         this.loadTileMapRoom();
 
         //PUNTERO
         this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
-
-        //this.angleToPointer;
-        //this.input.on('pointermove', function (pointer) {
-        //    this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, (pointer.x / this.cameras.main.zoom) + this.cameras.main.worldView.x, (pointer.y / this.cameras.main.zoom) + this.cameras.main.worldView.y);
-        //    this.point = pointer;
-        //}, this);
 
         this.doorSystem;
 
@@ -86,40 +77,9 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.zoom = 3;
         this.cameras.main.startFollow(this.point);
 
-        //this.cursors = this.input.keyboard.createCursorKeys();
-
-        //this.tilemapState = 0;
-
-
-
-
-        //this.add.text(10, 10, 'Press 1 to play, 2 for -nothing- or 3 for -nothing-', { font: '16px Courier', fill: '#00ff00' });
-
-        //this.input.keyboard.once('keyup-ONE', function () {
-        //    if (this.health != undefined)
-        //        this.scene.start('main', { health: this.health, ammo: this.ammo });
-        //    else
-        //        this.scene.start('main', { health: 10, ammo: 100 });
-        //
-        //}, this);
-
-        /*this.input.keyboard.once('keyup-TWO', function () {
-
-            this.scene.start('demo', { id: 1, image: 'babar-phaleon-coco.png' });
-
-        }, this);
-
-        this.input.keyboard.once('keyup-THREE', function () {
-
-            this.scene.start('demo', { id: 2, image: 'babar-pym-wait.png' });
-
-        }, this);*/
-
         this.playButton = new Button(this, 220, 215, 'playButton', 'playButtonlight', 'play')
         this.gddButton = new Button(this, 220, 240, 'gddButton', 'gddButtonlight', 'play')
         this.optionsButton = new Button(this, 220, 265, 'optionsButton', 'optionsButtonlight', 'play')
-
-
 
         this.events.on('shutdown', this.shutdown, this);
     }
@@ -166,12 +126,7 @@ export default class Game extends Phaser.Scene {
 
     //SE CARGA UNA HABITACION
     loadTileMapRoom() {
-
-        //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
-        //this.make.tilemap({ key: 'sala1' })
         this.tileset = this.map.addTilesetImage('TileJavi', 'tileBase', 16, 16);
-
-        //this.map.createBlankDynamicLayer('menu', this.tileset);
 
         let backgroundLayer = this.map.createStaticLayer('Background', this.tileset);
         let groundLayer = this.map.createStaticLayer('Ground', this.tileset);
