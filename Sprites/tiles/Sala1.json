@@ -171,60 +171,6 @@
                  "y":719.166666666667
                 }, 
                 {
-                 "gid":323,
-                 "height":16,
-                 "id":130,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":853.333333333333,
-                 "y":736
-                }, 
-                {
-                 "gid":323,
-                 "height":16,
-                 "id":133,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":728.333333333333,
-                 "y":875
-                }, 
-                {
-                 "gid":323,
-                 "height":16,
-                 "id":134,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":860.666666666667,
-                 "y":872
-                }, 
-                {
                  "height":0,
                  "id":136,
                  "name":"endLevel",
@@ -258,42 +204,6 @@
                  "width":16,
                  "x":816,
                  "y":808
-                }, 
-                {
-                 "gid":323,
-                 "height":16,
-                 "id":138,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":996,
-                 "y":756
-                }, 
-                {
-                 "gid":323,
-                 "height":16,
-                 "id":139,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":1015,
-                 "y":904
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -347,7 +257,7 @@
  "nextobjectid":140,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"2020.10.30",
+ "tiledversion":"1.4.3",
  "tileheight":16,
  "tilesets":[
         {
