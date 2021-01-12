@@ -28,9 +28,8 @@ export default class Enemy extends Humanoid {
         //this.angleAcercarse = this.angleAcercarse * Math.random()/2; //para que no sea un movimiento perfecto
 
 
-        this.arrayBehaviorStates = []; //array con arrais que cambian los booleanos de comportamientos (se pueden combinar)
-        this.arrayBehaviorTime = []; //tiempo que s emantendra en cada uno de los estados mientras se recorre 
-
+        this.arrayBehaviors = config.enemy.rutina; //array con arrais que cambian los booleanos de comportamientos (se pueden combinar)
+        this.arrayBehaviorNumber = 0;
         //Atributos
         this.speed = 50;
         this.health = 3;
@@ -101,8 +100,12 @@ export default class Enemy extends Humanoid {
         this.dir = vectorAux;
 
 
+        this.acercarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAcercarse;
+        this.alejarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAlejarse;;
         this.timerMove = this.scene.time.now + this.enemyTime;
-        this.timerStrafe = this.scene.time.now + 3000;
+        this.strafeTime = this.arrayBehaviors[this.arrayBehaviorNumber].strafeTime;
+        this.timerStrafe = this.scene.time.now + this.strafeTime;
+        this.timerNextBehaviour = this.arrayBehaviors[this.arrayBehaviorNumber].time;
 
 
         //DISPARO
@@ -176,21 +179,22 @@ export default class Enemy extends Humanoid {
 
         //MOVEMOS AL ENEMIGO
         //Estado reposo
-        if (this.body.speed < 1 && !this.attackState) {
+        if (!this.attackState && this.body.speed < 1) {
             this.applyForce({ x: this.dir.x * config.enemy.idleVelFactor, y: this.dir.y * config.enemy.idleVelFactor });
             //this.dir = {x:0,y:0};
 
         }
         //Estado ataque
-        else if (this.body.speed < 1 && this.attackState) {
+        else if (this.attackState && this.body.speed < 1) {
             this.applyForce({ x: this.dir.x * config.enemy.aggroVelFactor, y: this.dir.y * config.enemy.aggroVelFactor });
             this.dir = { x: 0, y: 0 };
         }
 
         let distanciaentrejugador = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
 
-        if (distanciaentrejugador <= config.enemy.aggroDistance) {
+        if ( !this.attackState && distanciaentrejugador <= config.enemy.aggroDistance) {
             this.attackState = true;
+            this.changeBehavior();
         }
 
 
@@ -228,7 +232,7 @@ export default class Enemy extends Humanoid {
 
 
 
-            if (this.acercarse && distanciaentrejugador >= 100) {
+            if (this.acercarse && distanciaentrejugador >= this.acercarseDistancia) {
 
                 vectorAux.add(new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y).rotate(this.angleAcercarse));
                 //vectorAux.rotate(this.angleAcercarse);//todo
@@ -237,7 +241,7 @@ export default class Enemy extends Humanoid {
             //else  if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0}; //esta en 0,0 para asegurarse de que
 
 
-            if (this.alejarse && distanciaentrejugador < 95) {
+            if (this.alejarse && distanciaentrejugador < this.alejarseDistancia) {
 
                 vectorAux.add(new Phaser.Math.Vector2(-this.playerRef.x + this.x, -this.playerRef.y + this.y));
                 //this.dir.normalize();
@@ -259,7 +263,7 @@ export default class Enemy extends Humanoid {
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
 
                 this.strafeAngle = -this.strafeAngle;
-                this.timerStrafe = this.scene.time.now + (10000 * Math.random());
+                this.timerStrafe = this.scene.time.now + (this.strafeTime * Math.random());
 
             }
 
@@ -284,6 +288,13 @@ export default class Enemy extends Humanoid {
         }
 
 
+
+
+        //para cambiarle el comportamiento
+
+        if(this.scene.time.now >= this.timerNextBehaviour){
+            this.changeBehavior();
+        }
 
 
     }
@@ -328,50 +339,26 @@ export default class Enemy extends Humanoid {
     getShootTime() {
         return Math.floor(Math.random() * (5 - 1)) + 2;
     }
+   
+    changeBehavior(){
+        
+    this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
 
 
-    //CALCULA UNA NUEVA POSICION
+
+    this.acercarse = this.arrayBehaviors[this.arrayBehaviorNumber].acercarse;
+    this.acercarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAcercarse;
+    
+    this.alejarse = this.arrayBehaviors[this.arrayBehaviorNumber].alejarse;
+    this.alejarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAlejarse;
+
+    this.strafe = this.arrayBehaviors[this.arrayBehaviorNumber].strafe;
+    this.strafeTime = this.arrayBehaviors[this.arrayBehaviorNumber].strafeTime;
+
+    this.arrayBehaviorNumber++;
+    if (this.arrayBehaviorNumber >= this.arrayBehaviors.length) this.arrayBehaviorNumber = 0;
+}
 
 
-    //CREA LA NUEVA DIRECCION A UTILIZAR EN EL MOVIMIENTO
-    /**
-     * 
-
-     enemyMove() {
-         this.dir = new Phaser.Math.Vector2(0, 0);
-         this.dir.normalize();
-        }
-        */
-
-    //Calculos auxiliares del movimiento en reposo
-    //Auxiliar para rest, gira arma y enemigo
-
-    //METODO QUE CALCULA LO RELACIONADO AL MOVIMIENTO EN ESTADO ATAQUE
-    attackEnemy(distanceBetweenPos) {
-        //Si llega a la siguiente pos
-        if (distanceBetweenPos < config.enemy.minDistance) {
-
-            //Elegimos entre una posicion aleatoria y que se acerque al jugador
-            this.newNextPos();
-            this.enemyMove();
-
-            //AQUI INICILIZAMOS EL TIMER CADA VEZ
-            this.timerMove = this.scene.time.now + this.enemyTime;
-        }
-        //Si no llega a la pos pero el tiempo llega a su maximo cambia de pos 
-        else if (this.scene.time.now > this.timerMove) {
-            this.newNextPos();
-            this.enemyMove();
-
-            //AQUI INICILIZAMOS EL TIMER CADA VEZ
-            this.timerMove = this.scene.time.now + this.enemyTime;
-        }
-
-        //Rotamos sprite y arma en cada frame
-        this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y));
-        this.moveRotate((this.playerRef.x - this.x));
-
-
-    }
 
 }
