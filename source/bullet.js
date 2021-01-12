@@ -24,6 +24,10 @@ export default class Bullet extends Phaser.GameObjects.Container{
             });
         }
             
+        //camera shake al instanciarse
+        if (config.cameraShake != null){
+            this.scene.cameras.main.shake(config.cameraShake.duration, config.cameraShake.intensity, config.cameraShake.force);
+        }
         
         
         this.config = config;
