@@ -131,10 +131,9 @@ export default class Enemy extends Humanoid {
                 let bodyB = event.pairs[i].bodyB;
 
                 if (bodyA === wordBody || bodyB === wordBody) {
-                    if (bodyA.label !== "bullet" || bodyB.label !== "bullet") {
+                    if (bodyA.label === "pared" || bodyB.label === "pared") {
                         this.angleAcercarse = -this.angleAcercarse;
                         this.strafeAngle = -this.strafeAngle;
-                        console.log(this.strafeAngle);
 
                         this.timerStrafe = this.scene.time.now + (10000 * Math.random());
                     }
