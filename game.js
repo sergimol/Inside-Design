@@ -343,7 +343,7 @@ export default class Game extends Phaser.Scene {
     colstopLayer.setCollisionByProperty({ collide: true });
     boxtopLayer.setCollisionByProperty({ collide: true });
     // físicas
-    this.matter.world.convertTilemapLayer(collidersLayer);
+    this.matter.world.convertTilemapLayer(collidersLayer, {label: "pared"});
     this.matter.world.convertTilemapLayer(colsbottomLayer);
     this.matter.world.convertTilemapLayer(boxbottomLayer);
     this.matter.world.convertTilemapLayer(colstopLayer);
