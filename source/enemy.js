@@ -5,6 +5,7 @@ import config from "./config.js";
 
 import defaultWeapon from "./weaponsFolder/defaultEnemyWeapon.js";
 
+
 export default class Enemy extends Humanoid {
     constructor(scene, x, y, sprite, player, doorN, doorS) {
         super(scene, x, y, sprite);
@@ -15,9 +16,9 @@ export default class Enemy extends Humanoid {
 
         //comportamientos
         this.Idle = false;
-        this.acercarse = true;
-        this.alejarse = true;
-        this.strafe = true;
+        this.acercarse = false;
+        this.alejarse = false;
+        this.strafe = false;
 
         this.strafeAngle = Math.PI / 2; //izquierda o derecha del strafe
         if (Phaser.Math.RND.between(0, 1) != 0)
@@ -147,35 +148,30 @@ export default class Enemy extends Humanoid {
 
     }//Fin constructorasd
 
+checkHitState(){
+    if (this.hitState) {
+        this.aspecto.play('enemyHit', true);
+        if (this.aspecto.anims.currentFrame.textureFrame === 14)
+            this.hitState = false;
+    }
+    //Comprobamos el movimiento para asignar la animacion
+    else if (!this.isDead) {
+        if (this.dir.x !== 0 || this.dir.y !== 0)
+            this.aspecto.play('enemyWalk', true);
+        else
+            this.aspecto.play('enemyIdle', true);
+    }
+    else {
+        if (this.body.speed <= 5) {
+            this.setFrictionAir(0.4);
+            //this.setCollisionCategory(null)
 
-    //PREUPDATE
-    preUpdate() {
-
-        this.applyForce(this.forceSaved);
-        this.forceSaved = { x: 0, y: 0 };
-
-        if (this.hitState) {
-            this.aspecto.play('enemyHit', true);
-            if (this.aspecto.anims.currentFrame.textureFrame === 14)
-                this.hitState = false;
         }
-        //Comprobamos el movimiento para asignar la animacion
-        else if (this.isDead === false) {
-            if (this.dir.x !== 0 || this.dir.y !== 0)
-                this.aspecto.play('enemyWalk', true);
-            else
-                this.aspecto.play('enemyIdle', true);
-        }
-        else {
-            if (this.body.speed <= 5) {
-                this.setFrictionAir(0.4);
-                //this.setCollisionCategory(null)
+        this.setActive(false);
+    }
+    }
 
-            }
-            this.setActive(false);
-        }
-
-
+    moveEnemy(){
         //MOVEMOS AL ENEMIGO
         //Estado reposo
         if (!this.attackState && this.body.speed < 1) {
@@ -196,23 +192,13 @@ export default class Enemy extends Humanoid {
             this.changeBehavior();
         }
 
+    }
 
+    nextMove(){
         //Para calcular la distancia entre siguientes posiciones   
         //ESTADO REPOSO
 
         if (!this.attackState) {
-            //LO DEJO COMENTADO POR SI HAY QUE AJUSTAR COSAS
-            /*
-            let distanceBetweenPos = Phaser.Math.Distance.Between(this.x, this.y, this.nextRestPos.x, this.nextRestPos.y);
-            //Si no llega a la pos pero el tiempo llega a su maximo cambia de pos 
-            if(distanceBetweenPos < config.enemy.minDistance)
-            {
-                this.dir = {x:0, y:0};
-                this.auxRest();
-                //AQUI INICILIZAMOS EL TIMER CADA VEZ
-                this.timerMove = this.scene.time.now + this.enemyTime + 700;
-            }*/
-            /*else*/
             if (this.scene.time.now > this.timerMove) {
                 this.dir = { x: 0, y: 0 };
                 this.auxRest();
@@ -265,36 +251,39 @@ export default class Enemy extends Humanoid {
                 this.timerStrafe = this.scene.time.now + (this.strafeTime * Math.random());
 
             }
-
-            //if(distanciaentrejugador >= 100){
-
-            //} else this.dir = {x:0, y:0};
-
-            if (this.scene.time.now > this.timerShoot) {
-                //Disparamos y reactivamos el timer de disparo con un aleatorio
-
-                //this.strafeAngle = -this.strafeAngle;
-                //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
-
-
-                this.weapon.shoot(true, this);
-
-                let sound = this.scene.sound.add('gunShootSound');
-                sound.setVolume(0.7);
-                sound.play();
-                this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
-            }
         }
+    }
+
+    nextShoot(){
+        if (this.scene.time.now > this.timerShoot) {
+            //Disparamos y reactivamos el timer de disparo con un aleatorio
+
+            //this.strafeAngle = -this.strafeAngle;
+            //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
 
 
+            this.weapon.shoot(true, this);
 
-
-        //para cambiarle el comportamiento
-
-        if(this.scene.time.now >= this.timerNextBehaviour){
-            this.changeBehavior();
+            let sound = this.scene.sound.add('gunShootSound');
+            sound.setVolume(0.7);
+            sound.play();
+            this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
         }
+    }
 
+
+
+    //PREUPDATE
+    preUpdate() {
+
+        this.applyForce(this.forceSaved);
+        this.forceSaved = { x: 0, y: 0 };
+
+        this.checkHitState();
+        this.moveEnemy();
+        this.nextMove();
+        this.nextShoot();
+        this.changeBehavior();
 
     }
 
@@ -340,22 +329,26 @@ export default class Enemy extends Humanoid {
     }
    
     changeBehavior(){
-        
-    this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
 
-
-
-    this.acercarse = this.arrayBehaviors[this.arrayBehaviorNumber].acercarse;
-    this.acercarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAcercarse;
-    
-    this.alejarse = this.arrayBehaviors[this.arrayBehaviorNumber].alejarse;
-    this.alejarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAlejarse;
-
-    this.strafe = this.arrayBehaviors[this.arrayBehaviorNumber].strafe;
-    this.strafeTime = this.arrayBehaviors[this.arrayBehaviorNumber].strafeTime;
-
-    this.arrayBehaviorNumber++;
-    if (this.arrayBehaviorNumber >= this.arrayBehaviors.length) this.arrayBehaviorNumber = 0;
+        if(this.scene.time.now >= this.timerNextBehaviour){
+            
+            
+            this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
+            
+            
+            
+            this.acercarse = this.arrayBehaviors[this.arrayBehaviorNumber].acercarse;
+            this.acercarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAcercarse;
+            
+            this.alejarse = this.arrayBehaviors[this.arrayBehaviorNumber].alejarse;
+            this.alejarseDistancia = this.arrayBehaviors[this.arrayBehaviorNumber].distanciaAlejarse;
+            
+            this.strafe = this.arrayBehaviors[this.arrayBehaviorNumber].strafe;
+            this.strafeTime = this.arrayBehaviors[this.arrayBehaviorNumber].strafeTime;
+            
+            this.arrayBehaviorNumber++;
+            if (this.arrayBehaviorNumber >= this.arrayBehaviors.length) this.arrayBehaviorNumber = 0;
+        }
 }
 
 
