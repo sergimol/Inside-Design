@@ -2,7 +2,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, sprite, playerref) {
         super(scene, x, y, sprite);
         this.depth = 3;
-        this.setSize(1, 1);
+        this.setSize(4, 4);
         this.scene.matter.add.gameObject(this);
         this.scene.add.existing(this);
 
@@ -19,7 +19,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
        
        // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16, Neutral Bullet: 32, item: 64
         this.body.collisionFilter = {
-            'group' : -5, 
+            'group' : 64, 
             
             'category': 64,
             'mask':2 | 1, //choca con player y escenario
