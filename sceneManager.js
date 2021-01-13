@@ -1,5 +1,6 @@
 import Doors from "./source/doors.js";
 import Enemy from "./source/enemy.js";
+import configEnemy from "./source/enemiesFolder/defaultEnemy.js";
 import Button from "./source/button.js";
 
 export default class Game extends Phaser.Scene {
@@ -102,7 +103,7 @@ export default class Game extends Phaser.Scene {
                 this.point = objeto;
             }
             else if (objeto.name === 'enemy') {
-                const e = new Enemy(this, objeto.x, objeto.y, 'player', this.point, objeto.properties[0].value - 1, this.doorSystem);
+                const e = new Enemy(this, objeto.x, objeto.y, 'player', this.point, objeto.properties[0].value - 1, this.doorSystem, configEnemy);
                 this.enemies.add(e);
 
                 if (doorNum[objeto.properties[0].value - 1] != x)

@@ -4,6 +4,7 @@ import Puntero from "./source/puntero.js";
 import Enemy from "./source/enemy.js";
 import Item from "./source/item.js";
 import Doors from "./source/doors.js";
+import enemyConfig from "./source/enemiesFolder/defaultEnemy.js"
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -209,7 +210,7 @@ tusmuerto(){
         this.player.changeWeapon(this.weaponID);
       }
       else if (objeto.name === 'enemy') {
-        const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player, objeto.properties[0].value - 1, this.doorSystem);
+        const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player, objeto.properties[0].value - 1, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
         if (doorNum[objeto.properties[0].value - 1] != x)
@@ -233,7 +234,7 @@ tusmuerto(){
       let tileY = Phaser.Math.RND.between(0, this.map.height);
 
       if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
-        let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, 'player', this.player, 0, this.doorSystem);
+        let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, 'player', this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
 

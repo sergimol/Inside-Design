@@ -1,17 +1,18 @@
 import Humanoid from "./humanoid.js";
 import Doors from "./doors.js";
 import Weapon from "./weapon.js";
-import config from "./config.js";
 
 import defaultWeapon from "./weaponsFolder/defaultEnemyWeapon.js";
 
 
 export default class Enemy extends Humanoid {
-    constructor(scene, x, y, sprite, player, doorN, doorS) {
+    constructor(scene, x, y, sprite, player, doorN, doorS, config) {
         super(scene, x, y, sprite);
         this.body.label = 'enemy';
         this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
         this.add(this.weapon);
+
+        this.config = config;
 
 
         //comportamientos
@@ -29,7 +30,7 @@ export default class Enemy extends Humanoid {
         //this.angleAcercarse = this.angleAcercarse * Math.random()/2; //para que no sea un movimiento perfecto
 
 
-        this.arrayBehaviors = config.enemy.rutina; //array con arrais que cambian los booleanos de comportamientos (se pueden combinar)
+        this.arrayBehaviors = config.rutina; //array con arrais que cambian los booleanos de comportamientos (se pueden combinar)
         this.arrayBehaviorNumber = 0;
         //Atributos
         this.speed = 50;
@@ -89,7 +90,7 @@ export default class Enemy extends Humanoid {
         //this.enemyMove();
 
         //MOVIMIENTO IDLE
-        this.enemyTime = config.enemy.idleMovTime;
+        this.enemyTime = config.idleMovTime;
 
         this.timerMove = this.scene.time.now + this.enemyTime + 200;
         //Para la nueva posicion
@@ -110,7 +111,7 @@ export default class Enemy extends Humanoid {
 
 
         //DISPARO
-        this.cadenceTime = config.enemy.cadenceTime;
+        this.cadenceTime = config.cadenceTime;
         this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
 
         //Colisiones
@@ -175,26 +176,27 @@ checkHitState(){
         //MOVEMOS AL ENEMIGO
         //Estado reposo
         if (!this.attackState && this.body.speed < 1) {
-            this.applyForce({ x: this.dir.x * config.enemy.idleVelFactor, y: this.dir.y * config.enemy.idleVelFactor });
+            this.applyForce({ x: this.dir.x * this.config.idleVelFactor, y: this.dir.y * this.config.idleVelFactor });
             //this.dir = {x:0,y:0};
 
         }
         //Estado ataque
         else if (this.attackState && this.body.speed < 1) {
-            this.applyForce({ x: this.dir.x * config.enemy.aggroVelFactor, y: this.dir.y * config.enemy.aggroVelFactor });
+            this.applyForce({ x: this.dir.x * this.config.aggroVelFactor, y: this.dir.y * this.config.aggroVelFactor });
             this.dir = { x: 0, y: 0 };
         }
 
-        let distanciaentrejugador = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
-
-        if ( !this.attackState && distanciaentrejugador <= config.enemy.aggroDistance) {
-            this.attackState = true;
-            this.changeBehavior();
-        }
+        
 
     }
 
     nextMove(){
+        let distanciaentrejugador = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
+
+        if ( !this.attackState && distanciaentrejugador <= this.config.aggroDistance) {
+            this.attackState = true;
+            this.changeBehavior();
+        }
         //Para calcular la distancia entre siguientes posiciones   
         //ESTADO REPOSO
 
