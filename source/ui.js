@@ -3,10 +3,13 @@ import dialogues from "./dialogues.js";
 
 export default class UI extends Phaser.Scene {
     constructor() {
-        super({ key: 'UIScene', active: true });
+        super({ key: 'UIScene'});
     }
 
-    
+    init(data) {
+        this.health = data.health,
+            this.ammo = data.ammo;
+    }
     preload(){
         //Carga de imagenes
             //Armas

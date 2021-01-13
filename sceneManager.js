@@ -8,8 +8,9 @@ export default class Game extends Phaser.Scene {
     }
     init(data) {
         this.health = data.health,
-            this.ammo = data.ammo;
-        this.weapom = data.weapon;
+            this.ammo = data.ammo,
+            this.weaponID = data.weaponID,
+            this.level = data.level;
     }
     preload() {
         this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
@@ -111,10 +112,6 @@ export default class Game extends Phaser.Scene {
                 doorNum[objeto.properties[0].value - 1] = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
 
                 x = doorNum[objeto.properties[0].value - 1];
-            }
-            else if (objeto.name === 'endLevel') {
-                this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
-                this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 40, 40, { isSensor: true, label: 'endLevel' }));
             }
         }
 

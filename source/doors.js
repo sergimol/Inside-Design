@@ -100,16 +100,6 @@ export default class Doors extends Phaser.GameObjects.Container {
             door.setStatic(true);
         }
     }
-    //this.doorsTrigger[this.contador - 1].body.parts[1].isSensor = true;
-    /*
-     if (this.doorsTrigger[this.contador - 1].label === "horizontal") {
-                this.doorsTrigger[this.contador - 1].setTexture(this.spriteOpenedH);
-            }
-            else if (this.doorsTrigger[this.contador - 1].label === "vertical") {
-                this.doorsTrigger[this.contador - 1].setTexture(this.spriteOpenedV);
-            }
-    */
-
 
     //Abro las puertas en orden (this.contador)
     openDoor() {

@@ -11,8 +11,9 @@ export default class Game extends Phaser.Scene {
   }
   init(data) {
     this.health = data.health,
-      this.ammo = data.ammo;
-    this.weaponID = data.weaponID;
+      this.ammo = data.ammo,
+      this.weaponID = data.weaponID,
+      this.level = data.level;
   }
 
 
@@ -78,9 +79,11 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-
+    console.log("level: " + this.level)
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
+
+    
 
     //localStorage.clear();
     this.loadFile();
@@ -95,48 +98,6 @@ export default class Game extends Phaser.Scene {
     this.loadTileMapRoom();
 
 
-    /*
-    this.map = this.make.tilemap({ key: 'dungeon' })
-    this.tileset = this.map.addTilesetImage('TilesetBase', 'tiles', 16, 16, 1, 2);
-
-    const groundLayer = this.map.createStaticLayer('Ground', this.tileset);
-    const detailsLayer = this.map.createStaticLayer('Details', this.tileset);
-    const wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
-    const wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
-    const colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
-    const boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
-    const collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
-    const colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
-    const boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
-
-    const entityLayer = this.map.getObjectLayer('Entities').objects
-    const DoorsentityLayer = this.map.getObjectLayer('Doors').objects
-    // profundidad
-    groundLayer.setDepth(0);
-    detailsLayer.setDepth(0);
-    wallsLayer.setDepth(1);
-    colsbottomLayer.setDepth(2);
-    boxbottomLayer.setDepth(2);
-    //enemigos          ->3
-    //jugador y balas   ->4
-    wallstopLayer.setDepth(5);
-    collidersLayer.setDepth(5);
-    colstopLayer.setDepth(6);
-    boxtopLayer.setDepth(6);
-
-    // colisiones tilemap
-    collidersLayer.setCollisionByProperty({ collide: true });
-    colsbottomLayer.setCollisionByProperty({ collide: true });
-    boxbottomLayer.setCollisionByProperty({ collide: true });
-    colstopLayer.setCollisionByProperty({ collide: true });
-    boxtopLayer.setCollisionByProperty({ collide: true });
-    // físicas
-    this.matter.world.convertTilemapLayer(collidersLayer);
-    this.matter.world.convertTilemapLayer(colsbottomLayer);
-    this.matter.world.convertTilemapLayer(boxbottomLayer);
-    this.matter.world.convertTilemapLayer(colstopLayer);
-    this.matter.world.convertTilemapLayer(boxtopLayer);
-    */
 
     //PUNTERO
     this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
@@ -200,7 +161,13 @@ export default class Game extends Phaser.Scene {
           if (playerBody.label === 'endLevel') {
             this.cameras.main.fadeOut(3000);
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
-            this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID });
+            if (this.level != 0) {
+              ++this.level;
+              this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level });
+            }
+            else{
+              this.scene.start('theEnd');
+            }
           }
         }
       }
@@ -258,25 +225,25 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for(let i = 0; i <= 10; i++){
+    for (let i = 0; i <= 10; i++) {
 
       let tileX = Phaser.Math.RND.between(0, this.map.width);
       let tileY = Phaser.Math.RND.between(0, this.map.height);
 
-        if (this.map.hasTileAt(tileX,tileY, groundLayer)){
-          let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, 'player', this.player, 0, this.doorSystem);
-          this.enemies.add(e);
+      if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
+        let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, 'player', this.player, 0, this.doorSystem);
+        this.enemies.add(e);
 
 
-          if (doorNum[0] != x)
+        if (doorNum[0] != x)
           enemyCount = 0;
 
         ++enemyCount;
         doorNum[0] = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
 
         x = doorNum[0];
-        }
-        else i--;
+      }
+      else i--;
 
     }
 
