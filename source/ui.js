@@ -3,18 +3,14 @@ import dialogues from "./dialogues.js";
 
 export default class UI extends Phaser.Scene {
     constructor() {
-        super({ key: 'UIScene'});
+        super({ key: 'UIScene', active: true });
     }
 
-    init(data) {
-        this.health = data.health,
-            this.ammo = data.ammo;
-    }
-    preload(){
+    preload() {
         //Carga de imagenes
-            //Armas
+        //Armas
         this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
-            //Pasivas
+        //Pasivas
         this.load.image('tanqueo', 'Sprites/pixel-tank.png');
         //this.load.image('facil', 'Sprites/');
         this.load.image('rambo', 'Sprites/rambo.png');
@@ -22,14 +18,14 @@ export default class UI extends Phaser.Scene {
         //this.load.image('malaonda', 'Sprites/');
         this.load.image('sanic', 'Sprites/sanic.png');
         this.load.image('cogo', 'Sprites/ferrari.png');
-            //Activas
+        //Activas
         this.load.image('dash', 'Sprites/dash-1.png');
-            //Dialogos
+        //Dialogos
         this.load.image('dialogbox', 'Sprites/dialogbox.png');
         //Carga de fuentes con bitmap
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
     }
-    
+
     create() {
         //Barra de fondo
         this.healthBackground = this.add.graphics();
@@ -52,18 +48,18 @@ export default class UI extends Phaser.Scene {
         this.healthBackground.scaleY = config.ui.barScaleY + 10;
 
         this.weapon = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
-        this.weapon.scale = config.ui.weaponScl;        
+        this.weapon.scale = config.ui.weaponScl;
 
         //Contador de munición
-        
+
         //creacion de texto con webfont
         WebFont.load({
-            google:{
-                families: [ 'Permanent Marker']
+            google: {
+                families: ['Permanent Marker']
             }
         })
-        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', {fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff'});        
-        
+        this.ammo = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '', { fontFamily: 'Permanent Marker', fontSize: config.ui.ammoFontSize, color: '#ffffff' });
+
         //Activa
         this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[0]);
 
@@ -86,63 +82,63 @@ export default class UI extends Phaser.Scene {
         this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
     }
 
-    setBackground(playerMaxHP){
+    setBackground(playerMaxHP) {
         this.healthBackground.scaleX = playerMaxHP * config.ui.barScaleX + 10;
     }
 
     //Actualiza el contador de munición
     setAmmo(playerAmmo) {
-        if(playerAmmo > -1)
+        if (playerAmmo > -1)
             this.ammo.text = playerAmmo;
         else
             this.ammo.text = '∞';
     }
 
-    setPassiveImg(id){
+    setPassiveImg(id) {
         this.activeImg.destroy();
         this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[id]);
     }
 
-    addPassiveImg(id){
+    addPassiveImg(id) {
         this.add.image(config.ui.passivePosX + (this.passiveCount * config.ui.passiveOffset), config.ui.passivePosY, config.ui.passiveImgs[id]);
         this.passiveCount++;
     }
 
-    removePassiveImg(){
-        
+    removePassiveImg() {
+
     }
 
     //Hace visible el cuadro de diálogo y el primer texto de este
-    startDialog(type, id){
+    startDialog(type, id) {
         //Pausa el juego
         //this.scene.pause('main');
         this.dialogBox.setVisible(true);
-        
+
         //Recoge el array con los diálogos      
-        if(type === 'passive'){
+        if (type === 'passive') {
             this.strings = dialogues.passives[id];
         }
 
-        else if(type === 'active'){
+        else if (type === 'active') {
             this.strings = dialogues.actives[id];
         }
-        
+
         this.onDialog = true;
         this.dialogState = 0;
         this.dialog.text = this.strings[this.dialogState];
     }
 
-    advanceDialog(){
-        if(this.onDialog){
+    advanceDialog() {
+        if (this.onDialog) {
             this.dialogState++;
-            if(this.dialogState < this.strings.length)
+            if (this.dialogState < this.strings.length)
                 this.dialog.text = this.strings[this.dialogState];
             else
                 this.endDialog()
         }
     }
-    
-    endDialog(){
+
+    endDialog() {
         this.onDialog = false;
         this.dialogBox.setVisible(false);
         this.dialog.text = '';
