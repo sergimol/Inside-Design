@@ -257,19 +257,22 @@ checkHitState(){
     }
 
     nextShoot(){
-        if (this.scene.time.now > this.timerShoot) {
-            //Disparamos y reactivamos el timer de disparo con un aleatorio
+        if(this.attackState){
 
-            //this.strafeAngle = -this.strafeAngle;
-            //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
-
-
-            this.weapon.shoot(true, this);
-
-            let sound = this.scene.sound.add('gunShootSound');
-            sound.setVolume(0.7);
-            sound.play();
-            this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
+            if (this.scene.time.now > this.timerShoot) {
+                //Disparamos y reactivamos el timer de disparo con un aleatorio
+                
+                //this.strafeAngle = -this.strafeAngle;
+                //this.strafeAngle = -this.strafeAngle; //cambia la direcction del strafe de iz a derecha y viceversa
+                
+                
+                this.weapon.shoot(true, this);
+                
+                let sound = this.scene.sound.add('gunShootSound');
+                sound.setVolume(0.7);
+                sound.play();
+                this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
+            }
         }
     }
 
