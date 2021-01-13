@@ -2,6 +2,8 @@ const enemy = {
 
     lvl: 1,
 
+    sprite: "player",
+
     health: 3,
     speed: 50,
     depth: 3,

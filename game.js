@@ -205,12 +205,14 @@ tusmuerto(){
     for (const objeto of entityLayer) {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
+
+      //TODO no hayq ue pasarle el sprite asi si no0 por config y para los cambios d sprite de jugador
       if (objeto.name === 'player') {
-        this.player = new Player(this, objeto.x, objeto.y, 'player', this.health, this.ammo);
+        this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo);
         this.player.changeWeapon(this.weaponID);
       }
       else if (objeto.name === 'enemy') {
-        const e = new Enemy(this, objeto.x, objeto.y, 'player', this.player, objeto.properties[0].value - 1, this.doorSystem, enemyConfig);
+        const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
         if (doorNum[objeto.properties[0].value - 1] != x)
@@ -234,7 +236,7 @@ tusmuerto(){
       let tileY = Phaser.Math.RND.between(0, this.map.height);
 
       if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
-        let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, 'player', this.player, 0, this.doorSystem, enemyConfig);
+        let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
 

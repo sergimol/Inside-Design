@@ -6,8 +6,8 @@ import defaultWeapon from "./weaponsFolder/defaultEnemyWeapon.js";
 
 
 export default class Enemy extends Humanoid {
-    constructor(scene, x, y, sprite, player, doorN, doorS, config) {
-        super(scene, x, y, sprite);
+    constructor(scene, x, y, player, doorN, doorS, config) {
+        super(scene, x, y, config.sprite);
         this.body.label = 'enemy';
         this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
         this.add(this.weapon);
@@ -47,25 +47,25 @@ export default class Enemy extends Humanoid {
         const anims = scene.anims;
         anims.create({
             key: 'enemyWalk',
-            frames: anims.generateFrameNumbers(sprite, { start: 4, end: 8 }), //15
+            frames: anims.generateFrameNumbers(config.sprite, { start: 4, end: 8 }), //15
             frameRate: 15,
             repeat: -1
         })
         anims.create({
             key: 'enemyIdle',
-            frames: anims.generateFrameNumbers(sprite, { start: 1, end: 3 }),
+            frames: anims.generateFrameNumbers(config.sprite, { start: 1, end: 3 }),
             frameRate: 7,
             repeat: -1
         })
         anims.create({
             key: 'enemyDep',
-            frames: anims.generateFrameNumbers(sprite, { start: 16, end: 28 }),
+            frames: anims.generateFrameNumbers(config.sprite, { start: 16, end: 28 }),
             frameRate: 14,
             repeat: 0
         })
         anims.create({
             key: 'enemyHit',
-            frames: anims.generateFrameNumbers(sprite, { start: 9, end: 14 }),
+            frames: anims.generateFrameNumbers(config.sprite, { start: 9, end: 14 }),
             frameRate: 60,
             repeat: 0
         })
