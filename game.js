@@ -4,6 +4,7 @@ import Puntero from "./source/puntero.js";
 import Enemy from "./source/enemy.js";
 import Item from "./source/item.js";
 import Doors from "./source/doors.js";
+import Config from "./source/config.js"
 import enemyConfig from "./source/enemiesFolder/defaultEnemy.js"
 
 export default class Game extends Phaser.Scene {
@@ -127,8 +128,6 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.startFollow(this.player.puntero.intermedio);
 
     this.cursors = this.input.keyboard.createCursorKeys();
-
-    this.tilemapState = 0;
     /*
     this.input.keyboard.on('keydown-SHIFT', function (event) {
       if (this.tilemapState == 0) this.tilemapState++;
@@ -179,19 +178,9 @@ export default class Game extends Phaser.Scene {
     
     this.input.keyboard.on('keydown_ESC',this.pauseGame, this);//this.pauseGame
   }//End of create
-tusmuerto(){
-  console.log("tusmuerto") 
-}
-  changeLayer() {
-    switch (this.tilemapState) {
-      case 0:
-        this.tileset = this.map.addTilesetImage('TilesetBase', 'tiles', 16, 16, 1, 2);
-        break;
 
-      case 1:
-        this.tileset = this.map.addTilesetImage('TilesetBase', 'tilesCrash', 16, 16, 1, 2);
-        break;
-    }
+  changeLayer(tileState) {
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', Config.tileset.tileReference[tileState], 16, 16);
   }
 
   loadObjects(entityLayer, DoorsentityLayer, groundLayer) {
@@ -279,7 +268,7 @@ tusmuerto(){
 
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
-    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetZeldaEx', 16, 16);
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetDoomEx', 16, 16);
 
     //this.map.createBlankDynamicLayer('sala1', this.tileset);
 

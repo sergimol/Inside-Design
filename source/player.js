@@ -11,6 +11,7 @@ export default class Player extends Humanoid {
     super(scene, x, y, sprite, health);
     this.body.label = 'player';
 
+
     //Arma
 
     this.weapon = new Weapon(scene, 0, 5, granade__launcher);
@@ -252,13 +253,11 @@ export default class Player extends Humanoid {
 
   //Método para añadir una pasiva aleatoria
   addPassive() {
-    //Elige una pasiv
+    //Elige una pasiva
     let id;
-
     do {
       id = Math.floor(Math.random() * config.player.passiveCount);
     } while (this.activePassives[id])
-    id = 7;
 
     this.hud.startDialog('passive', id);
     if (id !== 7) { //Distinto de 7 porque el cambio de arma no tiene indicador en el hud ni tiene que ser controlado por los booleanos
@@ -313,8 +312,41 @@ export default class Player extends Humanoid {
       //Cambio de arma
       case (7):
         console.log('Cambio de arma');
-        id = Math.floor(Math.random() * config.player.weaponCount);
-        this.changeWeapon(id);
+        let wId = Math.floor(Math.random() * config.player.weaponCount);
+        this.changeWeapon(wId);
+        break;
+      //TileSets
+      case(8):
+        console.log('Outlaws from the West');
+        this.scene.changeLayer(config.tileset.west);
+        break;
+      case(9):
+        console.log('Ray Tracing breakdance skill');
+        this.scene.changeLayer(config.tileset.raytracing);
+        break;
+      case(10):
+        console.log('La serie mas aburrida de la historia');
+        this.scene.changeLayer(config.tileset.minecraft);
+        break;
+      case(11):
+        console.log('Especial Navidad');
+        this.scene.changeLayer(config.tileset.navidad);
+      break;
+      case(12):
+        console.log('Mas de 1000 capitulos');
+        this.scene.changeLayer(config.tileset.piratas);
+        break;
+      case(13):
+        console.log('El mejor juego de la historia');
+        this.scene.changeLayer(config.tileset.zelda);
+      break;
+      case(14):
+        console.log('The Only Thing They Fear is You');
+        this.scene.changeLayer(config.tileset.doom);
+        break;
+      case(15):
+        console.log('P.T.');
+        this.scene.changeLayer(config.tileset.miedo);
         break;
     }
 

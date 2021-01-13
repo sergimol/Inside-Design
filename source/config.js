@@ -15,7 +15,7 @@ const Config = {
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
-        passiveCount: 8,
+        passiveCount: 16,
         weaponCount: 3
     },
     
@@ -46,6 +46,19 @@ const Config = {
         activePosX: 1300,
         activePosY: 50,
         activeImgs: ['dash', 'escudo', 'area']
+    },
+
+    tileset: {
+        west: 0,
+        raytracing: 1,
+        minecraft: 2,
+        navidad: 3,
+        piratas: 4,
+        zelda: 5,
+        doom: 6,
+        miedo: 7,
+        tileReference: ['tileSetWestEx', 'tileSetRayTracingEx', 'tileSetMinecraftEx', 'tileSetNavidadEx', 'tileSetPiratasEx',
+                        'tileSetZeldaEx', 'tileSetDoomEx', 'tileSetMiedoEx']
     }
 }
 
