@@ -33,7 +33,7 @@ export default class Enemy extends Humanoid {
         this.arrayBehaviors = config.rutina; //array con arrais que cambian los booleanos de comportamientos (se pueden combinar)
         this.arrayBehaviorNumber = 0;
         //Atributos
-        this.speed = 50;
+        this.aggroVelFactor = config.aggroVelFactor;
         this.health = 3;
         this.depth = 3;
 
@@ -182,7 +182,7 @@ checkHitState(){
         }
         //Estado ataque
         else if (this.attackState && this.body.speed < 1) {
-            this.applyForce({ x: this.dir.x * this.config.aggroVelFactor, y: this.dir.y * this.config.aggroVelFactor });
+            this.applyForce({ x: this.dir.x * this.aggroVelFactor, y: this.dir.y * this.aggroVelFactor });
             this.dir = { x: 0, y: 0 };
         }
 
@@ -191,67 +191,71 @@ checkHitState(){
     }
 
     nextMove(){
-        let distanciaentrejugador = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
 
-        if ( !this.attackState && distanciaentrejugador <= this.config.aggroDistance) {
-            this.attackState = true;
-            this.changeBehavior();
-        }
-        //Para calcular la distancia entre siguientes posiciones   
-        //ESTADO REPOSO
+        if (!this.Idle){
 
-        if (!this.attackState) {
-            if (this.scene.time.now > this.timerMove) {
-                this.dir = { x: 0, y: 0 };
-                this.auxRest();
-                //AQUI INICILIZAMOS EL TIMER CADA VEZ
-                this.timerMove = this.scene.time.now + this.enemyTime + 700;
-            }
-        }
-
-        //ESTADO ATAQUE
-        else {
-            //Movimiento
-            let vectorAux = new Phaser.Math.Vector2(0, 0);
-            let angulo = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
-            this.moveRotate(this.playerRef.x - this.x);
-            this.weapon.rotateWeapon(angulo);
-            //console.log(this.dir)
-
-
-            if (this.acercarse && distanciaentrejugador >= this.acercarseDistancia) {
-
-                vectorAux.add(new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y).rotate(this.angleAcercarse));
-                //vectorAux.rotate(this.angleAcercarse);//todo
-                //this.dir.normalize();
-            }
-            //else  if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0}; //esta en 0,0 para asegurarse de que
-
-
-            if (this.alejarse && distanciaentrejugador < this.alejarseDistancia) {
-
-                vectorAux.add(new Phaser.Math.Vector2(-this.playerRef.x + this.x, -this.playerRef.y + this.y));
-                //this.dir.normalize();
-            } //else if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0};
-
-
-            if (this.strafe) {
-                let vectorStrafe = new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y);
-                vectorStrafe.rotate(this.strafeAngle);
-                vectorAux.add(vectorStrafe);
-                //this.dir.normalize();
-            }
-
-            vectorAux.normalize();
-            this.dir = vectorAux;
-
-            //cambiar la direccion de rotacion del strafe
-            if (this.scene.time.now > this.timerStrafe) {
-                //Disparamos y reactivamos el timer de disparo con un aleatorio
-
-                this.strafeAngle = -this.strafeAngle;
-                this.timerStrafe = this.scene.time.now + (this.strafeTime * Math.random());
-
+                let distanciaentrejugador = Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
+                
+                if ( !this.attackState && distanciaentrejugador <= this.config.aggroDistance) {
+                    this.attackState = true;
+                    this.changeBehavior();
+                }
+                //Para calcular la distancia entre siguientes posiciones   
+                //ESTADO REPOSO
+                
+                if (!this.attackState) {
+                    if (this.scene.time.now > this.timerMove) {
+                        this.dir = { x: 0, y: 0 };
+                        this.auxRest();
+                        //AQUI INICILIZAMOS EL TIMER CADA VEZ
+                        this.timerMove = this.scene.time.now + this.enemyTime + 700;
+                    }
+                }
+                
+            //ESTADO ATAQUE
+            else {
+                //Movimiento
+                let vectorAux = new Phaser.Math.Vector2(0, 0);
+                let angulo = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
+                this.moveRotate(this.playerRef.x - this.x);
+                this.weapon.rotateWeapon(angulo);
+                //console.log(this.dir)
+                
+                
+                if (this.acercarse && distanciaentrejugador >= this.acercarseDistancia) {
+                    
+                    vectorAux.add(new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y).rotate(this.angleAcercarse));
+                    //vectorAux.rotate(this.angleAcercarse);//todo
+                    //this.dir.normalize();
+                }
+                //else  if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0}; //esta en 0,0 para asegurarse de que
+                
+                
+                if (this.alejarse && distanciaentrejugador < this.alejarseDistancia) {
+                    
+                    vectorAux.add(new Phaser.Math.Vector2(-this.playerRef.x + this.x, -this.playerRef.y + this.y));
+                    //this.dir.normalize();
+                } //else if (this.dir === {x:0,y:0}) this.dir = {x:0, y:0};
+                
+                
+                if (this.strafe) {
+                    let vectorStrafe = new Phaser.Math.Vector2(this.playerRef.x - this.x, this.playerRef.y - this.y);
+                    vectorStrafe.rotate(this.strafeAngle);
+                    vectorAux.add(vectorStrafe);
+                    //this.dir.normalize();
+                }
+                
+                vectorAux.normalize();
+                this.dir = vectorAux;
+                
+                //cambiar la direccion de rotacion del strafe
+                if (this.scene.time.now > this.timerStrafe) {
+                    //Disparamos y reactivamos el timer de disparo con un aleatorio
+                    
+                    this.strafeAngle = -this.strafeAngle;
+                    this.timerStrafe = this.scene.time.now + (this.strafeTime * Math.random());
+                    
+                }
             }
         }
     }

@@ -1,10 +1,10 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
-import Weapon from "./weapon.js";
 import granade__launcher from "./weaponsFolder/granade_launcher.js";
 import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
 import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
 import config from "./config.js";
+import Weapon from "./weapon.js";
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {

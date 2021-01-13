@@ -7,6 +7,9 @@ import Doors from "./source/doors.js";
 import Config from "./source/config.js"
 import enemyConfig from "./source/enemiesFolder/defaultEnemy.js"
 
+import Boss from "./source/boss.js";
+import clyon from "./source/Bosses/clyon.js";
+
 export default class Game extends Phaser.Scene {
   constructor() {
     super({ key: "main" });
@@ -219,7 +222,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i < 0; i++) {
 
       let tileX = Phaser.Math.RND.between(0, this.map.width);
       let tileY = Phaser.Math.RND.between(0, this.map.height);
