@@ -133,8 +133,9 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
 
 
-
+        if(!esEnemigo){
             this.scene.cameras.main.shake(config.weapon.shakeDur ,config.weapon.shakeInt);
+        }
             if (this.style === "mono"){
                 
             let sound = this.scene.sound.add('gunShootSound2');
