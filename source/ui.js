@@ -3,7 +3,7 @@ import dialogues from "./dialogues.js";
 
 export default class UI extends Phaser.Scene {
     constructor() {
-        super({ key: 'UIScene', active: true });
+        super({ key: 'UIScene' });
     }
 
     preload() {
@@ -88,10 +88,12 @@ export default class UI extends Phaser.Scene {
 
     //Actualiza el contador de munición
     setAmmo(playerAmmo) {
-        if (playerAmmo > -1)
-            this.ammo.text = playerAmmo;
-        else
-            this.ammo.text = '∞';
+        if (this.ammo.scene != undefined) {
+            if (playerAmmo > -1)
+                this.ammo.text = playerAmmo;
+            else
+                this.ammo.text = '∞';
+        }
     }
 
     setPassiveImg(id) {

@@ -175,6 +175,7 @@ export default class Game extends Phaser.Scene {
     this.doorSystem;
     this.pause = false;
     this.events.on('shutdown', this.shutdown, this);
+    
     this.input.keyboard.on('keydown_ESC',this.pauseGame, this);//this.pauseGame
   }//End of create
 tusmuerto(){
