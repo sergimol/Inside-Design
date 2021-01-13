@@ -307,11 +307,12 @@ export default class Game extends Phaser.Scene {
 
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
-    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetPiratasEx', 16, 16);
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetZeldaEx', 16, 16);
 
     //this.map.createBlankDynamicLayer('sala1', this.tileset);
 
     let groundLayer = this.map.createStaticLayer('Ground', this.tileset);
+    let enemiesLayer = this.map.createStaticLayer('Enemies', this.tileset);
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
     let reflexLayer = this.map.createStaticLayer('Reflex', this.tileset);
     let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
@@ -326,6 +327,7 @@ export default class Game extends Phaser.Scene {
     let entityLayer = this.map.getObjectLayer('Entities').objects
     let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
     // profundidad
+    enemiesLayer.setVisible(false);
     groundLayer.setDepth(0);
     detailsLayer.setDepth(0);
     reflexLayer.setDepth(0);
@@ -357,7 +359,7 @@ export default class Game extends Phaser.Scene {
     this.door;
     this.endZone;
     this.finish = false;
-    this.loadObjects(entityLayer, DoorsentityLayer, groundLayer);
+    this.loadObjects(entityLayer, DoorsentityLayer, enemiesLayer);
 
 
   }
