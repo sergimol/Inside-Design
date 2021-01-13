@@ -307,12 +307,13 @@ export default class Game extends Phaser.Scene {
 
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
-    this.tileset = this.map.addTilesetImage('tileSetBaseEx', 'tileSetWestEx', 16, 16);
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetPiratasEx', 16, 16);
 
     //this.map.createBlankDynamicLayer('sala1', this.tileset);
 
     let groundLayer = this.map.createStaticLayer('Ground', this.tileset);
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
+    let reflexLayer = this.map.createStaticLayer('Reflex', this.tileset);
     let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
     let wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
     let colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
@@ -320,12 +321,14 @@ export default class Game extends Phaser.Scene {
     let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
     let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
     let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
+    
 
     let entityLayer = this.map.getObjectLayer('Entities').objects
     let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
     // profundidad
     groundLayer.setDepth(0);
     detailsLayer.setDepth(0);
+    reflexLayer.setDepth(0);
     wallsLayer.setDepth(1);
     colsbottomLayer.setDepth(2);
     boxbottomLayer.setDepth(2);
