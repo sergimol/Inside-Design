@@ -1,11 +1,9 @@
-
 import Item from "./item.js";
-
 import config from "./config.js";
 
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
-    constructor(scene, x, y, humanSprite,health) {
+    constructor(scene, x, y, humanSprite, health) {
         super(scene, x, y);
         scene.add.existing(this);
 
@@ -20,7 +18,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.speed = config.humanoid.speed;
         this.hitState = false; //para cambiar a la animacion de hit
         //vector que acumula el empuje que s ele tiene que aplicar
-        this.forceSaved = { x: 1, y: 0};
+        this.forceSaved = { x: 1, y: 0 };
 
 
         this.setSize(config.humanoid.size, config.humanoid.size);
@@ -28,7 +26,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.scene.matter.add.gameObject(this);
         this.scene.matter.body.setInertia(this.body, Infinity);
 
-        
+
         this.body.restitution = 0;
         this.body.frictionStatic = 0;
         this.body.friction = 0;
@@ -59,9 +57,12 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
     damage(damagePoints) {
 
-        if (!this.isDead){
+        if (!this.isDead) {
             this.hitState = true;
             this.health -= damagePoints;
+            if (this.body.label === 'player')
+                this.hud.setHealth(this.health);
+
             if (this.health <= 0) {
 
                 let sound = this.scene.sound.add('deadSound');
@@ -99,9 +100,13 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                         'mask': 1, //mundo y balas jugador
                         //'group':2,  //asi no colisionan entre si si tienen este mismo valor en negativo, en positivo siempre colisionaran si tienen el mismo valor, con 0 npi, explotara supongo
                     };
-
                 }
-
+                else if (this.body.label === 'player') {
+                    this.weapon.pararRafagasCola();
+                    this.hud.setHealth(0);
+                    this.scene.scene.launch('death');
+                    this.scene.scene.pause('main');
+                }
             }
             else {
                 //sonido hit
@@ -109,13 +114,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                 //sound.setVolume(0.1);
                 sound.play();
             }
-            if (this.body.label === 'player')
-                if (this.isDead){
-                    this.weapon.pararRafagasCola();
-                    this.hud.setHealth(0);
-                }
-                else
-                    this.hud.setHealth(this.health);
         }
     }
 

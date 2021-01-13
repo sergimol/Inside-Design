@@ -152,12 +152,6 @@ export default class Enemy extends Humanoid {
     //PREUPDATE
     preUpdate() {
 
-
-        //console.log(this.body.force);
-        //console.log(this.forceSaved);
-
-        
-
         this.applyForce(this.forceSaved);
         this.forceSaved = { x: 0, y: 0 };
 
@@ -235,7 +229,7 @@ export default class Enemy extends Humanoid {
             let angulo = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
             this.moveRotate(this.playerRef.x - this.x);
             this.weapon.rotateWeapon(angulo);
-
+            //console.log(this.dir)
 
 
             if (this.acercarse && distanciaentrejugador >= this.acercarseDistancia) {
