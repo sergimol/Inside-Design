@@ -215,7 +215,7 @@ export default class Player extends Humanoid {
       }
     }
     else
-    this.weapon.shootAlternative(false,this);
+      this.weapon.shootAlternative(false, this);
   }
 
   playerMoverPuntero(pointer) {

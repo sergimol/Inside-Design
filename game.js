@@ -83,7 +83,7 @@ export default class Game extends Phaser.Scene {
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
 
-    
+
 
     //localStorage.clear();
     this.loadFile();
@@ -161,11 +161,11 @@ export default class Game extends Phaser.Scene {
           if (playerBody.label === 'endLevel') {
             this.cameras.main.fadeOut(3000);
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
-            if (this.level != 0) {
+            if (this.level != 2) {
               ++this.level;
               this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level });
             }
-            else{
+            else {
               this.scene.start('theEnd');
             }
           }
@@ -175,10 +175,12 @@ export default class Game extends Phaser.Scene {
     this.doorSystem;
     this.pause = false;
     this.events.on('shutdown', this.shutdown, this);
-
-    this.input.keyboard.on('keydown_ESC', this.pauseGame, this);
+    
+    this.input.keyboard.on('keydown_ESC',this.pauseGame, this);//this.pauseGame
   }//End of create
-
+tusmuerto(){
+  console.log("tusmuerto") 
+}
   changeLayer() {
     switch (this.tilemapState) {
       case 0:
@@ -289,7 +291,7 @@ export default class Game extends Phaser.Scene {
     let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
     let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
     let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
-    
+
 
     let entityLayer = this.map.getObjectLayer('Entities').objects
     let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
@@ -315,7 +317,7 @@ export default class Game extends Phaser.Scene {
     colstopLayer.setCollisionByProperty({ collide: true });
     boxtopLayer.setCollisionByProperty({ collide: true });
     // físicas
-    this.matter.world.convertTilemapLayer(collidersLayer, {label: "pared"});
+    this.matter.world.convertTilemapLayer(collidersLayer, { label: "pared" });
     this.matter.world.convertTilemapLayer(colsbottomLayer);
     this.matter.world.convertTilemapLayer(boxbottomLayer);
     this.matter.world.convertTilemapLayer(colstopLayer);
@@ -359,6 +361,7 @@ export default class Game extends Phaser.Scene {
   }
 
   pauseGame() {
+    console.log("pausa")
     this.scene.launch('pause');
     this.scene.pause('main');
   }
