@@ -470,7 +470,7 @@ export default class Game extends Phaser.Scene {
   }
 
   update(){
-
+    console.log(this.cameras.main.x)
     if(this.actualMusic.isPlaying){
 
       //Si queremos que se cambie al compas pues hay que descompentar este if
@@ -497,7 +497,7 @@ export default class Game extends Phaser.Scene {
 
   changeMusic(next){
     this.musicChange = true;
-    this.nextSong = Config.music.songReference[next];
+    this.nextSong = config.music.songReference[next];
   }
 
   //Métodos del HUD
