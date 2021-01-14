@@ -267,7 +267,8 @@ export default class Game extends Phaser.Scene {
         //this.player.changeAnimacionesonoseque();
       }
       else if (objeto.name === 'enemy') {
-        const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
+        const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
+        //const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
         if (doorNum[objeto.properties[0].value - 1] != x)

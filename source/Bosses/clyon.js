@@ -1,3 +1,8 @@
+import weapon1 from "./../weaponsFolder/machineGun.js";
+import weapon2 from "./../weaponsFolder/escopeta.js";
+
+
+
 const boss = {
 
     lvl: 1,
@@ -22,7 +27,12 @@ const boss = {
         alejarse:true,
         distanciaAlejarse:95,
         strafe: true,
-        starfeTime: 1000
+        starfeTime: 1000,
+        aiming: false,
+        shootCount: 3,
+        shootRafagas:1,
+        shootTime: 2000,
+        changeWeapon: weapon1,
     },
     {
         time: 10000,
@@ -31,7 +41,12 @@ const boss = {
         alejarse:true,
         distanciaAlejarse:200,
         strafe: false,
-        strafeTime: 1000
+        strafeTime: 1000, 
+        aiming: false,
+        shootCount: 3,
+        shootRafagas: 1,
+        shootTime: 1000,
+        changeWeapon: weapon2,
     }]
 }
 
