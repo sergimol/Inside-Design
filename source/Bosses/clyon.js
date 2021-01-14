@@ -45,7 +45,7 @@ const boss = {
         aiming: false,
         shootCount: 3,
         shootRafagas: 1,
-        shootTime: 1000,
+        shootTime: 0,
         changeWeapon: weapon2,
     }]
 }

@@ -49,7 +49,7 @@ tryShoot(){
                 let angulo = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
                 this.weapon.rotateWeapon(angulo);
             }
-           // this.weapon.shoot(true,this);
+            this.weapon.shoot(true,this);
             for(let i = 0 ; i < this.shootRafagas; i++){
                 
                 
@@ -57,7 +57,7 @@ tryShoot(){
         }
     }
 
-    if(this.scene.time.now <= this.timerKeepShooting){
+    if(this.scene.time.now < this.timerKeepShooting){
         
         this.weapon.shoot(true,this);
     }
@@ -71,11 +71,11 @@ changeBehavior(){
 
     if(this.scene.time.now >= this.timerNextBehaviour){
         
-        
+        this.timerKeepShooting = 0;
         this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
         
 
-        this.shootCount = this.arrayBehaviors[this.arrayBehaviorNumber].shootCount;
+        this.shootCount = this.arrayBehaviors[this.arrayBehaviorNumber].shootCount + 1;
         this.shootRafagas = this.arrayBehaviors[this.arrayBehaviorNumber].shootRafagas;
         this.shootTime = this.arrayBehaviors[this.arrayBehaviorNumber].shootTime;
 
