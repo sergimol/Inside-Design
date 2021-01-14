@@ -447,53 +447,53 @@ export default class Player extends Humanoid {
     }
   }
 
-  changeMusicMovida(id, isNewScene){
+  changeMusicMovida(id){
     this.musicID = id;
     switch(id)
     {
       case(config.music.mainChip):
         console.log('Outlaws from the West');
-        this.scene.changeMusic(config.music.mainChip, isNewScene);
+        this.scene.changeMusic(config.music.mainChip);
       break;
 
       case(config.music.west):
         console.log('Outlaws from the West');
-        this.scene.changeMusic(config.music.west, isNewScene);
+        this.scene.changeMusic(config.music.west);
       break;
 
       case(config.music.neon):
         console.log('Ray Tracing breakdance skill');
-        this.scene.changeMusic(config.music.neon, isNewScene);
+        this.scene.changeMusic(config.music.neon);
         break;
 
       case(config.music.old30s):
         console.log('La serie mas aburrida de la historia');
-        this.scene.changeMusic(config.music.old30s, isNewScene);
+        this.scene.changeMusic(config.music.old30s);
         break;
 
       case(config.music.epic):
        console.log('Especial Navidad');
-        this.scene.changeMusic(config.music.epic, isNewScene);
+        this.scene.changeMusic(config.music.epic);
         break;
 
       case(config.music.horror):
         console.log('Mas de 1000 capitulos');
-        this.scene.changeMusic(config.music.horror, isNewScene);
+        this.scene.changeMusic(config.music.horror);
         break;
 
       case(config.music.berridos):
         console.log('El mejor juego de la historia');
-        this.scene.changeMusic(config.music.berridos, isNewScene);
+        this.scene.changeMusic(config.music.berridos);
         break;
 
       case(config.music.rock):
         console.log('The Only Thing They Fear is You');
-        this.scene.changeMusic(config.music.rock, isNewScene);
+        this.scene.changeMusic(config.music.rock);
         break;
 
       case(config.music.piano):
         console.log('P.T.');
-        this.scene.changeMusic(config.music.piano, isNewScene);
+        this.scene.changeMusic(config.music.piano);
         break;
     }
   }
