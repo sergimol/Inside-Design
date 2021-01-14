@@ -259,9 +259,9 @@ export default class Game extends Phaser.Scene {
         if(this.level!=0)
           this.player.changeMusicMovida(this.musicID, true);
         else{
-          this.musicID = Config.music.mainChip;
+          this.musicID = config.music.mainChip;
           this.player.musicID = this.musicID;
-          this.actualMusic = this.sound.add(Config.music.songReference[this.musicID]);
+          this.actualMusic = this.sound.add(config.music.songReference[this.musicID]);
           this.actualMusic.play();
         }
         //this.player.changeAnimacionesonoseque();
@@ -516,7 +516,7 @@ export default class Game extends Phaser.Scene {
   }
 
   setSceneMusic(next){
-    this.nextSong = Config.music.songReference[next];
+    this.nextSong = config.music.songReference[next];
     this.actualMusic.destroy();
     this.actualMusic = this.sound.add(this.nextSong);
     this.actualMusic.play();
@@ -587,7 +587,7 @@ export default class Game extends Phaser.Scene {
   }
 
   changeMusic(next, isNewScene){ 
-    this.nextSong = Config.music.songReference[next];
+    this.nextSong = config.music.songReference[next];
     
     if(isNewScene){
       this.actualMusic = this.sound.add(this.nextSong);
