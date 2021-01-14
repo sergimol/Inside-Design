@@ -216,7 +216,7 @@ export default class Game extends Phaser.Scene {
             if (this.level != 2) {
               ++this.level;
               this.lastSeekMusic = this.actualMusic.seek;
-              this.actualMusic.destroy();
+              //this.actualMusic.destroy();
               this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level, 
                                 tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic});
             }
@@ -256,9 +256,8 @@ export default class Game extends Phaser.Scene {
         this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo);
         this.player.changeWeapon(this.weaponID);
         this.player.changeTile(this.tileID, true);
-        if(this.level!=0)
-          this.player.changeMusicMovida(this.musicID, true);
-        else{
+        //Creamos la musica si es la primera sala
+        if(this.level === 0){
           this.musicID = config.music.mainChip;
           this.player.musicID = this.musicID;
           this.actualMusic = this.sound.add(config.music.songReference[this.musicID]);
@@ -515,14 +514,6 @@ export default class Game extends Phaser.Scene {
       
   }
 
-  setSceneMusic(next){
-    this.nextSong = config.music.songReference[next];
-    this.actualMusic.destroy();
-    this.actualMusic = this.sound.add(this.nextSong);
-    this.actualMusic.play();
-    this.actualMusic.setSeek(this.lastSeekMusic);
-  }
-
   //Métodos del HUD
   setHealth(playerHealth) {
     this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
@@ -586,20 +577,14 @@ export default class Game extends Phaser.Scene {
     this.dialog.text = '';
   }
 
-  changeMusic(next, isNewScene){ 
+  //CAMBIAR MUSICA POR EL PLAYER
+  changeMusic(next){ 
     this.nextSong = config.music.songReference[next];
-    
-    if(isNewScene){
-      this.actualMusic = this.sound.add(this.nextSong);
-      this.actualMusic.play()
-      this.actualMusic.setSeek(this.lastSeekMusic);
-    }
-    else{
-      let seekNose = this.actualMusic.seek;
-      this.actualMusic.destroy();
-      this.actualMusic = this.sound.add(this.nextSong);
-      this.actualMusic.play()
-      this.actualMusic.setSeek(seekNose);
-    }
+    let seekNose = this.actualMusic.seek;
+    this.actualMusic.destroy();
+    this.actualMusic = this.sound.add(this.nextSong);
+    this.actualMusic.play()
+    this.actualMusic.setSeek(seekNose);
+  
   }
 }
