@@ -144,10 +144,9 @@ export default class Player extends Humanoid {
 
 
     //Carga de datos del hud
-    this.hud = this.scene.scene.get('UIScene');
-    this.hud.setHealth(this.health);
-    this.hud.setBackground(this.maxHealth);
-    this.hud.setAmmo(this.ammo);
+    this.scene.setHealth(this.health);
+    this.scene.setBackground(this.maxHealth);
+    this.scene.setAmmo(this.ammo);
 
     //Pasivas
     //this.scene.input.keyboard.on('keydown_SPACE', this.addPassive, this);
@@ -212,7 +211,7 @@ export default class Player extends Humanoid {
     if (this.ammo >= this.weapon.ammoCostPerShoot() || this.hasInfiniteAmmo) {
       if (this.weapon.shoot(false, this) && !this.hasInfiniteAmmo) {
         this.ammo -= this.weapon.ammoCostPerShoot();
-        this.hud.setAmmo(this.ammo);
+        this.scene.setAmmo(this.ammo);
       }
     }
     else
@@ -259,11 +258,9 @@ export default class Player extends Humanoid {
       id = Math.floor(Math.random() * config.player.passiveCount);
     } while (this.activePassives[id])
 
-    this.hud.startDialog('passive', id);
+    this.scene.startDialog('passive', id);
     if (id !== 7) { //Distinto de 7 porque el cambio de arma no tiene indicador en el hud ni tiene que ser controlado por los booleanos
       this.activePassives[id] = true;
-      if (id !== 3 && id !== 4 && id !== 1)  //temporal (no tienen imagenes)
-        this.hud.addPassiveImg(id);
     }
 
     //Aplica la pasiva correspondiente
@@ -273,8 +270,8 @@ export default class Player extends Humanoid {
         console.log('Me lo tanqueo')
         this.health += this.health / 2;
         this.maxHealth += this.maxHealth / 2;
-        this.hud.setHealth(this.health);
-        this.hud.setBackground(this.maxHealth);
+        this.scene.setHealth(this.health);
+        this.scene.setBackground(this.maxHealth);
         break;
       //Disminuye la vida
       case (1):
@@ -282,15 +279,15 @@ export default class Player extends Humanoid {
         this.maxHealth /= 2;
         if (this.maxHealth < this.health) {
           this.health = this.maxHealth;
-          this.hud.setHealth(this.health);
+          this.scene.setHealth(this.health);
         }
-        this.hud.setBackground(this.maxHealth);
+        this.scene.setBackground(this.maxHealth);
         break;
       //Munición infinita
       case (2):
         console.log('Rambo');
         this.hasInfiniteAmmo = true;
-        this.hud.setAmmo(-1);
+        this.scene.setAmmo(-1);
         break;
       //Botiquines
       case (3):
@@ -380,7 +377,7 @@ export default class Player extends Humanoid {
   giveAmmo(amount) {
     this.ammo += amount;
     if (!this.hasInfiniteAmmo)
-      this.hud.setAmmo(this.ammo);
+      this.scene.setAmmo(this.ammo);
   }
 
   addToState() {

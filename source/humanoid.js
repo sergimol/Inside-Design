@@ -62,7 +62,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
             this.hitState = true;
             this.health -= damagePoints;
             if (this.body.label === 'player')
-                this.hud.setHealth(this.health);
+                this.scene.setHealth(this.health);
 
             if (this.health <= 0) {
 
@@ -104,7 +104,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                 }
                 else if (this.body.label === 'player') {
                     this.weapon.pararRafagasCola();
-                    this.hud.setHealth(0);
+                    this.scene.setHealth(0);
                     this.scene.scene.launch('death');
                     this.scene.scene.pause('main');
                 }

@@ -4,8 +4,9 @@ import Puntero from "./source/puntero.js";
 import Enemy from "./source/enemy.js";
 import Item from "./source/item.js";
 import Doors from "./source/doors.js";
-import Config from "./source/config.js"
+import config from "./source/config.js"
 import enemyConfig from "./source/enemiesFolder/defaultEnemy.js"
+import dialogues from "./source/dialogues.js";
 
 import Boss from "./source/boss.js";
 import clyon from "./source/Bosses/clyon.js";
@@ -90,6 +91,24 @@ export default class Game extends Phaser.Scene {
     this.load.image('dashParticle', './Sprites/dashParticula.png')
     this.load.audio('dashSound', './audio/dashSound.wav');
 
+    //Elementos de la UI
+    //Armas
+    this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
+    //Pasivas
+    this.load.image('tanqueo', 'Sprites/pixel-tank.png');
+    //this.load.image('facil', 'Sprites/');
+    this.load.image('rambo', 'Sprites/rambo.png');
+    //this.load.image('buenaonda', 'Sprites/');
+    //this.load.image('malaonda', 'Sprites/');
+    this.load.image('sanic', 'Sprites/sanic.png');
+    this.load.image('cogo', 'Sprites/ferrari.png');
+    //Activas
+    this.load.image('dash', 'Sprites/dash-1.png');
+    //Dialogos
+    this.load.image('dialogbox', 'Sprites/dialogbox.png');
+    //Carga de fuentes con bitmap
+    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+
   }
 
   create() {
@@ -97,6 +116,12 @@ export default class Game extends Phaser.Scene {
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
 
+    //creacion de texto con webfont
+    WebFont.load({
+      google: {
+        families: ['Permanent Marker', 'Rock Salt', 'Beth Ellen']
+      }
+    })
 
 
     //PARA LA MUSICA
@@ -195,12 +220,13 @@ export default class Game extends Phaser.Scene {
     this.doorSystem;
     this.pause = false;
     this.events.on('shutdown', this.shutdown, this);
-    
-    this.input.keyboard.on('keydown_ESC',this.pauseGame, this);//this.pauseGame
+
+    this.input.keyboard.on('keydown_ESC', this.pauseGame, this);//this.pauseGame
+    this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);
   }//End of create
 
   changeLayer(tileState) {
-    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', Config.tileset.tileReference[tileState], 16, 16);
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', config.tileset.tileReference[tileState], 16, 16);
   }
 
   loadObjects(entityLayer, DoorsentityLayer, groundLayer) {
@@ -340,10 +366,75 @@ export default class Game extends Phaser.Scene {
     this.door;
     this.endZone;
     this.finish = false;
+
+    //UI
+    //Barra de fondo
+    this.healthBackground = this.add.graphics();
+    this.healthBackground.fillStyle(0xababab, 0.5);
+    this.healthBackground.fillRect(0, 0, 1, 1);
+    this.healthBackground.setScrollFactor(0);
+    this.healthBackground.setDepth(7);
+    //Barra de vida
+    this.healthBar = this.add.graphics();
+    this.healthBar.fillStyle(config.ui.healthBarColor, 1);
+    this.healthBar.fillRect(0, 0, 1, 1);
+    this.healthBar.setScrollFactor(0);
+    this.healthBar.setDepth(7);
+
+    this.passiveCount = 0;
+
+    //Posición de las barras
+    this.healthBar.x = config.ui.barPosX;
+    this.healthBar.y = config.ui.barPosY;
+    this.healthBackground.x = config.ui.barPosX - 3;
+    this.healthBackground.y = config.ui.barPosY - 3;
+    //Escala de las barras
+    this.healthBar.scaleY = config.ui.barScaleY;
+    this.healthBackground.scaleY = config.ui.barScaleY + 6;
+
+    this.weaponImg = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
+    this.weaponImg.scale = config.ui.weaponScl;
+    this.weaponImg.setScrollFactor(0);
+    this.weaponImg.setDepth(7);
+
+    //Contador de munición
+    this.ammoCounter = this.add.text(config.ui.ammoPosX, config.ui.ammoPosY, '0', { fontFamily: 'Beth Ellen', fontSize: config.ui.ammoFontSize, color: '#ffffff' });
+    this.ammoCounter.setScrollFactor(0);
+    this.ammoCounter.setScale(0.3);
+    this.ammoCounter.setDepth(7);
+
+    //Contador de vida 
+    this.healthCounter = this.add.text(config.ui.healthPosX, config.ui.healthPosY, '0', { fontFamily: 'Beth Ellen', fontSize: config.ui.healthFontSize, color: '#ffffff' });
+    this.healthCounter.setScrollFactor(0);
+    this.healthCounter.setScale(0.25);
+    this.healthCounter.setDepth(7);
+
+    //Activa
+    this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[0]);
+    this.activeImg.setScrollFactor(0);
+    this.activeImg.setScale(0.5);
+    this.activeImg.setDepth(7);
+
+    //Dialogo
+    this.dialogBox = this.add.image(config.ui.dialogBoxX, config.ui.dialogBoxY, 'dialogbox');
+    this.dialogBox.setScale(0.3);
+    this.dialogBox.setVisible(false);
+    this.dialogBox.setScrollFactor(0);
+    this.dialogBox.setDepth(7);
+
+    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', {fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: '#ffffff'};
+    this.dialog.setScale(0.5)
+    this.dialog.setScrollFactor(0);
+    this.dialog.setDepth(7);
+
+    //Variables para el control de los diálogos
+    this.dialogState = 0;
+    this.onDialog = false;
+    this.strings;
+
     this.loadObjects(entityLayer, DoorsentityLayer, enemiesLayer);
-
-
   }
+
   saveFile() {
     var file = {
       disparos: this.disparosRealizados,
@@ -407,5 +498,68 @@ export default class Game extends Phaser.Scene {
   changeMusic(next){
     this.musicChange = true;
     this.nextSong = Config.music.songReference[next];
+  }
+
+  //Métodos del HUD
+  setHealth(playerHealth) {
+    this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
+    this.healthCounter.text = playerHealth;
+  }
+
+  setBackground(playerMaxHP) {
+    this.healthBackground.scaleX = playerMaxHP * config.ui.barScaleX + 6;
+  }
+
+  //Actualiza el contador de munición
+  setAmmo(playerAmmo) {
+    if (playerAmmo > -1)
+      this.ammoCounter.text = playerAmmo;
+    else
+      this.ammoCounter.text = '∞';
+  }
+
+  setActiveImg(id) {
+    this.activeImg.destroy();
+    this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[id]);
+  }
+
+  /*addPassiveImg(id) {
+    let img = this.add.image(config.ui.passivePosX + (this.passiveCount * config.ui.passiveOffset), config.ui.passivePosY, config.ui.passiveImgs[id]);
+    img.setScale(0.3);
+    this.passiveCount++;
+  }*/
+
+  //Hace visible el cuadro de diálogo y el primer texto de este
+  startDialog(type, id) {
+    this.dialogBox.setVisible(true);
+
+    //Recoge el array con los diálogos      
+    if (type === 'passive') {
+      this.strings = dialogues.passives[id];
+    }
+
+    else if (type === 'active') {
+      this.strings = dialogues.actives[id];
+    }
+
+    this.onDialog = true;
+    this.dialogState = 0;
+    this.dialog.text = this.strings[this.dialogState];
+  }
+
+  advanceDialog() {
+    if (this.onDialog) {
+      this.dialogState++;
+      if (this.dialogState < this.strings.length)
+        this.dialog.text = this.strings[this.dialogState];
+      else
+        this.endDialog()
+    }
+  }
+
+  endDialog() {
+    this.onDialog = false;
+    this.dialogBox.setVisible(false);
+    this.dialog.text = '';
   }
 }
