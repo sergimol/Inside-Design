@@ -59,6 +59,20 @@ const Config = {
         miedo: 7,
         tileReference: ['tileSetWestEx', 'tileSetRayTracingEx', 'tileSetMinecraftEx', 'tileSetNavidadEx', 'tileSetPiratasEx',
                         'tileSetZeldaEx', 'tileSetDoomEx', 'tileSetMiedoEx']
+    },
+
+    music: {
+        mainChip: 0,
+        west: 1,
+        old30s: 2,
+        neon: 3,
+        epic: 4,
+        rock: 5,
+        horror: 6,
+        piano: 7,
+        berridos: 8, 
+        songReference: ['mainChiptuneSong', 'westernSong', '30sSong', 'neonRiderSong',
+        'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong']
     }
 }
 

@@ -69,7 +69,16 @@ export default class Game extends Phaser.Scene {
     this.load.tilemapTiledJSON('sala6', './Sprites/tiles/Sala6.json');
 
     //nuevo
-    this.load.audio('mainTheme', './audio/main_theme_v1.0.wav');
+    this.load.audio('mainChiptuneSong', './audio/mainChiptune.mp3');
+    this.load.audio('westernSong', './audio/western.mp3');
+    this.load.audio('30sSong', './audio/30s.mp3');
+    this.load.audio('neonRiderSong', './audio/neonRider.mp3');
+    this.load.audio('epicSong', './audio/epic.mp3');
+    this.load.audio('rockSong', './audio/rock.mp3');
+    this.load.audio('horrorSong', './audio/horror.mp3');
+    this.load.audio('pianoSong', './audio/piano.mp3');
+    this.load.audio('berridosSong', './audio/berridos.mp3');
+
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
     this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
     this.load.audio('hitShootSound', './audio/hitShoot.wav');
@@ -89,6 +98,14 @@ export default class Game extends Phaser.Scene {
     this.enemiesKilled = 0;
 
 
+
+    //PARA LA MUSICA
+    this.tempo = 1400;
+    this.compassTimer = this.time.now + this.tempo;
+    this.musicChange = false;
+    this.actualMusic = this.sound.add('mainChiptuneSong');
+    this.actualMusic.play();
+    this.cumdebug = false;
 
     //localStorage.clear();
     this.loadFile();
@@ -114,8 +131,8 @@ export default class Game extends Phaser.Scene {
     }, this);
 
     //Prototipo Musica
-    let sound = this.sound.add('mainTheme');
-    sound.setVolume(0.7);
+    //let sound = this.sound.add('mainTheme');
+    //sound.setVolume(0.7);
     //sound.play();
 
 
@@ -359,5 +376,36 @@ export default class Game extends Phaser.Scene {
     console.log("pausa")
     this.scene.launch('pause');
     this.scene.pause('main');
+  }
+
+  update(){
+
+    if(this.actualMusic.isPlaying){
+
+      //Si queremos que se cambie al compas pues hay que descompentar este if
+    // if(this.time.now >= this.compassTimer)
+     // {
+        this.compassTimer = this.time.now + this.tempo;
+        //VALE A PARTIR DE AQUI, SI LO QUEREMOS HACER POR COMPASES
+        //SE QUEDA EN EL UPDATE
+        //SI NO, PUES LO PODEMOS SACAR A UN METODO
+        //Y LA VARIABLE musicChange se funa en ese caso
+        if(this.musicChange)
+        {
+          this.musicChange = false; 
+          let seekNose = this.actualMusic.seek;
+          this.actualMusic.destroy();
+          this.actualMusic = this.sound.add(this.nextSong);
+          this.actualMusic.play()
+          this.actualMusic.setSeek(seekNose);
+        }
+     // }
+    }
+      
+  }
+
+  changeMusic(next){
+    this.musicChange = true;
+    this.nextSong = Config.music.songReference[next];
   }
 }

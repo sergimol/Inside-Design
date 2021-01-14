@@ -319,10 +319,12 @@ export default class Player extends Humanoid {
       case(8):
         console.log('Outlaws from the West');
         this.scene.changeLayer(config.tileset.west);
+        this.scene.changeMusic(config.music.west);
         break;
       case(9):
         console.log('Ray Tracing breakdance skill');
         this.scene.changeLayer(config.tileset.raytracing);
+        this.scene.changeMusic(config.music.neon);
         break;
       case(10):
         console.log('La serie mas aburrida de la historia');
@@ -343,10 +345,12 @@ export default class Player extends Humanoid {
       case(14):
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
+        this.scene.changeMusic(config.music.rock);
         break;
       case(15):
         console.log('P.T.');
         this.scene.changeLayer(config.tileset.miedo);
+        this.scene.changeMusic(config.music.horror);
         break;
     }
 
