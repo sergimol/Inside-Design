@@ -9,7 +9,8 @@ const boss = {
 
     sprite: "player",
 
-    health: 3,
+    health: 300,
+    mass: 1600,
     speed: 50,
     depth: 3,
     idleMovTime: 1000,

@@ -34,11 +34,11 @@ export default class Enemy extends Humanoid {
         this.arrayBehaviorNumber = 0;
         //Atributos
         this.aggroVelFactor = config.aggroVelFactor;
-        this.health = 3;
+        this.health = config.health;
         this.depth = 3;
 
         this.body.frictionAir = 0.25;
-        this.body.mass = 800;
+        this.scene.matter.body.setMass(this.body, config.mass);
 
 
         this.add(this.aspecto);
