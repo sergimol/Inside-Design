@@ -15,7 +15,7 @@ const Config = {
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
-        passiveCount: 16,
+        passiveCount: 8,
         weaponCount: 3
     },
     
@@ -57,6 +57,7 @@ const Config = {
     },
 
     tileset: {
+        tileCount: 8,
         west: 0,
         raytracing: 1,
         minecraft: 2,

@@ -20,6 +20,10 @@ export default class Game extends Phaser.Scene {
       this.ammo = data.ammo,
       this.weaponID = data.weaponID,
       this.level = data.level;
+      this.tileID = data.tileID;
+      this.musicID = data.musicID,
+      this.lastSeekMusic = data.lastSeekMusic
+      //this.playerAspectID = data.playerAspectID
   }
 
 
@@ -124,13 +128,7 @@ export default class Game extends Phaser.Scene {
     })
 
 
-    //PARA LA MUSICA
-    this.tempo = 1400;
-    this.compassTimer = this.time.now + this.tempo;
-    this.musicChange = false;
-    this.actualMusic = this.sound.add('mainChiptuneSong');
-    this.actualMusic.play();
-    this.cumdebug = false;
+    
 
     //localStorage.clear();
     this.loadFile();
@@ -144,7 +142,16 @@ export default class Game extends Phaser.Scene {
     this.map = this.make.tilemap({ key: 'sala1' });
     this.loadTileMapRoom();
 
+    //PARA LA MUSICA
+    
 
+    //this.tempo = 1400;
+    //this.compassTimer = this.time.now + this.tempo;
+    //this.musicChange = false;
+    //this.actualMusic = this.sound.add('mainChiptuneSong');
+    //this.actualMusic.play();
+    this.cumdebug = false;
+    //this.setSceneMusic(this.musicID);
 
     //PUNTERO
     this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
@@ -208,7 +215,10 @@ export default class Game extends Phaser.Scene {
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
             if (this.level != 2) {
               ++this.level;
-              this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level });
+              this.lastSeekMusic = this.actualMusic.seek;
+              this.actualMusic.destroy();
+              this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level, 
+                                tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic});
             }
             else {
               this.scene.start('theEnd');
@@ -241,10 +251,20 @@ export default class Game extends Phaser.Scene {
       // `objeto.name` u `objeto.type` nos llegan de las propiedades del
       // objeto en Tiled
 
-      //TODO no hayq ue pasarle el sprite asi si no0 por config y para los cambios d sprite de jugador
+      //TODO no hayq ue pasarle el sprite asi si no por config y para los cambios d sprite de jugador
       if (objeto.name === 'player') {
         this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo);
         this.player.changeWeapon(this.weaponID);
+        this.player.changeTile(this.tileID, true);
+        if(this.level!=0)
+          this.player.changeMusicMovida(this.musicID, true);
+        else{
+          this.musicID = Config.music.mainChip;
+          this.player.musicID = this.musicID;
+          this.actualMusic = this.sound.add(Config.music.songReference[this.musicID]);
+          this.actualMusic.play();
+        }
+        //this.player.changeAnimacionesonoseque();
       }
       else if (objeto.name === 'enemy') {
         const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
@@ -314,7 +334,7 @@ export default class Game extends Phaser.Scene {
 
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
-    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetDoomEx', 16, 16);
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetBaseEx', 16, 16);
 
     //this.map.createBlankDynamicLayer('sala1', this.tileset);
 
@@ -495,9 +515,12 @@ export default class Game extends Phaser.Scene {
       
   }
 
-  changeMusic(next){
-    this.musicChange = true;
-    this.nextSong = config.music.songReference[next];
+  setSceneMusic(next){
+    this.nextSong = Config.music.songReference[next];
+    this.actualMusic.destroy();
+    this.actualMusic = this.sound.add(this.nextSong);
+    this.actualMusic.play();
+    this.actualMusic.setSeek(this.lastSeekMusic);
   }
 
   //Métodos del HUD
@@ -561,5 +584,22 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
+  }
+
+  changeMusic(next, isNewScene){ 
+    this.nextSong = Config.music.songReference[next];
+    
+    if(isNewScene){
+      this.actualMusic = this.sound.add(this.nextSong);
+      this.actualMusic.play()
+      this.actualMusic.setSeek(this.lastSeekMusic);
+    }
+    else{
+      let seekNose = this.actualMusic.seek;
+      this.actualMusic.destroy();
+      this.actualMusic = this.sound.add(this.nextSong);
+      this.actualMusic.play()
+      this.actualMusic.setSeek(seekNose);
+    }
   }
 }

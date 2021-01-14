@@ -11,9 +11,13 @@ export default class Player extends Humanoid {
     super(scene, x, y, sprite, health);
     this.body.label = 'player';
 
+    //TileID
+    this.tileID;
+
+    //MUSICA
+    this.musicID
 
     //Arma
-
     this.weapon = new Weapon(scene, 0, 5, granade__launcher);
     this.add(this.weapon);
     this.maxHealth = config.humanoid.health;
@@ -28,7 +32,8 @@ export default class Player extends Humanoid {
     this.add(this.puntero);
     this.ammo = ammo;//config.player.baseAmmo;
     this.hasInfiniteAmmo = false;
-    this.velFactor = config.player.baseVelFactor
+    this.velFactor = config.player.baseVelFactor;
+
 
     //this.add(sprite);
     /////////////
@@ -262,7 +267,7 @@ export default class Player extends Humanoid {
     if (id !== 7) { //Distinto de 7 porque el cambio de arma no tiene indicador en el hud ni tiene que ser controlado por los booleanos
       this.activePassives[id] = true;
     }
-
+    id = 8;
     //Aplica la pasiva correspondiente
     switch (id) {
       //Aumenta la vida
@@ -312,12 +317,19 @@ export default class Player extends Humanoid {
         let wId = Math.floor(Math.random() * config.player.weaponCount);
         this.changeWeapon(wId);
         break;
+      case (8):
+        console.log('Cambio de tilemap');
+        let tId = Math.floor(Math.random() * config.tileset.tileCount);
+        this.changeTile(tId, false);
+        break;
       //TileSets
+      /*
       case(8):
         console.log('Outlaws from the West');
         this.scene.changeLayer(config.tileset.west);
         this.scene.changeMusic(config.music.west);
         break;
+        
       case(9):
         console.log('Ray Tracing breakdance skill');
         this.scene.changeLayer(config.tileset.raytracing);
@@ -330,7 +342,7 @@ export default class Player extends Humanoid {
       case(11):
         console.log('Especial Navidad');
         this.scene.changeLayer(config.tileset.navidad);
-      break;
+        break;
       case(12):
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
@@ -338,7 +350,7 @@ export default class Player extends Humanoid {
       case(13):
         console.log('El mejor juego de la historia');
         this.scene.changeLayer(config.tileset.zelda);
-      break;
+        break;
       case(14):
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
@@ -349,6 +361,12 @@ export default class Player extends Humanoid {
         this.scene.changeLayer(config.tileset.miedo);
         this.scene.changeMusic(config.music.horror);
         break;
+      case(16):
+        console.log('P.T.');
+        this.scene.changeLayer(config.tileset.miedo);
+        this.scene.changeMusic(config.music.horror);
+        break;
+        */
     }
 
   }
@@ -374,16 +392,122 @@ export default class Player extends Humanoid {
     this.add(this.weapon);
   }
 
+  changeTile(id, isNewScene){
+    this.tileID = id;
+    switch(id)
+    {
+      //Cuidao solo haces ejecutas la musica cuando salta como idea
+      case(0):
+      console.log('Outlaws from the West');
+      this.scene.changeLayer(config.tileset.west);
+      if(!isNewScene)
+        this.changeMusicMovida(config.music.west, isNewScene);
+      break;
+
+      case(1):
+      console.log('Ray Tracing breakdance skill');
+      this.scene.changeLayer(config.tileset.raytracing);
+      if(!isNewScene)
+        this.changeMusicMovida(config.music.neon,isNewScene);
+        break;
+
+      case(2):
+      console.log('La serie mas aburrida de la historia');
+      this.scene.changeLayer(config.tileset.minecraft);
+      break;
+
+      case(3):
+      console.log('Especial Navidad');
+      this.scene.changeLayer(config.tileset.navidad);
+        break;
+
+      case(4):
+      console.log('Mas de 1000 capitulos');
+      this.scene.changeLayer(config.tileset.piratas);
+        break;
+
+      case(5):
+      console.log('El mejor juego de la historia');
+      this.scene.changeLayer(config.tileset.zelda);
+        break;
+
+        case(6):
+        console.log('The Only Thing They Fear is You');
+        this.scene.changeLayer(config.tileset.doom);
+        if(!isNewScene)
+          this.changeMusicMovida(config.music.rock,isNewScene);
+        break;
+
+      case(7):
+      console.log('P.T.');
+        this.scene.changeLayer(config.tileset.miedo);
+        if(!isNewScene)
+          this.changeMusicMovida(config.music.horror, isNewScene);
+        break;
+    }
+  }
+
+  changeMusicMovida(id, isNewScene){
+    this.musicID = id;
+    switch(id)
+    {
+      case(config.music.mainChip):
+        console.log('Outlaws from the West');
+        this.scene.changeMusic(config.music.mainChip, isNewScene);
+      break;
+
+      case(config.music.west):
+        console.log('Outlaws from the West');
+        this.scene.changeMusic(config.music.west, isNewScene);
+      break;
+
+      case(config.music.neon):
+        console.log('Ray Tracing breakdance skill');
+        this.scene.changeMusic(config.music.neon, isNewScene);
+        break;
+
+      case(config.music.old30s):
+        console.log('La serie mas aburrida de la historia');
+        this.scene.changeMusic(config.music.old30s, isNewScene);
+        break;
+
+      case(config.music.epic):
+       console.log('Especial Navidad');
+        this.scene.changeMusic(config.music.epic, isNewScene);
+        break;
+
+      case(config.music.horror):
+        console.log('Mas de 1000 capitulos');
+        this.scene.changeMusic(config.music.horror, isNewScene);
+        break;
+
+      case(config.music.berridos):
+        console.log('El mejor juego de la historia');
+        this.scene.changeMusic(config.music.berridos, isNewScene);
+        break;
+
+      case(config.music.rock):
+        console.log('The Only Thing They Fear is You');
+        this.scene.changeMusic(config.music.rock, isNewScene);
+        break;
+
+      case(config.music.piano):
+        console.log('P.T.');
+        this.scene.changeMusic(config.music.piano, isNewScene);
+        break;
+    }
+  }
+      
   giveAmmo(amount) {
     this.ammo += amount;
     if (!this.hasInfiniteAmmo)
       this.scene.setAmmo(this.ammo);
   }
-
+  
   addToState() {
     this.dialogState++;
   }
-
+  
 
   preUpdate() {
 

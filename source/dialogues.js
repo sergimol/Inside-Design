@@ -9,13 +9,14 @@ const Dialogues = {
         6: ["cogo"],
         7: ["arma", "arma 2"],
         8: ["Outlaws from the West"],
+        /*
         9: ["Ray Tracing breakdance skill"],
         10: ['La serie mas aburrida de la historia'],
         11: ['Especial de Navidad'],
         12: ['Mas de 1000 capitulos'],
         13: ['El mejor juego de la historia'],
         14: ['The Only Thing They Fear is You'],
-        15: ['P.T.']
+        15: ['P.T.']*/
     },
 
     actives: {
