@@ -90,15 +90,7 @@ export default class Player extends Humanoid {
     }, this);
 
 
-
-    //PRUEBAS ACTIVA
-    const actives = {
-      NONE: 'none',
-      DASH: 'dash',
-      SHIELD: 'shield',
-      BOMB: 'bomb'
-    };
-    this.actualACTIVE = actives.DASH;
+    this.actualACTIVE = 'none' //Ninguna activa
     let dashParticles = this.scene.add.particles('dashParticle');
 
     this.dashEmitter = dashParticles.createEmitter({
@@ -116,7 +108,7 @@ export default class Player extends Humanoid {
       //Comprobamos que sea el click derecho
       if (pointer.rightButtonDown()) {
         //DASH
-        if (this.actualACTIVE === actives.DASH) {
+        if (this.actualACTIVE === config.player.actives[0]) {
 
           if (this.dir.x === 0 && this.dir.y === 0)
             this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
@@ -136,11 +128,11 @@ export default class Player extends Humanoid {
             this.dash();
         }
         //ESCUDO
-        else if (this.actualACTIVE === actives.SHIELD) {
+        else if (this.actualACTIVE === config.player.actives[1]) {
 
         }
         //BOMBAS
-        else if (this.actualACTIVE === actives.BOMB) {
+        else if (this.actualACTIVE === config.player.actives[2]) {
 
         }
       }
@@ -255,17 +247,32 @@ export default class Player extends Humanoid {
 
   }
 
-  choosePassive() {
-    //Número aleatorio
+  chooseIdea(type) {
     let id;
-    do {
-      id = Math.floor(Math.random() * config.player.passiveCount);
-    } while (this.activePassives[id])
+    if(type === 'passive'){
+      //Número aleatorio
+      do {
+        id = Math.floor(Math.random() * config.player.passiveCount);
+      } while (this.activePassives[id])
 
-    this.scene.startDialog('passive', id);
-    if (id !== 7) {
-      this.activePassives[id] = true;
+      this.scene.startDialog('passive', id);
+      if (id !== 7) {
+        this.activePassives[id] = true;
+      }
     }
+    else if(type === 'active'){
+        id = Math.floor(Math.random() * config.player.activeCount);
+        this.scene.startDialog('active', id);
+    }
+    else if(type === 'tempPassive'){
+
+    }
+  }
+
+  changeActive(id){
+    this.actualACTIVE = config.player.actives[id];
+    console.log(this.actualACTIVE);
+    this.scene.setActiveImg(id); 
   }
 
   //Método para añadir una pasiva aleatoria

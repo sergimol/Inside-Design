@@ -108,6 +108,8 @@ export default class Game extends Phaser.Scene {
     this.load.image('cogo', 'sprites/ferrari.png');
     //Activas
     this.load.image('dash', 'sprites/dash_1.png');
+    this.load.image('shield', 'sprites/shield.png');
+    this.load.image('bomb', 'sprites/bomb.png');
     //Dialogos
     this.load.image('dialogbox', 'sprites/dialogbox.png');
     //Carga de fuentes con bitmap
@@ -428,7 +430,7 @@ export default class Game extends Phaser.Scene {
     this.healthCounter.setDepth(7);
 
     //Activa
-    this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[0]);
+    this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY);
     this.activeImg.setScrollFactor(0);
     this.activeImg.setScale(0.5);
     this.activeImg.setDepth(7);
@@ -542,8 +544,7 @@ export default class Game extends Phaser.Scene {
   }
 
   setActiveImg(id) {
-    this.activeImg.destroy();
-    this.activeImg = this.add.image(config.ui.activePosX, config.ui.activePosY, config.ui.activeImgs[id]);
+    this.activeImg.setTexture(config.ui.activeImgs[id]);
   }
 
   /*addPassiveImg(id) {
@@ -568,7 +569,8 @@ export default class Game extends Phaser.Scene {
     this.onDialog = true;
     this.dialogState = 0;
     this.dialog.text = this.strings[this.dialogState];
-    this.pendingPassive = id;
+    this.pendingIdea = id;
+    this.pendingType = type;
   }
 
   advanceDialog() {
@@ -585,7 +587,10 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
-    this.player.addPassive(this.pendingPassive);
+    if(this.pendingType === 'passive')
+      this.player.addPassive(this.pendingIdea);
+    else if(this.pendingType === 'active')
+      this.player.changeActive(this.pendingIdea);
   }
 
   //CAMBIAR MUSICA POR EL PLAYER

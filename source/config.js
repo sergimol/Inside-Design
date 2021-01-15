@@ -23,7 +23,13 @@ const Config = {
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
         passiveCount: 8,
-        weaponCount: 3
+        weaponCount: 3,
+        activeCount: 3,
+        actives: [
+            'dash',
+            'shield',
+            'bomb'
+        ]
     },
     
     //Configuración base de las armas
@@ -55,7 +61,7 @@ const Config = {
         //passiveImgs: ['tanqueo', 'facil', 'rambo', 'buenaonda', 'malaonda', 'sanic', 'cogo'], 
         activePosX: 900,
         activePosY: 285,
-        activeImgs: ['dash', 'escudo', 'area'],
+        activeImgs: ['dash', 'escudo', 'bomb'],
         dialogBoxX: 700,
         dialogBoxY: 470,
         dialogX: 590,
