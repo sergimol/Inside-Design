@@ -1,4 +1,3 @@
-
 import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
 import escopetaAuto from "./weaponsFolder/escopeta_Auto.js";
 import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
@@ -13,8 +12,9 @@ import rifle_francotirador_preciso from "./weaponsFolder/rifle_Francotirador_Pre
 import rifle_francotirador from "./weaponsFolder/rifle_Francotirador.js";
 import rifle_rafagas from "./weaponsFolder/rifle_Rafagas.js";
 
-const WeaponList = [defaultWeapon,escopetaAuto,escopeta_lanzable,escopeta_rafagas, escopeta,
+const List = [
+defaultWeapon, escopetaAuto, escopeta_lanzable, escopeta_rafagas, escopeta,
 granade__launcher, machinegun, pistolaBasica, pistolaLaser, rifle_Automatico,
 rifle_francotirador_preciso, rifle_francotirador, rifle_rafagas];
 
-export default WeaponList;
+export default List;

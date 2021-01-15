@@ -6,6 +6,8 @@ import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
 import config from "./config.js";
 import Weapon from "./weapon.js";
 
+import WeaponList from "./weaponList.js";
+
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
     super(scene, x, y, sprite, health);
@@ -381,17 +383,7 @@ export default class Player extends Humanoid {
 
   changeWeapon(wId) {
     this.weapon.destructora();
-    switch (wId) {
-      case (0):
-        this.weapon = new Weapon(this.scene, 0, 5, defaultWeapon);
-        break;
-      case (1):
-        this.weapon = new Weapon(this.scene, 0, 5, granade__launcher);
-        break;
-      case (2):
-        this.weapon = new Weapon(this.scene, 0, 5, escopeta_lanzable);
-        break;
-    }
+    this.weapon = new Weapon(this.scene ,0 ,5, WeaponList[wId]);
     this.add(this.weapon);
   }
 
