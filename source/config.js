@@ -7,7 +7,7 @@ const Config = {
     },
 
     gdd:{
-        numeroArmas:15,
+        numeroArmas:13,
         numeroEsteticas:0,
         numeroPasivas:0,
         nueroActivas:0
