@@ -255,19 +255,22 @@ export default class Player extends Humanoid {
 
   }
 
-  //Método para añadir una pasiva aleatoria
-  addPassive() {
-    //Elige una pasiva
+  choosePassive() {
+    //Número aleatorio
     let id;
     do {
       id = Math.floor(Math.random() * config.player.passiveCount);
     } while (this.activePassives[id])
 
     this.scene.startDialog('passive', id);
-    if (id !== 7) { //Distinto de 7 porque el cambio de arma no tiene indicador en el hud ni tiene que ser controlado por los booleanos
+    if (id !== 7) {
       this.activePassives[id] = true;
     }
-    id = 8;
+  }
+
+  //Método para añadir una pasiva aleatoria
+  addPassive(id) {
+
     //Aplica la pasiva correspondiente
     switch (id) {
       //Aumenta la vida
@@ -376,9 +379,9 @@ export default class Player extends Humanoid {
 
   }
 
-  changeWeapon(id) {
+  changeWeapon(wId) {
     this.weapon.destructora();
-    switch (id) {
+    switch (wId) {
       case (0):
         this.weapon = new Weapon(this.scene, 0, 5, defaultWeapon);
         break;
@@ -392,122 +395,120 @@ export default class Player extends Humanoid {
     this.add(this.weapon);
   }
 
-  changeTile(id, isNewScene){
-    this.tileID = id;
-    switch(id)
-    {
+  changeTile(tId, isNewScene) {
+    this.tileID = tId;
+    switch (tId) {
       //Cuidao solo haces ejecutas la musica cuando salta como idea
-      case(0):
-      console.log('Outlaws from the West');
-      this.scene.changeLayer(config.tileset.west);
-      if(!isNewScene)
-        this.changeMusicMovida(config.music.west, isNewScene);
-      break;
-
-      case(1):
-      console.log('Ray Tracing breakdance skill');
-      this.scene.changeLayer(config.tileset.raytracing);
-      if(!isNewScene)
-        this.changeMusicMovida(config.music.neon,isNewScene);
+      case (0):
+        console.log('Outlaws from the West');
+        this.scene.changeLayer(config.tileset.west);
+        if (!isNewScene)
+          this.changeMusicMovida(config.music.west, isNewScene);
         break;
 
-      case(2):
-      console.log('La serie mas aburrida de la historia');
-      this.scene.changeLayer(config.tileset.minecraft);
-      break;
-
-      case(3):
-      console.log('Especial Navidad');
-      this.scene.changeLayer(config.tileset.navidad);
+      case (1):
+        console.log('Ray Tracing breakdance skill');
+        this.scene.changeLayer(config.tileset.raytracing);
+        if (!isNewScene)
+          this.changeMusicMovida(config.music.neon, isNewScene);
         break;
 
-      case(4):
-      console.log('Mas de 1000 capitulos');
-      this.scene.changeLayer(config.tileset.piratas);
+      case (2):
+        console.log('La serie mas aburrida de la historia');
+        this.scene.changeLayer(config.tileset.minecraft);
         break;
 
-      case(5):
-      console.log('El mejor juego de la historia');
-      this.scene.changeLayer(config.tileset.zelda);
+      case (3):
+        console.log('Especial Navidad');
+        this.scene.changeLayer(config.tileset.navidad);
         break;
 
-        case(6):
+      case (4):
+        console.log('Mas de 1000 capitulos');
+        this.scene.changeLayer(config.tileset.piratas);
+        break;
+
+      case (5):
+        console.log('El mejor juego de la historia');
+        this.scene.changeLayer(config.tileset.zelda);
+        break;
+
+      case (6):
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
-        if(!isNewScene)
-          this.changeMusicMovida(config.music.rock,isNewScene);
+        if (!isNewScene)
+          this.changeMusicMovida(config.music.rock, isNewScene);
         break;
 
-      case(7):
-      console.log('P.T.');
+      case (7):
+        console.log('P.T.');
         this.scene.changeLayer(config.tileset.miedo);
-        if(!isNewScene)
+        if (!isNewScene)
           this.changeMusicMovida(config.music.horror, isNewScene);
         break;
     }
   }
 
-  changeMusicMovida(id){
-    this.musicID = id;
-    switch(id)
-    {
-      case(config.music.mainChip):
+  changeMusicMovida(mId) {
+    this.musicID = mId;
+    switch (mId) {
+      case (config.music.mainChip):
         console.log('Outlaws from the West');
         this.scene.changeMusic(config.music.mainChip);
-      break;
+        break;
 
-      case(config.music.west):
+      case (config.music.west):
         console.log('Outlaws from the West');
         this.scene.changeMusic(config.music.west);
-      break;
+        break;
 
-      case(config.music.neon):
+      case (config.music.neon):
         console.log('Ray Tracing breakdance skill');
         this.scene.changeMusic(config.music.neon);
         break;
 
-      case(config.music.old30s):
+      case (config.music.old30s):
         console.log('La serie mas aburrida de la historia');
         this.scene.changeMusic(config.music.old30s);
         break;
 
-      case(config.music.epic):
-       console.log('Especial Navidad');
+      case (config.music.epic):
+        console.log('Especial Navidad');
         this.scene.changeMusic(config.music.epic);
         break;
 
-      case(config.music.horror):
+      case (config.music.horror):
         console.log('Mas de 1000 capitulos');
         this.scene.changeMusic(config.music.horror);
         break;
 
-      case(config.music.berridos):
+      case (config.music.berridos):
         console.log('El mejor juego de la historia');
         this.scene.changeMusic(config.music.berridos);
         break;
 
-      case(config.music.rock):
+      case (config.music.rock):
         console.log('The Only Thing They Fear is You');
         this.scene.changeMusic(config.music.rock);
         break;
 
-      case(config.music.piano):
+      case (config.music.piano):
         console.log('P.T.');
         this.scene.changeMusic(config.music.piano);
         break;
     }
   }
-      
+
   giveAmmo(amount) {
     this.ammo += amount;
     if (!this.hasInfiniteAmmo)
       this.scene.setAmmo(this.ammo);
   }
-  
+
   addToState() {
     this.dialogState++;
   }
-  
+
 
   preUpdate() {
 

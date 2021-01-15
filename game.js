@@ -263,8 +263,8 @@ export default class Game extends Phaser.Scene {
         //this.player.changeAnimacionesonoseque();
       }
       else if (objeto.name === 'enemy') {
-        const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
-        //const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
+        //const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
+        const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
         if (doorNum[objeto.properties[0].value - 1] != x)
@@ -282,7 +282,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for (let i = 0; i < 0; i++) {
+    for (let i = 0; i < 5; i++) {
 
       let tileX = Phaser.Math.RND.between(0, this.map.width);
       let tileY = Phaser.Math.RND.between(0, this.map.height);
@@ -557,6 +557,7 @@ export default class Game extends Phaser.Scene {
     this.onDialog = true;
     this.dialogState = 0;
     this.dialog.text = this.strings[this.dialogState];
+    this.pendingPassive = id;
   }
 
   advanceDialog() {
@@ -573,6 +574,7 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
+    this.player.addPassive(this.pendingPassive);
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
