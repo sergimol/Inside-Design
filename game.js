@@ -28,50 +28,50 @@ export default class Game extends Phaser.Scene {
 
 
   preload() {
-    this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('player', './sprites/player.png', { frameWidth: 24, frameHeight: 24 });
 
     //Diego
-    this.load.spritesheet('bullet', 'Sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('enemybullet', 'Sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.image('crosshair', 'Sprites/crosshair.png');
-    this.load.image('granade_launcher', 'Sprites/granade_launcher.png');
+    this.load.spritesheet('bullet', 'sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('enemybullet', 'sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.image('crosshair', 'sprites/crosshair.png');
+    this.load.image('granade_launcher', 'sprites/granade_launcher.png');
 
-    this.load.image('escopeta_lanzable', 'Sprites/escopeta_lanzable.png');
+    this.load.image('escopeta_lanzable', 'sprites/escopeta_lanzable.png');
 
-    this.load.spritesheet('granade__launcher_shoot', 'Sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
-    this.load.spritesheet('escopeta_lanzable_shoot', 'Sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('granade_launcher_shoot_explosion', 'Sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
+    this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
+    this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
     //Javi
     //Tiles de estéticas
-    this.load.image('tileBase', './Sprites/tiles/TileJavi.png');
-    this.load.image('tileSetBaseEx', './Sprites/tiles/tileSetBaseEx.png');
-    this.load.image('tileSetDoomEx', './Sprites/tiles/tileSetDoomEx.png');
-    this.load.image('tileSetMiedoEx', './Sprites/tiles/tileSetMiedoEx.png');
-    this.load.image('tileSetMinecraftEx', './Sprites/tiles/tileSetMinecraftEx.png');
-    this.load.image('tileSetNavidadEx', './Sprites/tiles/tileSetNavidadEx.png');
-    this.load.image('tileSetPiratasEx', './Sprites/tiles/tileSetPiratasEx.png');
-    this.load.image('tileSetRayTracingEx', './Sprites/tiles/tileSetRayTracingEx.png');
-    this.load.image('tileSetWestEx', './Sprites/tiles/tileSetWestEx.png');
-    this.load.image('tileSetZeldaEx', './Sprites/tiles/tileSetZeldaEx.png');
+    this.load.image('tileBase', './sprites/tiles/tileJavi.png');
+    this.load.image('tileSetBaseEx', './sprites/tiles/tileSetBaseEx.png');
+    this.load.image('tileSetDoomEx', './sprites/tiles/tileSetDoomEx.png');
+    this.load.image('tileSetMiedoEx', './sprites/tiles/tileSetMiedoEx.png');
+    this.load.image('tileSetMinecraftEx', './sprites/tiles/tileSetMinecraftEx.png');
+    this.load.image('tileSetNavidadEx', './sprites/tiles/tileSetNavidadEx.png');
+    this.load.image('tileSetPiratasEx', './sprites/tiles/tileSetPiratasEx.png');
+    this.load.image('tileSetRayTracingEx', './sprites/tiles/tileSetRayTracingEx.png');
+    this.load.image('tileSetWestEx', './sprites/tiles/tileSetWestEx.png');
+    this.load.image('tileSetZeldaEx', './sprites/tiles/tileSetZeldaEx.png');
 
-    this.load.image('doorV', './Sprites/doorV.png');
-    this.load.image('doorOpenV', './Sprites/doorOpenV.png');
-    this.load.image('doorH', './Sprites/doorH.png');
-    this.load.image('doorOpenH', './Sprites/doorOpenH.png');
-    this.load.image('trigger', './Sprites/trigger.png');
-    this.load.image('end', './Sprites/end.jpg');
-    this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
-    this.load.image('medkit', './Sprites/medkit.png');
+    this.load.image('doorV', './sprites/doorV.png');
+    this.load.image('doorOpenV', './sprites/doorOpenV.png');
+    this.load.image('doorH', './sprites/doorH.png');
+    this.load.image('doorOpenH', './sprites/doorOpenH.png');
+    this.load.image('trigger', './sprites/trigger.png');
+    this.load.image('end', './sprites/end.jpg');
+    this.load.image('bulletAmmo', './sprites/bulletAmmo.png');
+    this.load.image('medkit', './sprites/medkit.png');
 
     //TODAS LAS SALAS
-    this.load.tilemapTiledJSON('dungeon', './Sprites/tiles/NivelBase.json');
-    this.load.tilemapTiledJSON('sala1', './Sprites/tiles/Sala1.json');
-    this.load.tilemapTiledJSON('sala2', './Sprites/tiles/Sala2.json');
-    this.load.tilemapTiledJSON('sala3', './Sprites/tiles/Sala3.json');
-    this.load.tilemapTiledJSON('sala4', './Sprites/tiles/Sala4.json');
-    this.load.tilemapTiledJSON('sala5', './Sprites/tiles/Sala5.json');
-    this.load.tilemapTiledJSON('sala6', './Sprites/tiles/Sala6.json');
+    this.load.tilemapTiledJSON('dungeon', './sprites/tiles/nivelBase.json');
+    this.load.tilemapTiledJSON('sala1', './sprites/tiles/sala1.json');
+    this.load.tilemapTiledJSON('sala2', './sprites/tiles/sala2.json');
+    this.load.tilemapTiledJSON('sala3', './sprites/tiles/sala3.json');
+    this.load.tilemapTiledJSON('sala4', './sprites/tiles/sala4.json');
+    this.load.tilemapTiledJSON('sala5', './sprites/tiles/sala5.json');
+    this.load.tilemapTiledJSON('sala6', './sprites/tiles/sala6.json');
 
     //nuevo
     this.load.audio('mainChiptuneSong', './audio/mainChiptune.mp3');
@@ -88,28 +88,28 @@ export default class Game extends Phaser.Scene {
     this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
     this.load.audio('hitShootSound', './audio/hitShoot.wav');
     this.load.audio('deadSound', './audio/deadSound.wav');
-    this.load.image('gunShoot', './Sprites/gunShootProt.png');
-    this.load.image('bate', './Sprites/Bate3.png');
-    this.load.image('swing', './Sprites/swing.png');
-    this.load.image('walkParticle', './Sprites/walkParticulas.png');
-    this.load.image('dashParticle', './Sprites/dashParticula.png')
+    this.load.image('gunShoot', './sprites/gunShootProt.png');
+    this.load.image('bate', './sprites/bate3.png');
+    this.load.image('swing', './sprites/swing.png');
+    this.load.image('walkParticle', './sprites/walkParticulas.png');
+    this.load.image('dashParticle', './sprites/dashParticula.png')
     this.load.audio('dashSound', './audio/dashSound.wav');
 
     //Elementos de la UI
     //Armas
-    this.load.image('gunshotsilhouette', 'Sprites/gunshotSilueta.png');
+    this.load.image('gunshotsilhouette', 'sprites/gunshotSilueta.png');
     //Pasivas
-    this.load.image('tanqueo', 'Sprites/pixel-tank.png');
+    this.load.image('tanqueo', 'sprites/pixel_tank.png');
     //this.load.image('facil', 'Sprites/');
-    this.load.image('rambo', 'Sprites/rambo.png');
+    this.load.image('rambo', 'sprites/rambo.png');
     //this.load.image('buenaonda', 'Sprites/');
     //this.load.image('malaonda', 'Sprites/');
-    this.load.image('sanic', 'Sprites/sanic.png');
-    this.load.image('cogo', 'Sprites/ferrari.png');
+    this.load.image('sanic', 'sprites/sanic.png');
+    this.load.image('cogo', 'sprites/ferrari.png');
     //Activas
-    this.load.image('dash', 'Sprites/dash-1.png');
+    this.load.image('dash', 'sprites/dash_1.png');
     //Dialogos
-    this.load.image('dialogbox', 'Sprites/dialogbox.png');
+    this.load.image('dialogbox', 'sprites/dialogbox.png');
     //Carga de fuentes con bitmap
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
 
@@ -125,10 +125,7 @@ export default class Game extends Phaser.Scene {
       google: {
         families: ['Permanent Marker', 'Rock Salt', 'Beth Ellen']
       }
-    })
-
-
-    
+    })    
 
     //localStorage.clear();
     this.loadFile();

@@ -4,7 +4,7 @@ export default class Game extends Phaser.Scene {
         super({ key: "theEnd" });
     }
     preload() {
-        this.load.image('endBackground', 'Sprites/endGame.png');
+        this.load.image('endBackground', 'sprites/endGame.png');
         //this.load.image('quitButton', 'Sprites/quitButton.png');
         //this.load.image('quitButtonlight', 'Sprites/quitButtonlight.png');
     }

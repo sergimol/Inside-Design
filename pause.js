@@ -4,9 +4,9 @@ export default class Game extends Phaser.Scene {
         super({ key: "pause" });
     }
     preload() {
-        this.load.image('menuBackground', 'Sprites/MenuBackground.png');
-        this.load.image('quitButton', 'Sprites/quitButton.png');
-        this.load.image('quitButtonlight', 'Sprites/quitButtonlight.png');
+        this.load.image('menuBackground', 'sprites/menuBackground.png');
+        this.load.image('quitButton', 'sprites/quitButton.png');
+        this.load.image('quitButtonlight', 'sprites/quitButtonlight.png');
     }
     create() {
         const { ESC } = Phaser.Input.Keyboard.KeyCodes
