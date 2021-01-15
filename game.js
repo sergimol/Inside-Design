@@ -568,6 +568,7 @@ export default class Game extends Phaser.Scene {
     this.onDialog = true;
     this.dialogState = 0;
     this.dialog.text = this.strings[this.dialogState];
+    this.pendingPassive = id;
   }
 
   advanceDialog() {
@@ -584,6 +585,7 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
+    this.player.addPassive(this.pendingPassive);
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
