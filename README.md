@@ -169,26 +169,24 @@ Una vez activada tienen un cooldown antes de poder volver a usarse. El cooldown 
 Como se menciona en el esquema de arriba, la introducción en la partida de estas IDEAS viene a ser la siguiente.
 Durante el primer nivel el jugador no tiene ACTIVA.
 En la primera sala del segundo nivel se le otorga y explicará la ACTIVA y no se le volverá a dar algo relacionado hasta la primera sala del siguiente nivel.
-En las siguientes primeras salas, no se darán nuevas ACTIVAS, sino modificaciones de la primera que se le otorgó.
-Por lo tanto cada ACTIVA tiene su funcionamiento base y como mínimo 3 modificaciones para poder cubrir los siguientes niveles.
+En las siguientes primeras sala, no se le dará una nueva ACTIVA, sino que se modificará la primera que se le otorgó.
+Por lo tanto cada ACTIVA tiene su funcionamiento base y 1 modificación.
 
 ###### -Dash: 
-Al pulsar botón “X” el jugador realiza un dash moderadamente rápido (3 variantes)
-1. Al estar activado, si chocas con un enemigo lo matas
-2. El dash se sustituye por una voltereta, hace el mismo efecto (evitar balas) pero tiene menos alcance
-3. Teletransporte automático en la dirección.
+Al activarla el jugador realiza un dash moderadamente rápido.
+Modificación:
+ Al estar activado, si chocas con un enemigo lo matas
 
 ###### -Escudo:
-Mientras mantengas pulsado “X” pones un escudo al jugador, no le afectan las balas. El escudo dura un par de segundos. (3 variantes)
-1. Al estar activado las balas rebotan.
-2. Mientras estar activado no te puedes mover.
-3. Absorbe las balas y las devuelves cuando te lo quitas o cuando absorbe la cantidad máxima de balas (se desactiva cuando acumula el máximo de balas)
+Al activarla pone un escudo al jugador que le protege de las balas. El escudo dura un par de segundos.
+Modificación:
+ Al estar activado las balas rebotan.
 
 ###### -Ataque en área:
-Cuando se activa, aplica un efecto en un radio determinado (3 efectos posibles)
-1. Aturde a los enemigos.
-2. Elimina a los enemigos.
-3. Elimina las balas enemigas.
+Cuando se activa, destruye las balas en un radio determinado.
+Modificación:
+ Además de destruir las balas, hace daño a los enemigos.
+
 
 ##### PASIVAS
 Son IDEAS que se aplican ya sea al jugador, a los enemigos o al entorno pero no es necesario activarlas pulsando nada. Suelen ser modificaciones de atributos, reglas básicas o cambios estéticos.
