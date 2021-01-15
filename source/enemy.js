@@ -2,7 +2,7 @@ import Humanoid from "./humanoid.js";
 import Doors from "./doors.js";
 import Weapon from "./weapon.js";
 
-import defaultWeapon from "./weaponsFolder/defaultEnemyWeapon.js";
+import defaultWeapon from "./enemyWeaponFolder/defaultEnemyWeapon.js";
 
 
 export default class Enemy extends Humanoid {

@@ -80,8 +80,8 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.startFollow(this.point);
 
         this.playButton = new Button(this, 220, 215, 'playButton', 'playButtonlight', 'play')
-        this.gddButton = new Button(this, 220, 240, 'gddButton', 'gddButtonlight', 'play')
-        this.optionsButton = new Button(this, 220, 265, 'optionsButton', 'optionsButtonlight', 'play')
+        this.gddButton = new Button(this, 220, 240, 'gddButton', 'gddButtonlight', 'gdd')
+        this.optionsButton = new Button(this, 220, 265, 'optionsButton', 'optionsButtonlight', 'options')
 
         this.events.on('shutdown', this.shutdown, this);
     }

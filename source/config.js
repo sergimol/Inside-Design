@@ -6,6 +6,13 @@ const Config = {
         size: 16
     },
 
+    gdd:{
+        numeroArmas:15,
+        numeroEsteticas:0,
+        numeroPasivas:0,
+        nueroActivas:0
+    },
+
     //Configuración específica del jugador
     player: {
         depth: 4,

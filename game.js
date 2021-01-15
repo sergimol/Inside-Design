@@ -119,6 +119,7 @@ export default class Game extends Phaser.Scene {
     console.log("level: " + this.level)
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
+    this.gdd = [];
 
     //creacion de texto con webfont
     WebFont.load({
@@ -263,8 +264,8 @@ export default class Game extends Phaser.Scene {
         //this.player.changeAnimacionesonoseque();
       }
       else if (objeto.name === 'enemy') {
-        const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
-        //const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
+        //const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
+        const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
         if (doorNum[objeto.properties[0].value - 1] != x)
@@ -282,7 +283,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for (let i = 0; i < 0; i++) {
+    for (let i = 0; i < 20; i++) {
 
       let tileX = Phaser.Math.RND.between(0, this.map.width);
       let tileY = Phaser.Math.RND.between(0, this.map.height);
@@ -455,8 +456,9 @@ export default class Game extends Phaser.Scene {
   saveFile() {
     var file = {
       disparos: this.disparosRealizados,
-      enemigos: this.enemiesKilled
+      enemigos: this.enemiesKilled,
       //que tiene que gaurdar el file¿?
+      gdd: this.gdd
     }
     localStorage.setItem('insideDesignSaveFile', JSON.stringify(file));
   }
@@ -468,10 +470,19 @@ export default class Game extends Phaser.Scene {
     if (file !== null) {
       this.disparosRealizados = file.disparos;
       this.enemiesKilled = file.enemigos;
+
+      this.gdd = file.gdd;
     }
     else {
       this.disparosRealizados = 0;
       this.enemiesKilled = 0;
+
+      //generar archivo del gdd
+      this.gdd = [];
+      let numIdeas = config.gdd.nueroActivas + config.gdd.numeroArmas + config.gdd.numeroEsteticas + config.gdd.numeroPasivas;     
+      for (let i = 0; i < numIdeas; i++) {
+      this.gdd.push(false);
+}
     }
   }
 
