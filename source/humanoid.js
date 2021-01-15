@@ -28,10 +28,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.scene.matter.body.setInertia(this.body, Infinity);
 
 
-        this.body.restitution = 0;
-        this.body.frictionStatic = 0;
-        this.body.friction = 0;
-        this.body.slop = 0.0000000;
 
         this.scene.matter.world.on('collisionstart', (event) => {
             let wordBody = this.body;
