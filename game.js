@@ -119,9 +119,16 @@ export default class Game extends Phaser.Scene {
 
   create() {
     console.log("level: " + this.level)
+    //variables que utilizara ela rchivo de guardado
+    //estadisticas y gdd
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
-    this.gdd = [];
+
+    this.gddActivas = [];   
+    this.gddPasivas = [];
+    this.gddTemporales = [];
+    this.gddArmas = [];
+    this.gddEsteticas = [];
 
     //creacion de texto con webfont
     WebFont.load({
@@ -460,7 +467,12 @@ export default class Game extends Phaser.Scene {
       disparos: this.disparosRealizados,
       enemigos: this.enemiesKilled,
       //que tiene que gaurdar el file¿?
-      gdd: this.gdd
+      
+      gddActivas: this.gddActivas,
+      gddPasivas: this.gddPasivas,
+      gddTemporales: this.gddTemporales,
+      gddArmas: this.gddArmas,
+      gddEsteticas: this.gddEsteticas
     }
     localStorage.setItem('insideDesignSaveFile', JSON.stringify(file));
   }
@@ -473,20 +485,47 @@ export default class Game extends Phaser.Scene {
       this.disparosRealizados = file.disparos;
       this.enemiesKilled = file.enemigos;
 
-      this.gdd = file.gdd;
+      
+      this.gddActivas = file.gddActivas;
+      this.gddPasivas = file.gddPasivas;
+      this.gddTemporales = file.gddTemporales;
+      this.gddArmas = file.gddArmas;
+      this.gddEsteticas = file.gddEsteticas;
     }
     else {
       this.disparosRealizados = 0;
       this.enemiesKilled = 0;
 
       //generar archivo del gdd
-      this.gdd = [];
-      let numIdeas = config.gdd.nueroActivas + config.gdd.numeroArmas + config.gdd.numeroEsteticas + config.gdd.numeroPasivas;     
-      for (let i = 0; i < numIdeas; i++) {
-      this.gdd.push(false);
-}
+      this.gddActivas = [];
+      let numIdeas = config.gdd.nueroActivas;     
+      for (let i = 0; i < numIdeas; i++) 
+      this.gddActivas.push(false);
+      
+      this.gddPasivas = [];
+       numIdeas = config.gdd.numeroPasivas;     
+      for (let i = 0; i < numIdeas; i++)
+      this.gddPasivas.push(false);
+      
+      this.gddArmas = [];
+       numIdeas = config.gdd.numeroArmas;     
+      for (let i = 0; i < numIdeas; i++)
+      this.gddArmas.push(false);
+      
+      this.gddEsteticas = [];
+       numIdeas = config.gdd.numeroEsteticas;     
+      for (let i = 0; i < numIdeas; i++) 
+      this.gddEsteticas.push(false);
+
+      
+      this.gddTemporales = [];
+       numIdeas = config.gdd.numeroTemporales;     
+      for (let i = 0; i < numIdeas; i++) 
+      this.gddTemporales.push(false);
     }
   }
+      
+
 
   shutdown() {
     //  We need to clear keyboard events, or they'll stack up when the Menu is re-run
@@ -601,5 +640,25 @@ export default class Game extends Phaser.Scene {
     this.actualMusic.play()
     this.actualMusic.setSeek(seekNose);
   
+  }
+
+  updateGdd(key, id){
+  if (key === "weapon"){
+      this.gddArmas[id] = true;
+  }
+  if (key === "pasiva"){
+      this.gddPasivas[id] = true;
+  }
+  if (key === "activa"){
+      this.gddActivas[id] = true;
+  }
+  if (key === "temporal"){
+      this.gddTemporales[id] = true;
+  }
+  if (key === "estetica"){
+      this.gddEsteticas[id] = true;
+  }
+
+  this.saveFile();
   }
 }

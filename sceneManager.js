@@ -67,6 +67,7 @@ export default class Game extends Phaser.Scene {
 
     create() {
         //this.point;
+        localStorage.clear();
         this.map = this.make.tilemap({ key: 'menu' });
         this.loadTileMapRoom();
 
