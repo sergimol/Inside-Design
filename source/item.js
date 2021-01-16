@@ -1,3 +1,5 @@
+import config from './config.js'
+
 export default class Item extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, sprite, playerref) {
         super(scene, x, y, sprite);
@@ -34,17 +36,17 @@ export default class Item extends Phaser.GameObjects.Sprite {
                 if (bodyA === wordBody || bodyB === wordBody) {
                     if (bodyA.label === 'player') {
                         if (this.body.label === 'bulletAmmo')
-                            bodyA.gameObject.giveAmmo(5);
+                            bodyA.gameObject.giveAmmo(config.items.ammoDrop);
                         else if (this.body.label === 'medkit')
                             if (bodyA.gameObject.health < bodyA.gameObject.maxHealth)
-                                bodyA.gameObject.damage(-3);
+                                bodyA.gameObject.giveHealth(config.items.healthDrop);
                         this.eliminaItem();
                     } else if (bodyB.label === 'player') {
                         if (this.body.label === 'bulletAmmo')
-                            bodyB.gameObject.giveAmmo(5);
+                            bodyB.gameObject.giveAmmo(config.items.ammoDrop);
                         else if (this.body.label === 'medkit')
                             if (bodyB.gameObject.health < bodyB.gameObject.maxHealth)
-                                bodyB.gameObject.damage(-3);
+                                bodyB.gameObject.giveHealth(config.items.healthDrop);
                         this.eliminaItem();
                     }
                 }

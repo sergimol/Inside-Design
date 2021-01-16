@@ -95,6 +95,11 @@ const Config = {
         berridos: 8, 
         songReference: ['mainChiptuneSong', 'westernSong', '30sSong', 'neonRiderSong',
         'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong']
+    },
+
+    items: {
+        healthDrop: 3,
+        ammoDrop: 5
     }
 }
 

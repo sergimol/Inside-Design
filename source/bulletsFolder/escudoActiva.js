@@ -5,8 +5,8 @@ const BulletConfig = {
 
     sprite: "shield", 
     scale: 1,
-    sizeX: 8,
-    sizeY: 8,
+    sizeX: 12,
+    sizeY: 12,
     originX: 0,
     originY: 0, 
     mass: 30,
@@ -20,14 +20,14 @@ const BulletConfig = {
     devulveBalas: false,
     destruyeBalas: true, 
     isSensor: true,
-    pierce: 0,
+    pierce: Infinity,
     destroyOnWall: false, //si true, ignorara rebotes y si es sensor cuando choque con una pared se destruira
     balaHija: null,
     lifeTime: Infinity, //milisegundos
 
     form:"circle",
     customForm: {
-        radius: 12
+        radius: 24
     },
 
     

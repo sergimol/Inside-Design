@@ -110,7 +110,7 @@ export default class Doors extends Phaser.GameObjects.Container {
                 this.doors[this.contador].setTexture(this.spriteOpenedV);
 
             this.doors[this.contador].setCollisionCategory(null);
-            this.scene.player.chooseIdea('active');
+            this.scene.player.chooseIdea('passive');
             ++this.contador;
         }
     }

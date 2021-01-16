@@ -16,12 +16,6 @@ export default class Player extends Humanoid {
     super(scene, x, y, sprite, health);
     this.body.label = 'player';
 
-    //TileID
-    this.tileID;
-
-    //MUSICA
-    this.musicID
-
     //Arma
     this.weapon = new Weapon(scene, 0, 5, granade__launcher);
     this.add(this.weapon);
@@ -31,7 +25,7 @@ export default class Player extends Humanoid {
     //this.body.mass = 900;
     this.body.frictionAir = 0.25;
     this.depth = 4;
-    let active;
+    this.healthDropBonus = 0;
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
@@ -95,14 +89,9 @@ export default class Player extends Humanoid {
     }, this);
 
 
-    this.actualACTIVE = 'shield' //Ninguna activa
+    this.actualACTIVE = 'shield'; //Ninguna activa
+    this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
-    this.shield = new Bullet(this.scene, 0, 0, escudoActiva);
-    this.shield.setAlpha(0.5);
-    this.shield.depth = 4;
-    this.shield.setVisible(false);
-    this.shield.setActive(false);
-    this.add(this.shield);
 
     this.dashEmitter = dashParticles.createEmitter({
       speed: 20,
@@ -142,10 +131,16 @@ export default class Player extends Humanoid {
         }
         //ESCUDO
         else if (this.actualACTIVE === config.player.actives[1]) {
-          if(!this.shielded){
+          if (!this.shielded) {
+            if(!this.upgraded)
+              this.shield = new Bullet(this.scene, this.x, this.y, escudoActiva, false);
+            else{
+              this.shield = new Bullet(this.scene, this.x, this.y, escudoMejoradoActiva, false);
+              this.shield.aspecto.setTint(0x42e313);
+            }
+            this.shield.setAlpha(0.5);
+            this.shield.depth = 4;
             this.shielded = true;
-            this.shield.setActive(true);
-            this.shield.setVisible(true);
             this.shieldTime = 2000;
           }
         }
@@ -196,6 +191,8 @@ export default class Player extends Humanoid {
     this.activePassives = [];
     for (let i = 0; i < config.player.passiveCount; i++)
       this.activePassives[i] = false;
+
+    this.upgradeActive();
 
   }//End of create
 
@@ -267,7 +264,7 @@ export default class Player extends Humanoid {
 
   chooseIdea(type) {
     let id;
-    if(type === 'passive'){
+    if (type === 'passive') {
       //Número aleatorio
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
@@ -278,20 +275,24 @@ export default class Player extends Humanoid {
         this.activePassives[id] = true;
       }
     }
-    else if(type === 'active'){
-        id = Math.floor(Math.random() * config.player.activeCount);
-        id = 1;
-        this.scene.startDialog('active', id);
+    else if (type === 'active') {
+      id = Math.floor(Math.random() * config.player.activeCount);
+      id = 1;
+      this.scene.startDialog('active', id);
     }
-    else if(type === 'tempPassive'){
+    else if (type === 'tempPassive') {
 
     }
   }
 
-  changeActive(id){
+  changeActive(id) {
     this.actualACTIVE = config.player.actives[id];
     console.log(this.actualACTIVE);
-    this.scene.setActiveImg(id); 
+    this.scene.setActiveImg(id);
+  }
+
+  upgradeActive() {
+    this.upgraded = true;
   }
 
   //Método para añadir una pasiva aleatoria
@@ -326,11 +327,11 @@ export default class Player extends Humanoid {
       //Botiquines
       case (3):
         console.log('Botiquines buena onda');
-        ///////////////////////////////////
+        this.healthDropBonus = 3;
         break;
       case (4):
         console.log('Botiquines mala onda');
-        ///////////////////////////////////
+        this.healthDropBonus = -2;
         break;
       case (5):
         console.log('Sanic');
@@ -407,7 +408,7 @@ export default class Player extends Humanoid {
 
   changeWeapon(wId) {
     this.weapon.destructora();
-    this.weapon = new Weapon(this.scene ,0 ,5, WeaponList[wId]);
+    this.weapon = new Weapon(this.scene, 0, 5, WeaponList[wId]);
     this.add(this.weapon);
   }
 
@@ -515,10 +516,18 @@ export default class Player extends Humanoid {
     }
   }
 
-  giveAmmo(amount) {
-    this.ammo += amount;
-    if (!this.hasInfiniteAmmo)
+  giveAmmo(amount) {    
+    if (!this.hasInfiniteAmmo){
+      this.ammo += amount;
       this.scene.setAmmo(this.ammo);
+    }
+  }
+
+  giveHealth(amount){
+    this.health += (amount + this.healthDropBonus);
+    if(this.health > this.maxHealth)
+      this.health = this.maxHealth;
+    this.scene.setHealth(this.health);
   }
 
   addToState() {
@@ -571,17 +580,20 @@ export default class Player extends Humanoid {
       this.shoot();
     }
 
-    if(this.shielded){
+    if (this.shielded) {
       this.shieldTime--;
-      console.log(this.shieldTime)
-      if(this.shieldTime <= 0){
+      console.log(this.shield)
+      if (this.shieldTime <= 0) {
         this.shielded = false;
-        this.shield.setVisible(false);
-        this.shield.setActive(false);
+        this.shield.destroy();
+      }
+      else {
+        this.shield.x = this.x;
+        this.shield.y = this.y;
       }
     }
 
-    
+
 
     //Llamada al menu de pausa
     //console.log(this.cursors.escape.isDown)
