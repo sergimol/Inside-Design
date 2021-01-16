@@ -3,20 +3,20 @@ import hijaConfig from "./defaultEnemyBullet.js";
 
 const BulletConfig = {
 
-    sprite: "bullet", 
-    scale: 0.7,
+    sprite: "shield", 
+    scale: 1,
     sizeX: 8,
     sizeY: 8,
-    originX: 4,
-    originY: 4, 
+    originX: 0,
+    originY: 0, 
     mass: 30,
     label: 'bullet',
-    airFriction: 0.01,
+    airFriction: 0.,
     rebotes: 0, 
-    fuerzaRebote: 0.8, 
+    fuerzaRebote: 0, 
 
-    velocidadMinima: 1.0,
-    damage: 3, 
+    velocidadMinima: -1,
+    damage: 0, 
     devulveBalas: false,
     destruyeBalas: true, 
     isSensor: true,
@@ -25,11 +25,9 @@ const BulletConfig = {
     balaHija: null,
     lifeTime: Infinity, //milisegundos
 
-    form:"rectangle",
+    form:"circle",
     customForm: {
-        //rectangle x, y widht, height
-        width: 8,
-        height: 8,
+        radius: 12
     },
 
     
@@ -37,9 +35,9 @@ const BulletConfig = {
 
     //para la animacion
     
-    key: "defaultBullet_anims",
+    key: "shield",
     frameRate: 15,
-    frames: {start: 0 , end:2 },//{start: 1 , end:1 }), //15
+    frames: {start: 0 , end:0 },//{start: 1 , end:1 }), //15
     repeat: -1,
 
     

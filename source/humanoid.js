@@ -54,7 +54,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
     damage(damagePoints) {
 
-        if (!this.isDead) {
+        if (!this.isDead && !this.shielded) {
             this.hitState = true;
             this.health -= damagePoints;
             if (this.body.label === 'player')
