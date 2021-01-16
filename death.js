@@ -6,10 +6,10 @@ export default class Game extends Phaser.Scene {
     preload() {
         this.load.image('menuBackground', 'Sprites/MenuBackground.png');
 
-        this.load.image('restartButton', 'Sprites/restartButton.png');
-        this.load.image('restartButtonlight', 'Sprites/restartButtonlight.png');
-        this.load.image('quitButton', 'Sprites/quitButton.png');
-        this.load.image('quitButtonlight', 'Sprites/quitButtonlight.png');
+        this.load.image('restartButton', 'Sprites/buttons/restartButton.png');
+        this.load.image('restartButtonlight', 'Sprites/buttons/restartButtonlight.png');
+        this.load.image('quitButton', 'Sprites/buttons/quitButton.png');
+        this.load.image('quitButtonlight', 'Sprites/buttons/quitButtonlight.png');
     }
     create() {
         console.log("se crea")

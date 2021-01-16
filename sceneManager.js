@@ -56,13 +56,13 @@ export default class Game extends Phaser.Scene {
         this.load.audio('dashSound', './audio/dashSound.wav');
 
         //Buttons
-        this.load.image('playButton', './Sprites/playButton.png');
-        this.load.image('gddButton', './Sprites/gddButton.png');
-        this.load.image('optionsButton', './Sprites/optionsButton.png');
+        this.load.image('playButton', './Sprites/buttons/playButton.png');
+        this.load.image('gddButton', './Sprites/buttons/gddButton.png');
+        this.load.image('optionsButton', './Sprites/buttons/optionsButton.png');
 
-        this.load.image('playButtonlight', './Sprites/playButtonlight.png');
-        this.load.image('gddButtonlight', './Sprites/gddButtonlight.png');
-        this.load.image('optionsButtonlight', './Sprites/optionsButtonlight.png');
+        this.load.image('playButtonlight', './Sprites/buttons/playButtonlight.png');
+        this.load.image('gddButtonlight', './Sprites/buttons/gddButtonlight.png');
+        this.load.image('optionsButtonlight', './Sprites/buttons/optionsButtonlight.png');
     }
 
     create() {
@@ -80,8 +80,8 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.startFollow(this.point);
 
         this.playButton = new Button(this, 220, 215, 'playButton', 'playButtonlight', 'play')
-        this.gddButton = new Button(this, 220, 240, 'gddButton', 'gddButtonlight', 'play')
-        this.optionsButton = new Button(this, 220, 265, 'optionsButton', 'optionsButtonlight', 'play')
+        this.gddButton = new Button(this, 220, 240, 'gddButton', 'gddButtonlight', 'gdd')
+        this.optionsButton = new Button(this, 220, 265, 'optionsButton', 'optionsButtonlight', 'options')
 
         this.events.on('shutdown', this.shutdown, this);
     }

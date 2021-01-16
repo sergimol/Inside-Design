@@ -32,7 +32,7 @@
          "name":"Enemies",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -88,7 +88,7 @@
          "name":"WallsTop",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -102,7 +102,7 @@
          "name":"ColsBottom",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -116,7 +116,7 @@
          "name":"BoxBottom",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -177,7 +177,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -249,7 +249,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -262,7 +262,7 @@
          "name":"ColsTop",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -276,7 +276,7 @@
          "name":"BoxTop",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -285,7 +285,7 @@
  "nextobjectid":140,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.3",
+ "tiledversion":"2020.10.30",
  "tileheight":16,
  "tilesets":[
         {

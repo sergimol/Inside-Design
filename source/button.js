@@ -42,5 +42,8 @@ export default class Button extends Phaser.GameObjects.Image {
         else if (this.label === 'resume') {
             this.scene.resumeGame();
         }
+        else if (this.label === 'options' || this.label === 'gdd') {
+            console.log("Casi crack")
+        }
     }
 }

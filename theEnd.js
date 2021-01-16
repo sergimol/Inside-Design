@@ -20,7 +20,7 @@ export default class Game extends Phaser.Scene {
         let scaleX = this.cameras.main.width / background.width;
         let scaleY = this.cameras.main.height / background.height;
         let scale = Math.max(scaleX, scaleY);
-        background.setScale(scale).setScrollFactor(0)
+        background.setScale(scale).setScrollFactor(0);
     }
     exitMenu() {
         this.scene.stop();
