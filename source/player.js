@@ -7,6 +7,9 @@ import config from "./config.js";
 import Weapon from "./weapon.js";
 
 import WeaponList from "./weaponList.js";
+import Bullet from "./bullet.js";
+import escudoActiva from "./bulletsFolder/escudoActiva.js"
+import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js"
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
@@ -92,8 +95,14 @@ export default class Player extends Humanoid {
     }, this);
 
 
-    this.actualACTIVE = 'none' //Ninguna activa
+    this.actualACTIVE = 'shield' //Ninguna activa
     let dashParticles = this.scene.add.particles('dashParticle');
+    this.shield = new Bullet(this.scene, 0, 0, escudoActiva);
+    this.shield.setAlpha(0.5);
+    this.shield.depth = 4;
+    this.shield.setVisible(false);
+    this.shield.setActive(false);
+    this.add(this.shield);
 
     this.dashEmitter = dashParticles.createEmitter({
       speed: 20,
@@ -104,6 +113,8 @@ export default class Player extends Humanoid {
     this.dashTime = config.player.dashTime;
     this.setMass(config.player.mass);
     this.inDash = false;
+    this.shielded = false;
+    this.shieldTime = 0;
     this.dashPos;
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
     this.scene.input.on('pointerdown', function (pointer) {
@@ -131,7 +142,12 @@ export default class Player extends Humanoid {
         }
         //ESCUDO
         else if (this.actualACTIVE === config.player.actives[1]) {
-
+          if(!this.shielded){
+            this.shielded = true;
+            this.shield.setActive(true);
+            this.shield.setVisible(true);
+            this.shieldTime = 2000;
+          }
         }
         //BOMBAS
         else if (this.actualACTIVE === config.player.actives[2]) {
@@ -264,6 +280,7 @@ export default class Player extends Humanoid {
     }
     else if(type === 'active'){
         id = Math.floor(Math.random() * config.player.activeCount);
+        id = 1;
         this.scene.startDialog('active', id);
     }
     else if(type === 'tempPassive'){
@@ -553,6 +570,18 @@ export default class Player extends Humanoid {
       this.semiAutomaticaHasShoot = true;
       this.shoot();
     }
+
+    if(this.shielded){
+      this.shieldTime--;
+      console.log(this.shieldTime)
+      if(this.shieldTime <= 0){
+        this.shielded = false;
+        this.shield.setVisible(false);
+        this.shield.setActive(false);
+      }
+    }
+
+    
 
     //Llamada al menu de pausa
     //console.log(this.cursors.escape.isDown)

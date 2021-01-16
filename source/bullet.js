@@ -12,7 +12,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         //animacion
 
         const anims = this.scene.anims;
-
+    
         if (!anims.exists(config.key)){
 
             anims.create({
@@ -67,7 +67,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.body.label = config.label;
         
         
-        this.aspecto.play(config.key);
+        //this.aspecto.play(config.key);
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, config.inertia);
         this.setFrictionAir(config.airFriction);

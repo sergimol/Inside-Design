@@ -62,7 +62,7 @@ const Config = {
         //passiveImgs: ['tanqueo', 'facil', 'rambo', 'buenaonda', 'malaonda', 'sanic', 'cogo'], 
         activePosX: 900,
         activePosY: 285,
-        activeImgs: ['dash', 'escudo', 'bomb'],
+        activeImgs: ['dash', 'shield', 'bomb'],
         dialogBoxX: 700,
         dialogBoxY: 470,
         dialogX: 590,
