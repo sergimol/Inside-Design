@@ -13,6 +13,8 @@ export default class Button extends Phaser.GameObjects.Image {
         this.sprite = sprite;
         this.sprite2 = sprite2;
         this.label = label;
+
+        this.escenaOrigen = this.scene.scene.get('main');
     }
     //Al pasar por encima se ilumina el boton
     enterButtonHoverState() {
@@ -25,18 +27,15 @@ export default class Button extends Phaser.GameObjects.Image {
 
     enterActiveState() {
         if (this.label === 'play') {
-            if (this.scene.health != undefined) {
+            //if (this.escenaOrigen != null)
+            //    this.escenaOrigen.scene.actualMusic.stop();
+            if (this.scene.health != undefined)
                 this.scene.scene.start('main', { health: this.scene.health, ammo: this.scene.ammo, weaponID: this.scene.weaponID, level: this.scene.level });
-            }
-            else {
-                this.scene.scene.launch('UIScene');
+            else
                 this.scene.scene.start('main', { health: 10, ammo: 100, weaponID: 2, level: 0 });
-                
-            }
         }
         else if (this.label === 'quit') {
             this.scene.scene.stop('main');
-            this.scene.scene.stop('UIScene');
             this.scene.scene.start('sceneManager');
         }
         else if (this.label === 'resume') {

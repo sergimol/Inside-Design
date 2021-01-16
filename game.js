@@ -20,10 +20,10 @@ export default class Game extends Phaser.Scene {
       this.ammo = data.ammo,
       this.weaponID = data.weaponID,
       this.level = data.level;
-      this.tileID = data.tileID;
-      this.musicID = data.musicID,
+    this.tileID = data.tileID;
+    this.musicID = data.musicID,
       this.lastSeekMusic = data.lastSeekMusic
-      //this.playerAspectID = data.playerAspectID
+    //this.playerAspectID = data.playerAspectID
   }
 
 
@@ -124,7 +124,7 @@ export default class Game extends Phaser.Scene {
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
 
-    this.gddActivas = [];   
+    this.gddActivas = [];
     this.gddPasivas = [];
     this.gddTemporales = [];
     this.gddArmas = [];
@@ -135,7 +135,7 @@ export default class Game extends Phaser.Scene {
       google: {
         families: ['Permanent Marker', 'Rock Salt', 'Beth Ellen']
       }
-    })    
+    })
 
     //localStorage.clear();
     this.loadFile();
@@ -150,7 +150,7 @@ export default class Game extends Phaser.Scene {
     this.loadTileMapRoom();
 
     //PARA LA MUSICA
-    
+
 
     //this.tempo = 1400;
     //this.compassTimer = this.time.now + this.tempo;
@@ -220,15 +220,19 @@ export default class Game extends Phaser.Scene {
           if (playerBody.label === 'endLevel') {
             this.cameras.main.fadeOut(3000);
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
-            if (this.level != 0) {
-              ++this.level;
-              this.lastSeekMusic = this.actualMusic.seek;
-              //this.actualMusic.destroy();
-              this.scene.start('main', { health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level, 
-                                tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic});
-            }
-            else {
-              this.scene.start('theEnd');
+            if (blockBody === 'player') {
+              if (this.level != 0) {
+                ++this.level;
+                this.lastSeekMusic = this.actualMusic.seek;
+                //this.actualMusic.destroy();
+                this.scene.start('main', {
+                  health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level,
+                  tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic
+                });
+              }
+              else {
+                this.scene.start('theEnd');
+              }
             }
           }
         }
@@ -240,6 +244,7 @@ export default class Game extends Phaser.Scene {
 
     this.input.keyboard.on('keydown_ESC', this.pauseGame, this);//this.pauseGame
     this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);
+
   }//End of create
 
   changeLayer(tileState) {
@@ -264,9 +269,11 @@ export default class Game extends Phaser.Scene {
         this.player.changeWeapon(this.weaponID);
         this.player.changeTile(this.tileID, true);
         //Creamos la musica si es la primera sala
-        if(this.level === 0){
+        if (this.level === 0) {
           this.musicID = config.music.mainChip;
           this.player.musicID = this.musicID;
+          if (this.actualMusic != null)
+            this.actualMusic.stop();
           this.actualMusic = this.sound.add(config.music.songReference[this.musicID]);
           this.actualMusic.play();
         }
@@ -449,7 +456,7 @@ export default class Game extends Phaser.Scene {
     this.dialogBox.setScrollFactor(0);
     this.dialogBox.setDepth(7);
 
-    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', {fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: '#ffffff'};
+    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', { fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: '#ffffff' };
     this.dialog.setScale(0.5)
     this.dialog.setScrollFactor(0);
     this.dialog.setDepth(7);
@@ -467,7 +474,7 @@ export default class Game extends Phaser.Scene {
       disparos: this.disparosRealizados,
       enemigos: this.enemiesKilled,
       //que tiene que gaurdar el file¿?
-      
+
       gddActivas: this.gddActivas,
       gddPasivas: this.gddPasivas,
       gddTemporales: this.gddTemporales,
@@ -485,7 +492,7 @@ export default class Game extends Phaser.Scene {
       this.disparosRealizados = file.disparos;
       this.enemiesKilled = file.enemigos;
 
-      
+
       this.gddActivas = file.gddActivas;
       this.gddPasivas = file.gddPasivas;
       this.gddTemporales = file.gddTemporales;
@@ -498,33 +505,33 @@ export default class Game extends Phaser.Scene {
 
       //generar archivo del gdd
       this.gddActivas = [];
-      let numIdeas = config.gdd.nueroActivas;     
-      for (let i = 0; i < numIdeas; i++) 
-      this.gddActivas.push(false);
-      
-      this.gddPasivas = [];
-       numIdeas = config.gdd.numeroPasivas;     
+      let numIdeas = config.gdd.nueroActivas;
       for (let i = 0; i < numIdeas; i++)
-      this.gddPasivas.push(false);
-      
-      this.gddArmas = [];
-       numIdeas = config.gdd.numeroArmas;     
-      for (let i = 0; i < numIdeas; i++)
-      this.gddArmas.push(false);
-      
-      this.gddEsteticas = [];
-       numIdeas = config.gdd.numeroEsteticas;     
-      for (let i = 0; i < numIdeas; i++) 
-      this.gddEsteticas.push(false);
+        this.gddActivas.push(false);
 
-      
+      this.gddPasivas = [];
+      numIdeas = config.gdd.numeroPasivas;
+      for (let i = 0; i < numIdeas; i++)
+        this.gddPasivas.push(false);
+
+      this.gddArmas = [];
+      numIdeas = config.gdd.numeroArmas;
+      for (let i = 0; i < numIdeas; i++)
+        this.gddArmas.push(false);
+
+      this.gddEsteticas = [];
+      numIdeas = config.gdd.numeroEsteticas;
+      for (let i = 0; i < numIdeas; i++)
+        this.gddEsteticas.push(false);
+
+
       this.gddTemporales = [];
-       numIdeas = config.gdd.numeroTemporales;     
-      for (let i = 0; i < numIdeas; i++) 
-      this.gddTemporales.push(false);
+      numIdeas = config.gdd.numeroTemporales;
+      for (let i = 0; i < numIdeas; i++)
+        this.gddTemporales.push(false);
     }
   }
-      
+
 
 
   shutdown() {
@@ -539,29 +546,28 @@ export default class Game extends Phaser.Scene {
     this.scene.pause('main');
   }
 
-  update(){
-    if(this.actualMusic.isPlaying){
+  update() {
+    if (this.actualMusic.isPlaying) {
 
       //Si queremos que se cambie al compas pues hay que descompentar este if
-    // if(this.time.now >= this.compassTimer)
-     // {
-        this.compassTimer = this.time.now + this.tempo;
-        //VALE A PARTIR DE AQUI, SI LO QUEREMOS HACER POR COMPASES
-        //SE QUEDA EN EL UPDATE
-        //SI NO, PUES LO PODEMOS SACAR A UN METODO
-        //Y LA VARIABLE musicChange se funa en ese caso
-        if(this.musicChange)
-        {
-          this.musicChange = false; 
-          let seekNose = this.actualMusic.seek;
-          this.actualMusic.destroy();
-          this.actualMusic = this.sound.add(this.nextSong);
-          this.actualMusic.play()
-          this.actualMusic.setSeek(seekNose);
-        }
-     // }
+      // if(this.time.now >= this.compassTimer)
+      // {
+      this.compassTimer = this.time.now + this.tempo;
+      //VALE A PARTIR DE AQUI, SI LO QUEREMOS HACER POR COMPASES
+      //SE QUEDA EN EL UPDATE
+      //SI NO, PUES LO PODEMOS SACAR A UN METODO
+      //Y LA VARIABLE musicChange se funa en ese caso
+      if (this.musicChange) {
+        this.musicChange = false;
+        let seekNose = this.actualMusic.seek;
+        this.actualMusic.destroy();
+        this.actualMusic = this.sound.add(this.nextSong);
+        this.actualMusic.play()
+        this.actualMusic.setSeek(seekNose);
+      }
+      // }
     }
-      
+
   }
 
   //Métodos del HUD
@@ -626,40 +632,40 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
-    if(this.pendingType === 'passive')
+    if (this.pendingType === 'passive')
       this.player.addPassive(this.pendingIdea);
-    else if(this.pendingType === 'active')
+    else if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
-  changeMusic(next){ 
+  changeMusic(next) {
     this.nextSong = config.music.songReference[next];
     let seekNose = this.actualMusic.seek;
     this.actualMusic.destroy();
     this.actualMusic = this.sound.add(this.nextSong);
     this.actualMusic.play()
     this.actualMusic.setSeek(seekNose);
-  
+
   }
 
-  updateGdd(key, id){
-  if (key === "weapon"){
+  updateGdd(key, id) {
+    if (key === "weapon") {
       this.gddArmas[id] = true;
-  }
-  if (key === "pasiva"){
+    }
+    if (key === "pasiva") {
       this.gddPasivas[id] = true;
-  }
-  if (key === "activa"){
+    }
+    if (key === "activa") {
       this.gddActivas[id] = true;
-  }
-  if (key === "temporal"){
+    }
+    if (key === "temporal") {
       this.gddTemporales[id] = true;
-  }
-  if (key === "estetica"){
+    }
+    if (key === "estetica") {
       this.gddEsteticas[id] = true;
-  }
+    }
 
-  this.saveFile();
+    this.saveFile();
   }
 }
