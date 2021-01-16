@@ -10,7 +10,8 @@ const Config = {
         numeroArmas:13,
         numeroEsteticas:0,
         numeroPasivas:0,
-        nueroActivas:0
+        nueroActivas:0,
+        numeroTemporales:0
     },
 
     //Configuración específica del jugador

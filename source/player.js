@@ -257,7 +257,7 @@ export default class Player extends Humanoid {
         id = Math.floor(Math.random() * config.player.passiveCount);
       } while (this.activePassives[id])
 
-      this.scene.startDialog('passive', id);
+      this.scene.startDialog('passive', 7);
       if (id !== 7) {
         this.activePassives[id] = true;
       }
@@ -279,7 +279,6 @@ export default class Player extends Humanoid {
 
   //Método para añadir una pasiva aleatoria
   addPassive(id) {
-
     //Aplica la pasiva correspondiente
     switch (id) {
       //Aumenta la vida
@@ -326,8 +325,9 @@ export default class Player extends Humanoid {
       //Cambio de arma
       case (7):
         console.log('Cambio de arma');
-        let wId = Math.floor(Math.random() * config.player.weaponCount);
+        let wId = Math.floor(Math.random() * config.gdd.numeroArmas);
         this.changeWeapon(wId);
+        this.scene.updateGdd("weapon", wId);
         break;
       case (8):
         console.log('Cambio de tilemap');
