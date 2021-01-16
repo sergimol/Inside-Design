@@ -126,7 +126,7 @@ export default class Game extends Phaser.Scene {
 
     this.gddActivas = [];   
     this.gddPasivas = [];
-    this.gddtemporales = [];
+    this.gddTemporales = [];
     this.gddArmas = [];
     this.gddEsteticas = [];
 
@@ -645,6 +645,18 @@ export default class Game extends Phaser.Scene {
   updateGdd(key, id){
   if (key === "weapon"){
       this.gddArmas[id] = true;
+  }
+  if (key === "pasiva"){
+      this.gddPasivas[id] = true;
+  }
+  if (key === "activa"){
+      this.gddActivas[id] = true;
+  }
+  if (key === "temporal"){
+      this.gddTemporales[id] = true;
+  }
+  if (key === "estetica"){
+      this.gddEsteticas[id] = true;
   }
 
   this.saveFile();
