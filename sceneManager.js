@@ -14,33 +14,33 @@ export default class Game extends Phaser.Scene {
             this.level = data.level;
     }
     preload() {
-        this.load.spritesheet('player', './Sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
+        this.load.spritesheet('player', './sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
 
         //Diego
-        this.load.spritesheet('bullet', 'Sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('enemybullet', 'Sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.image('crosshair', 'Sprites/crosshair.png');
-        this.load.image('granade_launcher', 'Sprites/granade_launcher.png');
+        this.load.spritesheet('bullet', 'sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('enemybullet', 'sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.image('crosshair', 'sprites/crosshair.png');
+        this.load.image('granade_launcher', 'sprites/granade_launcher.png');
 
-        this.load.image('escopeta_lanzable', 'Sprites/escopeta_lanzable.png');
+        this.load.image('escopeta_lanzable', 'sprites/escopeta_lanzable.png');
 
-        this.load.spritesheet('granade__launcher_shoot', 'Sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
-        this.load.spritesheet('escopeta_lanzable_shoot', 'Sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
-        this.load.spritesheet('granade_launcher_shoot_explosion', 'Sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
+        this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
+        this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
         //Javi
         //Tiles de estéticas
-        this.load.image('tileBase', './Sprites/tiles/TileJavi.png');
-        this.load.image('doorV', './Sprites/doorV.png');
-        this.load.image('doorOpenV', './Sprites/doorOpenV.png');
-        this.load.image('doorH', './Sprites/doorH.png');
-        this.load.image('doorOpenH', './Sprites/doorOpenH.png');
-        this.load.image('trigger', './Sprites/trigger.png');
-        this.load.image('end', './Sprites/end.jpg');
-        this.load.image('bulletAmmo', './Sprites/bulletAmmo.png');
-        this.load.image('medkit', './Sprites/medkit.png');
+        this.load.image('tileBase', './sprites/tiles/tileJavi.png');
+        this.load.image('doorV', './sprites/doorV.png');
+        this.load.image('doorOpenV', './sprites/doorOpenV.png');
+        this.load.image('doorH', './sprites/doorH.png');
+        this.load.image('doorOpenH', './sprites/doorOpenH.png');
+        this.load.image('trigger', './sprites/trigger.png');
+        this.load.image('end', './sprites/end.jpg');
+        this.load.image('bulletAmmo', './sprites/bulletAmmo.png');
+        this.load.image('medkit', './sprites/medkit.png');
 
-        this.load.tilemapTiledJSON('menu', './Sprites/tiles/menu.json');
+        this.load.tilemapTiledJSON('menu', './sprites/tiles/menu.json');
 
         //nuevo
         this.load.audio('mainTheme', './audio/main_theme_v1.0.wav');
@@ -48,25 +48,26 @@ export default class Game extends Phaser.Scene {
         this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
         this.load.audio('hitShootSound', './audio/hitShoot.wav');
         this.load.audio('deadSound', './audio/deadSound.wav');
-        this.load.image('gunShoot', './Sprites/gunShootProt.png');
-        this.load.image('bate', './Sprites/Bate3.png');
-        this.load.image('swing', './Sprites/swing.png');
-        this.load.image('walkParticle', './Sprites/walkParticulas.png');
-        this.load.image('dashParticle', './Sprites/dashParticula.png')
+        this.load.image('gunShoot', './sprites/gunShootProt.png');
+        this.load.image('bate', './sprites/bate3.png');
+        this.load.image('swing', './sprites/swing.png');
+        this.load.image('walkParticle', './sprites/walkParticulas.png');
+        this.load.image('dashParticle', './sprites/dashParticula.png')
         this.load.audio('dashSound', './audio/dashSound.wav');
 
         //Buttons
-        this.load.image('playButton', './Sprites/buttons/playButton.png');
-        this.load.image('gddButton', './Sprites/buttons/gddButton.png');
-        this.load.image('optionsButton', './Sprites/buttons/optionsButton.png');
+        this.load.image('playButton', './sprites/playButton.png');
+        this.load.image('gddButton', './sprites/gddButton.png');
+        this.load.image('optionsButton', './sprites/optionsButton.png');
 
-        this.load.image('playButtonlight', './Sprites/buttons/playButtonlight.png');
-        this.load.image('gddButtonlight', './Sprites/buttons/gddButtonlight.png');
-        this.load.image('optionsButtonlight', './Sprites/buttons/optionsButtonlight.png');
+        this.load.image('playButtonlight', './sprites/playButtonlight.png');
+        this.load.image('gddButtonlight', './sprites/gddButtonlight.png');
+        this.load.image('optionsButtonlight', './sprites/optionsButtonlight.png');
     }
 
     create() {
         //this.point;
+        localStorage.clear();
         this.map = this.make.tilemap({ key: 'menu' });
         this.loadTileMapRoom();
 

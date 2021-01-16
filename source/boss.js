@@ -6,6 +6,14 @@ export default class Boss extends Enemy {
 constructor(scene, x, y, player, doorN, doorS, config){
     super(scene, x , y, player, doorN, doorS, config)
     this.config = config;
+
+    this.aiming = false;
+    this.shootCount = 0;
+    this.shootRafagas = 0;
+    this.shootTime = 0;
+
+    this.timerTryShoot = 0;
+    this.timerKeepShooting = 0;
 }
 
 
@@ -18,8 +26,42 @@ preUpdate() {
     this.checkHitState();
     this.moveEnemy();
     this.nextMove();
-    //this.nextShoot();
+
+    this.tryShoot();
+    //this.weapon.shoot(true,this);
+    
+ 
+
     this.changeBehavior();
+
+}
+
+//intentara disparar bajo las condiciones que hemos creado
+tryShoot(){
+    if (this.scene.time.now >= this.timerTryShoot){
+        
+        this.timerTryShoot = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time / this.shootCount;
+        
+        if(this.shootCount >= 0){
+            this.timerKeepShooting = this.scene.time.now + this.shootTime;
+            this.shootCount--;
+            if(!this.aiming){
+                let angulo = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
+                this.weapon.rotateWeapon(angulo);
+            }
+            this.weapon.shoot(true,this);
+            for(let i = 0 ; i < this.shootRafagas; i++){
+                
+                
+            }
+        }
+    }
+
+    if(this.scene.time.now < this.timerKeepShooting){
+        
+        this.weapon.shoot(true,this);
+    }
+
 
 }
 
@@ -29,9 +71,17 @@ changeBehavior(){
 
     if(this.scene.time.now >= this.timerNextBehaviour){
         
-        
+        this.timerKeepShooting = 0;
         this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
         
+
+        this.shootCount = this.arrayBehaviors[this.arrayBehaviorNumber].shootCount + 1;
+        this.shootRafagas = this.arrayBehaviors[this.arrayBehaviorNumber].shootRafagas;
+        this.shootTime = this.arrayBehaviors[this.arrayBehaviorNumber].shootTime;
+
+        this.timerTryShoot = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time / this.shootCount;
+
+        this.aiming = this.arrayBehaviors[this.arrayBehaviorNumber].aiming;
         
         
         this.acercarse = this.arrayBehaviors[this.arrayBehaviorNumber].acercarse;
@@ -42,6 +92,10 @@ changeBehavior(){
         
         this.strafe = this.arrayBehaviors[this.arrayBehaviorNumber].strafe;
         this.strafeTime = this.arrayBehaviors[this.arrayBehaviorNumber].strafeTime;
+
+
+        //cambiamos el arma
+        this.changeWeapon(this.arrayBehaviors[this.arrayBehaviorNumber].changeWeapon);
         
         this.arrayBehaviorNumber++;
         if (this.arrayBehaviorNumber >= this.arrayBehaviors.length) this.arrayBehaviorNumber = 0;
@@ -77,8 +131,11 @@ nextMove(){
             //Movimiento
             let vectorAux = new Phaser.Math.Vector2(0, 0);
             let angulo = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
+            
+            if (this.aiming){
+                this.weapon.rotateWeapon(angulo);
+            }
             this.moveRotate(this.playerRef.x - this.x);
-            this.weapon.rotateWeapon(angulo);
             //console.log(this.dir)
             
             

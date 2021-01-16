@@ -12,7 +12,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         //animacion
 
         const anims = this.scene.anims;
-
+    
         if (!anims.exists(config.key)){
 
             anims.create({
@@ -67,7 +67,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.body.label = config.label;
         
         
-        this.aspecto.play(config.key);
+        //this.aspecto.play(config.key);
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, config.inertia);
         this.setFrictionAir(config.airFriction);
@@ -274,7 +274,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         else 
                         this.pierce--;
                     }
-                    else if (bodyB.label === 'bullet' && bodyB !== wordBody && (this.body.isSensor === true || bodyB.isSensor == true)){ //para las armas a meele que devuelvan al bicho
+                    else if (bodyB.label === 'bullet' && bodyB !== wordBody && (this.body.isSensor === true || bodyB.isSensor === true)){ //para las armas a meele que devuelvan al bicho
                         //DARLE LA VUELTA  ALA BALA
                         if (config.devulveBalas){
                             //let velocidad = Math.sqrt(Math.pow(bodyB.velocity.x, 2) + Math.pow(bodyB.velocity.y, 2));
@@ -315,7 +315,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                             bodyB.gameObject.booleanoParaDestruirme = true;
                         }
                     }
-                    else if (bodyA.label === 'bullet' && bodyA !== wordBody && (this.body.isSensor === true || bodyA.isSensor == true) ){
+                    else if (bodyA.label === 'bullet' && bodyA !== wordBody && (this.body.isSensor === true || bodyA.isSensor === true) ){
                         //DARLE LA VUELTA  ALA BALA
                         if (config.devulveBalas){
                             //let velocidad = Math.sqrt(Math.pow(bodyA.velocity.x, 2) + Math.pow(bodyA.velocity.y, 2));

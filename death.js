@@ -4,12 +4,12 @@ export default class Game extends Phaser.Scene {
         super({ key: "death" });
     }
     preload() {
-        this.load.image('menuBackground', 'Sprites/MenuBackground.png');
+        this.load.image('menuBackground', 'sprites/menuBackground.png');
 
-        this.load.image('restartButton', 'Sprites/buttons/restartButton.png');
-        this.load.image('restartButtonlight', 'Sprites/buttons/restartButtonlight.png');
-        this.load.image('quitButton', 'Sprites/buttons/quitButton.png');
-        this.load.image('quitButtonlight', 'Sprites/buttons/quitButtonlight.png');
+        this.load.image('restartButton', 'sprites/restartButton.png');
+        this.load.image('restartButtonlight', 'sprites/restartButtonlight.png');
+        this.load.image('quitButton', 'sprites/quitButton.png');
+        this.load.image('quitButtonlight', 'sprites/quitButtonlight.png');
     }
     create() {
         console.log("se crea")

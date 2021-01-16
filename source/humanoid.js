@@ -28,10 +28,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.scene.matter.body.setInertia(this.body, Infinity);
 
 
-        this.body.restitution = 0;
-        this.body.frictionStatic = 0;
-        this.body.friction = 0;
-        this.body.slop = 0.0000000;
 
         this.scene.matter.world.on('collisionstart', (event) => {
             let wordBody = this.body;
@@ -58,11 +54,11 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
     damage(damagePoints) {
 
-        if (!this.isDead) {
+        if (!this.isDead && !this.shielded) {
             this.hitState = true;
             this.health -= damagePoints;
             if (this.body.label === 'player')
-                this.hud.setHealth(this.health);
+                this.scene.setHealth(this.health);
 
             if (this.health <= 0) {
 
@@ -104,7 +100,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                 }
                 else if (this.body.label === 'player') {
                     this.weapon.pararRafagasCola();
-                    this.hud.setHealth(0);
+                    this.scene.setHealth(0);
                     this.scene.scene.launch('death');
                     this.scene.scene.pause('main');
                 }

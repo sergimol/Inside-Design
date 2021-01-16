@@ -13,7 +13,6 @@
   <script type="module">
     import GameManager from "./sceneManager.js";
     import Game from "./game.js";
-    import Ui from "./source/ui.js";
     import Pause from "./pause.js";
     import Death from "./death.js";
     import theEnd from "./theEnd.js";
@@ -30,10 +29,10 @@
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
-      scene: [GameManager, Game, Ui, Pause, Death, theEnd],
+      scene: [GameManager, Game, Pause, Death, theEnd],
       physics: {
         default: "matter",
-        matter: { gravity: { y: 0 }, debug: false },
+        matter: { gravity: { y: 0 }, debug: true },
       },
     };
     new Phaser.Game(config);

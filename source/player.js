@@ -6,14 +6,17 @@ import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
 import config from "./config.js";
 import Weapon from "./weapon.js";
 
+import WeaponList from "./weaponList.js";
+import Bullet from "./bullet.js";
+import escudoActiva from "./bulletsFolder/escudoActiva.js"
+import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js"
+
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
     super(scene, x, y, sprite, health);
     this.body.label = 'player';
 
-
     //Arma
-
     this.weapon = new Weapon(scene, 0, 5, granade__launcher);
     this.add(this.weapon);
     this.maxHealth = config.humanoid.health;
@@ -22,13 +25,14 @@ export default class Player extends Humanoid {
     //this.body.mass = 900;
     this.body.frictionAir = 0.25;
     this.depth = 4;
-    let active;
+    this.healthDropBonus = 0;
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
     this.ammo = ammo;//config.player.baseAmmo;
     this.hasInfiniteAmmo = false;
-    this.velFactor = config.player.baseVelFactor
+    this.velFactor = config.player.baseVelFactor;
+
 
     //this.add(sprite);
     /////////////
@@ -85,15 +89,8 @@ export default class Player extends Humanoid {
     }, this);
 
 
-
-    //PRUEBAS ACTIVA
-    const actives = {
-      NONE: 'none',
-      DASH: 'dash',
-      SHIELD: 'shield',
-      BOMB: 'bomb'
-    };
-    this.actualACTIVE = actives.DASH;
+    this.actualACTIVE = 'shield'; //Ninguna activa
+    this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
 
     this.dashEmitter = dashParticles.createEmitter({
@@ -105,13 +102,15 @@ export default class Player extends Humanoid {
     this.dashTime = config.player.dashTime;
     this.setMass(config.player.mass);
     this.inDash = false;
+    this.shielded = false;
+    this.shieldTime = 0;
     this.dashPos;
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
     this.scene.input.on('pointerdown', function (pointer) {
       //Comprobamos que sea el click derecho
       if (pointer.rightButtonDown()) {
         //DASH
-        if (this.actualACTIVE === actives.DASH) {
+        if (this.actualACTIVE === config.player.actives[0]) {
 
           if (this.dir.x === 0 && this.dir.y === 0)
             this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
@@ -131,11 +130,22 @@ export default class Player extends Humanoid {
             this.dash();
         }
         //ESCUDO
-        else if (this.actualACTIVE === actives.SHIELD) {
-
+        else if (this.actualACTIVE === config.player.actives[1]) {
+          if (!this.shielded) {
+            if(!this.upgraded)
+              this.shield = new Bullet(this.scene, this.x, this.y, escudoActiva, false);
+            else{
+              this.shield = new Bullet(this.scene, this.x, this.y, escudoMejoradoActiva, false);
+              this.shield.aspecto.setTint(0x42e313);
+            }
+            this.shield.setAlpha(0.5);
+            this.shield.depth = 4;
+            this.shielded = true;
+            this.shieldTime = 2000;
+          }
         }
         //BOMBAS
-        else if (this.actualACTIVE === actives.BOMB) {
+        else if (this.actualACTIVE === config.player.actives[2]) {
 
         }
       }
@@ -144,10 +154,9 @@ export default class Player extends Humanoid {
 
 
     //Carga de datos del hud
-    this.hud = this.scene.scene.get('UIScene');
-    this.hud.setHealth(this.health);
-    this.hud.setBackground(this.maxHealth);
-    this.hud.setAmmo(this.ammo);
+    this.scene.setHealth(this.health);
+    this.scene.setBackground(this.maxHealth);
+    this.scene.setAmmo(this.ammo);
 
     //Pasivas
     //this.scene.input.keyboard.on('keydown_SPACE', this.addPassive, this);
@@ -183,6 +192,8 @@ export default class Player extends Humanoid {
     for (let i = 0; i < config.player.passiveCount; i++)
       this.activePassives[i] = false;
 
+    this.upgradeActive();
+
   }//End of create
 
 
@@ -212,7 +223,7 @@ export default class Player extends Humanoid {
     if (this.ammo >= this.weapon.ammoCostPerShoot() || this.hasInfiniteAmmo) {
       if (this.weapon.shoot(false, this) && !this.hasInfiniteAmmo) {
         this.ammo -= this.weapon.ammoCostPerShoot();
-        this.hud.setAmmo(this.ammo);
+        this.scene.setAmmo(this.ammo);
       }
     }
     else
@@ -251,21 +262,41 @@ export default class Player extends Humanoid {
 
   }
 
-  //Método para añadir una pasiva aleatoria
-  addPassive() {
-    //Elige una pasiva
+  chooseIdea(type) {
     let id;
-    do {
-      id = Math.floor(Math.random() * config.player.passiveCount);
-    } while (this.activePassives[id])
+    if (type === 'passive') {
+      //Número aleatorio
+      do {
+        id = Math.floor(Math.random() * config.player.passiveCount);
+      } while (this.activePassives[id])
 
-    this.hud.startDialog('passive', id);
-    if (id !== 7) { //Distinto de 7 porque el cambio de arma no tiene indicador en el hud ni tiene que ser controlado por los booleanos
-      this.activePassives[id] = true;
-      if (id !== 3 && id !== 4 && id !== 1)  //temporal (no tienen imagenes)
-        this.hud.addPassiveImg(id);
+      this.scene.startDialog('passive', 7);
+      if (id !== 7) {
+        this.activePassives[id] = true;
+      }
     }
+    else if (type === 'active') {
+      id = Math.floor(Math.random() * config.player.activeCount);
+      id = 1;
+      this.scene.startDialog('active', id);
+    }
+    else if (type === 'tempPassive') {
 
+    }
+  }
+
+  changeActive(id) {
+    this.actualACTIVE = config.player.actives[id];
+    console.log(this.actualACTIVE);
+    this.scene.setActiveImg(id);
+  }
+
+  upgradeActive() {
+    this.upgraded = true;
+  }
+
+  //Método para añadir una pasiva aleatoria
+  addPassive(id) {
     //Aplica la pasiva correspondiente
     switch (id) {
       //Aumenta la vida
@@ -273,8 +304,8 @@ export default class Player extends Humanoid {
         console.log('Me lo tanqueo')
         this.health += this.health / 2;
         this.maxHealth += this.maxHealth / 2;
-        this.hud.setHealth(this.health);
-        this.hud.setBackground(this.maxHealth);
+        this.scene.setHealth(this.health);
+        this.scene.setBackground(this.maxHealth);
         break;
       //Disminuye la vida
       case (1):
@@ -282,24 +313,24 @@ export default class Player extends Humanoid {
         this.maxHealth /= 2;
         if (this.maxHealth < this.health) {
           this.health = this.maxHealth;
-          this.hud.setHealth(this.health);
+          this.scene.setHealth(this.health);
         }
-        this.hud.setBackground(this.maxHealth);
+        this.scene.setBackground(this.maxHealth);
         break;
       //Munición infinita
       case (2):
         console.log('Rambo');
         this.hasInfiniteAmmo = true;
-        this.hud.setAmmo(-1);
+        this.scene.setAmmo(-1);
         break;
       //Botiquines
       case (3):
         console.log('Botiquines buena onda');
-        ///////////////////////////////////
+        this.healthDropBonus = 3;
         break;
       case (4):
         console.log('Botiquines mala onda');
-        ///////////////////////////////////
+        this.healthDropBonus = -2;
         break;
       case (5):
         console.log('Sanic');
@@ -312,17 +343,27 @@ export default class Player extends Humanoid {
       //Cambio de arma
       case (7):
         console.log('Cambio de arma');
-        let wId = Math.floor(Math.random() * config.player.weaponCount);
+        let wId = Math.floor(Math.random() * config.gdd.numeroArmas);
         this.changeWeapon(wId);
+        this.scene.updateGdd("weapon", wId);
+        break;
+      case (8):
+        console.log('Cambio de tilemap');
+        let tId = Math.floor(Math.random() * config.tileset.tileCount);
+        this.changeTile(tId, false);
         break;
       //TileSets
+      /*
       case(8):
         console.log('Outlaws from the West');
         this.scene.changeLayer(config.tileset.west);
+        this.scene.changeMusic(config.music.west);
         break;
+        
       case(9):
         console.log('Ray Tracing breakdance skill');
         this.scene.changeLayer(config.tileset.raytracing);
+        this.scene.changeMusic(config.music.neon);
         break;
       case(10):
         console.log('La serie mas aburrida de la historia');
@@ -331,7 +372,7 @@ export default class Player extends Humanoid {
       case(11):
         console.log('Especial Navidad');
         this.scene.changeLayer(config.tileset.navidad);
-      break;
+        break;
       case(12):
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
@@ -339,15 +380,23 @@ export default class Player extends Humanoid {
       case(13):
         console.log('El mejor juego de la historia');
         this.scene.changeLayer(config.tileset.zelda);
-      break;
+        break;
       case(14):
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
+        this.scene.changeMusic(config.music.rock);
         break;
       case(15):
         console.log('P.T.');
         this.scene.changeLayer(config.tileset.miedo);
+        this.scene.changeMusic(config.music.horror);
         break;
+      case(16):
+        console.log('P.T.');
+        this.scene.changeLayer(config.tileset.miedo);
+        this.scene.changeMusic(config.music.horror);
+        break;
+        */
     }
 
   }
@@ -357,26 +406,128 @@ export default class Player extends Humanoid {
 
   }
 
-  changeWeapon(id) {
+  changeWeapon(wId) {
     this.weapon.destructora();
-    switch (id) {
-      case (0):
-        this.weapon = new Weapon(this.scene, 0, 5, defaultWeapon);
-        break;
-      case (1):
-        this.weapon = new Weapon(this.scene, 0, 5, granade__launcher);
-        break;
-      case (2):
-        this.weapon = new Weapon(this.scene, 0, 5, escopeta_lanzable);
-        break;
-    }
+    this.weapon = new Weapon(this.scene, 0, 5, WeaponList[wId]);
     this.add(this.weapon);
   }
 
-  giveAmmo(amount) {
-    this.ammo += amount;
-    if (!this.hasInfiniteAmmo)
-      this.hud.setAmmo(this.ammo);
+  changeTile(tId, isNewScene) {
+    this.tileID = tId;
+    switch (tId) {
+      //Cuidao solo haces ejecutas la musica cuando salta como idea
+      case (0):
+        console.log('Outlaws from the West');
+        this.scene.changeLayer(config.tileset.west);
+        if (!isNewScene)
+          this.changeMusicMovida(config.music.west, isNewScene);
+        break;
+
+      case (1):
+        console.log('Ray Tracing breakdance skill');
+        this.scene.changeLayer(config.tileset.raytracing);
+        if (!isNewScene)
+          this.changeMusicMovida(config.music.neon, isNewScene);
+        break;
+
+      case (2):
+        console.log('La serie mas aburrida de la historia');
+        this.scene.changeLayer(config.tileset.minecraft);
+        break;
+
+      case (3):
+        console.log('Especial Navidad');
+        this.scene.changeLayer(config.tileset.navidad);
+        break;
+
+      case (4):
+        console.log('Mas de 1000 capitulos');
+        this.scene.changeLayer(config.tileset.piratas);
+        break;
+
+      case (5):
+        console.log('El mejor juego de la historia');
+        this.scene.changeLayer(config.tileset.zelda);
+        break;
+
+      case (6):
+        console.log('The Only Thing They Fear is You');
+        this.scene.changeLayer(config.tileset.doom);
+        if (!isNewScene)
+          this.changeMusicMovida(config.music.rock, isNewScene);
+        break;
+
+      case (7):
+        console.log('P.T.');
+        this.scene.changeLayer(config.tileset.miedo);
+        if (!isNewScene)
+          this.changeMusicMovida(config.music.horror, isNewScene);
+        break;
+    }
+  }
+
+  changeMusicMovida(mId) {
+    this.musicID = mId;
+    switch (mId) {
+      case (config.music.mainChip):
+        console.log('Outlaws from the West');
+        this.scene.changeMusic(config.music.mainChip);
+        break;
+
+      case (config.music.west):
+        console.log('Outlaws from the West');
+        this.scene.changeMusic(config.music.west);
+        break;
+
+      case (config.music.neon):
+        console.log('Ray Tracing breakdance skill');
+        this.scene.changeMusic(config.music.neon);
+        break;
+
+      case (config.music.old30s):
+        console.log('La serie mas aburrida de la historia');
+        this.scene.changeMusic(config.music.old30s);
+        break;
+
+      case (config.music.epic):
+        console.log('Especial Navidad');
+        this.scene.changeMusic(config.music.epic);
+        break;
+
+      case (config.music.horror):
+        console.log('Mas de 1000 capitulos');
+        this.scene.changeMusic(config.music.horror);
+        break;
+
+      case (config.music.berridos):
+        console.log('El mejor juego de la historia');
+        this.scene.changeMusic(config.music.berridos);
+        break;
+
+      case (config.music.rock):
+        console.log('The Only Thing They Fear is You');
+        this.scene.changeMusic(config.music.rock);
+        break;
+
+      case (config.music.piano):
+        console.log('P.T.');
+        this.scene.changeMusic(config.music.piano);
+        break;
+    }
+  }
+
+  giveAmmo(amount) {    
+    if (!this.hasInfiniteAmmo){
+      this.ammo += amount;
+      this.scene.setAmmo(this.ammo);
+    }
+  }
+
+  giveHealth(amount){
+    this.health += (amount + this.healthDropBonus);
+    if(this.health > this.maxHealth)
+      this.health = this.maxHealth;
+    this.scene.setHealth(this.health);
   }
 
   addToState() {
@@ -428,6 +579,21 @@ export default class Player extends Humanoid {
       this.semiAutomaticaHasShoot = true;
       this.shoot();
     }
+
+    if (this.shielded) {
+      this.shieldTime--;
+      console.log(this.shield)
+      if (this.shieldTime <= 0) {
+        this.shielded = false;
+        this.shield.destroy();
+      }
+      else {
+        this.shield.x = this.x;
+        this.shield.y = this.y;
+      }
+    }
+
+
 
     //Llamada al menu de pausa
     //console.log(this.cursors.escape.isDown)
