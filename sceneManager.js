@@ -56,13 +56,13 @@ export default class Game extends Phaser.Scene {
         this.load.audio('dashSound', './audio/dashSound.wav');
 
         //Buttons
-        this.load.image('playButton', './sprites/playButton.png');
-        this.load.image('gddButton', './sprites/gddButton.png');
-        this.load.image('optionsButton', './sprites/optionsButton.png');
+        this.load.image('playButton', './sprites/buttons/playButton.png');
+        this.load.image('gddButton', './sprites/buttons/gddButton.png');
+        this.load.image('optionsButton', './sprites/buttons/optionsButton.png');
 
-        this.load.image('playButtonlight', './sprites/playButtonlight.png');
-        this.load.image('gddButtonlight', './sprites/gddButtonlight.png');
-        this.load.image('optionsButtonlight', './sprites/optionsButtonlight.png');
+        this.load.image('playButtonlight', './sprites/buttons/playButtonlight.png');
+        this.load.image('gddButtonlight', './sprites/buttons/gddButtonlight.png');
+        this.load.image('optionsButtonlight', './sprites/buttons/optionsButtonlight.png');
     }
 
     create() {
