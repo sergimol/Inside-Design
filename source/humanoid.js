@@ -88,8 +88,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                             var item = new Item(this.scene, this.x, this.y, 'medkit', this.scene.player);
                     }
                     //Decrementa en 1 EnemyCountDoor de la sala en la que se encuentra el enemigo
-                    --this.doorRef.EnemyCountDoor[this.doorNum];    //El -1 es porque la puerta inicial es 1, pero el array empieza en 0
-                    console.log(this.doorRef.EnemyCountDoor[this.doorNum]);
+                    --this.doorRef.EnemyCountDoor;    //El -1 es porque la puerta inicial es 1, pero el array empieza en 0
+                    console.log(this.doorRef.EnemyCountDoor);
 
                     this.body.collisionFilter = {
                         'group': -2,

@@ -1,4 +1,11 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "target":"."
+        }
+    },
  "height":30,
  "infinite":false,
  "layers":[
@@ -150,11 +157,6 @@
                  "name":"door",
                  "properties":[
                         {
-                         "name":"DoorNum",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
                          "name":"rotation",
                          "type":"string",
                          "value":"horizontal"
@@ -172,19 +174,14 @@
                  "name":"doorTrigger",
                  "properties":[
                         {
-                         "name":"DoorNum",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"direccion",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
                          "name":"rotation",
                          "type":"string",
                          "value":"vertical"
+                        }, 
+                        {
+                         "name":"zdireccion",
+                         "type":"int",
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
@@ -296,7 +293,6 @@
                  "objectgroup":
                     {
                      "draworder":"index",
-                     "id":2,
                      "name":"",
                      "objects":[
                             {
@@ -418,7 +414,6 @@
                  "objectgroup":
                     {
                      "draworder":"index",
-                     "id":2,
                      "name":"",
                      "objects":[
                             {
@@ -540,7 +535,6 @@
                  "objectgroup":
                     {
                      "draworder":"index",
-                     "id":2,
                      "name":"",
                      "objects":[
                             {

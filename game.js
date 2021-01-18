@@ -146,9 +146,13 @@ export default class Game extends Phaser.Scene {
     let nameRoom = 'sala' + numRoom.toString();
 
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
-    this.map = this.make.tilemap({ key: 'sala1' });
-    this.loadTileMapRoom();
+    this.levelname = this.level + 1;
+    this.map = this.make.tilemap({ key: 'sala' + this.levelname});
 
+
+    this.loadTileMapRoom();
+    this.EnterRoomDir = this.map.properties[0].value;
+    this.ExitRoomDir = this.map.properties[1].value;
     //PARA LA MUSICA
 
 
@@ -218,10 +222,11 @@ export default class Game extends Phaser.Scene {
             playerBody = bodyB;
           }
           if (playerBody.label === 'endLevel') {
-            this.cameras.main.fadeOut(3000);
+            
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
-            if (blockBody === 'player') {
-              if (this.level != 3) {
+            if (blockBody.label === 'player') {
+              this.cameras.main.fadeOut(3000);
+              if (this.level != 1) {
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
                 this.scene.start('main', {
@@ -254,7 +259,7 @@ export default class Game extends Phaser.Scene {
     this.doorSystem = new Doors(this, 'doorOpenV', 'doorV', 'doorOpenH', 'doorH');
 
     this.enemies = this.add.group();
-    let doorNum = {}; //Guarda la cantidad de enemigos por sala
+    let doorNum; //Guarda la cantidad de enemigos por sala
     var enemyCount = 0;
     let x = 0;
 
@@ -284,13 +289,13 @@ export default class Game extends Phaser.Scene {
         const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
-        if (doorNum[objeto.properties[0].value - 1] != x)
+        if (doorNum != x)
           enemyCount = 0;
 
         ++enemyCount;
-        doorNum[objeto.properties[0].value - 1] = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
+        doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
 
-        x = doorNum[objeto.properties[0].value - 1];
+        x = doorNum;
       }
       else if (objeto.name === 'endLevel') {
         this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
@@ -309,13 +314,13 @@ export default class Game extends Phaser.Scene {
         this.enemies.add(e);
 
 
-        if (doorNum[0] != x)
+        if (doorNum != x)
           enemyCount = 0;
 
         ++enemyCount;
-        doorNum[0] = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
+        doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
 
-        x = doorNum[0];
+        x = doorNum;
       }
       else i--;
 
@@ -323,7 +328,7 @@ export default class Game extends Phaser.Scene {
 
     for (const objeto of DoorsentityLayer) {
       //Creamos una puerta con la posicion y el numero necesario de enemigos  y la rotacion que hacen falta matar para que se abra
-      this.doorSystem.addDoor(objeto, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1, objeto.properties[1].value);
+      this.doorSystem.addDoor(objeto, doorNum);
     }
   }
 

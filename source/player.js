@@ -132,9 +132,9 @@ export default class Player extends Humanoid {
         //ESCUDO
         else if (this.actualACTIVE === config.player.actives[1]) {
           if (!this.shielded) {
-            if(!this.upgraded)
+            if (!this.upgraded)
               this.shield = new Bullet(this.scene, this.x, this.y, escudoActiva, false);
-            else{
+            else {
               this.shield = new Bullet(this.scene, this.x, this.y, escudoMejoradoActiva, false);
               this.shield.aspecto.setTint(0x42e313);
             }
@@ -194,6 +194,9 @@ export default class Player extends Humanoid {
 
     this.upgradeActive();
 
+
+    this.isEntering = true;
+    this.isLeaving = false;
   }//End of create
 
 
@@ -516,16 +519,16 @@ export default class Player extends Humanoid {
     }
   }
 
-  giveAmmo(amount) {    
-    if (!this.hasInfiniteAmmo){
+  giveAmmo(amount) {
+    if (!this.hasInfiniteAmmo) {
       this.ammo += amount;
       this.scene.setAmmo(this.ammo);
     }
   }
 
-  giveHealth(amount){
+  giveHealth(amount) {
     this.health += (amount + this.healthDropBonus);
-    if(this.health > this.maxHealth)
+    if (this.health > this.maxHealth)
       this.health = this.maxHealth;
     this.scene.setHealth(this.health);
   }
@@ -543,20 +546,35 @@ export default class Player extends Humanoid {
     if (this.scene.time.now > this.timerDash) {
       this.inDash = false;
     }
-    //Idle por defecto
-    this.dir.x = 0;
-    this.dir.y = 0;
-    //Movimiento horizontal
-    if (this.cursors.left.isDown || this.cursors.a.isDown)
-      this.dir.x = -1;
-    else if (this.cursors.right.isDown || this.cursors.d.isDown)
-      this.dir.x = 1;
-    //Movimiento vertical        
-    if (this.cursors.up.isDown || this.cursors.w.isDown)
-      this.dir.y = -1;
-    else if (this.cursors.down.isDown || this.cursors.s.isDown)
-      this.dir.y = 1;
-
+    //Right si se entra o se sale por la izquierda
+    //Left si se entra o se sale por la derecha
+    //Top si se entra o se sale por arriba
+    //Down si se entra o se sale por abajo
+    if (this.isEntering || this.isLeaving) {
+      if (this.scene.EnterRoomDir === "Right" || this.scene.ExitRoomDir === "Left")
+        this.dir.x = 1;
+      else if (this.scene.EnterRoomDir === "Left" || this.scene.ExitRoomDir === "Right")
+        this.dir.x = -1;
+      else if (this.scene.EnterRoomDir === "Top" || this.scene.ExitRoomDir === "Bottom")
+        this.dir.y = 1;
+      else if (this.scene.EnterRoomDir === "Bottom" || this.scene.ExitRoomDir === "Top")
+        this.dir.y = -1;
+    }
+    else {
+      //Idle por defecto
+      this.dir.x = 0;
+      this.dir.y = 0;
+      //Movimiento horizontal
+      if (this.cursors.left.isDown || this.cursors.a.isDown)
+        this.dir.x = -1;
+      else if (this.cursors.right.isDown || this.cursors.d.isDown)
+        this.dir.x = 1;
+      //Movimiento vertical        
+      if (this.cursors.up.isDown || this.cursors.w.isDown)
+        this.dir.y = -1;
+      else if (this.cursors.down.isDown || this.cursors.s.isDown)
+        this.dir.y = 1;
+    }
     this.dir.normalize();
     this.playerMove();
     this.puntero.moverconjugador(this);
@@ -582,7 +600,7 @@ export default class Player extends Humanoid {
 
     if (this.shielded) {
       this.shieldTime--;
-      console.log(this.shield)
+      //console.log(this.shield)
       if (this.shieldTime <= 0) {
         this.shielded = false;
         this.shield.destroy();

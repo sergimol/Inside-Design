@@ -119,7 +119,7 @@ export default class Game extends Phaser.Scene {
 
         for (const objeto of DoorsentityLayer) {
             //Creamos una puerta con la posicion y el numero necesario de enemigos  y la rotacion que hacen falta matar para que se abra
-            this.doorSystem.addDoor(objeto, doorNum[objeto.properties[0].value - 1], objeto.properties[0].value - 1, objeto.properties[1].value);
+            this.doorSystem.addDoor(objeto, doorNum);
         }
     }
 

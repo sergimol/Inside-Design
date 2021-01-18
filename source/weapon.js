@@ -162,7 +162,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
             this.scene.disparosRealizados++;
             this.scene.saveFile();
 
-            console.log(localStorage);
+            //console.log(localStorage);
         }
         
             this.canyon.getWorldTransformMatrix(this.tempMatrix, this.scene.TransformMatrix);
