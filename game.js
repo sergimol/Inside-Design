@@ -221,10 +221,9 @@ export default class Game extends Phaser.Scene {
             this.cameras.main.fadeOut(3000);
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
             if (blockBody === 'player') {
-              if (this.level != 0) {
+              if (this.level != 3) {
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
-                //this.actualMusic.destroy();
                 this.scene.start('main', {
                   health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level,
                   tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic
@@ -274,8 +273,9 @@ export default class Game extends Phaser.Scene {
           this.player.musicID = this.musicID;
           if (this.actualMusic != null)
             this.actualMusic.stop();
-          this.actualMusic = this.sound.add(config.music.songReference[this.musicID]);
+          this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 0.3 });
           this.actualMusic.play();
+
         }
         //this.player.changeAnimacionesonoseque();
       }
