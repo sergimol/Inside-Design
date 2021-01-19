@@ -23,14 +23,39 @@ const Config = {
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
-        passiveCount: 8,
+        passiveCount: 9,
         weaponCount: 3,
         activeCount: 3,
         actives: [
             'dash',
             'shield',
             'bomb'
-        ]
+        ],
+        spriteKey: [
+            'playerDef',
+            'playerWest',
+            'playerDoomGuy',
+            'playerPirata',
+            'playerCalvo',
+            'playerEllie',
+            'playerRuso',
+            'playerPayaso',
+            'playerCresta',
+            'playerHummus',
+        ],
+        def: 0,
+        west: 1,
+        doom: 2,
+        pirata: 3,
+        calvo: 4,
+        ellie: 5,
+        ruso: 6,
+        payaso: 7,
+        cresta: 8,
+        hummus: 9,
+        numberAspectos: 10,
+
+        spriteID: 0
     },
     
     //Configuración base de las armas
@@ -102,6 +127,8 @@ const Config = {
         healthDrop: 3,
         ammoDrop: 5
     }
+
+    
 }
 
 export default Config

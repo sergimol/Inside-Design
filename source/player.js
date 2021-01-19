@@ -16,6 +16,7 @@ export default class Player extends Humanoid {
     super(scene, x, y, sprite, health);
     this.body.label = 'player';
 
+    this.spriteID = config.player.spriteID;
     //Arma
     this.weapon = new Weapon(scene, 0, 5, granade__launcher);
     this.add(this.weapon);
@@ -36,22 +37,8 @@ export default class Player extends Humanoid {
 
     //this.add(sprite);
     /////////////
-    //Animaciones
-    const anims = scene.anims;
-
-    anims.create({
-      key: 'walk',
-      frames: anims.generateFrameNumbers(sprite, { start: 4, end: 8 }), //15
-      frameRate: 15,
-      repeat: -1
-    })
-    anims.create({
-      key: 'idle',
-      frames: anims.generateFrameNumbers(sprite, { start: 1, end: 3 }),
-      frameRate: 7,
-      repeat: -1
-    })
-
+    
+    
     //INPUT
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D, ENTER, ESC } = Phaser.Input.Keyboard.KeyCodes
     this.cursors = scene.input.keyboard.addKeys({
@@ -254,11 +241,11 @@ export default class Player extends Humanoid {
       if (this.dir.x === 0 && this.dir.y === 0) {
 
         this.emitter.stopFollow(this);
-        this.aspecto.play('idle', true);
+        this.aspecto.play('idle'+config.player.spriteKey[this.spriteID], true);
       }
       else {
         this.emitter.startFollow(this);
-        this.aspecto.play('walk', true);
+        this.aspecto.play('walk'+config.player.spriteKey[this.spriteID], true);
       }
     }
 
@@ -272,6 +259,8 @@ export default class Player extends Humanoid {
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
       } while (this.activePassives[id])
+      //
+      
 
       this.scene.startDialog('passive', 7);
       if (id !== 7) {
@@ -286,6 +275,7 @@ export default class Player extends Humanoid {
     else if (type === 'tempPassive') {
 
     }
+
   }
 
   changeActive(id) {
@@ -353,53 +343,14 @@ export default class Player extends Humanoid {
       case (8):
         console.log('Cambio de tilemap');
         let tId = Math.floor(Math.random() * config.tileset.tileCount);
+        //
+        tId = 4;
         this.changeTile(tId, false);
         break;
-      //TileSets
-      /*
-      case(8):
-        console.log('Outlaws from the West');
-        this.scene.changeLayer(config.tileset.west);
-        this.scene.changeMusic(config.music.west);
+     case (9):
+        console.log("Cambio solo apariecia");
+        this.changeSpriteIdea(false);
         break;
-        
-      case(9):
-        console.log('Ray Tracing breakdance skill');
-        this.scene.changeLayer(config.tileset.raytracing);
-        this.scene.changeMusic(config.music.neon);
-        break;
-      case(10):
-        console.log('La serie mas aburrida de la historia');
-        this.scene.changeLayer(config.tileset.minecraft);
-        break;
-      case(11):
-        console.log('Especial Navidad');
-        this.scene.changeLayer(config.tileset.navidad);
-        break;
-      case(12):
-        console.log('Mas de 1000 capitulos');
-        this.scene.changeLayer(config.tileset.piratas);
-        break;
-      case(13):
-        console.log('El mejor juego de la historia');
-        this.scene.changeLayer(config.tileset.zelda);
-        break;
-      case(14):
-        console.log('The Only Thing They Fear is You');
-        this.scene.changeLayer(config.tileset.doom);
-        this.scene.changeMusic(config.music.rock);
-        break;
-      case(15):
-        console.log('P.T.');
-        this.scene.changeLayer(config.tileset.miedo);
-        this.scene.changeMusic(config.music.horror);
-        break;
-      case(16):
-        console.log('P.T.');
-        this.scene.changeLayer(config.tileset.miedo);
-        this.scene.changeMusic(config.music.horror);
-        break;
-        */
     }
 
   }
@@ -424,10 +375,12 @@ export default class Player extends Humanoid {
         this.scene.changeLayer(config.tileset.west);
         if (!isNewScene)
           this.changeMusicMovida(config.music.west, isNewScene);
+          this.spriteID = config.player.west;
+          this.changeSpriteIdea(true);
         break;
 
       case (1):
-        console.log('Ray Tracing breakdance skill');
+        console.log('Ray Tracing breakdance kill');
         this.scene.changeLayer(config.tileset.raytracing);
         if (!isNewScene)
           this.changeMusicMovida(config.music.neon, isNewScene);
@@ -446,6 +399,8 @@ export default class Player extends Humanoid {
       case (4):
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
+        this.spriteID = config.player.pirata;
+        this.changeSpriteIdea(true);
         break;
 
       case (5):
@@ -458,6 +413,8 @@ export default class Player extends Humanoid {
         this.scene.changeLayer(config.tileset.doom);
         if (!isNewScene)
           this.changeMusicMovida(config.music.rock, isNewScene);
+          this.spriteID = config.player.doom;
+          this.changeSpriteIdea(true);
         break;
 
       case (7):
@@ -540,6 +497,7 @@ export default class Player extends Humanoid {
 
   preUpdate() {
 
+  
     this.applyForce(this.forceSaved);
     this.forceSaved = { x: 0, y: 0 };
 
@@ -625,5 +583,21 @@ export default class Player extends Humanoid {
 
     //Llamada al menu de pausa
     //console.log(this.cursors.escape.isDown)
+  }
+
+  changeSpriteIdea(fromTile){
+    
+    if(fromTile)
+      this.scene.changePlayerSprite(this.spriteID);
+    else
+    {
+      let id;
+      do {
+        id = Math.floor(Math.random() * config.player.numberAspectos);
+      } while (id<=3)
+      this.spriteID = id;
+      this.scene.changePlayerSprite(this.spriteID);
+    }
+    
   }
 }
