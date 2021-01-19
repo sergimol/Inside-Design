@@ -550,14 +550,24 @@ export default class Player extends Humanoid {
     //Left si se entra o se sale por la derecha
     //Top si se entra o se sale por arriba
     //Down si se entra o se sale por abajo
-    if (this.isEntering || this.isLeaving) {
-      if (this.scene.EnterRoomDir === "Right" || this.scene.ExitRoomDir === "Left")
+    if (this.isEntering) {
+      if (this.scene.EnterRoomDir === "Right")
         this.dir.x = 1;
-      else if (this.scene.EnterRoomDir === "Left" || this.scene.ExitRoomDir === "Right")
+      else if (this.scene.EnterRoomDir === "Left")
         this.dir.x = -1;
-      else if (this.scene.EnterRoomDir === "Top" || this.scene.ExitRoomDir === "Bottom")
+      else if (this.scene.EnterRoomDir === "Top")
         this.dir.y = 1;
-      else if (this.scene.EnterRoomDir === "Bottom" || this.scene.ExitRoomDir === "Top")
+      else if (this.scene.EnterRoomDir === "Bottom")
+        this.dir.y = -1;
+    }
+    else if (this.isLeaving) {
+      if (this.scene.ExitRoomDir === "Left")
+        this.dir.x = 1;
+      else if (this.scene.ExitRoomDir === "Right")
+        this.dir.x = -1;
+      else if (this.scene.ExitRoomDir === "Bottom")
+        this.dir.y = 1;
+      else if (this.scene.ExitRoomDir === "Top")
         this.dir.y = -1;
     }
     else {
