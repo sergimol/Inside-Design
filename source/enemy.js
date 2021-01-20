@@ -16,9 +16,6 @@ export default class Enemy extends Humanoid {
 
         this.isBoss = isBoss;
         this.cleon = cleon;
-        this.aimadre = Phaser.Math.RND.between(0, 1); //izquierda o derecha del strafe
-        //this.aspecto.setSize(10,10);
-        this.setScale(2,2);
 
         //comportamientos
         this.Idle = false;
@@ -155,17 +152,15 @@ export default class Enemy extends Humanoid {
 
 checkHitState(){
     if (this.hitState) {
-        /*
         if(!this.isBoss)
             this.aspecto.play('hitEnemy', true);
-            
         else
-        {*/
-            if(this.aimadre === 0)
+        {
+            if(this.cleon)
                 this.aspecto.play('hitCleon', true);
             else
                 this.aspecto.play('hitGuille', true);
-       // }
+        }
 
         if (this.aspecto.anims.currentFrame.textureFrame === 14)
             this.hitState = false;
@@ -174,25 +169,28 @@ checkHitState(){
     else if (!this.isDead) {
         if (this.dir.x !== 0 || this.dir.y !== 0)
         {
-
-            if(this.aimadre === 0)
-                this.aspecto.play('walkCleon', true);
+            if(!this.isBoss)
+                this.aspecto.play('walkEnemy', true);
             else
-                this.aspecto.play('walkGuille', true);
+            {
+                if(this.cleon)
+                    this.aspecto.play('walkCleon', true);
+                else
+                    this.aspecto.play('walkGuille', true);
+            }
         }
         else
         {
 
-            /*
             if(!this.isBoss)
                 this.aspecto.play('idleEnemy', true);
             else
-            {*/
-                if(this.aimadre === 0)
+            {
+                if(this.cleon)
                     this.aspecto.play('idleCleon', true);
                 else
                     this.aspecto.play('idleGuille', true);
-            //}
+            }
         }
     }
     else {
