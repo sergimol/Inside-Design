@@ -368,7 +368,7 @@ export default class Player extends Humanoid {
         break;
      case (9):
         console.log("Cambio solo apariecia");
-        this.changeSpriteIdea(false);
+        this.changeSpriteIdea(false, false, " ");
         break;
     }
 
@@ -395,7 +395,7 @@ export default class Player extends Humanoid {
         if (!isNewScene)
           this.changeMusicMovida(config.music.west, isNewScene);
           this.spriteID = config.player.west;
-          this.changeSpriteIdea(true);
+          this.changeSpriteIdea(true, false, " ");
         break;
 
       case (1):
@@ -419,7 +419,7 @@ export default class Player extends Humanoid {
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
         this.spriteID = config.player.pirata;
-        this.changeSpriteIdea(true);
+        this.changeSpriteIdea(true, false, " ");
         break;
 
       case (5):
@@ -433,7 +433,7 @@ export default class Player extends Humanoid {
         if (!isNewScene)
           this.changeMusicMovida(config.music.rock, isNewScene);
           this.spriteID = config.player.doom;
-          this.changeSpriteIdea(true);
+          this.changeSpriteIdea(true, false, " ");
         break;
 
       case (7):
@@ -610,19 +610,24 @@ export default class Player extends Humanoid {
     //console.log(this.cursors.escape.isDown)
   }
 
-  changeSpriteIdea(fromTile){
+  changeSpriteIdea(fromTile, isNewScene, lastSpriteId){
     
-    if(fromTile)
-      this.scene.changePlayerSprite(this.spriteID);
+    //Si viene de cargar escena le mandamos el id anterior
+    if(isNewScene)
+      this.spriteID = lastSpriteId;
+    //Si viene de nueva idea miramos si viene de una que desencadena de tile o no
     else
     {
-      let id;
-      do {
-        id = Math.floor(Math.random() * config.player.numberAspectos);
-      } while (id<=3)
-      this.spriteID = id;
-      this.scene.changePlayerSprite(this.spriteID);
+      if(!fromTile)  
+      {
+        let id;
+        do {
+           id = Math.floor(Math.random() * config.player.numberAspectos);
+        } while (id<=3)
+        this.spriteID = id;
+      }
+        
     }
-    
+    this.scene.changePlayerSprite(this.spriteID);
   }
 }
