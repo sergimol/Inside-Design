@@ -9,8 +9,8 @@ import enemyConfig from "./source/enemiesFolder/defaultEnemy.js"
 import dialogues from "./source/dialogues.js";
 
 import Boss from "./source/boss.js";
-import clyon from "./source/Bosses/clyon.js";
-import willermo from "./source/Bosses/willermo.js";
+import clyon from "./source/bosses/clyon.js";
+import willermo from "./source/bosses/willermo.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {

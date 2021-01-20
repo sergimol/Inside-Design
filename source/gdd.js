@@ -13,26 +13,26 @@ export default class Game extends Phaser.Scene {
         super({ key: "gdd" });
     }
     preload() {
-        this.load.image('background', 'Sprites/gdd/GDDBackground.png');
-        this.load.image('gotele', 'Sprites/gdd/GDDgotele.png');
+        this.load.image('background', 'sprites/gdd/gddBackground.png');
+        this.load.image('gotele', 'sprites/gdd/gddgotele.png');
 
-        this.load.image('back', 'Sprites/gdd/GDDback.png');
-        this.load.image('next', 'Sprites/gdd/GDDnext.png');
-        this.load.image('exit', 'Sprites/gdd/GDDexit.png');
+        this.load.image('back', 'sprites/gdd/gddback.png');
+        this.load.image('next', 'sprites/gdd/gddnext.png');
+        this.load.image('exit', 'sprites/gdd/gddexit.png');
 
-        this.load.image('armas', 'Sprites/gdd/GDDarmas.png');
-        this.load.image('esteticas', 'Sprites/gdd/GDDesteticas.png');
-        this.load.image('pasivas', 'Sprites/gdd/GDDpasivas.png');
-        this.load.image('activas', 'Sprites/gdd/GDDactivas.png');
-        this.load.image('temporales', 'Sprites/gdd/GDDtemporales.png');
+        this.load.image('armas', 'sprites/gdd/gddarmas.png');
+        this.load.image('esteticas', 'sprites/gdd/gddesteticas.png');
+        this.load.image('pasivas', 'sprites/gdd/gddpasivas.png');
+        this.load.image('activas', 'sprites/gdd/gddactivas.png');
+        this.load.image('temporales', 'sprites/gdd/gddtemporales.png');
 
         //IMAGENES IDEAS
-        this.load.image('armas0', 'Sprites/gdd/armas1.png');
-        this.load.image('armas1', 'Sprites/gdd/armas2.png');
-        this.load.image('armas2', 'Sprites/gdd/armas3.png');
+        this.load.image('armas0', 'sprites/gdd/armas1.png');
+        this.load.image('armas1', 'sprites/gdd/armas2.png');
+        this.load.image('armas2', 'sprites/gdd/armas3.png');
 
-        this.load.image('pasivas0', 'Sprites/gdd/pasivas1.png');
-        this.load.image('pasivas1', 'Sprites/gdd/pasivas2.png');
+        this.load.image('pasivas0', 'sprites/gdd/pasivas1.png');
+        this.load.image('pasivas1', 'sprites/gdd/pasivas2.png');
     }
 
 
