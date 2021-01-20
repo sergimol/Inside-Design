@@ -72,7 +72,7 @@ export default class Game extends Phaser.Scene {
         this.loadTileMapRoom();
 
         //PUNTERO
-        this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
+        this.input.setDefaultCursor('url(sprites/crosshair.png), pointer');
 
         this.doorSystem;
 
