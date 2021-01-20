@@ -33,6 +33,8 @@ export default class Player extends Humanoid {
     this.hasInfiniteAmmo = false;
     this.velFactor = config.player.baseVelFactor;
 
+    this.weaponId = 0;
+
 
     //this.add(sprite);
     /////////////
@@ -413,6 +415,7 @@ export default class Player extends Humanoid {
     this.weapon.destructora();
     this.weapon = new Weapon(this.scene, 0, 5, WeaponList[wId]);
     this.add(this.weapon);
+    this.weaponId = wId;
   }
 
   changeTile(tId, isNewScene) {

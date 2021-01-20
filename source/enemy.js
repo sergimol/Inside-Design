@@ -23,9 +23,9 @@ export default class Enemy extends Humanoid {
 
         this.strafeAngle = Math.PI / 2; //izquierda o derecha del strafe
         if (Phaser.Math.RND.between(0, 1) != 0)
-            this.angleAcercarse = Math.PI / 4; //preferencia para acercarse sobre el lado izquierdo o el derecho
+            this.angleAcercarse = config.angleAcercarse; //preferencia para acercarse sobre el lado izquierdo o el derecho
         else
-            this.angleAcercarse = -Math.PI / 4; //preferencia para acercarse sobre el lado izquierdo o el derecho
+            this.angleAcercarse = -config.angleAcercarse; //preferencia para acercarse sobre el lado izquierdo o el derecho
 
         //this.angleAcercarse = this.angleAcercarse * Math.random()/2; //para que no sea un movimiento perfecto
 
@@ -206,7 +206,7 @@ checkHitState(){
                 if (!this.attackState) {
                     if (this.scene.time.now > this.timerMove) {
                         this.dir = { x: 0, y: 0 };
-                        this.auxRest();
+                        //this.auxRest();
                         //AQUI INICILIZAMOS EL TIMER CADA VEZ
                         this.timerMove = this.scene.time.now + this.enemyTime + 700;
                     }
@@ -341,7 +341,7 @@ checkHitState(){
 
         if(this.scene.time.now >= this.timerNextBehaviour){
             
-            
+            this.Idle = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].idle;
             this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
             
             

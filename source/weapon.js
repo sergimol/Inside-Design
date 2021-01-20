@@ -11,7 +11,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         super(scene, x, y);
         
         this.config = config;
-        this.weaponID = config.id;
+       // this.weaponID = config.id;
         //Otros atributos
         this.rafagas = config.rafagas; //cantidad de veces que se llama al metodo de disparar
         this.rafagasCadence = config.rafagasCadence; //intervalo de tiempo entre que se puede disparar una rafaga y otra

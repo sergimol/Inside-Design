@@ -15,9 +15,11 @@ const enemy = {
     aggroDistance: 100,
     idleVelFactor: 0.1,
     aggroVelFactor: 0.4,
+    angleAcercarse:Math.PI / 4,
 
     rutina: [{
         time: 10000,
+        idle:false,
         acercarse: true,
         distanciaAcercarse:100,
         alejarse:true,
@@ -27,6 +29,7 @@ const enemy = {
     },
     {
         time: 10000,
+        idle: false,
         acercarse: false,
         distanciaAcercarse:100,
         alejarse:true,

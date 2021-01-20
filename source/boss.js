@@ -14,6 +14,7 @@ constructor(scene, x, y, player, doorN, doorS, config){
 
     this.timerTryShoot = 0;
     this.timerKeepShooting = 0;
+    this.changeWeapon(config.weapon);
 }
 
 
@@ -70,9 +71,11 @@ tryShoot(){
 changeBehavior(){
 
     if(this.scene.time.now >= this.timerNextBehaviour){
+
+        this.Idle = this.arrayBehaviors[this.arrayBehaviorNumber].idle;
         
         this.timerKeepShooting = 0;
-        this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
+        this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time;
         
 
         this.shootCount = this.arrayBehaviors[this.arrayBehaviorNumber].shootCount + 1;
@@ -95,6 +98,7 @@ changeBehavior(){
 
 
         //cambiamos el arma
+        if (this.arrayBehaviors[this.arrayBehaviorNumber].changeWeapon !== null)
         this.changeWeapon(this.arrayBehaviors[this.arrayBehaviorNumber].changeWeapon);
         
         this.arrayBehaviorNumber++;
