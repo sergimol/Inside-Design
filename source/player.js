@@ -9,8 +9,10 @@ import Weapon from "./weapon.js";
 import WeaponList from "./weaponList.js";
 import Bullet from "./bullet.js";
 import escudoActiva from "./bulletsFolder/escudoActiva.js"
-import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js"
-import upgradedDash from "./bulletsFolder/upgradedDash.js"
+import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js";
+import upgradedDash from "./bulletsFolder/upgradedDash.js";
+import areaAttack from "./bulletsFolder/areaAttack.js";
+import upgradedAreaAttack from "./bulletsFolder/upgradedAreaAttack.js"
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
@@ -28,6 +30,7 @@ export default class Player extends Humanoid {
     this.body.frictionAir = 0.25;
     this.depth = 4;
     this.healthDropBonus = 0;
+    this.activeCooldown = 0;
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
@@ -77,7 +80,7 @@ export default class Player extends Humanoid {
     }, this);
 
 
-    this.actualACTIVE = 'dash'; //Ninguna activa
+    this.actualACTIVE = 'area'; //Ninguna activa
     this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
     let dashUpgradedParticles = this.scene.add.particles('dashUpgradedParticle');
@@ -145,12 +148,20 @@ export default class Player extends Humanoid {
             this.shield.setAlpha(0.5);
             this.shield.depth = 4;
             this.shielded = true;
-            this.shieldTime = 2000;
+            this.shieldTime = 1500;
           }
         }
         //BOMBAS
         else if (this.actualACTIVE === config.player.actives[2]) {
-
+          if(!this.activeCooldown > 0){
+            if(!this.upgraded)
+              this.areaAttack = new Bullet(this.scene, this.x, this.y, areaAttack, false);
+            else
+              this.areaAttack = new Bullet(this.scene, this.x, this.y, upgradedAreaAttack, false);
+            this.areaAttack.setVisible(false);
+            this.areaTime = 10;
+            this.activeCooldown = 250;
+          }
         }
       }
     }, this);
@@ -196,7 +207,7 @@ export default class Player extends Humanoid {
     for (let i = 0; i < config.player.passiveCount; i++)
       this.activePassives[i] = false;
 
-    this.upgradeActive();
+    //this.upgradeActive();
 
 
     this.isEntering = true;
@@ -220,10 +231,7 @@ export default class Player extends Humanoid {
 
 
   dash() {
-    if(!this.upgraded)
-      this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
-    else
-      this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
+    this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
   }
 
 
@@ -277,11 +285,9 @@ export default class Player extends Humanoid {
       //Número aleatorio
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
-      } while (this.activePassives[id])
-      //
-      
+      } while (this.activePassives[id])      
 
-      this.scene.startDialog('passive', 7);
+      this.scene.startDialog('passive', id);
       if (id !== 7) {
         this.activePassives[id] = true;
       }
@@ -376,7 +382,6 @@ export default class Player extends Humanoid {
 
   removePassive(id) {
     this.activePassives[id] = false;
-
   }
 
   changeWeapon(wId) {
@@ -516,19 +521,9 @@ export default class Player extends Humanoid {
 
   preUpdate() {
 
-  
     this.applyForce(this.forceSaved);
     this.forceSaved = { x: 0, y: 0 };
 
-    if (this.inDash && this.scene.time.now > this.timerDash) {
-      this.inDash = false;
-      if(this.upgraded){
-        this.upgradedDashEmitter.stopFollow(this);
-        this.upgradedDash.destroy();
-      }
-      else
-        this.dashEmitter.stopFollow(this); 
-    }
     //Right si se entra o se sale por la izquierda
     //Left si se entra o se sale por la derecha
     //Top si se entra o se sale por arriba
@@ -591,20 +586,8 @@ export default class Player extends Humanoid {
       this.shoot();
     }
 
-    if (this.shielded) {
-      this.shieldTime--;
-      //console.log(this.shield)
-      if (this.shieldTime <= 0) {
-        this.shielded = false;
-        this.shield.destroy();
-      }
-      else {
-        this.shield.x = this.x;
-        this.shield.y = this.y;
-      }
-    }
-
-
+    if(this.actualACTIVE !== 'none')
+      this.handleActive();
 
     //Llamada al menu de pausa
     //console.log(this.cursors.escape.isDown)
@@ -629,5 +612,47 @@ export default class Player extends Humanoid {
         
     }
     this.scene.changePlayerSprite(this.spriteID);
+  }
+
+  //Maneja las actualizaciones de la activa 
+  handleActive(){
+    switch(this.actualACTIVE){
+      case 'dash':
+        if (this.inDash && this.scene.time.now > this.timerDash) {
+          this.inDash = false;
+          if(this.upgraded){
+            this.upgradedDashEmitter.stopFollow(this);
+            this.upgradedDash.destroy();
+          }
+          else
+            this.dashEmitter.stopFollow(this); 
+        }
+        break;
+      case 'shield':
+        if (this.shielded) {
+          this.shieldTime--;
+          //console.log(this.shield)
+          if (this.shieldTime <= 0) {
+            this.shielded = false;
+            this.shield.destroy();
+          }
+          else {
+            this.shield.x = this.x;
+            this.shield.y = this.y;
+          }
+        }  
+        break;
+      case 'area':
+        if(this.areaTime <= 0){
+          if(this.areaAttack != null)
+            this.areaAttack.destroy();
+        }
+        else
+          this.areaTime--;
+        break;
+    }
+
+    if(this.activeCooldown > 0)
+      this.activeCooldown--;
   }
 }

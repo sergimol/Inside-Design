@@ -29,7 +29,7 @@ const Config = {
         actives: [
             'dash',
             'shield',
-            'bomb'
+            'area'
         ],
         spriteKey: [
             'playerDef',

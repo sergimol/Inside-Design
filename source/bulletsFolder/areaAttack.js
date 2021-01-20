@@ -16,7 +16,7 @@ const BulletConfig = {
     fuerzaRebote: 0, 
 
     velocidadMinima: -1,
-    damage: 5, 
+    damage: 0, 
     devulveBalas: false,
     destruyeBalas: true, 
     isSensor: true,
@@ -27,7 +27,7 @@ const BulletConfig = {
 
     form:"circle",
     customForm: {
-        radius: 20
+        radius: 100
     },
 
     

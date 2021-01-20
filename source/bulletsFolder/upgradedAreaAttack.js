@@ -27,7 +27,7 @@ const BulletConfig = {
 
     form:"circle",
     customForm: {
-        radius: 20
+        radius: 100
     },
 
     
