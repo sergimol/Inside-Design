@@ -58,7 +58,26 @@ export default class Game extends Phaser.Scene {
     this.load.image('crosshair', 'sprites/crosshair.png');
     this.load.image('granade_launcher', 'sprites/granade_launcher.png');
 
+    //Armas
     this.load.image('escopeta_lanzable', 'sprites/escopeta_lanzable.png');
+    this.load.image('escopeta', 'sprites/spritesarmas/escopeta.png');
+    this.load.image('escopetaRebote', 'sprites/spritesarmas/escopetaRebote.png');
+    this.load.image('espadon', 'sprites/spritesarmas/Espadon.png');
+    this.load.image('francotirador', 'sprites/spritesarmas/francotirador.png');
+    this.load.image('katana', 'sprites/spritesarmas/katana.png');
+    this.load.image('lanzagranadas', 'sprites/spritesarmas/lanzagranadas.png');
+    this.load.image('lanzallamas', 'sprites/spritesarmas/lanzallamas.png');
+    this.load.image('martilloThis', 'sprites/spritesarmas/martilloThis.png');
+    this.load.image('metralleta', 'sprites/spritesarmas/metralleta.png');
+    this.load.image('metralletaRebote', 'sprites/spritesarmas/metralletaRebote.png');
+    this.load.image('microondas', 'sprites/spritesarmas/microondas.png');
+    this.load.image('miniGun', 'sprites/spritesarmas/miniGun.png');
+    this.load.image('miniGunRebote', 'sprites/spritesarmas/miniGunRebote.png');
+    this.load.image('pistolaBasica', 'sprites/spritesarmas/pistolaBasica.png');
+    this.load.image('pistolaBasicaRebote', 'sprites/spritesarmas/pistolaBasicaRebote.png');
+    this.load.image('pistolaLaser', 'sprites/spritesarmas/pistolaLaser.png');
+    this.load.image('rafagas', 'sprites/spritesarmas/rafagas.png');
+    this.load.image('rafagasRebote', 'sprites/spritesarmas/rafagasRebote.png');
 
     this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
