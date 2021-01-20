@@ -12,6 +12,7 @@ export default class Doors extends Phaser.GameObjects.Container {
         this.doorsTrigger;
         this.EnemyCountDoor;   //Guarda los enemigos que hay que matar para que se abra cada puerta
 
+        this.doorIsOpen = false;
 
 
         this.scene.matter.world.on('collisionstart', (event) => {
@@ -106,7 +107,9 @@ export default class Doors extends Phaser.GameObjects.Container {
 
     //Abro las puertas
     openDoor() {
-        if (this.EnemyCountDoor <= 0) {                //Si EnemyCountDoor === 0, la puerta se tiene que abrir
+       
+        if (this.EnemyCountDoor <= 0) {//Si EnemyCountDoor === 0, la puerta se tiene que abrir
+            this.doorIsOpen = true;                
             if (this.doors.label === "horizontal") {
                 this.doors.setTexture(this.spriteOpenedH);
                 var rect = this.scene.matter.add.rectangle(this.doors.x, this.doors.y, 16, 48, { isSensor: true, label: 'exit' })
@@ -136,6 +139,7 @@ export default class Doors extends Phaser.GameObjects.Container {
     }
 
     preUpdate() {
-        this.openDoor();
+        if (!this.doorIsOpen) 
+            this.openDoor();
     }
 }
