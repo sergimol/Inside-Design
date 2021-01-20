@@ -10,6 +10,7 @@ import dialogues from "./source/dialogues.js";
 
 import Boss from "./source/boss.js";
 import clyon from "./source/Bosses/clyon.js";
+import willermo from "./source/Bosses/willermo.js";
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -284,8 +285,9 @@ export default class Game extends Phaser.Scene {
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
                 this.scene.start('main', {
-                  health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level,
+                  health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weaponId, level: this.level,
                   tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID
+
                 });
               }
               else {
@@ -345,7 +347,7 @@ export default class Game extends Phaser.Scene {
       }
       else if (objeto.name === 'enemy') {
         //const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
-        const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
+        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
         if (doorNum != x)
@@ -360,15 +362,38 @@ export default class Game extends Phaser.Scene {
         this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
         this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 40, 40, { isSensor: true, label: 'endLevel' }));
       }
+      else if (objeto.name === 'boss'){
+        let e;
+        switch (objeto.properties[1].value){
+          case("cylon"):
+          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
+          break;
+          case("willermo"): 
+          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo);
+          break;
+        }
+       
+        //const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
+        this.enemies.add(e);
+
+        if (doorNum != x)
+          enemyCount = 0;
+
+        ++enemyCount;
+        doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
+
+        x = doorNum;
+      }
     }
 
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
 
       let tileX = Phaser.Math.RND.between(0, this.map.width);
       let tileY = Phaser.Math.RND.between(0, this.map.height);
 
       if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
+        //let e = new Boss(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, clyon);
         let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
@@ -489,6 +514,17 @@ export default class Game extends Phaser.Scene {
     //Escala de las barras
     this.healthBar.scaleY = config.ui.barScaleY;
     this.healthBackground.scaleY = config.ui.barScaleY + 6;
+
+    
+    this.cooldownBar = this.add.graphics();    
+    this.cooldownBar.fillStyle(0x00ff00, 1);
+    this.cooldownBar.fillRect(0, 0, 1, 1);
+    this.cooldownBar.setScrollFactor(0);
+    this.cooldownBar.setDepth(7);
+    this.cooldownBar.x = 850;
+    this.cooldownBar.y = 300;
+    this.cooldownBar.scaleX = 0;
+    this.cooldownBar.scaleY = 5; 
 
     this.weaponImg = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
     this.weaponImg.scale = config.ui.weaponScl;
@@ -654,6 +690,10 @@ export default class Game extends Phaser.Scene {
 
   setActiveImg(id) {
     this.activeImg.setTexture(config.ui.activeImgs[id]);
+  }
+
+  setCooldownBar(time){
+    this.cooldownBar.scaleX = time / 3;// * config.ui.barScaleX;
   }
 
   /*addPassiveImg(id) {

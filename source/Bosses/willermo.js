@@ -1,5 +1,5 @@
-import weapon1 from "./../enemyWeaponFolder/cylon_rafaga_gun.js";
-import weapon2 from "./../enemyWeaponFolder/cylon_rafaga_shotgun.js";
+import weapon1 from "../enemyWeaponFolder/destructoraDeCodigo.js";
+import weapon2 from "../enemyWeaponFolder/lanzadora_de_gatos_williDotInc.js";
 
 
 
@@ -19,20 +19,20 @@ const boss = {
     minDistance: 4,
     aggroDistance: 100,
     idleVelFactor: 0.1,
-    aggroVelFactor: 0.8,
+    aggroVelFactor: 1.6,
     angleAcercarse: 0, 
-    weapon: weapon2,
+    weapon: weapon1,
     rutina: [{
-        time: 10000,
+        time: 8000,
         idle: false,
         acercarse: true,
-        distanciaAcercarse:100,
-        alejarse:true,
+        distanciaAcercarse:48,
+        alejarse:false,
         distanciaAlejarse:95,
         strafe: false,
         starfeTime: 1000,
         aiming: false,
-        shootCount: 3,
+        shootCount: 8,
         shootRafagas:1,
         shootTime: 0,
         changeWeapon: null,
@@ -49,7 +49,7 @@ const boss = {
         shootCount: 0,
         shootRafagas:1,
         shootTime: 2000,
-        changeWeapon: weapon1,
+        changeWeapon: weapon2,
     },
     {
         time: 10000,
@@ -78,7 +78,7 @@ const boss = {
         shootCount: 0,
         shootRafagas:1,
         shootTime: 2000,
-        changeWeapon: weapon2,
+        changeWeapon: weapon1,
     }]
 }
 

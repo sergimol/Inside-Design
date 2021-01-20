@@ -236,6 +236,52 @@
                  "width":16,
                  "x":816,
                  "y":808
+                }, 
+                {
+                 "gid":323,
+                 "height":16,
+                 "id":140,
+                 "name":"boss",
+                 "properties":[
+                        {
+                         "name":"Sala",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"config",
+                         "type":"string",
+                         "value":"cylon"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":879.333333333333,
+                 "y":791.333333333333
+                }, 
+                {
+                 "gid":323,
+                 "height":16,
+                 "id":141,
+                 "name":"boss",
+                 "properties":[
+                        {
+                         "name":"Sala",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"config",
+                         "type":"string",
+                         "value":"willermo"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":845.333333333333,
+                 "y":817.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -272,7 +318,7 @@
          "y":0
         }],
  "nextlayerid":22,
- "nextobjectid":140,
+ "nextobjectid":142,
  "orientation":"orthogonal",
  "properties":[
         {
@@ -286,7 +332,7 @@
          "value":"Top"
         }],
  "renderorder":"right-down",
- "tiledversion":"2020.10.30",
+ "tiledversion":"1.4.3",
  "tileheight":16,
  "tilesets":[
         {

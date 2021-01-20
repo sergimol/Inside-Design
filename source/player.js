@@ -38,6 +38,8 @@ export default class Player extends Humanoid {
     this.hasInfiniteAmmo = false;
     this.velFactor = config.player.baseVelFactor;
 
+    this.weaponId = 0;
+
 
     //this.add(sprite);
     /////////////
@@ -80,7 +82,8 @@ export default class Player extends Humanoid {
     }, this);
 
 
-    this.actualACTIVE = 'area'; //Ninguna activa
+    this.actualACTIVE = 'dash'; //Ninguna activa
+    this.scene.setActiveImg(0);
     this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
     let dashUpgradedParticles = this.scene.add.particles('dashUpgradedParticle');
@@ -106,7 +109,7 @@ export default class Player extends Humanoid {
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
     this.scene.input.on('pointerdown', function (pointer) {
       //Comprobamos que sea el click derecho
-      if (pointer.rightButtonDown()) {
+      if (pointer.rightButtonDown() && this.activeCooldown <= 0) {
         //DASH
         if (this.actualACTIVE === config.player.actives[0]) { //Dash
 
@@ -132,9 +135,10 @@ export default class Player extends Humanoid {
           }
           let sound = this.scene.sound.add('dashSound');
           sound.play();
-
-          if (this.inDash)
-            this.dash();
+           
+          this.activeCooldown = 50;
+      
+          this.dash();
         }
         //ESCUDO
         else if (this.actualACTIVE === config.player.actives[1]) { //Escudo
@@ -153,15 +157,13 @@ export default class Player extends Humanoid {
         }
         //BOMBAS
         else if (this.actualACTIVE === config.player.actives[2]) {
-          if(!this.activeCooldown > 0){
-            if(!this.upgraded)
-              this.areaAttack = new Bullet(this.scene, this.x, this.y, areaAttack, false);
-            else
-              this.areaAttack = new Bullet(this.scene, this.x, this.y, upgradedAreaAttack, false);
-            this.areaAttack.setVisible(false);
-            this.areaTime = 10;
-            this.activeCooldown = 250;
-          }
+          if(!this.upgraded)
+            this.areaAttack = new Bullet(this.scene, this.x, this.y, areaAttack, false);
+          else
+            this.areaAttack = new Bullet(this.scene, this.x, this.y, upgradedAreaAttack, false);
+          this.areaAttack.setVisible(false);
+          this.areaTime = 10;
+          this.activeCooldown = 250;
         }
       }
     }, this);
@@ -207,7 +209,7 @@ export default class Player extends Humanoid {
     for (let i = 0; i < config.player.passiveCount; i++)
       this.activePassives[i] = false;
 
-    //this.upgradeActive();
+    this.upgradeActive();
 
 
     this.isEntering = true;
@@ -388,6 +390,7 @@ export default class Player extends Humanoid {
     this.weapon.destructora();
     this.weapon = new Weapon(this.scene, 0, 5, WeaponList[wId]);
     this.add(this.weapon);
+    this.weaponId = wId;
   }
 
   changeTile(tId, isNewScene) {
@@ -635,6 +638,7 @@ export default class Player extends Humanoid {
           if (this.shieldTime <= 0) {
             this.shielded = false;
             this.shield.destroy();
+            this.activeCooldown = 500;
           }
           else {
             this.shield.x = this.x;
@@ -652,7 +656,9 @@ export default class Player extends Humanoid {
         break;
     }
 
-    if(this.activeCooldown > 0)
+    if(this.activeCooldown > 0){
       this.activeCooldown--;
+      this.scene.setCooldownBar(this.activeCooldown);
+    }
   }
 }

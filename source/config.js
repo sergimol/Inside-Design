@@ -85,7 +85,7 @@ const Config = {
         passivePosY: 320,
         passiveOffset: 40,
         //passiveImgs: ['tanqueo', 'facil', 'rambo', 'buenaonda', 'malaonda', 'sanic', 'cogo'], 
-        activePosX: 900,
+        activePosX: 875,
         activePosY: 285,
         activeImgs: ['dash', 'shield', 'bomb'],
         dialogBoxX: 700,
