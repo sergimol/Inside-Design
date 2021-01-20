@@ -9,6 +9,7 @@ const Dialogues = {
         ["cogo"],
         ["arma", "arma 2"],
         ["Outlaws from the West"],
+        ["cum"]
         /*
         9: ["Ray Tracing breakdance skill"],
         10: ['La serie mas aburrida de la historia'],

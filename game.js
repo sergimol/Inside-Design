@@ -16,19 +16,40 @@ export default class Game extends Phaser.Scene {
     super({ key: "main" });
   }
   init(data) {
-    this.health = data.health,
+      this.health = data.health,
       this.ammo = data.ammo,
       this.weaponID = data.weaponID,
       this.level = data.level;
-    this.tileID = data.tileID;
-    this.musicID = data.musicID,
+      this.tileID = data.tileID;
+      this.musicID = data.musicID,
       this.lastSeekMusic = data.lastSeekMusic
+      this.playerSpriteID = data.playerSpriteID;
     //this.playerAspectID = data.playerAspectID
   }
 
 
   preload() {
-    this.load.spritesheet('player', './sprites/player.png', { frameWidth: 24, frameHeight: 24 });
+    //Sprites Player
+    this.load.spritesheet('playerDef', './sprites/spritespersonajes/playerdefinitivo.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerWest', './sprites/spritespersonajes/arthurmorgan.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerCalvo', './sprites/spritespersonajes/calvo.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerDoomGuy', './sprites/spritespersonajes/doomguy.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerEllie', './sprites/spritespersonajes/ellie.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerRuso', './sprites/spritespersonajes/ruso.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerPayaso', './sprites/spritespersonajes/payaso.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerCresta', './sprites/spritespersonajes/cresta.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerHummus', './sprites/spritespersonajes/hummus.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('playerPirata', './sprites/spritespersonajes/pirata.png', { frameWidth: 24, frameHeight: 24 });
+
+    //Publishers
+    this.load.spritesheet('cleon', './sprites/spritespersonajes/cleon.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('guille', './sprites/spritespersonajes/guille.png', { frameWidth: 24, frameHeight: 24 });
+
+    //Enemigos
+    this.load.spritesheet('enemyDef', './sprites/spritespersonajes/enemigo.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('enemyDemon', './sprites/spritespersonajes/demonio.png', { frameWidth: 24, frameHeight: 24 });
+
+
 
     //Diego
     this.load.spritesheet('bullet', 'sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
@@ -92,7 +113,8 @@ export default class Game extends Phaser.Scene {
     this.load.image('bate', './sprites/bate3.png');
     this.load.image('swing', './sprites/swing.png');
     this.load.image('walkParticle', './sprites/walkParticulas.png');
-    this.load.image('dashParticle', './sprites/dashParticula.png')
+    this.load.image('dashParticle', './sprites/dashParticula.png');
+    this.load.image('dashUpgradedParticle', './sprites/dashParticulaMejorada.png');
     this.load.audio('dashSound', './audio/dashSound.wav');
 
     //Elementos de la UI
@@ -118,6 +140,35 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+
+    //ANIMACIONES JUGADOR
+    /*
+    this.anims.create({
+      key: 'walk'+ config.player.spriteKey[0],
+      frames: this.anims.generateFrameNumbers('playerDef', { start: 4, end: 8 }), //15
+      frameRate: 15,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'idle'+ config.player.spriteKey[0],
+      frames: this.anims.generateFrameNumbers('playerDef', { start: 1, end: 3 }),
+      frameRate: 7,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'death'+ config.player.spriteKey[0],
+      frames: this.anims.generateFrameNumbers('playerDef', { start: 16, end: 28 }),
+      frameRate: 14,
+      repeat: 0
+    })
+    this.anims.create({
+      key: 'hit'+ config.player.spriteKey[0],
+      frames: this.anims.generateFrameNumbers('playerDef', { start: 9, end: 14 }),
+      frameRate: 60,
+      repeat: 0
+    })
+    */
+
     console.log("level: " + this.level)
     //variables que utilizara ela rchivo de guardado
     //estadisticas y gdd
@@ -161,7 +212,7 @@ export default class Game extends Phaser.Scene {
     //this.musicChange = false;
     //this.actualMusic = this.sound.add('mainChiptuneSong');
     //this.actualMusic.play();
-    this.cumdebug = false;
+
     //this.setSceneMusic(this.musicID);
 
     //PUNTERO
@@ -227,11 +278,12 @@ export default class Game extends Phaser.Scene {
             if (blockBody.label === 'player') {
               this.cameras.main.fadeOut(3000);
               if (this.level != 3) {
+
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
                 this.scene.start('main', {
                   health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weapon.weaponID, level: this.level,
-                  tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic
+                  tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID
                 });
               }
               else {
@@ -247,7 +299,7 @@ export default class Game extends Phaser.Scene {
     this.events.on('shutdown', this.shutdown, this);
 
     this.input.keyboard.on('keydown_ESC', this.pauseGame, this);//this.pauseGame
-    this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);
+    this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);  
 
   }//End of create
 
@@ -272,16 +324,21 @@ export default class Game extends Phaser.Scene {
         this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo);
         this.player.changeWeapon(this.weaponID);
         this.player.changeTile(this.tileID, true);
+        
         //Creamos la musica si es la primera sala
         if (this.level === 0) {
           this.musicID = config.music.mainChip;
           this.player.musicID = this.musicID;
+          this.playerSpriteID = config.player.def;
+          this.player.changeSpriteIdea(false, true, this.playerSpriteID);
           if (this.actualMusic != null)
             this.actualMusic.stop();
           this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 0.3 });
           this.actualMusic.play();
 
         }
+        else
+        this.player.changeSpriteIdea(false, true, this.playerSpriteID);
         //this.player.changeAnimacionesonoseque();
       }
       else if (objeto.name === 'enemy') {
@@ -637,10 +694,12 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
+    
     if (this.pendingType === 'passive')
-      this.player.addPassive(this.pendingIdea);
+    this.player.addPassive(9);
     else if (this.pendingType === 'active')
-      this.player.changeActive(this.pendingIdea);
+    this.player.changeActive(this.pendingIdea);
+    
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
@@ -673,4 +732,36 @@ export default class Game extends Phaser.Scene {
 
     this.saveFile();
   }
+
+
+  changePlayerSprite(id){
+    //ANIMACIONES JUGADOR
+    //if(this.anims.exists('walk')){
+      //this.anims.destroy();
+      this.anims.create({
+        key: 'walk' + config.player.spriteKey[id],
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 4, end: 8 }), //15
+        frameRate: 15,
+        repeat: -1
+      })
+      this.anims.create({
+        key: 'idle'+ config.player.spriteKey[id],
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 1, end: 3 }),
+        frameRate: 7,
+        repeat: -1
+      })
+      this.anims.create({
+        key: 'death'+ config.player.spriteKey[id],
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 16, end: 28 }),
+        frameRate: 14,
+        repeat: 0
+      })
+      this.anims.create({
+        key: 'hit'+ config.player.spriteKey[id],
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 9, end: 14 }),
+        frameRate: 60,
+        repeat: 0
+      })
+   // }
+    }
 }
