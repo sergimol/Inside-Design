@@ -33,6 +33,3 @@ export default class Game extends Phaser.Scene {
         this.scene.resume('main');
     }
 }
-//Resume
-//Opciones
-//Exit
