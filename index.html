@@ -1,50 +1,94 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="sprites/hummusIcon.png" type="image/png" />
-    <meta name="viewport" content="width=device-width, initial-scale=2.0" />
-    <link rel="stylesheet" href="game.css" />
-    <title>INSIDE DESIGN</title> 
-  </head>
-  <body background="./sprites/web/background.png"> 
-     <!-- Divison de la pagina por contenedores -->
-    <div class = "contenedor" style="background-color: white;">
-      <img src =  "./sprites/web/hummusTitulo.jpg" width="50%" height="auto" style = "display: block; margin-left: auto; margin-right: auto;">
-      <table style = "width: 100%;">
-        <ul>
-          <tr>
-            <td><h1 style = "text-align: center;"> Inside Design </h1></td>
-            <td><a href = "us.html"><h1 style = "text-align: center;"> Sobre nosotros </h1></a></td>
-          </tr>
-        </ul>
-      </table>
-      <ul style="padding-right: 20px ;padding-bottom: 10px;">
-        <li><a href = "https://twitter.com/HummusSapiens_"; target="_blank" style = "text-decoration:none"><img src ="./sprites/web/twitter.png" width="50" height="auto"> </a></li>
-        <li><a href = "https://github.com/sergimol/Inside-Design"; target="_blank"><img src ="./sprites/web/github.png" width="50" height="auto"> </a></li>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="sprites/hummusIcon.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=2.0" />
+  <link rel="stylesheet" href="game.css" />
+  <title>INSIDE DESIGN</title>
+
+  <script src="phaser.js"></script>
+  <link rel="stylesheet" href="game.css" />
+</head>
+
+<body background="./sprites/web/background.png">
+  <!-- Divison de la pagina por contenedores -->
+  <section class="contenedor" style="background-color: white;">
+    <img src="./sprites/web/hummusTitulo.jpg" width="50%" height="auto"
+      style="display: block; margin-left: auto; margin-right: auto;">
+    <table style="width: 100%;">
+      <ul>
+        <tr>
+          <td>
+            <h1 style="text-align: center;"> Inside Design </h1>
+          </td>
+          <td><a href="us.html">
+              <h1 style="text-align: center;"> Sobre nosotros </h1>
+            </a></td>
+        </tr>
       </ul>
-    </div>
-    <div class = "contenedor">
-      <div class = "button-container">
-        <img src =  "./sprites/web/portada.png" >
-        <a href = "game.html"><button class = "button">- JUGAR -</button></a>
-      </div>
-      <div style="background-color: black;">
-        <table>
-          <tr >
-            <td style="width: 15%;">
-             <h1 style= "color: darkgoldenrod; text-align: center; position: relative; top: 100px"> Descripción </h2>
-            </td>
-            <td style = "color: darksalmon; text-align: justify; position: relative; top: 80px">Inside Design es un top down shooter rogue-like en el que se pretende realizar una simulación del  proceso de desarrollo de un videojuego. Mientras el jugador avanza por los niveles, tendrá que lidiar con las mecánicas introducidas por los personajes de los desarrolladores.
-            </td>
-            <td style="text-align: center;">
-              <iframe width="420" height="315"
-                 src="https://www.youtube.com/embed/z8ukuh8iQuI">
-              </iframe>
-             </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </body>
+    </table>
+    <ul style="padding-right: 20px ;">
+      <li><a href="https://twitter.com/HummusSapiens_" ; target="_blank" style="text-decoration:none"><img
+            src="./sprites/web/twitter.png" width="50" height="auto"> </a></li>
+      <li><a href="https://github.com/sergimol/Inside-Design" ; target="_blank"><img src="./sprites/web/github.png"
+            width="50" height="auto"> </a></li>
+    </ul>
+  </section>
+
+  <section style = "padding-bottom: 20px;">
+    <canvas id="canvas" width="1400" height="800"></canvas>
+    <script type="module">
+      import GameManager from "./sceneManager.js";
+      import Game from "./game.js";
+      import Pause from "./pause.js";
+      import Death from "./death.js";
+      import theEnd from "./theEnd.js";
+      import GDD from "./source/gdd.js";
+
+      var config = {
+        type: Phaser.WEBGL,
+        canvas:document.getElementById('canvas'),
+        width: 1400,
+        height: 800,
+        pixelArt: true,
+        input: {
+          gamepad: true,
+        },
+        scale: {
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH,
+        },
+        scene: [GameManager, Game, Pause, Death, theEnd, GDD],
+        physics: {
+          default: "matter",
+          matter: { gravity: { y: 0 }, debug: false },
+        },
+      };
+      new Phaser.Game(config);
+    </script>
+  </section>
+
+  <section >
+    <table style="background-color: black;">
+      <tr>
+        <td style="width: 15%;">
+          <h1 style="color: darkgoldenrod; text-align: center; position: relative; top: 100px"> Descripción </h1>
+        </td>
+        <td style="width: 40%">
+          <h1 style="font-size: 25px;color: darksalmon; text-align: justify; position: relative; top: 20px">Inside
+            Design es un top down shooter rogue-like en el que se pretende realizar una simulación del proceso de
+            desarrollo de un videojuego. Mientras el jugador avanza por los niveles, tendrá que lidiar con las
+            mecánicas introducidas por los personajes de los desarrolladores.</h1>
+        </td>
+        <td style="text-align: center;">
+          <iframe width="420" height="315" src="https://www.youtube.com/embed/z8ukuh8iQuI">
+          </iframe>
+        </td>
+      </tr>
+    </table>
+  </section>
+</body>
+
 </html>
