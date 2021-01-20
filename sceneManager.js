@@ -14,19 +14,19 @@ export default class Game extends Phaser.Scene {
             this.level = data.level;
     }
     preload() {
-        this.load.spritesheet('player', './sprites/Player.png', { frameWidth: 24, frameHeight: 24 });
+        this.load.spritesheet('player', './sprites/player.png', { frameWidth: 24, frameHeight: 24 });
 
         //Diego
-        this.load.spritesheet('bullet', 'sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('enemybullet', 'sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.image('crosshair', 'sprites/crosshair.png');
-        this.load.image('granade_launcher', 'sprites/granade_launcher.png');
+        this.load.spritesheet('bullet', './sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('enemybullet', './sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.image('crosshair', './sprites/crosshair.png');
+        this.load.image('granade_launcher', './sprites/granade_launcher.png');
 
-        this.load.image('escopeta_lanzable', 'sprites/escopeta_lanzable.png');
+        this.load.image('escopeta_lanzable', './sprites/escopeta_lanzable.png');
 
-        this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
-        this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
-        this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
+        this.load.spritesheet('granade__launcher_shoot', './sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
+        this.load.spritesheet('escopeta_lanzable_shoot', './sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet('granade_launcher_shoot_explosion', './sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
         //Javi
         //Tiles de estéticas
