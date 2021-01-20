@@ -513,6 +513,17 @@ export default class Game extends Phaser.Scene {
     this.healthBar.scaleY = config.ui.barScaleY;
     this.healthBackground.scaleY = config.ui.barScaleY + 6;
 
+    
+    this.cooldownBar = this.add.graphics();    
+    this.cooldownBar.fillStyle(0x00ff00, 1);
+    this.cooldownBar.fillRect(0, 0, 1, 1);
+    this.cooldownBar.setScrollFactor(0);
+    this.cooldownBar.setDepth(7);
+    this.cooldownBar.x = 850;
+    this.cooldownBar.y = 300;
+    this.cooldownBar.scaleX = 0;
+    this.cooldownBar.scaleY = 5; 
+
     this.weaponImg = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
     this.weaponImg.scale = config.ui.weaponScl;
     this.weaponImg.setScrollFactor(0);
@@ -677,6 +688,10 @@ export default class Game extends Phaser.Scene {
 
   setActiveImg(id) {
     this.activeImg.setTexture(config.ui.activeImgs[id]);
+  }
+
+  setCooldownBar(time){
+    this.cooldownBar.scaleX = time / 3;// * config.ui.barScaleX;
   }
 
   /*addPassiveImg(id) {

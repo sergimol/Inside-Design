@@ -16,7 +16,7 @@ const BulletConfig = {
     fuerzaRebote: 0, 
 
     velocidadMinima: -1,
-    damage: 5, 
+    damage: 2, 
     devulveBalas: false,
     destruyeBalas: true, 
     isSensor: true,
@@ -31,7 +31,7 @@ const BulletConfig = {
     },
 
     
-    pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
+    pushback: 25, //fuerza con la que empuja la bala al chocar con un objetivo
 
     //para la animacion
     
