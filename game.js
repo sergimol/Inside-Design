@@ -353,7 +353,7 @@ export default class Game extends Phaser.Scene {
 
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
-    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetWestEx', 16, 16);
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetRayTracingEx', 16, 16);
 
     //this.map.createBlankDynamicLayer('sala1', this.tileset);
 
