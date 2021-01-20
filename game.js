@@ -270,6 +270,7 @@ export default class Game extends Phaser.Scene {
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(1, 7);
     let nameRoom = 'sala' + numRoom.toString();
+    nameRoom = 'sala2';
     this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;
@@ -460,7 +461,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 0; i++) {
 
       let tileX = Phaser.Math.RND.between(0, this.map.width);
       let tileY = Phaser.Math.RND.between(0, this.map.height);
