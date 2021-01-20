@@ -10,6 +10,7 @@ import WeaponList from "./weaponList.js";
 import Bullet from "./bullet.js";
 import escudoActiva from "./bulletsFolder/escudoActiva.js"
 import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js"
+import upgradedDash from "./bulletsFolder/upgradedDash.js"
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
@@ -76,9 +77,10 @@ export default class Player extends Humanoid {
     }, this);
 
 
-    this.actualACTIVE = 'shield'; //Ninguna activa
+    this.actualACTIVE = 'dash'; //Ninguna activa
     this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
+    let dashUpgradedParticles = this.scene.add.particles('dashUpgradedParticle');
 
     this.dashEmitter = dashParticles.createEmitter({
       speed: 20,
@@ -86,6 +88,12 @@ export default class Player extends Humanoid {
       lifespan: 300,
       blendMode: 'ADD'
     });
+    this.upgradedDashEmitter = dashUpgradedParticles.createEmitter({
+      speed: 20,
+      scale: { start: 4, end: 0 },
+      lifespan: 300,
+      blendMode: 'ADD'
+    })
     this.dashTime = config.player.dashTime;
     this.setMass(config.player.mass);
     this.inDash = false;
@@ -97,7 +105,7 @@ export default class Player extends Humanoid {
       //Comprobamos que sea el click derecho
       if (pointer.rightButtonDown()) {
         //DASH
-        if (this.actualACTIVE === config.player.actives[0]) {
+        if (this.actualACTIVE === config.player.actives[0]) { //Dash
 
           if (this.dir.x === 0 && this.dir.y === 0)
             this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
@@ -108,8 +116,17 @@ export default class Player extends Humanoid {
           this.inDash = true;
 
           this.timerDash = this.scene.time.now + this.dashTime;
-          this.dashEmitter.startFollow(this);
-          this.aspecto.setTint(config.player.dashTint);
+          
+          if(this.upgraded){
+            this.upgradedDashEmitter.startFollow(this);
+            this.upgradedDash = new Bullet(this.scene, this.x, this.y, upgradedDash, false);
+            this.aspecto.setTint(0xf00f0f);
+            this.upgradedDash.setVisible(false);
+          }
+          else{
+            this.dashEmitter.startFollow(this);
+            this.aspecto.setTint(config.player.dashTint);
+          }
           let sound = this.scene.sound.add('dashSound');
           sound.play();
 
@@ -117,7 +134,7 @@ export default class Player extends Humanoid {
             this.dash();
         }
         //ESCUDO
-        else if (this.actualACTIVE === config.player.actives[1]) {
+        else if (this.actualACTIVE === config.player.actives[1]) { //Escudo
           if (!this.shielded) {
             if (!this.upgraded)
               this.shield = new Bullet(this.scene, this.x, this.y, escudoActiva, false);
@@ -203,8 +220,10 @@ export default class Player extends Humanoid {
 
 
   dash() {
-    this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
-
+    if(!this.upgraded)
+      this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
+    else
+      this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
   }
 
 
@@ -229,7 +248,7 @@ export default class Player extends Humanoid {
   playerMove() {
     if (!this.inDash) {
       this.aspecto.setTint(config.player.baseTint);
-      this.dashEmitter.stopFollow(this);
+      
       if (this.body.speed < this.velFactor) {
 
         this.applyForce({ x: this.dir.x * this.velFactor, y: this.dir.y * this.velFactor });
@@ -501,8 +520,14 @@ export default class Player extends Humanoid {
     this.applyForce(this.forceSaved);
     this.forceSaved = { x: 0, y: 0 };
 
-    if (this.scene.time.now > this.timerDash) {
+    if (this.inDash && this.scene.time.now > this.timerDash) {
       this.inDash = false;
+      if(this.upgraded){
+        this.upgradedDashEmitter.stopFollow(this);
+        this.upgradedDash.destroy();
+      }
+      else
+        this.dashEmitter.stopFollow(this); 
     }
     //Right si se entra o se sale por la izquierda
     //Left si se entra o se sale por la derecha

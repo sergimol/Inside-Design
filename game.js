@@ -112,7 +112,8 @@ export default class Game extends Phaser.Scene {
     this.load.image('bate', './sprites/bate3.png');
     this.load.image('swing', './sprites/swing.png');
     this.load.image('walkParticle', './sprites/walkParticulas.png');
-    this.load.image('dashParticle', './sprites/dashParticula.png')
+    this.load.image('dashParticle', './sprites/dashParticula.png');
+    this.load.image('dashUpgradedParticle', './sprites/dashParticulaMejorada.png');
     this.load.audio('dashSound', './audio/dashSound.wav');
 
     //Elementos de la UI
