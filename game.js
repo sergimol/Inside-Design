@@ -94,6 +94,7 @@ export default class Game extends Phaser.Scene {
     this.load.tilemapTiledJSON('sala4', './sprites/tiles/sala4.json');
     this.load.tilemapTiledJSON('sala5', './sprites/tiles/sala5.json');
     this.load.tilemapTiledJSON('sala6', './sprites/tiles/sala6.json');
+    this.load.tilemapTiledJSON('sala7', './sprites/tiles/sala7.json');
 
     //nuevo
     this.load.audio('mainChiptuneSong', './audio/mainChiptune.mp3');
@@ -197,12 +198,13 @@ export default class Game extends Phaser.Scene {
 
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
-    let numRoom = Phaser.Math.RND.between(1, 6);
+    let numRoom = Phaser.Math.RND.between(1, 7);
     let nameRoom = 'sala' + numRoom.toString();
-
+    this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
-    this.levelname = this.level + 2;
-    this.map = this.make.tilemap({ key: 'sala' + this.levelname});
+    //this.levelname = this.level + 7;
+    //console.log(this.levelname)
+    //this.map = this.make.tilemap({ key: 'sala' + this.levelname});
 
 
     this.loadTileMapRoom();
@@ -281,7 +283,7 @@ export default class Game extends Phaser.Scene {
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
             if (blockBody.label === 'player') {
               this.cameras.main.fadeOut(3000);
-              if (this.level != 3) {
+              if (this.level != 8) {
 
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
@@ -438,7 +440,7 @@ export default class Game extends Phaser.Scene {
 
     //this.arrayRooms[this.arrayRooms.length - 1].createBlankLayer();
     //this.make.tilemap({ key: 'sala1' })
-    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetRayTracingEx', 16, 16);
+    this.tileset = this.map.addTilesetImage('tileSetRayTracingEx', 'tileSetWestEx', 16, 16);
 
     //this.map.createBlankDynamicLayer('sala1', this.tileset);
 
