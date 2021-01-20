@@ -81,9 +81,13 @@ export default class Player extends Humanoid {
         this.semiAutomaticaHasShoot = false;
     }, this);
 
-
-    this.actualACTIVE = 'dash'; //Ninguna activa
-    this.scene.setActiveImg(0);
+    //TEMPORAL PARA QUE LA GENTE PUEDA PROBAR ACTIVAS
+    let a = Math.floor(Math.random() * 2);
+    if(a === 0)
+      this.actualACTIVE = 'dash';
+    else
+      this.activePassives = 'shield';
+    this.scene.setActiveImg(a);
     this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
     let dashUpgradedParticles = this.scene.add.particles('dashUpgradedParticle');
@@ -209,7 +213,6 @@ export default class Player extends Humanoid {
     for (let i = 0; i < config.player.passiveCount; i++)
       this.activePassives[i] = false;
 
-    this.upgradeActive();
 
 
     this.isEntering = true;

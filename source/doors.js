@@ -116,6 +116,7 @@ export default class Doors extends Phaser.GameObjects.Container {
         }
         this.doors.setExistingBody(rect);
         this.scene.player.chooseIdea('passive');
+        this.scene.player.upgradeActive();
         this.isOpen = true;
     }
 
