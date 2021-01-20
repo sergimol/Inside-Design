@@ -3,8 +3,8 @@ import config from './config.js'
 export default class Item extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, sprite, playerref) {
         super(scene, x, y, sprite);
-        this.depth = 3;
-        this.setSize(4, 4);
+        
+        //this.setSize(30, 4);
         this.scene.matter.add.gameObject(this);
         this.scene.add.existing(this);
 
@@ -14,17 +14,20 @@ export default class Item extends Phaser.GameObjects.Sprite {
         this.playerRef = playerref;
 
         //Constantes
-        this.fuerza = 0.000002;
-       // this.setFrictionAir(0.03);
-
-       
+        this.fuerza = 0.0002;
+        this.setFrictionAir(0.05);
+        let angle = Phaser.Math.Angle.RandomDegrees();
+        this.scene.matter.body.setAngle(this.body, angle);
+        this.thrust(this.fuerza);
+        this.body.depth = 5;
+        this.body.isSensor = true;
        
        // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16, Neutral Bullet: 32, item: 64
         this.body.collisionFilter = {
             'group' : 64, 
             
             'category': 64,
-            'mask':2 | 1, //choca con player y escenario
+            'mask':2 | 1 , //choca con player y escenario
         };
 
         this.scene.matter.world.on('collisionstart', (event) => {
@@ -54,7 +57,7 @@ export default class Item extends Phaser.GameObjects.Sprite {
         });
     }
     actualizaPos() {
-        if (Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y) < 50) {
+        if (Phaser.Math.Distance.Between(this.x, this.y, this.playerRef.x, this.playerRef.y) < 40) {
             let angle = Phaser.Math.Angle.Between(this.x, this.y, this.playerRef.x, this.playerRef.y);
             this.scene.matter.body.setAngle(this.body, angle);
             this.thrust(this.fuerza);

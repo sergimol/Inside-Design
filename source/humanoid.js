@@ -11,7 +11,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.aspecto = scene.add.sprite(0, 0, humanSprite);
         this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
         this.add(this.aspecto);
-
+      
         //Atributos
         this.health = health;//config.humanoid.health;
 
@@ -22,12 +22,10 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.forceSaved = { x: 1, y: 0 };
 
 
-        this.setSize(config.humanoid.size, config.humanoid.size);
+        this.setSize(config.humanoid.size - 5, config.humanoid.size);
 
         this.scene.matter.add.gameObject(this);
         this.scene.matter.body.setInertia(this.body, Infinity);
-
-
 
         this.scene.matter.world.on('collisionstart', (event) => {
             let wordBody = this.body;

@@ -32,7 +32,7 @@ export default class Button extends Phaser.GameObjects.Image {
             if (this.scene.health != undefined)
                 this.scene.scene.start('main', { health: this.scene.health, ammo: this.scene.ammo, weaponID: this.scene.weaponID, level: this.scene.level });
             else
-                this.scene.scene.start('main', { health: 10, ammo: 100, weaponID: 2, level: 0 });
+                this.scene.scene.start('main', { health: 10, ammo: 100, weaponID: 6, level: 0 });
         }
         else if (this.label === 'quit') {
             this.scene.scene.stop('main');
@@ -41,8 +41,39 @@ export default class Button extends Phaser.GameObjects.Image {
         else if (this.label === 'resume') {
             this.scene.resumeGame();
         }
-        else if (this.label === 'options' || this.label === 'gdd') {
+        else if (this.label === 'gdd') {
+            this.scene.scene.stop();
+            this.scene.scene.start('gdd');
+        }
+        else if (this.label === 'options') {
             console.log("Casi crack")
+        }
+
+        else if (this.label === 'backGDD') {
+            this.scene.previousGDD();
+        }
+        else if (this.label === 'nextGDD') {
+            this.scene.nextGDD();
+        }
+        else if (this.label === 'exitGDD') {
+            this.scene.scene.stop('gdd');
+            this.scene.scene.start('sceneManager');
+        }
+
+        else if (this.label === 'armasGDD') {
+            this.scene.selectArrayGDD(this.scene.gddArmas);
+        }
+        else if (this.label === 'esteticasGDD') {
+            this.scene.selectArrayGDD(this.scene.gddEsteticas);
+        }
+        else if (this.label === 'pasivasGDD') {
+            this.scene.selectArrayGDD(this.scene.gddPasivas);
+        }
+        else if (this.label === 'activasGDD') {
+            this.scene.selectArrayGDD(this.scene.gddActivas);
+        }
+        else if (this.label === 'temporalesGDD') {
+            this.scene.selectArrayGDD(this.scene.gddTemporales);
         }
     }
 }

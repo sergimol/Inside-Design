@@ -9,13 +9,17 @@ import Weapon from "./weapon.js";
 import WeaponList from "./weaponList.js";
 import Bullet from "./bullet.js";
 import escudoActiva from "./bulletsFolder/escudoActiva.js"
-import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js"
+import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js";
+import upgradedDash from "./bulletsFolder/upgradedDash.js";
+import areaAttack from "./bulletsFolder/areaAttack.js";
+import upgradedAreaAttack from "./bulletsFolder/upgradedAreaAttack.js"
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
     super(scene, x, y, sprite, health);
     this.body.label = 'player';
 
+    this.spriteID = config.player.spriteID;
     //Arma
     this.weapon = new Weapon(scene, 0, 5, granade__launcher);
     this.add(this.weapon);
@@ -26,6 +30,7 @@ export default class Player extends Humanoid {
     this.body.frictionAir = 0.25;
     this.depth = 4;
     this.healthDropBonus = 0;
+    this.activeCooldown = 0;
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
@@ -38,22 +43,8 @@ export default class Player extends Humanoid {
 
     //this.add(sprite);
     /////////////
-    //Animaciones
-    const anims = scene.anims;
-
-    anims.create({
-      key: 'walk',
-      frames: anims.generateFrameNumbers(sprite, { start: 4, end: 8 }), //15
-      frameRate: 15,
-      repeat: -1
-    })
-    anims.create({
-      key: 'idle',
-      frames: anims.generateFrameNumbers(sprite, { start: 1, end: 3 }),
-      frameRate: 7,
-      repeat: -1
-    })
-
+    
+    
     //INPUT
     const { LEFT, RIGHT, UP, DOWN, W, A, S, D, ENTER, ESC } = Phaser.Input.Keyboard.KeyCodes
     this.cursors = scene.input.keyboard.addKeys({
@@ -91,9 +82,10 @@ export default class Player extends Humanoid {
     }, this);
 
 
-    this.actualACTIVE = 'shield'; //Ninguna activa
+    this.actualACTIVE = 'area'; //Ninguna activa
     this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
+    let dashUpgradedParticles = this.scene.add.particles('dashUpgradedParticle');
 
     this.dashEmitter = dashParticles.createEmitter({
       speed: 20,
@@ -101,6 +93,12 @@ export default class Player extends Humanoid {
       lifespan: 300,
       blendMode: 'ADD'
     });
+    this.upgradedDashEmitter = dashUpgradedParticles.createEmitter({
+      speed: 20,
+      scale: { start: 4, end: 0 },
+      lifespan: 300,
+      blendMode: 'ADD'
+    })
     this.dashTime = config.player.dashTime;
     this.setMass(config.player.mass);
     this.inDash = false;
@@ -112,7 +110,7 @@ export default class Player extends Humanoid {
       //Comprobamos que sea el click derecho
       if (pointer.rightButtonDown()) {
         //DASH
-        if (this.actualACTIVE === config.player.actives[0]) {
+        if (this.actualACTIVE === config.player.actives[0]) { //Dash
 
           if (this.dir.x === 0 && this.dir.y === 0)
             this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
@@ -123,8 +121,17 @@ export default class Player extends Humanoid {
           this.inDash = true;
 
           this.timerDash = this.scene.time.now + this.dashTime;
-          this.dashEmitter.startFollow(this);
-          this.aspecto.setTint(config.player.dashTint);
+          
+          if(this.upgraded){
+            this.upgradedDashEmitter.startFollow(this);
+            this.upgradedDash = new Bullet(this.scene, this.x, this.y, upgradedDash, false);
+            this.aspecto.setTint(0xf00f0f);
+            this.upgradedDash.setVisible(false);
+          }
+          else{
+            this.dashEmitter.startFollow(this);
+            this.aspecto.setTint(config.player.dashTint);
+          }
           let sound = this.scene.sound.add('dashSound');
           sound.play();
 
@@ -132,7 +139,7 @@ export default class Player extends Humanoid {
             this.dash();
         }
         //ESCUDO
-        else if (this.actualACTIVE === config.player.actives[1]) {
+        else if (this.actualACTIVE === config.player.actives[1]) { //Escudo
           if (!this.shielded) {
             if (!this.upgraded)
               this.shield = new Bullet(this.scene, this.x, this.y, escudoActiva, false);
@@ -143,12 +150,20 @@ export default class Player extends Humanoid {
             this.shield.setAlpha(0.5);
             this.shield.depth = 4;
             this.shielded = true;
-            this.shieldTime = 2000;
+            this.shieldTime = 1500;
           }
         }
         //BOMBAS
         else if (this.actualACTIVE === config.player.actives[2]) {
-
+          if(!this.activeCooldown > 0){
+            if(!this.upgraded)
+              this.areaAttack = new Bullet(this.scene, this.x, this.y, areaAttack, false);
+            else
+              this.areaAttack = new Bullet(this.scene, this.x, this.y, upgradedAreaAttack, false);
+            this.areaAttack.setVisible(false);
+            this.areaTime = 10;
+            this.activeCooldown = 250;
+          }
         }
       }
     }, this);
@@ -194,7 +209,7 @@ export default class Player extends Humanoid {
     for (let i = 0; i < config.player.passiveCount; i++)
       this.activePassives[i] = false;
 
-    this.upgradeActive();
+    //this.upgradeActive();
 
 
     this.isEntering = true;
@@ -219,7 +234,6 @@ export default class Player extends Humanoid {
 
   dash() {
     this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
-
   }
 
 
@@ -244,7 +258,7 @@ export default class Player extends Humanoid {
   playerMove() {
     if (!this.inDash) {
       this.aspecto.setTint(config.player.baseTint);
-      this.dashEmitter.stopFollow(this);
+      
       if (this.body.speed < this.velFactor) {
 
         this.applyForce({ x: this.dir.x * this.velFactor, y: this.dir.y * this.velFactor });
@@ -256,11 +270,11 @@ export default class Player extends Humanoid {
       if (this.dir.x === 0 && this.dir.y === 0) {
 
         this.emitter.stopFollow(this);
-        this.aspecto.play('idle', true);
+        this.aspecto.play('idle'+config.player.spriteKey[this.spriteID], true);
       }
       else {
         this.emitter.startFollow(this);
-        this.aspecto.play('walk', true);
+        this.aspecto.play('walk'+config.player.spriteKey[this.spriteID], true);
       }
     }
 
@@ -273,9 +287,9 @@ export default class Player extends Humanoid {
       //Número aleatorio
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
-      } while (this.activePassives[id])
+      } while (this.activePassives[id])      
 
-      this.scene.startDialog('passive', 7);
+      this.scene.startDialog('passive', id);
       if (id !== 7) {
         this.activePassives[id] = true;
       }
@@ -288,6 +302,7 @@ export default class Player extends Humanoid {
     else if (type === 'tempPassive') {
 
     }
+
   }
 
   changeActive(id) {
@@ -355,60 +370,20 @@ export default class Player extends Humanoid {
       case (8):
         console.log('Cambio de tilemap');
         let tId = Math.floor(Math.random() * config.tileset.tileCount);
+        //
+        tId = 4;
         this.changeTile(tId, false);
         break;
-      //TileSets
-      /*
-      case(8):
-        console.log('Outlaws from the West');
-        this.scene.changeLayer(config.tileset.west);
-        this.scene.changeMusic(config.music.west);
+     case (9):
+        console.log("Cambio solo apariecia");
+        this.changeSpriteIdea(false, false, " ");
         break;
-        
-      case(9):
-        console.log('Ray Tracing breakdance skill');
-        this.scene.changeLayer(config.tileset.raytracing);
-        this.scene.changeMusic(config.music.neon);
-        break;
-      case(10):
-        console.log('La serie mas aburrida de la historia');
-        this.scene.changeLayer(config.tileset.minecraft);
-        break;
-      case(11):
-        console.log('Especial Navidad');
-        this.scene.changeLayer(config.tileset.navidad);
-        break;
-      case(12):
-        console.log('Mas de 1000 capitulos');
-        this.scene.changeLayer(config.tileset.piratas);
-        break;
-      case(13):
-        console.log('El mejor juego de la historia');
-        this.scene.changeLayer(config.tileset.zelda);
-        break;
-      case(14):
-        console.log('The Only Thing They Fear is You');
-        this.scene.changeLayer(config.tileset.doom);
-        this.scene.changeMusic(config.music.rock);
-        break;
-      case(15):
-        console.log('P.T.');
-        this.scene.changeLayer(config.tileset.miedo);
-        this.scene.changeMusic(config.music.horror);
-        break;
-      case(16):
-        console.log('P.T.');
-        this.scene.changeLayer(config.tileset.miedo);
-        this.scene.changeMusic(config.music.horror);
-        break;
-        */
     }
 
   }
 
   removePassive(id) {
     this.activePassives[id] = false;
-
   }
 
   changeWeapon(wId) {
@@ -427,10 +402,12 @@ export default class Player extends Humanoid {
         this.scene.changeLayer(config.tileset.west);
         if (!isNewScene)
           this.changeMusicMovida(config.music.west, isNewScene);
+          this.spriteID = config.player.west;
+          this.changeSpriteIdea(true, false, " ");
         break;
 
       case (1):
-        console.log('Ray Tracing breakdance skill');
+        console.log('Ray Tracing breakdance kill');
         this.scene.changeLayer(config.tileset.raytracing);
         if (!isNewScene)
           this.changeMusicMovida(config.music.neon, isNewScene);
@@ -449,6 +426,8 @@ export default class Player extends Humanoid {
       case (4):
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
+        this.spriteID = config.player.pirata;
+        this.changeSpriteIdea(true, false, " ");
         break;
 
       case (5):
@@ -461,6 +440,8 @@ export default class Player extends Humanoid {
         this.scene.changeLayer(config.tileset.doom);
         if (!isNewScene)
           this.changeMusicMovida(config.music.rock, isNewScene);
+          this.spriteID = config.player.doom;
+          this.changeSpriteIdea(true, false, " ");
         break;
 
       case (7):
@@ -546,9 +527,6 @@ export default class Player extends Humanoid {
     this.applyForce(this.forceSaved);
     this.forceSaved = { x: 0, y: 0 };
 
-    if (this.scene.time.now > this.timerDash) {
-      this.inDash = false;
-    }
     //Right si se entra o se sale por la izquierda
     //Left si se entra o se sale por la derecha
     //Top si se entra o se sale por arriba
@@ -611,22 +589,73 @@ export default class Player extends Humanoid {
       this.shoot();
     }
 
-    if (this.shielded) {
-      this.shieldTime--;
-      //console.log(this.shield)
-      if (this.shieldTime <= 0) {
-        this.shielded = false;
-        this.shield.destroy();
-      }
-      else {
-        this.shield.x = this.x;
-        this.shield.y = this.y;
-      }
-    }
-
-
+    if(this.actualACTIVE !== 'none')
+      this.handleActive();
 
     //Llamada al menu de pausa
     //console.log(this.cursors.escape.isDown)
+  }
+
+  changeSpriteIdea(fromTile, isNewScene, lastSpriteId){
+    
+    //Si viene de cargar escena le mandamos el id anterior
+    if(isNewScene)
+      this.spriteID = lastSpriteId;
+    //Si viene de nueva idea miramos si viene de una que desencadena de tile o no
+    else
+    {
+      if(!fromTile)  
+      {
+        let id;
+        do {
+           id = Math.floor(Math.random() * config.player.numberAspectos);
+        } while (id<=3)
+        this.spriteID = id;
+      }
+        
+    }
+    this.scene.changePlayerSprite(this.spriteID);
+  }
+
+  //Maneja las actualizaciones de la activa 
+  handleActive(){
+    switch(this.actualACTIVE){
+      case 'dash':
+        if (this.inDash && this.scene.time.now > this.timerDash) {
+          this.inDash = false;
+          if(this.upgraded){
+            this.upgradedDashEmitter.stopFollow(this);
+            this.upgradedDash.destroy();
+          }
+          else
+            this.dashEmitter.stopFollow(this); 
+        }
+        break;
+      case 'shield':
+        if (this.shielded) {
+          this.shieldTime--;
+          //console.log(this.shield)
+          if (this.shieldTime <= 0) {
+            this.shielded = false;
+            this.shield.destroy();
+          }
+          else {
+            this.shield.x = this.x;
+            this.shield.y = this.y;
+          }
+        }  
+        break;
+      case 'area':
+        if(this.areaTime <= 0){
+          if(this.areaAttack != null)
+            this.areaAttack.destroy();
+        }
+        else
+          this.areaTime--;
+        break;
+    }
+
+    if(this.activeCooldown > 0)
+      this.activeCooldown--;
   }
 }

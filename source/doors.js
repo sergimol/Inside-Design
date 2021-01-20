@@ -12,7 +12,7 @@ export default class Doors extends Phaser.GameObjects.Container {
         this.doorsTrigger;
         this.EnemyCountDoor;   //Guarda los enemigos que hay que matar para que se abra cada puerta
 
-
+        this.isOpen = false;
 
         this.scene.matter.world.on('collisionstart', (event) => {
 
@@ -106,18 +106,17 @@ export default class Doors extends Phaser.GameObjects.Container {
 
     //Abro las puertas
     openDoor() {
-        if (this.EnemyCountDoor <= 0) {                //Si EnemyCountDoor === 0, la puerta se tiene que abrir
-            if (this.doors.label === "horizontal") {
-                this.doors.setTexture(this.spriteOpenedH);
-                var rect = this.scene.matter.add.rectangle(this.doors.x, this.doors.y, 16, 48, { isSensor: true, label: 'exit' })
-            }
-            else if (this.doors.label === "vertical") {
-                this.doors.setTexture(this.spriteOpenedV);
-                var rect = this.scene.matter.add.rectangle(this.doors.x, this.doors.y, 48, 16, { isSensor: true, label: 'exit' })
-            }
-            this.doors.setExistingBody(rect);
-            this.scene.player.chooseIdea('passive');
+        if (this.doors.label === "horizontal") {
+            this.doors.setTexture(this.spriteOpenedH);
+            var rect = this.scene.matter.add.rectangle(this.doors.x, this.doors.y, 16, 48, { isSensor: true, label: 'exit' })
         }
+        else if (this.doors.label === "vertical") {
+            this.doors.setTexture(this.spriteOpenedV);
+            var rect = this.scene.matter.add.rectangle(this.doors.x, this.doors.y, 48, 16, { isSensor: true, label: 'exit' })
+        }
+        this.doors.setExistingBody(rect);
+        this.scene.player.chooseIdea('passive');
+        this.isOpen = true;
     }
 
     closeTriggerDoor() {
@@ -136,6 +135,8 @@ export default class Doors extends Phaser.GameObjects.Container {
     }
 
     preUpdate() {
-        this.openDoor();
+        //Si EnemyCountDoor === 0, la puerta se tiene que abrir
+        if(this.EnemyCountDoor <= 0 && !this.isOpen)
+            this.openDoor();
     }
 }

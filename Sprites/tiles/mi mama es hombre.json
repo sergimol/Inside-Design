@@ -1,4 +1,11 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "target":"."
+        }
+    },
  "height":230,
  "infinite":false,
  "layers":[
@@ -194,6 +201,33 @@
          "spacing":2,
          "tilecount":1440,
          "tileheight":16,
+         "tiles":[
+                {
+                 "id":239,
+                 "objectgroup":
+                    {
+                     "draworder":"index",
+                     "id":2,
+                     "name":"",
+                     "objects":[
+                            {
+                             "height":7.08695652173913,
+                             "id":1,
+                             "name":"",
+                             "rotation":0,
+                             "type":"",
+                             "visible":true,
+                             "width":11.7391304347826,
+                             "x":2.1304347826087,
+                             "y":8.91304347826087
+                            }],
+                     "opacity":1,
+                     "type":"objectgroup",
+                     "visible":true,
+                     "x":0,
+                     "y":0
+                    }
+                }],
          "tilewidth":16
         }],
  "tilewidth":16,
