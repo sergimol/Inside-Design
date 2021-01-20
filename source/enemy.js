@@ -206,7 +206,7 @@ checkHitState(){
                 if (!this.attackState) {
                     if (this.scene.time.now > this.timerMove) {
                         this.dir = { x: 0, y: 0 };
-                        //this.auxRest();
+                        this.auxRest();
                         //AQUI INICILIZAMOS EL TIMER CADA VEZ
                         this.timerMove = this.scene.time.now + this.enemyTime + 700;
                     }
@@ -342,7 +342,7 @@ checkHitState(){
 
         if(this.scene.time.now >= this.timerNextBehaviour){
             
-            this.Idle = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].idle;
+            this.Idle = this.arrayBehaviors[this.arrayBehaviorNumber].idle;
             this.timerNextBehaviour = this.scene.time.now + this.arrayBehaviors[this.arrayBehaviorNumber].time
             
             
