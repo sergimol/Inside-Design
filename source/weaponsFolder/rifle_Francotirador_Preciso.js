@@ -3,7 +3,7 @@ import disparoAlternativo from "../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
     id: 10,
-    spriteWeapon: "gunShoot",
+    spriteWeapon: "francotirador",
     s: "mono",
     m: "auto", 
     cadence: 500,
