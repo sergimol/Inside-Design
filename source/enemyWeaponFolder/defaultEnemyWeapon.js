@@ -18,8 +18,8 @@ const WeaponConfig = {
     canyonX: 20, 
     canyonY: 0,
     cuerpoACuerpo: false, 
-    rotationOffSet: 0, 
-    costeMunicionPorBala: 100,
+    rotationOffSet: Math.PI/4, 
+    costeMunicionPorBala: Math.PI/4,
 
 
     fixedDisp:{
