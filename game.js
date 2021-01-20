@@ -197,11 +197,11 @@ export default class Game extends Phaser.Scene {
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(1, 7);
     let nameRoom = 'sala' + numRoom.toString();
-
+    this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
-    this.levelname = this.level + 7;
-    console.log(this.levelname)
-    this.map = this.make.tilemap({ key: 'sala' + this.levelname});
+    //this.levelname = this.level + 7;
+    //console.log(this.levelname)
+    //this.map = this.make.tilemap({ key: 'sala' + this.levelname});
 
 
     this.loadTileMapRoom();
@@ -280,7 +280,7 @@ export default class Game extends Phaser.Scene {
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
             if (blockBody.label === 'player') {
               this.cameras.main.fadeOut(3000);
-              if (this.level != 3) {
+              if (this.level != 8) {
 
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
