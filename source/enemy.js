@@ -6,7 +6,7 @@ import defaultWeapon from "./enemyWeaponFolder/defaultEnemyWeapon.js";
 
 
 export default class Enemy extends Humanoid {
-    constructor(scene, x, y, player, doorN, doorS, config) {
+    constructor(scene, x, y, player, doorN, doorS, config, isBoss, cleon) {
         super(scene, x, y, config.sprite);
         this.body.label = 'enemy';
         this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
@@ -14,6 +14,8 @@ export default class Enemy extends Humanoid {
 
         this.config = config;
 
+        this.isBoss = isBoss;
+        this.cleon = cleon;
 
         //comportamientos
         this.Idle = false;
@@ -44,6 +46,7 @@ export default class Enemy extends Humanoid {
         this.add(this.aspecto);
         /////////////
         //Animaciones
+        /*
         const anims = scene.anims;
         anims.create({
             key: 'enemyWalk',
@@ -69,15 +72,13 @@ export default class Enemy extends Humanoid {
             frameRate: 60,
             repeat: 0
         })
+        */
 
         //Referencia al player
         this.playerRef = player;
         //Referencia al DoorSystem
         this.doorRef = doorS;
         this.doorNum = doorN;   //Sala en la que se encuentra
-
-        //Cambiar color "placeholder"
-        this.aspecto.setTint(0x9999ff);
 
         //this.newNextPos();
 
@@ -151,16 +152,46 @@ export default class Enemy extends Humanoid {
 
 checkHitState(){
     if (this.hitState) {
-        this.aspecto.play('enemyHit', true);
+        if(!this.isBoss)
+            this.aspecto.play('hitEnemy', true);
+        else
+        {
+            if(this.cleon)
+                this.aspecto.play('hitCleon', true);
+            else
+                this.aspecto.play('hitGuille', true);
+        }
+
         if (this.aspecto.anims.currentFrame.textureFrame === 14)
             this.hitState = false;
     }
     //Comprobamos el movimiento para asignar la animacion
     else if (!this.isDead) {
         if (this.dir.x !== 0 || this.dir.y !== 0)
-            this.aspecto.play('enemyWalk', true);
+        {
+            if(!this.isBoss)
+                this.aspecto.play('walkEnemy', true);
+            else
+            {
+                if(this.cleon)
+                    this.aspecto.play('walkCleon', true);
+                else
+                    this.aspecto.play('walkGuille', true);
+            }
+        }
         else
-            this.aspecto.play('enemyIdle', true);
+        {
+
+            if(!this.isBoss)
+                this.aspecto.play('idleEnemy', true);
+            else
+            {
+                if(this.cleon)
+                    this.aspecto.play('idleCleon', true);
+                else
+                    this.aspecto.play('idleGuille', true);
+            }
+        }
     }
     else {
         if (this.body.speed <= 5) {

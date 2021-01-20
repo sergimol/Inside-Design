@@ -146,33 +146,84 @@ export default class Game extends Phaser.Scene {
 
   create() {
 
-    //ANIMACIONES JUGADOR
-    /*
+    //ANIMACIONES ENEMIGO PERO POCHAS
     this.anims.create({
-      key: 'walk'+ config.player.spriteKey[0],
-      frames: this.anims.generateFrameNumbers('playerDef', { start: 4, end: 8 }), //15
+      key: 'walkEnemy',
+      frames: this.anims.generateFrameNumbers('enemyDef', { start: 4, end: 8 }), //15
       frameRate: 15,
       repeat: -1
     })
     this.anims.create({
-      key: 'idle'+ config.player.spriteKey[0],
-      frames: this.anims.generateFrameNumbers('playerDef', { start: 1, end: 3 }),
+      key: 'idleEnemy',
+      frames: this.anims.generateFrameNumbers('enemyDef', { start: 1, end: 3 }),
       frameRate: 7,
       repeat: -1
     })
     this.anims.create({
-      key: 'death'+ config.player.spriteKey[0],
-      frames: this.anims.generateFrameNumbers('playerDef', { start: 16, end: 28 }),
+      key: 'deathEnemy',
+      frames: this.anims.generateFrameNumbers('enemyDef', { start: 16, end: 28 }),
       frameRate: 14,
       repeat: 0
     })
     this.anims.create({
-      key: 'hit'+ config.player.spriteKey[0],
-      frames: this.anims.generateFrameNumbers('playerDef', { start: 9, end: 14 }),
+      key: 'hitEnemy',
+      frames: this.anims.generateFrameNumbers('enemyDef', { start: 9, end: 14 }),
       frameRate: 60,
       repeat: 0
     })
-    */
+
+    //cleon
+    this.anims.create({
+      key: 'walkCleon',
+      frames: this.anims.generateFrameNumbers('cleon', { start: 4, end: 8 }), //15
+      frameRate: 15,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'idleCleon',
+      frames: this.anims.generateFrameNumbers('cleon', { start: 1, end: 3 }),
+      frameRate: 7,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'deathCleon',
+      frames: this.anims.generateFrameNumbers('cleon', { start: 16, end: 28 }),
+      frameRate: 14,
+      repeat: 0
+    })
+    this.anims.create({
+      key: 'hitCleon',
+      frames: this.anims.generateFrameNumbers('cleon', { start: 9, end: 14 }),
+      frameRate: 60,
+      repeat: 0
+    })
+
+    //wily
+    this.anims.create({
+      key: 'walkGuille',
+      frames: this.anims.generateFrameNumbers('guille', { start: 4, end: 8 }), //15
+      frameRate: 15,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'idleGuille',
+      frames: this.anims.generateFrameNumbers('guille', { start: 1, end: 3 }),
+      frameRate: 7,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'deathGuille',
+      frames: this.anims.generateFrameNumbers('guille', { start: 16, end: 28 }),
+      frameRate: 14,
+      repeat: 0
+    })
+    this.anims.create({
+      key: 'hitGuille',
+      frames: this.anims.generateFrameNumbers('guille', { start: 9, end: 14 }),
+      frameRate: 60,
+      repeat: 0
+    })
+    
 
     console.log("level: " + this.level)
     //variables que utilizara ela rchivo de guardado
@@ -350,7 +401,7 @@ export default class Game extends Phaser.Scene {
       }
       else if (objeto.name === 'enemy') {
         //const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
-        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
+        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig, false, false);
         this.enemies.add(e);
 
         if (doorNum != x)
@@ -369,10 +420,10 @@ export default class Game extends Phaser.Scene {
         let e;
         switch (objeto.properties[1].value){
           case("cylon"):
-          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
+          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon, true, true);
           break;
           case("willermo"): 
-          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo);
+          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo, true, false);
           break;
         }
        

@@ -69,7 +69,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
                 this.weapon.setVisible(false);
                 //console.log('entityDep');
-                this.aspecto.play('enemyDep', true);
+                this.aspecto.play('deathEnemy', true);
 
                 if (this.body.label === 'enemy') {
                     this.scene.enemyCount--;
