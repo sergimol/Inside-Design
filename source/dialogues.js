@@ -24,7 +24,48 @@ const Dialogues = {
         ["aaaaaaaaaaaaaaaaaaaaaaaa"],
         ["bbbbbbbbbbbbbbbbbbbbbbbb"],
         ["cccccccccccccccccccccccc"]
+    ],
+
+    weapons:[
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"],
+        ["weapon"]
+    ],
+
+    tilemap: [
+        ["tilemap"],
+        ["tilemap"],
+        ["tilemap"],
+        ["tilemap"],
+        ["tilemap"],
+        ["tilemap"],
+        ["tilemap"],
+        ["tilemap"]
+    ],
+
+    character: [
+        ["sprite"],
+        ["sprite"],
+        ["sprite"],
+        ["sprite"],
+        ["sprite"],
+        ["sprite"],
+        ["sprite"],
+        ["sprite"],
+        ["sprite"],
+        ["sprite"]
     ]
+
 }
 
 export default Dialogues

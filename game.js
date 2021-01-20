@@ -134,7 +134,10 @@ export default class Game extends Phaser.Scene {
     this.load.image('shield', 'sprites/shield.png');
     this.load.image('bomb', 'sprites/bomb.png');
     //Dialogos
-    this.load.image('dialogbox', 'sprites/dialogbox.png');
+    this.load.image('dialogoAndres', 'sprites/dialogoAndres.png');
+    this.load.image('dialogoDiego', 'sprites/dialogoDiego.png');
+    this.load.image('dialogoJavi', 'sprites/dialogoJavi.png');
+    this.load.image('dialogoSergio', 'sprites/dialogoSergio.png');
     //Carga de fuentes con bitmap
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
 
@@ -332,7 +335,7 @@ export default class Game extends Phaser.Scene {
           this.musicID = config.music.mainChip;
           this.player.musicID = this.musicID;
           this.playerSpriteID = config.player.def;
-          this.player.changeSpriteIdea(false, true, this.playerSpriteID);
+          this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
           if (this.actualMusic != null)
             this.actualMusic.stop();
           this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 0.3 });
@@ -340,7 +343,7 @@ export default class Game extends Phaser.Scene {
 
         }
         else
-        this.player.changeSpriteIdea(false, true, this.playerSpriteID);
+          this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
         //this.player.changeAnimacionesonoseque();
       }
       else if (objeto.name === 'enemy') {
@@ -519,8 +522,8 @@ export default class Game extends Phaser.Scene {
     this.cooldownBar.fillRect(0, 0, 1, 1);
     this.cooldownBar.setScrollFactor(0);
     this.cooldownBar.setDepth(7);
-    this.cooldownBar.x = 850;
-    this.cooldownBar.y = 300;
+    this.cooldownBar.x = config.ui.cooldownPosX;
+    this.cooldownBar.y = config.ui.cooldownPosY;
     this.cooldownBar.scaleX = 0;
     this.cooldownBar.scaleY = 5; 
 
@@ -548,20 +551,22 @@ export default class Game extends Phaser.Scene {
     this.activeImg.setDepth(7);
 
     //Dialogo
-    this.dialogBox = this.add.image(config.ui.dialogBoxX, config.ui.dialogBoxY, 'dialogbox');
+    this.dialogBox = this.add.image(config.ui.dialogBoxX, config.ui.dialogBoxY, 'dialogoSergio');
     this.dialogBox.setScale(0.3);
     this.dialogBox.setVisible(false);
     this.dialogBox.setScrollFactor(0);
     this.dialogBox.setDepth(7);
 
-    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', { fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: '#ffffff' };
+    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', { fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: "#ffffff"};
     this.dialog.setScale(0.5)
     this.dialog.setScrollFactor(0);
     this.dialog.setDepth(7);
+    this.dialog.setTint(0x000000);
 
     //Variables para el control de los diálogos
     this.dialogState = 0;
     this.onDialog = false;
+    this.talkedLast = -1;
     this.strings;
 
     this.loadObjects(entityLayer, DoorsentityLayer, enemiesLayer);
@@ -700,17 +705,38 @@ export default class Game extends Phaser.Scene {
     this.passiveCount++;
   }*/
 
+  chooseTalker(){
+    let talkId;
+    do{
+      talkId = Math.floor(Math.random() * 4);
+    }while(talkId === this.talkedLast);
+
+    this.dialogBox.setTexture(config.ui.dialogBoxes[talkId]);
+    this.talkedLast = talkId;
+  }
+
   //Hace visible el cuadro de diálogo y el primer texto de este
-  startDialog(type, id) {
+  startDialog(type, id, auxId) {
+    this.chooseTalker();
     this.dialogBox.setVisible(true);
 
-    //Recoge el array con los diálogos      
-    if (type === 'passive') {
-      this.strings = dialogues.passives[id];
-    }
-
-    else if (type === 'active') {
-      this.strings = dialogues.actives[id];
+    //Recoge el array con los diálogos 
+    switch(type){
+      case 'passive':
+        this.strings = dialogues.passives[auxId];
+        break;
+      case 'active':
+        this.strings = dialogues.actives[auxId];
+        break;
+      case 'weapon':
+        this.strings = dialogues.weapons[auxId];
+        break;
+      case 'tilemap':
+        this.strings = dialogues.tilemap[auxId];
+        break;
+      case 'character':
+        this.strings = dialogues.character[auxId];
+        break;
     }
 
     this.onDialog = true;
@@ -723,8 +749,10 @@ export default class Game extends Phaser.Scene {
   advanceDialog() {
     if (this.onDialog) {
       this.dialogState++;
-      if (this.dialogState < this.strings.length)
+      if (this.dialogState < this.strings.length){
+        this.chooseTalker();
         this.dialog.text = this.strings[this.dialogState];
+      }
       else
         this.endDialog()
     }
@@ -735,10 +763,10 @@ export default class Game extends Phaser.Scene {
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
     
-    if (this.pendingType === 'passive')
-    this.player.addPassive(9);
-    else if (this.pendingType === 'active')
-    this.player.changeActive(this.pendingIdea);
+    if (this.pendingType === 'active')
+      this.player.changeActive(this.pendingIdea);
+    else 
+      this.player.addPassive(this.pendingIdea);
     
   }
 

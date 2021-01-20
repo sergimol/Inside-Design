@@ -435,13 +435,13 @@ export default class Bullet extends Phaser.GameObjects.Container{
 
                 if (this.config.hijaFaction === true){
                     for (let i = 0; i < this.config.bulletPelletHija; ++i){
-                    this.instanciarBala(this.esEnemigo, i);
+                        this.instanciarBala(this.esEnemigo, i);
                     }
                     //let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, this.esEnemigo);
                 }
                 else{
                     for (let i = 0; i < this.config.bulletPelletHija; ++i){
-                    this.instanciarBala(null, i);
+                        this.instanciarBala(null, i);
                     }
                     //let disparoHijo = new Bullet(this.scene, this.x, this.y, this.config.balaHija, null);
                 }

@@ -23,7 +23,7 @@ const Config = {
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
-        passiveCount: 9,
+        passiveCount: 10,
         weaponCount: 3,
         activeCount: 3,
         actives: [
@@ -46,13 +46,13 @@ const Config = {
         def: 0,
         west: 1,
         doom: 2,
-        pirata: 3,
+        pirata: 3,/*
         calvo: 4,
         ellie: 5,
         ruso: 6,
         payaso: 7,
         cresta: 8,
-        hummus: 9,
+        hummus: 9,*/
         numberAspectos: 10,
 
         spriteID: 0
@@ -89,10 +89,13 @@ const Config = {
         activePosY: 285,
         activeImgs: ['dash', 'shield', 'bomb'],
         dialogBoxX: 700,
-        dialogBoxY: 470,
+        dialogBoxY: 400,
         dialogX: 590,
-        dialogY: 450,
-        dialogFontSize: 30
+        dialogY: 475,
+        dialogFontSize: 30,
+        cooldownPosX: 850,
+        cooldownPosY: 300,
+        dialogBoxes: ['dialogoAndres', 'dialogoDiego', 'dialogoJavi', 'dialogoSergio']
     },
 
     tileset: {

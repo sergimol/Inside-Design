@@ -284,15 +284,16 @@ checkHitState(){
 
     //PREUPDATE
     preUpdate() {
+        if(!this.isDead){
+            this.applyForce(this.forceSaved);
+            this.forceSaved = { x: 0, y: 0 };
 
-        this.applyForce(this.forceSaved);
-        this.forceSaved = { x: 0, y: 0 };
-
-        this.checkHitState();
-        this.moveEnemy();
-        this.nextMove();
-        this.nextShoot();
-        this.changeBehavior();
+            this.checkHitState();
+            this.moveEnemy();
+            this.nextMove();
+            this.nextShoot();
+            this.changeBehavior();
+        }
 
     }
 
