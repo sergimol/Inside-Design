@@ -11,10 +11,10 @@ const BulletConfig = {
     originY: 0, 
     mass: 50,
     label: 'bullet',
-    airFriction: 0.01,
+    airFriction: 0.015,
     rebotes: Infinity, 
     fuerzaRebote: 0.5, 
-    velocidadMinima: 1.0,
+    velocidadMinima: -1,
     damage: 2, 
     devulveBalas: false,
     destruyeBalas: false, 
@@ -35,7 +35,7 @@ const BulletConfig = {
     angularVelocityMultiply: 2, //multiplicara un valor aleatorio de entre 0 y 1 
     angularVelocitySuma: -1, //samara la valor aleatorio multiplicado
     angularVelocityResultadoMultiply: 1, //multiplicara el resultado de todo lo anterior
-    lifeTime: Infinity, //milisegundos
+    lifeTime: 4000, //milisegundos
     pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
 
     balaHija: hijaConfig, //Todo a partir de aqui pertenece a la hija
