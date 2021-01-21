@@ -1,4 +1,4 @@
-
+import Item from "./item.js"
 
 
 export default class Bullet extends Phaser.GameObjects.Container{
@@ -86,6 +86,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.rebotes = config.rebotes;
         this.damage = config.damage;
         this.pierce = config.pierce;
+        this.dropAmmo = config.dropAmmo
 
 
         //Otras variables
@@ -430,6 +431,12 @@ export default class Bullet extends Phaser.GameObjects.Container{
              this.booleanoParaDestruirme = true;
             }
         if (this.booleanoParaDestruirme){
+
+            if(this.dropAmmo !== null){
+                for (let i = 0; i < this.dropAmmo; i++){
+                    var item = new Item(this.scene, this.x, this.y, 'bulletAmmo', this.scene.player);
+                }
+            }
             
             if (this.config.balaHija !== null){
 

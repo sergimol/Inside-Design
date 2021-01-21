@@ -12,7 +12,7 @@ const enemy = {
     aggroMovTime: 500,
     cadenceTime: 1000,
     minDistance: 4,
-    aggroDistance: 100,
+    aggroDistance: 500,
     idleVelFactor: 0.1,
     aggroVelFactor: 0.4,
     angleAcercarse:Math.PI / 4,
@@ -26,7 +26,7 @@ const enemy = {
         distanciaAlejarse:95,
         strafe: true,
         starfeTime: 1000
-    },
+    }/**
     {
         time: 10000,
         idle: false,
@@ -36,7 +36,9 @@ const enemy = {
         distanciaAlejarse:200,
         strafe: false,
         strafeTime: 1000
-    }]
+    }
+        */,
+]
 }
 
 export default enemy;
