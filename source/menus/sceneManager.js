@@ -173,7 +173,7 @@ export default class Game extends Phaser.Scene {
         //this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
         if (this.actualMusic != null)
             this.actualMusic.stop();
-        this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 2 });
+        this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: config.musicVolume.intro });
         this.actualMusic.play();
         this.actualMusic.loop = true;
     }
