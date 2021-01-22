@@ -32,7 +32,7 @@
          "name":"Enemies",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":100,
          "x":0,
          "y":0
@@ -164,24 +164,6 @@
                  "width":0,
                  "x":1235.83333333334,
                  "y":423.666666666667
-                }, 
-                {
-                 "gid":323,
-                 "height":16,
-                 "id":137,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":816,
-                 "y":808
                 }, 
                 {
                  "gid":458,

@@ -166,24 +166,6 @@
                  "y":1241.5
                 }, 
                 {
-                 "gid":323,
-                 "height":16,
-                 "id":137,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":856,
-                 "y":839.333333333333
-                }, 
-                {
                  "gid":458,
                  "height":16,
                  "id":140,
