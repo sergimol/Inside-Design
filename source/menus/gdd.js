@@ -1,13 +1,13 @@
 import Button from "../button.js";
 import config from "../config.js"
 
-const activasList = ['pasivas0', 'pasivas1'];
-const pasivasList = ['pasivas0', 'pasivas1'];
-const temporalesList = ['pasivas0', 'pasivas1'];
+const activasList = ['activa0', 'activa1'];
+const pasivasList = ['pasiva0', 'pasiva1', 'pasiva2', 'pasiva3', 'pasiva4', 'pasiva5', 'pasiva6'];
+const temporalesList = ['pasivaTemp0', 'pasivaTemp1', 'pasivaTemp2'];
 const armasList = ['armas0', 'armas1', 'armas2'];
-const esteticasList = ['pasivas0', 'pasivas1'];
-const characterList = ['pasivas0', 'pasivas1'];
-const musicaList = ['pasivas0', 'pasivas1'];
+const esteticasList = ['ambiente0', 'ambiente1'];
+const characterList = ['character0', 'character1'];
+const musicaList = ['musica0', 'musica1'];
 
 
 export default class Game extends Phaser.Scene {
@@ -33,31 +33,33 @@ export default class Game extends Phaser.Scene {
 
 
         //IMAGENES IDEAS
-        this.load.image('desbloquear','sprites/gdd/desbloqueable.jpg')
-        this.load.image('sombra','sprites/gdd/sombra.png')
+        this.load.image('desbloquear', 'sprites/gdd/desbloqueable.jpg')
+        this.load.image('sombra', 'sprites/gdd/sombra.png')
 
         //PASIVAS
         //Me lo tanqueo
-        this.load.image('pasiva0','/sprites/gdd/atributos/melotanqueo.jpg');
+        this.load.image('pasiva0', '/sprites/gdd/atributos/melotanqueo.jpg');
         //Demasiado facil
-        this.load.image('pasiva2','/sprites/gdd/atributos/demasiadofacil.jpg');
+        this.load.image('pasiva1', '/sprites/gdd/atributos/demasiadofacil.jpg');
         //Rambo
+        this.load.image('pasiva2', '/sprites/gdd/atributos/rambo.jpg');
         //Botiquines buena onda
-        this.load.image('pasiva0','/sprites/gdd/atributos/buenaonda.jpg');
+        this.load.image('pasiva3', '/sprites/gdd/atributos/buenaonda.jpg');
         //Botiquines mala onda
-        this.load.image('pasiva3','/sprites/gdd/atributos/malaonda.jpg');
+        this.load.image('pasiva4', '/sprites/gdd/atributos/malaonda.jpg');
         //Sanic
-        this.load.image('pasiva0','/sprites/gdd/atributos/sanic.jpg');
+        this.load.image('pasiva5', '/sprites/gdd/atributos/sanic.jpg');
         //Cogo
-        this.load.image('pasiva1','/sprites/gdd/atributos/cogo.jpg');
+        this.load.image('pasiva6', '/sprites/gdd/atributos/cogo.jpg');
 
         //PASIVAS TEMPORALES
         //run pacifica
-        this.load.image('pasiva0','/sprites/gdd/temporales/runpacifica.jpg');
+        this.load.image('pasivaTemp0', '/sprites/gdd/temporales/runpacifica.jpg');
         //mario kart
-        this.load.image('pasiva0','/sprites/gdd/temporales/mariokart.jpg');
+        this.load.image('pasivaTemp1', '/sprites/gdd/temporales/mariokart.jpg');
         //borracho
-        this.load.image('pasiva0','/sprites/gdd/temporales/estoytoperdio.jpg');
+        this.load.image('pasivaTemp2', '/sprites/gdd/temporales/estoytoperdio.jpg');
+
         //ARMAS
         //Arma Default
         //Escopeta Automatica
@@ -73,8 +75,10 @@ export default class Game extends Phaser.Scene {
         //Rifle Francotirador de Precision
         //Rifle Francotirador
         //Rifle Rafagas
+
         //AMBIENTES
         //Outlaws from the West
+        this.load.image('ambiente0', '/sprites/gdd/tiles/estoytoperdio.jpg');
         //Ray Tracing breakdance kill
         //La serie mas aburrida de la historia
         //Especial Navidad
@@ -82,6 +86,7 @@ export default class Game extends Phaser.Scene {
         //El mejor juego de la historia
         //The Only Thing They Fear is You
         //P.T.
+
         //PERSONAJES
         //playerDef
         //playerWest
@@ -93,6 +98,7 @@ export default class Game extends Phaser.Scene {
         //playerPayaso
         //playerCresta
         //playerHummus
+
         //MUSICA
         //mainChip
         //Outlaws from the West
@@ -183,6 +189,7 @@ export default class Game extends Phaser.Scene {
     selectArrayGDD(nombre) {
         this.activeArray = nombre;
         this.contador = 0;
+
         this.showImage(this.activeArray);
     }
 
@@ -247,12 +254,13 @@ export default class Game extends Phaser.Scene {
             this.disparosRealizados = file.disparos;
             this.enemiesKilled = file.enemigos;
 
-
             this.gddActivas = file.gddActivas;
             this.gddPasivas = file.gddPasivas;
             this.gddTemporales = file.gddTemporales;
             this.gddArmas = file.gddArmas;
             this.gddEsteticas = file.gddEsteticas;
+            this.gddCharacter = file.gddCharacter;
+            this.gddMusica = file.gddMusica;
         }
         else {
             this.disparosRealizados = 0;
@@ -260,35 +268,45 @@ export default class Game extends Phaser.Scene {
 
             //generar archivo del gdd
             this.gddActivas = [];
-            let numIdeas = config.gdd.nueroActivas;
-
+            let numIdeas = config.gdd.numeroActivas;
             for (let i = 0; i < numIdeas; i++)
                 this.gddActivas.push(false);
 
+
             this.gddPasivas = [];
             numIdeas = config.gdd.numeroPasivas;
-
             for (let i = 0; i < numIdeas; i++)
                 this.gddPasivas.push(false);
-
-            this.gddArmas = [];
-            numIdeas = config.gdd.numeroArmas;
-
-            for (let i = 0; i < numIdeas; i++)
-                this.gddArmas.push(false);
-
-            this.gddEsteticas = [];
-            numIdeas = config.gdd.numeroEsteticas;
-
-            for (let i = 0; i < numIdeas; i++)
-                this.gddEsteticas.push(false);
 
 
             this.gddTemporales = [];
             numIdeas = config.gdd.numeroTemporales;
-
             for (let i = 0; i < numIdeas; i++)
                 this.gddTemporales.push(false);
+
+
+            this.gddArmas = [];
+            numIdeas = config.gdd.numeroArmas;
+            for (let i = 0; i < numIdeas; i++)
+                this.gddArmas.push(false);
+
+
+            this.gddEsteticas = [];
+            numIdeas = config.gdd.numeroEsteticas;
+            for (let i = 0; i < numIdeas; i++)
+                this.gddEsteticas.push(false);
+
+
+            this.gddCharacter = [];
+            numIdeas = config.gdd.numeroCharacter;
+            for (let i = 0; i < numIdeas; i++)
+                this.gddCharacter.push(false);
+
+
+            this.gddMusica = [];
+            numIdeas = config.gdd.numeroMusica;
+            for (let i = 0; i < numIdeas; i++)
+                this.gddMusica.push(false);
         }
     }
 }
