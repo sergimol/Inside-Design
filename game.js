@@ -5,7 +5,7 @@ import Enemy from "./source/enemy.js";
 import Item from "./source/item.js";
 import Doors from "./source/doors.js";
 import config from "./source/config.js"
-import enemyConfig from "./source/enemiesFolder/defaultEnemy.js"
+import listEnemies from "./source/enemyList.js"
 import dialogues from "./source/dialogues.js";
 
 import Boss from "./source/boss.js";
@@ -417,10 +417,38 @@ export default class Game extends Phaser.Scene {
         else
           this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
         //this.player.changeAnimacionesonoseque();
+
+        //Spawnear el numero de enemigos
+        for (let i = 0; i < 10;) {
+        //for (let i = 0; i < objeto.properties[0].numEnemies;) {
+
+          let tileX = Phaser.Math.RND.between(0, this.map.width);
+          let tileY = Phaser.Math.RND.between(0, this.map.height);
+    
+          if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
+            //let e = new Boss(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, clyon);
+            //hacer random para elegir entre 3 enemigos de acuerdo a 0 - 3, 3- 6, 6 - 9
+            let tipo = Phaser.Math.RND.between(0 + Math.floor(((this.level + 1)/7)), Math.floor(((this.level + 1)/3)));
+            let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, listEnemies[tipo]);
+            this.enemies.add(e);
+    
+    
+            if (doorNum != x)
+              enemyCount = 0;
+    
+            ++enemyCount;
+            doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
+    
+            x = doorNum;
+            i++;
+          }
+    
+        }
+
       }
       else if (objeto.name === 'enemy') {
         //const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
-        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig, false, false);
+        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, listEnemies[0], false, false);
         this.enemies.add(e);
 
         if (doorNum != x)
@@ -460,28 +488,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for (let i = 0; i < 10; i++) {
-
-      let tileX = Phaser.Math.RND.between(0, this.map.width);
-      let tileY = Phaser.Math.RND.between(0, this.map.height);
-
-      if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
-        //let e = new Boss(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, clyon);
-        let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, enemyConfig);
-        this.enemies.add(e);
-
-
-        if (doorNum != x)
-          enemyCount = 0;
-
-        ++enemyCount;
-        doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
-
-        x = doorNum;
-      }
-      else i--;
-
-    }
+    
 
     for (const objeto of DoorsentityLayer) {
       //Creamos una puerta con la posicion y el numero necesario de enemigos  y la rotacion que hacen falta matar para que se abra

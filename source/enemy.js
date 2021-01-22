@@ -9,7 +9,7 @@ export default class Enemy extends Humanoid {
     constructor(scene, x, y, player, doorN, doorS, config, isBoss, cleon) {
         super(scene, x, y, config.sprite);
         this.body.label = 'enemy';
-        this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
+        this.weapon = new Weapon(scene, 0, 5, config.weapon);
         this.add(this.weapon);
 
         this.config = config;

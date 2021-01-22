@@ -1,4 +1,4 @@
-import defaultWeapon from "./../enemyWeaponFolder/defaultEnemyWeapon.js";
+import defaultWeapon from "./../enemyWeaponFolder/rafagaGunEmenigo.js";
 
 const enemy = {
 
@@ -7,9 +7,9 @@ const enemy = {
     sprite: "player",
 
     weapon: defaultWeapon,
-    health: 10,
+    health: 20,
     mass: 800,
-    speed: 100,
+    speed: 200,
     depth: 3,
     idleMovTime: 1000,
     aggroMovTime: 500,
@@ -27,7 +27,7 @@ const enemy = {
         distanciaAcercarse:100,
         alejarse:true,
         distanciaAlejarse:95,
-        strafe: false,
+        strafe: true,
         starfeTime: 1000
     }/**
     {

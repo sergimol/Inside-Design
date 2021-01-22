@@ -1,6 +1,6 @@
 import weapon1 from "../enemyWeaponFolder/destructoraDeCodigo.js";
 import weapon2 from "../enemyWeaponFolder/lanzadora_de_gatos_williDotInc.js";
-import weapon3 from "../enemyWeaponFolder/MartilloThisMunicion.js";
+import weapon3 from "../enemyWeaponFolder/martilloThisMunicion.js";
 
 
 
@@ -85,7 +85,7 @@ const boss = {
         idle: false,
         acercarse: true,
         distanciaAcercarse:48,
-        alejarse:false,
+        alejarse:true,
         distanciaAlejarse:200,
         strafe: false,
         strafeTime: 1000, 

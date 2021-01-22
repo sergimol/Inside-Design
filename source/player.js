@@ -634,7 +634,7 @@ export default class Player extends Humanoid {
           this.inDash = false;
           if (this.upgraded) {
             this.upgradedDashEmitter.stopFollow(this);
-            if(!this.upgradedDash !== null )
+            if(this.upgradedDash !== null )
             this.upgradedDash.destroy();
           }
           else
@@ -647,7 +647,7 @@ export default class Player extends Humanoid {
           //console.log(this.shield)
           if (this.shieldTime <= 0) {
             this.shielded = false;
-            if(!this.shield !== null )
+            if(this.shield !== null )
             this.shield.destroy();
             this.activeCooldown = 500;
           }
