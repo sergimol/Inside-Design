@@ -43,12 +43,14 @@
     </script>
     <canvas id="canvas" width="1400" height="800"></canvas>
     <script type="module">
-      import GameManager from "./sceneManager.js";
+      
       import Game from "./game.js";
-      import Pause from "./pause.js";
-      import Death from "./death.js";
-      import theEnd from "./theEnd.js";
-      import GDD from "./source/gdd.js";
+
+      import GameManager from "./source/menus/sceneManager.js";
+      import Pause from "./source/menus/pause.js";
+      import Death from "./source/menus/death.js";
+      import theEnd from "./source/menus/theEnd.js";
+      import GDD from "./source/menus/gdd.js";
 
       var config = {
         type: Phaser.WEBGL,

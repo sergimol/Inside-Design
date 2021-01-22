@@ -1,3 +1,4 @@
+
 const Config = {
     //Configuración base de los humanoides
     humanoid: {
@@ -155,9 +156,10 @@ const Config = {
         enemy:2,
         player:3,
         collidersLayer:4,
-        button:5,
+        bullets:4,
+        buttonBackground:5,
+        button:6,
         
-
     },
     cameraSettings:{
         zoom : 3,
