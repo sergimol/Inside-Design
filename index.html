@@ -49,7 +49,6 @@
       import GameManager from "./source/menus/sceneManager.js";
       import Pause from "./source/menus/pause.js";
       import EndGame from "./source/menus/endGame.js";
-      import theEnd from "./source/menus/theEnd.js";
       import GDD from "./source/menus/gdd.js";
 
       var config = {
@@ -65,7 +64,7 @@
           mode: Phaser.Scale.FIT,
           autoCenter: Phaser.Scale.CENTER_BOTH,
         },
-        scene: [GameManager, Game, Pause, EndGame, theEnd, GDD],
+        scene: [GameManager, Game, Pause, EndGame, GDD],
         physics: {
           default: "matter",
           matter: { gravity: { y: 0 }, debug: false },
