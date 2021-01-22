@@ -98,6 +98,7 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('microondas_shoot', 'sprites/spritesarmas/microondas.png', { frameWidth: 24, frameHeight: 24 });
     this.load.spritesheet('microondas_explosion', 'sprites/explosionMicroondas.png', { frameWidth: (93 * 5), frameHeight: (97 * 5) });
     this.load.spritesheet('fuego', 'sprites/fire.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('area_attack', 'sprites/area_attack.png', { frameWidth: (185), frameHeight: (200) });
     
     this.load.spritesheet('bate_attack', 'sprites/swing.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('katana_attack', 'sprites/tajo.png', { frameWidth: 64, frameHeight: 64 });
@@ -191,34 +192,6 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-
-    //ANIMACIONES ENEMIGO PERO POCHAS
-    /*
-    this.anims.create({
-      key: 'walkEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 4, end: 8 }), //15
-      frameRate: 15,
-      repeat: -1
-    })
-    this.anims.create({
-      key: 'idleEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 1, end: 3 }),
-      frameRate: 7,
-      repeat: -1
-    })
-    this.anims.create({
-      key: 'deathEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 16, end: 28 }),
-      frameRate: 14,
-      repeat: 0
-    })
-    this.anims.create({
-      key: 'hitEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 9, end: 14 }),
-      frameRate: 60,
-      repeat: 0
-    })
-    */
 
     //cleon
     this.anims.create({
@@ -401,8 +374,7 @@ export default class Game extends Phaser.Scene {
                 this.actualMusic.stop();
                 this.actualMusic = this.sound.add(config.music.songReference[config.music.intro], { volume: config.musicVolume.intro });
                 this.actualMusic.play();
-                this.scene.stop();
-                this.scene.start('theEnd');
+                this.scene.start('endGame');
               }
             }
           }
@@ -781,7 +753,6 @@ export default class Game extends Phaser.Scene {
 
   //Métodos del HUD
   setHealth(playerHealth) {
-    playerHealth = Math.ceil(playerHealth);
     this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
     this.healthCounter.text = playerHealth;
   }
@@ -939,7 +910,7 @@ export default class Game extends Phaser.Scene {
       })
       this.anims.create({
         key: 'death'+ config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 15, end: 28 }),
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 13, end: 28 }),
         frameRate: 14,
         repeat: 0
       })
@@ -949,6 +920,7 @@ export default class Game extends Phaser.Scene {
         frameRate: 60,
         repeat: 0
       })
+
    // }
     }
 

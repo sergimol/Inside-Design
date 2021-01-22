@@ -23,7 +23,7 @@ const Config = {
         scaleX:11,
         scaleY:16,
         depth: 4,
-        baseAmmo: 100,
+        baseAmmo: 200,
         baseHealth:10,
         baseWeaponID:17,
         dashTime: 50,
@@ -31,7 +31,7 @@ const Config = {
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
-        passiveCount: 13,
+        passiveCount: 14,
         weaponCount: 17,
         activeCount: 3,
         actives: [
@@ -123,18 +123,19 @@ const Config = {
     },
 
     music: {
+        musicNumber: 9,
         mainChip: 0,
         west: 1,
-        old30s: 2,
-        neon: 3,
-        epic: 4,
-        rock: 5,
-        horror: 6,
+        rock: 2,
+        horror: 3,
+        neon: 4,
+        old30s: 5,
+        epic: 6,
         piano: 7,
         berridos: 8, 
         intro: 9, 
-        songReference: ['mainChiptuneSong', 'westernSong', '30sSong', 'neonRiderSong',
-        'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong','introSong']
+        songReference: ['mainChiptuneSong', 'westernSong', 'rockSong', 'horrorSong',
+        'neonRiderSong', '30sSong', 'epicSong', 'pianoSong', 'berridosSong','introSong']
     },
 
     items: {
