@@ -73,7 +73,9 @@ const Dialogues = {
     ],
 
     upgrade: [
-        ["mejora"]
+        ["Deberíamos meterle una mejora a la activa.", "¿Os parece que ahora el dash haga daño por contacto?", "Vale, hagamos eso."],
+        ["El escudo es muy simple, ¿Hacemos que las balas reboten en él?", "Me parece bien, añadámoslo"],
+        ["Estaría bien añadirle algo más al efecto en área.", "Podemos hacer que dañe a los enemigos en el área", "Estoy de acuerdo"]
     ]
 
 }
