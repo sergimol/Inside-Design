@@ -107,19 +107,6 @@ export default class Button extends Phaser.GameObjects.Image {
             localStorage.clear();
             console.log("a tomar por culo")
         }
-        else if (this.label === 'endGame') {
-            this.scene.time.delayedCall(200, this.fadeOut, [], this);
-            this.scene.time.delayedCall(2000, this.endGame, [], this);
-        }
-    }
-
-    fadeOut() {
-        this.escenaOrigen.cameras.main.fadeOut(1000, 0, 0, 0);
         
-    }
-    endGame() {
-        this.scene.scene.stop('main');
-        this.escenaOrigen.cameras.main.fadeIn(1000, 0, 0, 0);
-        this.scene.time.delayedCall(500, this.scene.endGame, [], this.scene);
     }
 }

@@ -11,37 +11,35 @@ export default class Game extends Phaser.Scene {
         this.load.image('menuBackground', 'sprites/buttons/MainmenuBackground.png');
 
         //Imagenes Victoria
-
+        this.win0 = this.load.image('win0', 'sprites/gdd/atributos/cogo.jpg');
+        this.win1 = this.load.image('win1', 'sprites/gdd/atributos/cogo.jpg');
 
 
         //Imagenes de Derrota
-        this.loose0 = this.load.image('quit1', 'sprites/gdd/atributos/sanic.jpg');
+        this.loose0 = this.load.image('loose0', 'sprites/gdd/atributos/sanic.jpg');
+        this.loose0 = this.load.image('loose1', 'sprites/gdd/atributos/sanic.jpg');
+
     }
     create() {
         //this.portada = this.add.image(900, 500, 'menuBackground').setScale(config.button.maNiggaDed - 0.025).setDepth(config.depths.buttonBackground);
-        this.escenaGame = this.scene.scene.get('main');
-        this.endGame();
+        this.escenaGame = this.scene.get('main');
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.time.delayedCall(1200, this.endGame, [], this);
     }
 
     endGame() {
-        if (this.escenaGame.player.isDead)
+        this.escenaGame.scene.stop();
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+
+        //Sacame un numero entre todas las screens de final de juego
+        let numRandom = Phaser.Math.RND.between(0, 1);
+        if (this.escenaGame.player.isDead) {
             console.log("moriste")
-        else
+            this.add.image(700, 400, looseList[numRandom]);
+        }
+        else {
             console.log("ganaste")
-        // Phaser.Math.RND.between(0, 1);  //Sacame un numero entre todas las screens de final de juego
+            this.add.image(700, 400, winList[numRandom]);
+        }
     }
 }
-/*
-else if (this.label === 'endGame') {
-    this.scene.time.delayedCall(200, this.fadeOut, [], this);
-    this.scene.time.delayedCall(2000, this.endGame, [], this);
-}
-fadeOut() {
-    this.escenaOrigen.cameras.main.fadeOut(1000, 0, 0, 0);
-
-}
-endGame() {
-    this.scene.scene.stop('main');
-    this.escenaOrigen.cameras.main.fadeIn(1000, 0, 0, 0);
-    this.scene.time.delayedCall(500, this.scene.endGame, [], this.scene);
-}*/
