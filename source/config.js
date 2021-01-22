@@ -148,7 +148,11 @@ const Config = {
 
     depths:{
         button:5,
-        
+
+    },
+    cameraSettings:{
+        zoom : 3,
+        //shake:
     }
 }
 

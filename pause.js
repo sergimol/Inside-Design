@@ -1,4 +1,5 @@
 import Button from "./source/button.js";
+import config from "./source/config.js"
 export default class Game extends Phaser.Scene {
     constructor() {
         super({ key: "pause" });
@@ -16,7 +17,7 @@ export default class Game extends Phaser.Scene {
         this.cursors = this.input.keyboard.addKeys({
             escape: ESC
         })
-        this.cameras.main.zoom = 3;
+        this.cameras.main.zoom = config.cameraSettings.zoom;
 
         this.resumeButton = new Button(this, 700, 380, 'resumeButton', 'resumeButtonlight', 'resume')
         this.gddButton = new Button(this, 700, 405, 'quitButton', 'quitButtonlight', 'quit')
@@ -32,6 +33,7 @@ export default class Game extends Phaser.Scene {
         this.scene.resume('UIScene');
         this.scene.resume('main');
     }
+    //Me servira para parar la musica?
     stopMusic(){
     }
 }

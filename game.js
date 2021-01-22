@@ -849,20 +849,20 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
-/*  CREO QUE ESTO NO SIRVE PARA NADA PERO NO LO QUERIA BORRAR
+  
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
     else
       this.player.addPassive(this.pendingIdea);
 
     this.doorSystem.openDoor();
-*/
+/*  //CREO QUE ESTO NO SIRVE PARA NADA PERO NO LO QUERIA BORRAR
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
     else if(this.pendingType === 'temporal')
       this.player.addTempPassive(this.pendingIdea);
     else
-      this.player.addPassive(this.pendingIdea);    
+      this.player.addPassive(this.pendingIdea);  */  
   }
 
   //CAMBIAR MUSICA POR EL PLAYER

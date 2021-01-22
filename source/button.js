@@ -35,7 +35,7 @@ export default class Button extends Phaser.GameObjects.Image {
             if (this.scene.health != undefined)
                 this.scene.scene.start('main', { health: this.scene.health, ammo: this.scene.ammo, weaponID: this.scene.weaponID, level: this.scene.level });
             else
-                this.scene.scene.start('main', { health: config.player.baseHealth, ammo: config.player.baseAmmo, weaponID: 5, level: config.player.baseWeaponID });
+                this.scene.scene.start('main', { health: config.player.baseHealth, ammo: config.player.baseAmmo, weaponID: config.player.baseWeaponID, level: 0 });
         }
         else if (this.label === 'quit') {
             //this.scene.scene.stop('pause');
