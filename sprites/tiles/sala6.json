@@ -149,18 +149,6 @@
          "name":"Entities",
          "objects":[
                 {
-                 "gid":458,
-                 "height":16,
-                 "id":129,
-                 "name":"player",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":1264.03787878788,
-                 "y":444.734848484852
-                }, 
-                {
                  "height":0,
                  "id":136,
                  "name":"endLevel",
@@ -176,6 +164,24 @@
                  "width":0,
                  "x":504.500000000007,
                  "y":1430.83333333333
+                }, 
+                {
+                 "gid":458,
+                 "height":16,
+                 "id":140,
+                 "name":"player",
+                 "properties":[
+                        {
+                         "name":"numEnemies",
+                         "type":"int",
+                         "value":20
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":1260,
+                 "y":444
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -184,7 +190,7 @@
          "y":0
         }],
  "nextlayerid":22,
- "nextobjectid":140,
+ "nextobjectid":141,
  "orientation":"orthogonal",
  "properties":[
         {

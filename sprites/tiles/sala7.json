@@ -168,29 +168,29 @@
                 {
                  "gid":458,
                  "height":16,
-                 "id":140,
+                 "id":141,
                  "name":"player",
                  "properties":[
                         {
                          "name":"numEnemies",
                          "type":"int",
-                         "value":0
+                         "value":25
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":1233.33333333333,
-                 "y":1130.66666666667
+                 "x":1236,
+                 "y":1114.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":22,
- "nextobjectid":141,
+ "nextobjectid":142,
  "orientation":"orthogonal",
  "properties":[
         {

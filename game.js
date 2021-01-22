@@ -50,13 +50,12 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('enemyDef', './sprites/spritespersonajes/enemigo.png', { frameWidth: 24, frameHeight: 24 });
     this.load.spritesheet('enemyDemon', './sprites/spritespersonajes/demonio.png', { frameWidth: 24, frameHeight: 24 });
 
-
-
-    //Diego
+    //Arma
     this.load.spritesheet('bullet', 'sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('enemybullet', 'sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
+
+    //Puntero
     this.load.image('crosshair', 'sprites/crosshair.png');
-    this.load.image('granade_launcher', 'sprites/granade_launcher.png');
 
     //Armas
     this.load.image('escopeta_lanzable', 'sprites/escopeta_lanzable.png');
@@ -78,12 +77,12 @@ export default class Game extends Phaser.Scene {
     this.load.image('pistolaLaser', 'sprites/spritesarmas/pistolaLaser.png');
     this.load.image('rafagas', 'sprites/spritesarmas/rafagas.png');
     this.load.image('rafagasRebote', 'sprites/spritesarmas/rafagasRebote.png');
+    this.load.image('granade_launcher', 'sprites/granade_launcher.png');
 
     this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
-    //Javi
     //Tiles de estéticas
     this.load.image('tileBase', './sprites/tiles/tileJavi.png');
     this.load.image('tileSetBaseEx', './sprites/tiles/tileSetBaseEx.png');
@@ -122,7 +121,7 @@ export default class Game extends Phaser.Scene {
     this.load.tilemapTiledJSON('sala13', './sprites/tiles/sala13.json');
     this.load.tilemapTiledJSON('sala14', './sprites/tiles/sala14.json');
 
-    //nuevo
+    //BSO
     this.load.audio('mainChiptuneSong', './audio/mainChiptune.mp3');
     this.load.audio('westernSong', './audio/western.mp3');
     this.load.audio('30sSong', './audio/30s.mp3');
@@ -133,7 +132,7 @@ export default class Game extends Phaser.Scene {
     this.load.audio('pianoSong', './audio/piano.mp3');
     this.load.audio('berridosSong', './audio/berridos.mp3');
 
-
+    //FX
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
     this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
     this.load.audio('hitShootSound', './audio/hitShoot.wav');
@@ -147,9 +146,9 @@ export default class Game extends Phaser.Scene {
     this.load.audio('dashSound', './audio/dashSound.wav');
 
     //Elementos de la UI
-    //Armas
+    //Armas//
     this.load.image('gunshotsilhouette', 'sprites/gunshotSilueta.png');
-    //Pasivas
+    //Pasivas//
     this.load.image('tanqueo', 'sprites/pixel_tank.png');
     //this.load.image('facil', 'Sprites/');
     this.load.image('rambo', 'sprites/rambo.png');
@@ -157,16 +156,16 @@ export default class Game extends Phaser.Scene {
     //this.load.image('malaonda', 'Sprites/');
     this.load.image('sanic', 'sprites/sanic.png');
     this.load.image('cogo', 'sprites/ferrari.png');
-    //Activas
+    //Activas//
     this.load.image('dash', 'sprites/dash_1.png');
     this.load.image('shield', 'sprites/shield.png');
     this.load.image('bomb', 'sprites/bomb.png');
-    //Dialogos
+    //Dialogos//
     this.load.image('dialogoAndres', 'sprites/dialogoAndres.png');
     this.load.image('dialogoDiego', 'sprites/dialogoDiego.png');
     this.load.image('dialogoJavi', 'sprites/dialogoJavi.png');
     this.load.image('dialogoSergio', 'sprites/dialogoSergio.png');
-    //Carga de fuentes con bitmap
+    //Carga de fuentes con bitmap//
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
 
   }
@@ -252,7 +251,7 @@ export default class Game extends Phaser.Scene {
     })
 
 
-    //variables que utilizara ela rchivo de guardado
+    //variables que utilizara el archivo de guardado
     //estadisticas y gdd
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
@@ -277,14 +276,14 @@ export default class Game extends Phaser.Scene {
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
 
-    //Si no toca la sala del boss no lo cargues, si toca, cargala
+    //Cargado de salas
     if (this.level != config.room.bossRoomLevel) {
       while (numRoom === 2) {
         console.log("No puedes cargar la room del boss")
         let numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
       }
     } else if (this.level === config.room.bossRoomLevel)
-    numRoom = 2;
+      numRoom = config.room.bossRoom;
 
     let nameRoom = 'sala' + numRoom.toString(); //
 
@@ -386,6 +385,11 @@ export default class Game extends Phaser.Scene {
                 });
               }
               else {
+                //Se acaba la escena de juego y se reproduce la canción de creditos
+                this.actualMusic.stop();
+                this.actualMusic = this.sound.add(config.music.songReference[config.music.intro], { volume: 5 });
+                this.actualMusic.play();
+                this.scene.stop();
                 this.scene.start('theEnd');
               }
             }
@@ -398,7 +402,7 @@ export default class Game extends Phaser.Scene {
     this.events.on('shutdown', this.shutdown, this);
 
     this.input.keyboard.on('keydown_ESC', this.pauseGame, this);//this.pauseGame
-    this.input.keyboard.on('keydown_SPACE', this.advanceDialog, this);  
+    this.input.keyboard.on('keydown_SPACE', this.advanceDialog, this);
 
   }//End of create
 
@@ -822,7 +826,7 @@ export default class Game extends Phaser.Scene {
       case 'character':
         this.strings = dialogues.character[auxId];
         break;
-      case 'temporal' :
+      case 'temporal':
         this.strings = dialogues.character[auxId];
     }
 
@@ -849,20 +853,20 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
-  
+
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
     else
       this.player.addPassive(this.pendingIdea);
 
     this.doorSystem.openDoor();
-/*  //CREO QUE ESTO NO SIRVE PARA NADA PERO NO LO QUERIA BORRAR
-    if (this.pendingType === 'active')
-      this.player.changeActive(this.pendingIdea);
-    else if(this.pendingType === 'temporal')
-      this.player.addTempPassive(this.pendingIdea);
-    else
-      this.player.addPassive(this.pendingIdea);  */  
+    /*  //CREO QUE ESTO NO SIRVE PARA NADA PERO NO LO QUERIA BORRAR
+        if (this.pendingType === 'active')
+          this.player.changeActive(this.pendingIdea);
+        else if(this.pendingType === 'temporal')
+          this.player.addTempPassive(this.pendingIdea);
+        else
+          this.player.addPassive(this.pendingIdea);  */
   }
 
   //CAMBIAR MUSICA POR EL PLAYER

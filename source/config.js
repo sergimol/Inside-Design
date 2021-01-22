@@ -69,7 +69,7 @@ const Config = {
     weapon:{
         shakeDur: 100,
         shakeInt: 0.0005,
-        shotVolume: 0.1
+        shotVolume: 0.1,
     },
     
     //Configuración de la UI
