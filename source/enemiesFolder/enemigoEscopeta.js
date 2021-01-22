@@ -7,9 +7,9 @@ const enemy = {
     sprite: "player",
 
     weapon: defaultWeapon,
-    health: 50,
+    health: 30,
     mass: 800,
-    speed: 50,
+    speed: 30,
     depth: 3,
     idleMovTime: 1000,
     aggroMovTime: 500,
@@ -21,10 +21,10 @@ const enemy = {
     angleAcercarse:Math.PI / 6,
 
     humanoide:{
-        spriteScaleX:1,
-        spriteScaleY:1,
-        scaleX:11,
-        scaleY:16,
+        spriteScaleX:1.5,
+        spriteScaleY:1.5,
+        scaleX:11 * 1.5,
+        scaleY:16 * 1.5,
     },
     rutina: [{
         time: 10000,

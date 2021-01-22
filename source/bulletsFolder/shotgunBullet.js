@@ -1,6 +1,3 @@
-import hijaConfig from "./defaultEnemyBullet.js";
-
-
 const BulletConfig = {
 
     sprite: "bullet", 
@@ -16,7 +13,7 @@ const BulletConfig = {
     fuerzaRebote: 0.8, 
 
     velocidadMinima: 1.0,
-    damage: 1, 
+    damage: 2, 
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: false,

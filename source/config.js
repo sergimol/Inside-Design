@@ -27,7 +27,7 @@ const Config = {
         depth: 4,
         baseAmmo: 200,
         baseHealth:10,
-        baseWeaponID:17,
+        baseWeaponID:0,
         dashTime: 50,
         mass: 800,
         dashTint: 0x00ff1e,
@@ -189,8 +189,8 @@ const Config = {
         maNiggaDed:0.15,
     },
     musicVolume:{
-        intro: 2,   //2
-        general: 1, //1 
+        intro: 0.5,   //2
+        general: 0.5, //1 
     }
 }
 

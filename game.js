@@ -1,8 +1,5 @@
-import Weapon from "./source/weapon.js";
 import Player from "./source/player.js";
-import Puntero from "./source/puntero.js";
 import Enemy from "./source/enemy.js";
-import Item from "./source/item.js";
 import Doors from "./source/doors.js";
 import config from "./source/config.js"
 import listEnemies from "./source/enemyList.js"
@@ -311,28 +308,13 @@ export default class Game extends Phaser.Scene {
     console.log("level: " + this.level)
     console.log("Sala cargada: " + nameRoom)
 
-    //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
-    //this.levelname = this.level + 7;
-    //console.log(this.levelname)
-    //this.map = this.make.tilemap({ key: 'sala' + this.levelname});
-
-
     this.loadTileMapRoom();
     this.EnterRoomDir = this.map.properties[0].value;
     this.ExitRoomDir = this.map.properties[1].value;
     //PARA LA MUSICA
 
-
-    //this.tempo = 1400;
-    //this.compassTimer = this.time.now + this.tempo;
-    //this.musicChange = false;
-    //this.actualMusic = this.sound.add('mainChiptuneSong');
-    //this.actualMusic.play();
-
-    //this.setSceneMusic(this.musicID);
-
     //PUNTERO
-    this.input.setDefaultCursor('url(Sprites/crosshair.png), pointer');
+    this.input.setDefaultCursor('url(sprites/crosshair.png), pointer');
 
     this.angleToPointer;
     this.input.on('pointermove', function (pointer) {
@@ -346,13 +328,6 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.zoom = 3;
 
     this.cursors = this.input.keyboard.createCursorKeys();
-    /*
-    this.input.keyboard.on('keydown-SHIFT', function (event) {
-      if (this.tilemapState == 0) this.tilemapState++;
-      else this.tilemapState--;
-      console.log(this.tilemapState);
-    }, this);
-    */
 
     this.matter.world.on('collisionstart', (event) => {
 
