@@ -548,6 +548,7 @@ export default class Player extends Humanoid {
       case (config.music.old30s):
         console.log('Old30s');
         this.scene.changeMusic(config.music.old30s);
+        this.scene.putVideoOnScreen();
         break;
 
       case (config.music.epic):
