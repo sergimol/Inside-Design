@@ -295,7 +295,7 @@ export default class Player extends Humanoid {
       //Número aleatorio
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
-        //Ajustes para los porcentajes
+        //Ajustes para los porcentajes (cambio de arma 30 %(7,8,9)), cambio de tile 20% (10,11), resto 10%)
         if(id === 8 || id === 9) //Cambio de arma
           id = 7;
         if(id === 10 || id === 11)//Cambio de tile
@@ -405,6 +405,9 @@ export default class Player extends Humanoid {
       case (9):
         console.log("Cambio de apariecia");
         this.changeSpriteIdea(false, false, " ", this.sId);
+        break;
+      case(10):
+        this.changeMusic(this.mId);
         break;
     }
 
