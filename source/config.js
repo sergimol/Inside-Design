@@ -25,7 +25,7 @@ const Config = {
         depth: 4,
         baseAmmo: 100,
         baseHealth:10,
-        baseWeaponID:15,
+        baseWeaponID:3,
         dashTime: 50,
         mass: 800,
         dashTint: 0x00ff1e,
@@ -182,6 +182,8 @@ const Config = {
     },
     button:{
         mainMenu: 0.25,
+        gddMenu:0.8,
+        maNiggaDed:0.15,
     },
     musicVolume:{
         intro: 0,   //2

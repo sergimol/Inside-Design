@@ -15,7 +15,7 @@ const enemy = {
     aggroMovTime: 500,
     cadenceTime: 1000,
     minDistance: 4,
-    aggroDistance: 500,
+    aggroDistance: 200,
     idleVelFactor: 0.1,
     aggroVelFactor: 0.4,
     angleAcercarse:Math.PI / 4,

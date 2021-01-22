@@ -1,18 +1,18 @@
 import config from "./config.js"
 
 export default class Button extends Phaser.GameObjects.Image {
-    constructor(scene, x, y, sprite, sprite2, label,scale) {
+    constructor(scene, x, y, sprite, sprite2, label, scale) {
         super(scene, x, y, sprite);
         //this.image = scene.add.image(x, y, sprite);
         //this.scene.add(this);
         //  
         //this.updateBounds();
         //console.log(this)
-        this.setScale(scale); 
+        this.setScale(scale);
         scene.add.existing(this);
         //this.displayWidth = 100;
         //this.displayHeight = 200;
-        
+
 
         this.setInteractive()
             .on('pointerover', () => this.enterButtonHoverState(), this.alpha = 1)
@@ -26,7 +26,7 @@ export default class Button extends Phaser.GameObjects.Image {
         this.sprite2 = sprite2;
         this.label = label;
 
-        
+
 
         this.escenaOrigen = this.scene.scene.get('main');
     }
@@ -41,19 +41,18 @@ export default class Button extends Phaser.GameObjects.Image {
 
     enterActiveState() {
         if (this.label === 'play') {
-            //if (this.escenaOrigen != null)
-            //    this.escenaOrigen.scene.actualMusic.stop();
-            this.scene.actualMusic.stop();
+            if (this.scene.actualMusic !== undefined)
+                this.scene.actualMusic.stop();
+
             if (this.scene.health != undefined)
                 this.scene.scene.start('main', { health: this.scene.health, ammo: this.scene.ammo, weaponID: this.scene.weaponID, level: this.scene.level });
             else
-                this.scene.scene.start('main', { health: config.player.baseHealth, ammo: config.player.baseAmmo, weaponID: config.player.baseWeaponID, level: 0, 
-                    activePassives: config.player.startingPassives, actualACTIVE: 'none', upgraded: false, infiniteAmmo: false, maxHealth: config.player.baseHealth, velFactor: config.player.baseVelFactor });
+                this.scene.scene.start('main', {
+                    health: config.player.baseHealth, ammo: config.player.baseAmmo, weaponID: config.player.baseWeaponID, level: 0,
+                    activePassives: config.player.startingPassives, actualACTIVE: 'none', upgraded: false, infiniteAmmo: false, maxHealth: config.player.baseHealth, velFactor: config.player.baseVelFactor
+                });
         }
         else if (this.label === 'quit') {
-            //this.scene.scene.stop('pause');
-            //console.log(this.scene)
-            //this.scene.actualMusic.stop();
             this.scene.scene.stop('main');
             this.scene.scene.start('sceneManager');
         }
@@ -100,7 +99,7 @@ export default class Button extends Phaser.GameObjects.Image {
         else if (this.label === 'musicaGDD') {
             this.scene.selectArrayGDD(this.scene.gddMusica);
         }
-       
-       
+
+
     }
 }
