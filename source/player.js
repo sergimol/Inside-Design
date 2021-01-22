@@ -337,6 +337,7 @@ export default class Player extends Humanoid {
   //Método para añadir una pasiva aleatoria
   addPassive(id) {
     //Aplica la pasiva correspondiente
+    id = 8;
     switch (id) {
       //Aumenta la vida
       case (0):
@@ -409,6 +410,7 @@ export default class Player extends Humanoid {
   }
 
   changeTile(tId, isNewScene) {
+    tId = 6;
     this.tileID = tId;
     switch (tId) {
       //Cuidao solo haces ejecutas la musica cuando salta como idea
@@ -416,11 +418,15 @@ export default class Player extends Humanoid {
         console.log('Outlaws from the West');
         this.scene.changeLayer(config.tileset.west);
         if (!isNewScene)
-          this.changeMusic(config.music.west, isNewScene);
-        this.spriteID = config.player.west;
-        this.scene.changePlayerSprite(this.spriteID);
-        break;
+        {
 
+          this.changeMusic(config.music.west, isNewScene);
+          this.spriteID = config.player.west;
+          this.scene.changePlayerSprite(this.spriteID);
+          this.scene.changeEnemySprite(config.enemySprite.west);
+        }
+          break;
+          
       case (1):
         console.log('Ray Tracing breakdance kill');
         this.scene.changeLayer(config.tileset.raytracing);
@@ -441,8 +447,12 @@ export default class Player extends Humanoid {
       case (4):
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
-        this.spriteID = config.player.pirata;
-        this.scene.changePlayerSprite(this.spriteID);
+        if (!isNewScene)
+        {
+          this.spriteID = config.player.pirata;
+          this.scene.changePlayerSprite(this.spriteID);
+          this.scene.changeEnemySprite(config.enemySprite.pirata);
+        }
         break;
 
       case (5):
@@ -453,10 +463,13 @@ export default class Player extends Humanoid {
       case (6):
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
-        if (!isNewScene)
+        if (!isNewScene){
+
           this.changeMusic(config.music.rock, isNewScene);
-        this.spriteID = config.player.doom;
-        this.scene.changePlayerSprite(this.spriteID);
+          this.spriteID = config.player.doom;
+          this.scene.changePlayerSprite(this.spriteID);
+          this.scene.changeEnemySprite(config.enemySprite.doom);
+        }
         break;
 
       case (7):

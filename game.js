@@ -25,6 +25,7 @@ export default class Game extends Phaser.Scene {
       this.musicID = data.musicID,
       this.lastSeekMusic = data.lastSeekMusic
       this.playerSpriteID = data.playerSpriteID;
+      this.enemySpriteID = data.enemySpriteID;
     //this.playerAspectID = data.playerAspectID
   }
 
@@ -47,8 +48,11 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('guille', './sprites/spritespersonajes/guille.png', { frameWidth: 24, frameHeight: 24 });
 
     //Enemigos
+    //Enemigos
     this.load.spritesheet('enemyDef', './sprites/spritespersonajes/enemigo.png', { frameWidth: 24, frameHeight: 24 });
     this.load.spritesheet('enemyDemon', './sprites/spritespersonajes/demonio.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('enemyPirata', './sprites/spritespersonajes/enemigopirata.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('enemyWest', './sprites/spritespersonajes/enemigowest.png', { frameWidth: 24, frameHeight: 24 });
 
 
 
@@ -166,6 +170,7 @@ export default class Game extends Phaser.Scene {
   create() {
 
     //ANIMACIONES ENEMIGO PERO POCHAS
+    /*
     this.anims.create({
       key: 'walkEnemy',
       frames: this.anims.generateFrameNumbers('enemyDef', { start: 4, end: 8 }), //15
@@ -190,6 +195,7 @@ export default class Game extends Phaser.Scene {
       frameRate: 60,
       repeat: 0
     })
+    */
 
     //cleon
     this.anims.create({
@@ -359,7 +365,8 @@ export default class Game extends Phaser.Scene {
                 this.lastSeekMusic = this.actualMusic.seek;
                 this.scene.start('main', {
                   health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weaponId, level: this.level,
-                  tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID
+                  tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID,
+                  enemySpriteID: this.actualEnemyID,
 
                 });
               }
@@ -407,6 +414,8 @@ export default class Game extends Phaser.Scene {
           this.musicID = config.music.mainChip;
           this.player.musicID = this.musicID;
           this.playerSpriteID = config.player.def;
+          this.actualEnemyID = config.enemySprite.def;
+          this.changeEnemySprite(this.actualEnemyID);
           this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
           if (this.actualMusic != null)
             this.actualMusic.stop();
@@ -415,7 +424,10 @@ export default class Game extends Phaser.Scene {
 
         }
         else
+        {
           this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
+          this.changeEnemySprite(this.enemySpriteID);
+        }
         //this.player.changeAnimacionesonoseque();
       }
       else if (objeto.name === 'enemy') {
@@ -875,9 +887,7 @@ export default class Game extends Phaser.Scene {
 
 
   changePlayerSprite(id){
-    //ANIMACIONES JUGADOR
-    //if(this.anims.exists('walk')){
-      //this.anims.destroy();
+
       this.anims.create({
         key: 'walk' + config.player.spriteKey[id],
         frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 4, end: 8 }), //15
@@ -892,7 +902,7 @@ export default class Game extends Phaser.Scene {
       })
       this.anims.create({
         key: 'death'+ config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 16, end: 28 }),
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 15, end: 28 }),
         frameRate: 14,
         repeat: 0
       })
@@ -904,4 +914,37 @@ export default class Game extends Phaser.Scene {
       })
    // }
     }
+
+    changeEnemySprite(id){
+
+      this.actualEnemyID = id;
+
+      this.anims.create({
+        key: 'walkEnemy' + config.enemySprite.key[id],
+        frames: this.anims.generateFrameNumbers(config.enemySprite.key[id], { start: 4, end: 8 }), //15
+        frameRate: 15,
+        repeat: -1
+      })
+      this.anims.create({
+        key: 'idleEnemy'+ config.enemySprite.key[id],
+        frames: this.anims.generateFrameNumbers(config.enemySprite.key[id], { start: 1, end: 3 }),
+        frameRate: 7,
+        repeat: -1
+      })
+      this.anims.create({
+        key: 'deathEnemy'+ config.enemySprite.key[id],
+        frames: this.anims.generateFrameNumbers(config.enemySprite.key[id], { start: 14, end: 28 }),
+        frameRate: 14,
+        repeat: 0
+      })
+      this.anims.create({
+        key: 'hitEnemy'+ config.enemySprite.key[id],
+        frames: this.anims.generateFrameNumbers(config.enemySprite.key[id], { start: 4, end: 14 }),
+        frameRate: 60,
+        repeat: 0
+      })
+    
+    }
+
+
 }

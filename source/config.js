@@ -129,6 +129,20 @@ const Config = {
     items: {
         healthDrop: 3,
         ammoDrop: 5
+    },
+
+    enemySprite:
+    {
+        key: [
+            'enemyDef',
+            'enemyWest',
+            'enemyDemon',
+            'enemyPirata',
+        ],
+        def: 0,
+        west: 1,
+        doom: 2,
+        pirata: 3,
     }
 
     

@@ -4,6 +4,8 @@ import Weapon from "./weapon.js";
 
 import defaultWeapon from "./enemyWeaponFolder/defaultEnemyWeapon.js";
 
+import configDefault from "./config.js";
+
 
 export default class Enemy extends Humanoid {
     constructor(scene, x, y, player, doorN, doorS, config, isBoss, cleon) {
@@ -170,11 +172,11 @@ checkHitState(){
         if (this.dir.x !== 0 || this.dir.y !== 0)
         {
             if(!this.isBoss)
-                this.aspecto.play('walkEnemy', true);
+                this.aspecto.play('walkEnemy' + configDefault.enemySprite.key[this.scene.actualEnemyID] , true);
             else
             {
                 if(this.cleon)
-                    this.aspecto.play('walkCleon', true);
+                    this.aspecto.play('walkCleon'+ configDefault.enemySprite.key[this.scene.actualEnemyID], true);
                 else
                     this.aspecto.play('walkGuille', true);
             }
@@ -183,7 +185,7 @@ checkHitState(){
         {
 
             if(!this.isBoss)
-                this.aspecto.play('idleEnemy', true);
+                this.aspecto.play('idleEnemy'+ configDefault.enemySprite.key[this.scene.actualEnemyID], true);
             else
             {
                 if(this.cleon)
