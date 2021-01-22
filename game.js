@@ -835,7 +835,12 @@ export default class Game extends Phaser.Scene {
         this.strings = dialogues.temps[auxId];
         break;
       case 'upgrade':
-        this.strings = dialogues.upgrade[auxId];
+        if(this.player.actualACTIVE === 'dash')
+          this.strings = dialogues.upgrade[0];
+        else if(this.player.actualACTIVE === 'shield')
+          this.strings = dialogues.upgrade[1];
+        else if(this.player.actualACTIVE === 'area')
+          this.strings = dialogues.upgrade[2];
     }
 
     this.onDialog = true;
