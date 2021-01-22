@@ -19,6 +19,8 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.origenX = config.origenX;
         this.origenY = config.origenY;
 
+        this.soundEffect = config.soundEffect;
+
         //semiautomatica o automatica
         this.modo = config.m;
         //forma en la que dispara, mono, rafaga, shotgun, multi, //granadas, cohetes, son un tipo de bala no un tipo de arma etc¿?
@@ -137,14 +139,24 @@ export default class Weapon extends Phaser.GameObjects.Container{
         }
             if (this.style === "mono"){
                 
-            let sound = this.scene.sound.add('gunShootSound2');
+                let sound
+                if(this.soundEffect !== undefined){
+                    sound = this.scene.sound.add(this.soundEffect);
+                }
+                else
+             sound = this.scene.sound.add('gunShootSound2');
             sound.setVolume(config.weapon.shotVolume);
             sound.play();
                 this.instanciarBala(esEnemigo, 0);
             }
             else if (this.style === "shotgun"){
                 
-            let sound = this.scene.sound.add('gunShootSound2');
+                let sound
+                if(this.soundEffect !== undefined){
+                    sound = this.scene.sound.add(this.soundEffect);
+                }
+                else
+             sound = this.scene.sound.add('gunShootSound2');
             sound.setVolume(config.weapon.shotVolume);
             sound.play();
                 for (let i = 0; i < this.pellets; ++i){
@@ -246,25 +258,33 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
 
 
-//TODO pasar esto a config weapon
+
             this.scene.cameras.main.shake(config.weapon.shakeDur ,config.weapon.shakeInt);
             if (this.style === "mono"){
-                
-            let sound = this.scene.sound.add('gunShootSound2');
+                let sound
+                if(this.soundEffect !== undefined){
+                    sound = this.scene.sound.add(this.soundEffect);
+                }
+                else
+             sound = this.scene.sound.add('gunShootSound2');
             sound.setVolume(config.weapon.shotVolume);
             sound.play();
                 this.instanciarBalaAlternative(esEnemigo, 0);
             }
             else if (this.style === "shotgun"){
                 
-            let sound = this.scene.sound.add('gunShootSound2');
+                let sound
+                if(this.soundEffect !== undefined){
+                    sound = this.scene.sound.add(this.soundEffect);
+                }
+                else
+             sound = this.scene.sound.add('gunShootSound2');
             sound.setVolume(config.weapon.shotVolume);
             sound.play();
                 for (let i = 0; i < this.pelletsAlternative; ++i){
                     this.instanciarBalaAlternative(esEnemigo, i);
                 }
             } 
-        
     }
 
 

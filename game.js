@@ -162,6 +162,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('dashParticle', './sprites/dashParticula.png');
     this.load.image('dashUpgradedParticle', './sprites/dashParticulaMejorada.png');
     this.load.audio('dashSound', './audio/dashSound.wav');
+    this.load.audio('microondas', './audio/microondas.wav');
 
     //Elementos de la UI
     //Armas//

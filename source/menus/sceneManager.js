@@ -58,10 +58,12 @@ export default class Game extends Phaser.Scene {
         this.load.image('playButton', './sprites/buttons/playButton.png');
         this.load.image('gddButton', './sprites/buttons/gddButton.png');
         this.load.image('optionsButton', './sprites/buttons/optionsButton.png');
+        this.load.image('localStorage', './sprites/buttons/localStorage.png');
 
         this.load.image('playButtonlight', './sprites/buttons/playButtonlight.png');
         this.load.image('gddButtonlight', './sprites/buttons/gddButtonlight.png');
         this.load.image('optionsButtonlight', './sprites/buttons/optionsButtonlight.png');
+        this.load.image('localStoragelight', './sprites/buttons/localStoragelight.png');
 
         this.load.image('menuBackground', 'sprites/buttons/MainmenuBackground.png');
 
@@ -84,13 +86,14 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.startFollow(this.point);
 
         this.playButton = new Button(this, 220, 215, 'playButton', 'playButtonlight', 'play', config.button.mainMenu)
-        this.gddButton = new Button(this, 220, 240, 'gddButton', 'gddButtonlight', 'gdd',config.button.mainMenu)
-        this.optionsButton = new Button(this, 220, 265, 'optionsButton', 'optionsButtonlight', 'options',config.button.mainMenu)
+        this.gddButton = new Button(this, 220, 240, 'gddButton', 'gddButtonlight', 'gdd', config.button.mainMenu)
+        this.optionsButton = new Button(this, 220, 265, 'optionsButton', 'optionsButtonlight', 'options', config.button.mainMenu)
+        this.localStorageButton = new Button(this, 220, 285, 'localStorage', 'localStoragelight', 'localStorageReset', config.button.mainMenu - 0.10)
 
         let background = this.add.image(220, 240, 'menuBackground');
-        background.setScale(0.25); 
+        background.setScale(0.25);
         background.setDepth(config.depths.buttonBackground);
-        
+
         this.events.on('shutdown', this.shutdown, this);
     }
 
@@ -111,8 +114,8 @@ export default class Game extends Phaser.Scene {
                 this.point = objeto;
             }
             else if (objeto.name === 'enemy') {
-               // const e = new Enemy(this, objeto.x, objeto.y, this.point, objeto.properties[0].value - 1, this.doorSystem, configEnemy);
-               // this.enemies.add(e);
+                // const e = new Enemy(this, objeto.x, objeto.y, this.point, objeto.properties[0].value - 1, this.doorSystem, configEnemy);
+                // this.enemies.add(e);
 
                 if (doorNum[objeto.properties[0].value - 1] != x)
                     enemyCount = 0;
