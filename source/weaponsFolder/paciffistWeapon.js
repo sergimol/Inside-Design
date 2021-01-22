@@ -1,5 +1,5 @@
 import disparo from "./../bulletsFolder/paciffistBullet.js";
-import disparoAlternativo from "../bulletsFolder/defaultBullet.js";
+import disparoAlternativo from "../bulletsFolder/paciffistBullet.js";
 
 const WeaponConfig = {
     id: 0,
@@ -19,7 +19,7 @@ const WeaponConfig = {
     canyonY: 0,
     cuerpoACuerpo: false, 
     rotationOffSet: 0, 
-    costeMunicionPorBala: 1,
+    costeMunicionPorBala: 0,
 
     
     fixedDisp:{

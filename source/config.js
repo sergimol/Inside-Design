@@ -8,11 +8,13 @@ const Config = {
     },
 
     gdd:{
+        numeroEsteticas:8,
         numeroArmas:18,
-        numeroEsteticas:0,
         numeroPasivas:7,
         nueroActivas:3,
-        numeroTemporales:3
+        numeroTemporales:3,
+        numeroCharacters:10 ,
+        numeroMusicas: 9
     },
 
     //Configuración específica del jugador
@@ -161,7 +163,7 @@ const Config = {
         numRoomsIni: 1,     //Sala inicial
         numRoomsTotal: 14,  //Salas totales
         bossRoom:2,         //Sala del boss (de Tiled)
-        bossRoomLevel: 9,   //Sala en la que debería de aparecer el boss
+        bossRoomLevel: 0,   //Sala en la que debería de aparecer el boss
     },
 
     depths:{

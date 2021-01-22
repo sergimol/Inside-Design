@@ -3,7 +3,7 @@ import hijaConfig from "./defaultEnemyBullet.js";
 
 const BulletConfig = {
 
-    sprite: "shield", 
+    sprite: "kart", 
     scale: 1,
     sizeX: 8,
     sizeY: 8,
@@ -18,7 +18,7 @@ const BulletConfig = {
     velocidadMinima: -1,
     damage: 15, 
     devulveBalas: false,
-    destruyeBalas: false, 
+    destruyeBalas: true, 
     isSensor: true,
     pierce: Infinity,
     destroyOnWall: false, //si true, ignorara rebotes y si es sensor cuando choque con una pared se destruira
@@ -27,7 +27,7 @@ const BulletConfig = {
 
     form:"circle",
     customForm: {
-        radius: 24
+        radius: 16
     },
 
     
@@ -35,9 +35,9 @@ const BulletConfig = {
 
     //para la animacion
     
-    key: "shield",
+    key: "kart_anim",
     frameRate: 15,
-    frames: {start: 0 , end:0 },//{start: 1 , end:1 }), //15
+    frames: {start: 0 , end:1 },//{start: 1 , end:1 }), //15
     repeat: -1,
 
     
