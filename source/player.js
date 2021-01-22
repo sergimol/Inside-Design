@@ -22,7 +22,7 @@ export default class Player extends Humanoid {
 
     this.spriteID = config.player.spriteID;
     //Arma
-    //this.weapon = new Weapon(scene, 0, 5, granade__launcher);
+    this.weapon = new Weapon(scene, 0, 5, config.player.baseWeaponID);
     this.add(this.weapon);
     this.maxHealth = config.humanoid.health;
 
