@@ -95,6 +95,8 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
+    this.load.spritesheet('microondas_shoot', 'sprites/spritesarmas/microondas.png', { frameWidth: 24, frameHeight: 24 });
+    this.load.spritesheet('microondas_explosion', 'sprites/explosionMicroondas.png', { frameWidth: (93 * 5), frameHeight: (97 * 5) });
     
     this.load.spritesheet('bate_attack', 'sprites/swing.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('katana_attack', 'sprites/tajo.png', { frameWidth: 64, frameHeight: 64 });

@@ -234,9 +234,10 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //bodyA.gameObject.applyForce(vectorDeDireccion);
                         //console.log(bodyA.speed);
 
-                        if (!this.body.isSensor) this.booleanoParaDestruirme = true;
-                        if (this.pierce <= 0) 
-                        this.booleanoParaDestruirme = true;
+                        if (this.pierce <= 0) {
+                            if (!this.body.isSensor) this.booleanoParaDestruirme = true;
+                            this.booleanoParaDestruirme = true;
+                        }
                         else 
                         this.pierce--;
                     }
@@ -269,9 +270,10 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //bodyB.gameObject.applyForce(vectorDeDireccion);
                         //console.log(bodyB.speed);
 
-                        if (!this.body.isSensor) this.booleanoParaDestruirme = true;
-                        if (this.pierce <= 0) 
-                        this.booleanoParaDestruirme = true;
+                        if (this.pierce <= 0) {
+                            if (!this.body.isSensor) this.booleanoParaDestruirme = true;
+                            this.booleanoParaDestruirme = true;
+                        }
                         else 
                         this.pierce--;
                     }

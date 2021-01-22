@@ -8,7 +8,7 @@ const Config = {
     },
 
     gdd:{
-        numeroArmas:16,
+        numeroArmas:17,
         numeroEsteticas:0,
         numeroPasivas:7,
         nueroActivas:3,
@@ -25,7 +25,7 @@ const Config = {
         depth: 4,
         baseAmmo: 100,
         baseHealth:10,
-        baseWeaponID:15,
+        baseWeaponID:16,
         dashTime: 50,
         mass: 800,
         dashTint: 0x00ff1e,
