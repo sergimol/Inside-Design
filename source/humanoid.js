@@ -83,8 +83,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                 else if (this.body.label === 'player') {
                     this.weapon.pararRafagasCola();
                     this.scene.setHealth(0);
-                    this.scene.scene.launch('death');
-                    this.scene.scene.pause('main');
+                    this.aspecto.play('death'+ config.player.spriteKey[this.spriteID], true);
+                    this.scene.scene.launch('endGame');            
                 }
             }
             else {

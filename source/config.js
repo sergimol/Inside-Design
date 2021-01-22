@@ -8,8 +8,8 @@ const Config = {
     },
 
     gdd:{
-        numeroArmas:17,
         numeroEsteticas:8,
+        numeroArmas:18,
         numeroPasivas:7,
         nueroActivas:3,
         numeroTemporales:3,
@@ -25,9 +25,9 @@ const Config = {
         scaleX:11,
         scaleY:16,
         depth: 4,
-        baseAmmo: 100,
+        baseAmmo: 200,
         baseHealth:10,
-        baseWeaponID:16,
+        baseWeaponID:17,
         dashTime: 50,
         mass: 800,
         dashTint: 0x00ff1e,
@@ -163,8 +163,7 @@ const Config = {
         numRoomsIni: 1,     //Sala inicial
         numRoomsTotal: 14,  //Salas totales
         bossRoom:2,         //Sala del boss (de Tiled)
-        bossRoomLevel: 10,
-        tutorialLevel: 0   //Sala en la que debería de aparecer el boss
+        bossRoomLevel: 0,   //Sala en la que debería de aparecer el boss
     },
 
     depths:{

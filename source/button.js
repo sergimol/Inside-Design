@@ -107,5 +107,6 @@ export default class Button extends Phaser.GameObjects.Image {
             localStorage.clear();
             console.log("a tomar por culo")
         }
+        
     }
 }

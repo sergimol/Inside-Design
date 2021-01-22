@@ -32,7 +32,7 @@ export default class Game extends Phaser.Scene {
     this.maxHealth = data.maxHealth;
     this.velFactor = data.velFactor;
     this.enemySpriteID = data.enemySpriteID
-    //this.playerAspectID = data.playerAspectID
+    this.videoPlay = data.videoPlay;
   }
 
 
@@ -100,6 +100,8 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('area_attack', 'sprites/area_attack.png', { frameWidth: 185, frameHeight: 200 });
     this.load.spritesheet('kart', 'sprites/spritespersonajes/kart.png', {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet('flor', 'sprites/spritespersonajes/flor.png', {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet('fuego', 'sprites/fire.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('area_attack', 'sprites/area_attack.png', { frameWidth: (185), frameHeight: (200) });
     
     this.load.spritesheet('bate_attack', 'sprites/swing.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('katana_attack', 'sprites/tajo.png', { frameWidth: 64, frameHeight: 64 });
@@ -190,6 +192,9 @@ export default class Game extends Phaser.Scene {
     //Carga de fuentes con bitmap//
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
 
+    //Video
+    this.load.video('filtrocinta', './sprites/video/filtrocintabien.mp4');
+
   }
 
   create() {
@@ -246,6 +251,15 @@ export default class Game extends Phaser.Scene {
       repeat: 0
     })
 
+
+    //Auxiliar para el video 
+    
+    if(this.videoPlay)
+    {
+      this.putVideoOnScreen();
+    }
+    else
+      this.videoPlaying = false;
 
     //variables que utilizara el archivo de guardado
     //estadisticas y gdd
@@ -367,7 +381,7 @@ export default class Game extends Phaser.Scene {
                   tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID,
                   activePassives: this.player.activePassives, actualACTIVE: this.player.actualACTIVE, upgraded: this.player.upgraded, 
                   infiniteAmmo: this.player.hasInfiniteAmmo, maxHealth: this.player.maxHealth, velFactor: this.player.velFactor,
-                  enemySpriteID: this.actualEnemyID
+                  enemySpriteID: this.actualEnemyID, videoPlay: this.videoPlaying
                 });
               }
               else {
@@ -375,8 +389,7 @@ export default class Game extends Phaser.Scene {
                 this.actualMusic.stop();
                 this.actualMusic = this.sound.add(config.music.songReference[config.music.intro], { volume: config.musicVolume.intro });
                 this.actualMusic.play();
-                this.scene.stop();
-                this.scene.start('theEnd');
+                this.scene.start('endGame');
               }
             }
           }
@@ -931,7 +944,7 @@ export default class Game extends Phaser.Scene {
       })
       this.anims.create({
         key: 'death'+ config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 15, end: 28 }),
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 13, end: 28 }),
         frameRate: 14,
         repeat: 0
       })
@@ -941,6 +954,7 @@ export default class Game extends Phaser.Scene {
         frameRate: 60,
         repeat: 0
       })
+
    // }
     }
 
@@ -973,6 +987,17 @@ export default class Game extends Phaser.Scene {
         repeat: 0
       })
     
+    }
+
+    putVideoOnScreen(){
+      this.videoPlaying = true;
+      this.video = this.add.video(700, 400, 'filtrocinta');
+      this.video.depth = 10;
+      this.video.setAlpha(0.3);
+      this.video.play();
+      this.video.setLoop(true);
+      this.video.setScrollFactor(0);
+      
     }
 
 

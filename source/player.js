@@ -174,8 +174,8 @@ export default class Player extends Humanoid {
     this.scene.setHealth(this.health);
     this.scene.setBackground(this.maxHealth);
     this.scene.setAmmo(this.ammo);
-    if(this.actualACTIVE !== 'none'){
-      switch(this.actualACTIVE){
+    if (this.actualACTIVE !== 'none') {
+      switch (this.actualACTIVE) {
         case 'dash':
           this.scene.setActiveImg(0);
           break;
@@ -216,7 +216,7 @@ export default class Player extends Humanoid {
 
     //Array de booleanos para saber si una pasiva está activada o no
     this.activePassives = activePassives;
-    
+
 
 
 
@@ -299,38 +299,38 @@ export default class Player extends Humanoid {
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
         //Ajustes para los porcentajes (cambio de arma 30 %(7,8,9)), cambio de tile 20% (10,11), resto 10%)
-        if(id === 8 || id === 9) //Cambio de arma
+        if (id === 8 || id === 9) //Cambio de arma
           id = 7;
-        if(id === 10 || id === 11)//Cambio de tile
+        if (id === 10 || id === 11)//Cambio de tile
           id = 8;
-        else if(id === 12)//Cambio de sprite
+        else if (id === 12)//Cambio de sprite
           id = 9;
-        else if(id === 13)
+        else if (id === 13)
           id = 10;
       } while (this.activePassives[id])
-      
-      if(id === 7){
+
+      if (id === 7) {
         this.wId = Math.floor(Math.random() * config.gdd.numeroArmas);
         this.scene.startDialog('weapon', id, this.wId);
       }
-      else if(id === 8){
+      else if (id === 8) {
         this.tId = Math.floor(Math.random() * config.tileset.tileCount);
         this.scene.startDialog('tilemap', id, this.tId);
       }
-      else if(id === 9){
+      else if (id === 9) {
         do {
           this.sId = Math.floor(Math.random() * config.player.numberAspectos);
         } while (this.sId <= 3)
         this.scene.startDialog('character', id, this.sId);
       }
-      else if(id === 10){
+      else if (id === 10) {
         do {
           this.mId = Math.floor(Math.random() * config.music.musicNumber);
         } while (this.mId < 5)
         this.scene.startDialog('music', id, this.mId);
       }
-      else{
-        this.scene.startDialog('passive', id, id);    
+      else {
+        this.scene.startDialog('passive', id, id);
         this.activePassives[id] = true;
       }
     }
@@ -414,16 +414,16 @@ export default class Player extends Humanoid {
         console.log("Cambio de apariecia");
         this.changeSpriteIdea(false, false, " ", this.sId);
         break;
-      case(10):
-		    console.log("Cambio exclusivo de musica");
+      case (10):
+        console.log("Cambio exclusivo de musica");
         this.changeMusic(this.mId);
         break;
     }
 
   }
 
-  addTempPassive(id){
-    switch(id){
+  addTempPassive(id) {
+    switch (id) {
       case 0:
         console.log('run pacifica');
         this.lastWeaponId = this.weaponId;
@@ -446,8 +446,7 @@ export default class Player extends Humanoid {
   }
 
   removeTempPassive() {
-    console.log('remove')
-    switch(this.currentTemp){
+    switch (this.currentTemp) {
       case 0:
         this.changeWeapon(this.lastWeaponId)
         break;
@@ -476,15 +475,14 @@ export default class Player extends Humanoid {
       case (0):
         console.log('Outlaws from the West');
         this.scene.changeLayer(config.tileset.west);
-        if (!isNewScene)
-        {
+        if (!isNewScene) {
           this.changeMusic(config.music.west, isNewScene);
           this.spriteID = config.player.west;
           this.scene.changePlayerSprite(this.spriteID);
           this.scene.changeEnemySprite(config.enemySprite.west);
         }
-          break;
-          
+        break;
+
       case (1):
         console.log('Ray Tracing breakdance kill');
         this.scene.changeLayer(config.tileset.raytracing);
@@ -505,8 +503,7 @@ export default class Player extends Humanoid {
       case (4):
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
-        if (!isNewScene)
-        {
+        if (!isNewScene) {
           this.spriteID = config.player.pirata;
           this.scene.changePlayerSprite(this.spriteID);
           this.scene.changeEnemySprite(config.enemySprite.pirata);
@@ -521,7 +518,7 @@ export default class Player extends Humanoid {
       case (6):
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
-        if (!isNewScene){
+        if (!isNewScene) {
           this.changeMusic(config.music.rock, isNewScene);
           this.spriteID = config.player.doom;
           this.scene.changePlayerSprite(this.spriteID);
@@ -559,6 +556,7 @@ export default class Player extends Humanoid {
       case (config.music.old30s):
         console.log('Old30s');
         this.scene.changeMusic(config.music.old30s);
+        this.scene.putVideoOnScreen();
         break;
 
       case (config.music.epic):
@@ -609,84 +607,86 @@ export default class Player extends Humanoid {
 
   preUpdate() {
 
-    this.applyForce(this.forceSaved);
-    this.forceSaved = { x: 0, y: 0 };
+    if (!this.isDead) {
+      this.applyForce(this.forceSaved);
+      this.forceSaved = { x: 0, y: 0 };
 
-    //Right si se entra o se sale por la izquierda
-    //Left si se entra o se sale por la derecha
-    //Top si se entra o se sale por arriba
-    //Down si se entra o se sale por abajo
-    if (this.isEntering) {
-      if (this.scene.EnterRoomDir === "Left")
-        this.dir.x = 1;
-      else if (this.scene.EnterRoomDir === "Right")
-        this.dir.x = -1;
-      else if (this.scene.EnterRoomDir === "Top")
-        this.dir.y = 1;
-      else if (this.scene.EnterRoomDir === "Bottom")
-        this.dir.y = -1;
-    }
-    else if (this.isLeaving) {
-      if (this.scene.ExitRoomDir === "Right")
-        this.dir.x = 1;
-      else if (this.scene.ExitRoomDir === "Left")
-        this.dir.x = -1;
-      else if (this.scene.ExitRoomDir === "Bottom")
-        this.dir.y = 1;
-      else if (this.scene.ExitRoomDir === "Top")
-        this.dir.y = -1;
-    }
-    else {
-      //Idle por defecto
-      this.dir.x = 0;
-      this.dir.y = 0;
-      //Movimiento horizontal
-      if (this.cursors.left.isDown || this.cursors.a.isDown){
-        this.dir.x = -1;
+      //Right si se entra o se sale por la izquierda
+      //Left si se entra o se sale por la derecha
+      //Top si se entra o se sale por arriba
+      //Down si se entra o se sale por abajo
+      if (this.isEntering) {
+        if (this.scene.EnterRoomDir === "Left")
+          this.dir.x = 1;
+        else if (this.scene.EnterRoomDir === "Right")
+          this.dir.x = -1;
+        else if (this.scene.EnterRoomDir === "Top")
+          this.dir.y = 1;
+        else if (this.scene.EnterRoomDir === "Bottom")
+          this.dir.y = -1;
       }
-      else if (this.cursors.right.isDown || this.cursors.d.isDown)
-        this.dir.x = 1;
-      //Movimiento vertical        
-      if (this.cursors.up.isDown || this.cursors.w.isDown)
-        this.dir.y = -1;
-      else if (this.cursors.down.isDown || this.cursors.s.isDown)
-        this.dir.y = 1;
-
-      if(this.drunk){
-        this.dir.x *= -1;
-        this.dir.y *= -1;
+      else if (this.isLeaving) {
+        if (this.scene.ExitRoomDir === "Right")
+          this.dir.x = 1;
+        else if (this.scene.ExitRoomDir === "Left")
+          this.dir.x = -1;
+        else if (this.scene.ExitRoomDir === "Bottom")
+          this.dir.y = 1;
+        else if (this.scene.ExitRoomDir === "Top")
+          this.dir.y = -1;
       }
-    }
-    this.dir.normalize();
-    this.playerMove();
-    this.puntero.moverconjugador(this);
-    this.puntero.updateMiddle(this);
+      else {
+        //Idle por defecto
+        this.dir.x = 0;
+        this.dir.y = 0;
+        //Movimiento horizontal
+        if (this.cursors.left.isDown || this.cursors.a.isDown) {
+          this.dir.x = -1;
+        }
+        else if (this.cursors.right.isDown || this.cursors.d.isDown)
+          this.dir.x = 1;
+        //Movimiento vertical        
+        if (this.cursors.up.isDown || this.cursors.w.isDown)
+          this.dir.y = -1;
+        else if (this.cursors.down.isDown || this.cursors.s.isDown)
+          this.dir.y = 1;
 
-    //esto no deberia de ir aqui
+        if (this.drunk) {
+          this.dir.x *= -1;
+          this.dir.y *= -1;
+        }
+      }
+      this.dir.normalize();
+      this.playerMove();
+      this.puntero.moverconjugador(this);
+      this.puntero.updateMiddle(this);
 
-    this.moveRotate(this.puntero.x - this.x);
-    this.rotateWeapon(this.angleToPointer);
-    //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
+      //esto no deberia de ir aqui
+
+      this.moveRotate(this.puntero.x - this.x);
+      this.rotateWeapon(this.angleToPointer);
+      //this.rotateWeapon(Phaser.Math.Angle.Between(this.x, this.y, px, py));
 
 
-    if (this.weapon.esAutomatica()) {
-      var pointer = this.scene.input.activePointer;
-      if (pointer.leftButtonDown()) {
+      if (this.weapon.esAutomatica()) {
+        var pointer = this.scene.input.activePointer;
+        if (pointer.leftButtonDown()) {
+          this.shoot();
+        }
+      }
+      else if (this.semiAutomaticaHasShoot === false) {
+        this.semiAutomaticaHasShoot = true;
         this.shoot();
       }
-    }
-    else if (this.semiAutomaticaHasShoot === false) {
-      this.semiAutomaticaHasShoot = true;
-      this.shoot();
-    }
 
-    if (this.actualACTIVE !== 'none')
-      this.handleActive();
+      if (this.actualACTIVE !== 'none')
+        this.handleActive();
 
-    if(this.tempTimer >= 0)
-      this.handleTemps();
-    //Llamada al menu de pausa
-    //console.log(this.cursors.escape.isDown)
+      if (this.tempTimer >= 0)
+        this.handleTemps();
+      //Llamada al menu de pausa
+      //console.log(this.cursors.escape.isDown)
+    }
   }
 
   changeSpriteIdea(fromTile, isNewScene, lastSpriteId, id) {
@@ -696,7 +696,7 @@ export default class Player extends Humanoid {
       this.spriteID = lastSpriteId;
     //Si viene de nueva idea miramos si viene de una que desencadena de tile o no
     else {
-      if (!fromTile) {        
+      if (!fromTile) {
         this.spriteID = id;
       }
 
@@ -712,7 +712,7 @@ export default class Player extends Humanoid {
           this.inDash = false;
           if (this.upgraded) {
             this.upgradedDashEmitter.stopFollow(this);
-            if(this.upgradedDash !== undefined)
+            if (this.upgradedDash !== undefined)
               this.upgradedDash.booleanoParaDestruirme = true;
           }
           else
@@ -725,7 +725,7 @@ export default class Player extends Humanoid {
           //console.log(this.shield)
           if (this.shieldTime <= 0) {
             this.shielded = false;
-            if(this.shield !== undefined)
+            if (this.shield !== undefined)
               this.shield.booleanoParaDestruirme = true;
             this.activeCooldown = 500;
           }
@@ -751,9 +751,9 @@ export default class Player extends Humanoid {
     }
   }
 
-  handleTemps(){
+  handleTemps() {
     this.tempTimer--;
-    if(this.tempTimer === 0)
+    if (this.tempTimer === 0)
       this.removeTempPassive();
     else if(this.currentTemp === 1){
       this.kart.x = this.x;
