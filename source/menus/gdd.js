@@ -2,12 +2,13 @@ import Button from "../button.js";
 import config from "../config.js"
 
 const activasList = ['activa0', 'activa1'];
-const pasivasList = ['pasiva0', 'pasiva1', 'pasiva2', 'pasiva3', 'pasiva4', 'pasiva5', 'pasiva6'];
+const pasivasList = ['pasiva0', 'pasiva1', 'desbloquear', 'pasiva3', 'pasiva4', 'pasiva5', 'pasiva6'];
 const temporalesList = ['pasivaTemp0', 'pasivaTemp1', 'pasivaTemp2'];
-const armasList = ['armas0', 'armas1', 'armas2'];
-const esteticasList = ['ambiente0', 'ambiente1'];
-const characterList = ['character0', 'character1'];
-const musicaList = ['musica0', 'musica1'];
+const armasList = ['armas0', 'armas1', 'armas2', 'armas3', 'armas4', 'armas5', 'armas6', 'armas7',
+    'armas8', 'armas9', 'armas10', 'armas11', 'armas12', 'armas13', 'armas14', 'armas15', 'armas16', 'armas17', 'armas18', 'armas19'];
+const esteticasList = ['ambiente0', 'ambiente1', 'ambiente2', 'ambiente3', 'ambiente4', 'ambiente5', 'ambiente6', 'ambiente7'];
+const characterList = ['desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear'];
+const musicaList = ['desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear', 'desbloquear'];
 
 
 export default class Game extends Phaser.Scene {
@@ -42,7 +43,7 @@ export default class Game extends Phaser.Scene {
         //Demasiado facil
         this.load.image('pasiva1', '/sprites/gdd/atributos/demasiadofacil.jpg');
         //Rambo
-        this.load.image('pasiva2', '/sprites/gdd/atributos/rambo.jpg');
+        //this.load.image('pasiva2', '/sprites/gdd/atributos/rambo.jpg');
         //Botiquines buena onda
         this.load.image('pasiva3', '/sprites/gdd/atributos/buenaonda.jpg');
         //Botiquines mala onda
@@ -62,30 +63,66 @@ export default class Game extends Phaser.Scene {
 
         //ARMAS
         //Arma Default
+        this.load.image('armas0', '/sprites/spritesarmas/miedo.jpg');
         //Escopeta Automatica
+        this.load.image('armas1', '/sprites/spritesarmas/escopeta.png');
         //Escopeta Peta
+        this.load.image('armas2', '/sprites/spritesarmas/escopeta.png');
         //Escopeta Rafagas
+        this.load.image('armas3', '/sprites/spritesarmas/escopeta.png');
         //Escopeta
+        this.load.image('armas4', '/sprites/spritesarmas/escopeta.png');
         //Lanza Granadas
+        this.load.image('armas5', '/sprites/spritesarmas/lanzagranadas.png');
         //Machine Gun
+        this.load.image('armas6', '/sprites/spritesarmas/miniGunRebote.png');
         //We are the World
+        this.load.image('armas7', '/sprites/spritesarmas/pistolaBasica.png');
         //Pistola
+        this.load.image('armas8', '/sprites/spritesarmas/pistolaBasica.png');
         //Pistola Laser
+        this.load.image('armas9', '/sprites/spritesarmas/pistolaLaser.png');
         //Rifle Automático
+        this.load.image('armas10', '/sprites/spritesarmas/rafagas.png');
         //Rifle Francotirador de Precision
+        this.load.image('armas11', '/sprites/spritesarmas/francotirador.png');
         //Rifle Francotirador
+        this.load.image('armas12', '/sprites/spritesarmas/francotirador.png');
         //Rifle Rafagas
+        this.load.image('armas13', '/sprites/spritesarmas/metralleta.png');
+        //Rifle Rafagas
+        this.load.image('armas14', '/sprites/spritesarmas/metralleta.png');
+        //Bate
+        this.load.image('armas15', '/sprites/spritesarmas/bate.png');
+        //Katana
+        this.load.image('armas16', '/sprites/spritesarmas/katana.png');
+        //espadon
+        this.load.image('armas17', '/sprites/spritesarmas/espadon.png');
+        //Microondas
+        this.load.image('armas18', '/sprites/spritesarmas/microondas.png');
+        //Lanzallamas
+        this.load.image('armas19', '/sprites/spritesarmas/lanzallamas.png');
+
+
+
 
         //AMBIENTES
         //Outlaws from the West
-        this.load.image('ambiente0', '/sprites/gdd/tiles/estoytoperdio.jpg');
+        this.load.image('ambiente0', '/sprites/gdd/tiles/western.jpg');
         //Ray Tracing breakdance kill
+        this.load.image('ambiente1', '/sprites/gdd/tiles/raytracing.jpg');
         //La serie mas aburrida de la historia
+        this.load.image('ambiente2', '/sprites/gdd/tiles/laseriemas.jpg');
         //Especial Navidad
+        this.load.image('ambiente3', '/sprites/gdd/tiles/especialdenavidad.jpg');
         //Mas de 1000 capitulos
+        this.load.image('ambiente4', '/sprites/gdd/tiles/masdemil.jpg');
         //El mejor juego de la historia
+        this.load.image('ambiente5', '/sprites/gdd/tiles/elmejorjuego.jpg');
         //The Only Thing They Fear is You
+        this.load.image('ambiente6', '/sprites/gdd/tiles/ilegalenaustralia.jpg');
         //P.T.
+        this.load.image('ambiente7', '/sprites/gdd/tiles/miedo.jpg');
 
         //PERSONAJES
         //playerDef
@@ -110,16 +147,6 @@ export default class Game extends Phaser.Scene {
         //BackToRock
         //Piano man
 
-
-
-
-
-        this.load.image('armas0', 'sprites/gdd/armas1.png');
-        this.load.image('armas1', 'sprites/gdd/armas2.png');
-        this.load.image('armas2', 'sprites/gdd/armas3.png');
-
-        this.load.image('pasivas0', 'sprites/gdd/pasivas1.png');
-        this.load.image('pasivas1', 'sprites/gdd/pasivas2.png');
 
         this.image; //Imagen de la idea
     }
