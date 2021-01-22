@@ -27,26 +27,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.scene.matter.add.gameObject(this);
         this.scene.matter.body.setInertia(this.body, Infinity);
 
-        this.scene.matter.world.on('collisionstart', (event) => {
-            let wordBody = this.body;
-            for (let i = 0; i < event.pairs.length; i++) {
-                let bodyA = event.pairs[i].bodyA;
-                let bodyB = event.pairs[i].bodyB;
-
-                //TODO
-                //#Issue esto ya no hace falta en ninguno de los sentidos
-                if (bodyA === wordBody || bodyB === wordBody) {
-                    if (bodyA === wordBody && bodyB.label === 'bullet') {
-                        //this.damage();
-                        //console.log("enemyHit");
-                    }
-                    else if (bodyA.label === 'bullet' && bodyB === wordBody) {
-                        //this.damage();
-                        //console.log("enemyHit");
-                    }
-                }
-            }
-        });
 
     }//Fin constructora
 

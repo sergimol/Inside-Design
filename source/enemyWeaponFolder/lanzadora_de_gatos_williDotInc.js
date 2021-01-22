@@ -1,4 +1,4 @@
-import disparo from "../enemyBullets/clyon_bullet.js";
+import disparo from "../enemyBullets/willermo_bullet_Nofricction.js";
 import disparoAlternativo from "../bulletsFolder/defaultBullet.js"; //no deberia de poder usarla el player asi que la voya a omitir
 
 const WeaponConfig = {

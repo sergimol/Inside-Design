@@ -24,7 +24,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         //forma en la que dispara, mono, rafaga, shotgun, multi, //granadas, cohetes, son un tipo de bala no un tipo de arma etc¿?
         this.style = config.s;
         this.cadencia = config.cadence; //en milisegundos
-        this.ultimoDisparoTiempo = 0;
+        this.ultimoDisparoTiempo = 0 - this.cadencia;
         
         //dispersion del arma %
         this.dispersion = config.dispersion;
@@ -47,7 +47,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.costeMunicionPorBala = config.costeMunicionPorBala;
 
         //disparo alternativo/sin ammo
-        this.ultimoDisparoTiempoAlternative = 0;
+        this.ultimoDisparoTiempoAlternative = 0 - this.cadenciaAlternative
         this.cadenciaAlternative = config.cadenciaAlternative;
         this.rafagasCadenceAlternative = config.rafagasCadenceAlternative;
         this.rafagasAlternative = config.rafagasAlternative;
@@ -76,7 +76,6 @@ export default class Weapon extends Phaser.GameObjects.Container{
 
     shoot(esEnemigo, humanoide){
         let siguienteDisparo = this.scene.time.now;
-        //console.log(this.ultimoDisparoTiempo);
         if (siguienteDisparo >= this.ultimoDisparoTiempo + this.cadencia){
             
             this.ultimoDisparoTiempo = siguienteDisparo;
