@@ -23,7 +23,7 @@ const Config = {
         scaleX:11,
         scaleY:16,
         depth: 4,
-        baseAmmo: 100,
+        baseAmmo: 200,
         baseHealth:10,
         baseWeaponID:5,
         dashTime: 50,
