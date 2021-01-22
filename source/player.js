@@ -305,7 +305,6 @@ export default class Player extends Humanoid {
           id = 10;
       } while (this.activePassives[id])
 
-      id = 10;
       if (id === 7) {
         this.wId = Math.floor(Math.random() * config.gdd.numeroArmas);
         this.scene.startDialog('weapon', id, this.wId);
@@ -529,7 +528,6 @@ export default class Player extends Humanoid {
   }
 
   changeMusic(mId) {
-    mId = config.music.old30s;
     this.musicID = mId;
     switch (mId) {
       case (config.music.mainChip):
