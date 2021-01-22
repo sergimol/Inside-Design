@@ -69,14 +69,18 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
                 this.weapon.setVisible(false);
                 //console.log('entityDep');
-                this.aspecto.play('deathEnemy'+ config.enemySprite.key[this.scene.actualEnemyID], true);
-
+                
                 if (this.body.label === 'enemy') {
                     this.scene.enemyCount--;
                     this.scene.enemiesKilled++;
                     this.scene.saveFile();
                     let numItems = Phaser.Math.RND.between(0, 4);
                     this.weapon.pararRafagasCola();
+                    if (!this.isBoss)
+                    this.aspecto.play('deathEnemy'+ config.enemySprite.key[this.scene.actualEnemyID], true);
+                    else
+                    this.aspecto.play(this.deadKey, true);
+                    
                     //console.log(numItems);
                     for (let n = 0; n < numItems; ++n) {
                         let chooseItem = Phaser.Math.RND.between(0, 4);

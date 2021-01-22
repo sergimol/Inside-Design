@@ -8,7 +8,7 @@ import configDefault from "./config.js";
 
 
 export default class Enemy extends Humanoid {
-    constructor(scene, x, y, player, doorN, doorS, config, isBoss, cleon) {
+    constructor(scene, x, y, player, doorN, doorS, config, isBoss) {
         super(scene, x, y, config.sprite, null, config.humanoide);
         this.body.label = 'enemy';
         this.weapon = new Weapon(scene, 0, 5, config.weapon);
@@ -17,7 +17,13 @@ export default class Enemy extends Humanoid {
         this.config = config;
 
         this.isBoss = isBoss;
-        this.cleon = cleon;
+
+        //animaciones //solo las va a usar si son bosses
+        this.hitKey = config.hitKey;
+        this.walkKey = config.walkKey;
+        this.idleKey = config.idleKey;
+        this.deadKey = config.deadKey;
+
 
         //comportamientos
         this.Idle = false;
@@ -158,10 +164,7 @@ checkHitState(){
             this.aspecto.play('hitEnemy'+ configDefault.enemySprite.key[this.scene.actualEnemyID] , true);
         else
         {
-            if(this.cleon)
-                this.aspecto.play('hitCleon', true);
-            else
-                this.aspecto.play('hitGuille', true);
+            this.aspecto.play(this.hitKey, true);
         }
 
         if (this.aspecto.anims.currentFrame.textureFrame === 14)
@@ -175,10 +178,7 @@ checkHitState(){
                 this.aspecto.play('walkEnemy' + configDefault.enemySprite.key[this.scene.actualEnemyID] , true);
             else
             {
-                if(this.cleon)
-                    this.aspecto.play('walkCleon'+ configDefault.enemySprite.key[this.scene.actualEnemyID], true);
-                else
-                    this.aspecto.play('walkGuille', true);
+                this.aspecto.play(this.walkKey, true);
             }
         }
         else
@@ -188,10 +188,7 @@ checkHitState(){
                 this.aspecto.play('idleEnemy'+ configDefault.enemySprite.key[this.scene.actualEnemyID], true);
             else
             {
-                if(this.cleon)
-                    this.aspecto.play('idleCleon', true);
-                else
-                    this.aspecto.play('idleGuille', true);
+                this.aspecto.play(this.idleKey, true);
             }
         }
     }

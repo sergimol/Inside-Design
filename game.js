@@ -474,7 +474,7 @@ export default class Game extends Phaser.Scene {
       }
       else if (objeto.name === 'enemy') {
         //const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
-        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, listEnemies[0], false, false);
+        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, listEnemies[0], false);
         this.enemies.add(e);
 
         if (doorNum != x)
@@ -492,10 +492,10 @@ export default class Game extends Phaser.Scene {
         let e;
         switch (objeto.properties[1].value) {
           case ("cylon"):
-            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon, true, true);
+            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
             break;
           case ("willermo"):
-            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo, true, false);
+            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo);
             break;
         }
 
