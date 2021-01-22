@@ -874,6 +874,7 @@ export default class Game extends Phaser.Scene {
     
     if(this.pendingType !== 'temporal')
       this.doorSystem.openDoor();
+    this.updateGdd();
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
