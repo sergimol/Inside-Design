@@ -938,7 +938,7 @@ export default class Game extends Phaser.Scene {
       })
       this.anims.create({
         key: 'death'+ config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 15, end: 28 }),
+        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 13, end: 28 }),
         frameRate: 14,
         repeat: 0
       })
@@ -948,6 +948,7 @@ export default class Game extends Phaser.Scene {
         frameRate: 60,
         repeat: 0
       })
+
    // }
     }
 

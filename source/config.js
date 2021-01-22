@@ -25,7 +25,7 @@ const Config = {
         depth: 4,
         baseAmmo: 100,
         baseHealth:10,
-        baseWeaponID:16,
+        baseWeaponID:5,
         dashTime: 50,
         mass: 800,
         dashTint: 0x00ff1e,
