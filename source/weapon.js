@@ -49,7 +49,7 @@ export default class Weapon extends Phaser.GameObjects.Container{
         this.costeMunicionPorBala = config.costeMunicionPorBala;
 
         //disparo alternativo/sin ammo
-        this.ultimoDisparoTiempoAlternative = 0 - this.cadenciaAlternative
+        this.ultimoDisparoTiempoAlternative = 0;
         this.cadenciaAlternative = config.cadenciaAlternative;
         this.rafagasCadenceAlternative = config.rafagasCadenceAlternative;
         this.rafagasAlternative = config.rafagasAlternative;
