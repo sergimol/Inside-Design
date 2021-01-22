@@ -1,3 +1,4 @@
+
 const Config = {
     //Configuración base de los humanoides
     humanoid: {
@@ -141,6 +142,20 @@ const Config = {
         ammoDrop: 5
     },
 
+    enemySprite:
+    {
+        key: [
+            'enemyDef',
+            'enemyWest',
+            'enemyDemon',
+            'enemyPirata',
+        ],
+        def: 0,
+        west: 1,
+        doom: 2,
+        pirata: 3,
+    },
+
     room:{
         numRoomsIni: 1,     //Sala inicial
         numRoomsTotal: 14,  //Salas totales
@@ -156,9 +171,10 @@ const Config = {
         enemy:2,
         player:3,
         collidersLayer:4,
-        button:5,
+        bullets:4,
+        buttonBackground:5,
+        button:6,
         
-
     },
     cameraSettings:{
         zoom : 3,

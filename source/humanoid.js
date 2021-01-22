@@ -1,5 +1,6 @@
 import Item from "./item.js";
 import Weapon from "./weapon.js";
+import config from "./config.js";
 
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
@@ -68,7 +69,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
 
                 this.weapon.setVisible(false);
                 //console.log('entityDep');
-                this.aspecto.play('deathEnemy', true);
+                this.aspecto.play('deathEnemy'+ config.enemySprite.key[this.scene.actualEnemyID], true);
 
                 if (this.body.label === 'enemy') {
                     this.scene.enemyCount--;
