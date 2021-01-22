@@ -169,7 +169,7 @@ export default class Game extends Phaser.Scene {
     this.load.audio('metralleta', './audio/metralleta.wav');
     this.load.audio('francotirador', './audio/fracotirador.wav');
     this.load.audio('minigun', './audio/minigun.wav');
-    this.load.audio('gas', './audio/gas.wav');
+    this.load.audio('gas', './audio/gas.mp3');
     this.load.audio('granadasBlop', './audio/granadasBlop.wav');
     this.load.audio('swing', './audio/swing.wav');
     this.load.audio('swingDuro', './audio/swingDuro.wav');
