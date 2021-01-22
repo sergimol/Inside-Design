@@ -42,6 +42,7 @@ export default class Game extends Phaser.Scene {
         //Demasiado facil
         this.load.image('pasiva2','/sprites/gdd/atributos/demasiadofacil.jpg');
         //Rambo
+        
         //Botiquines buena onda
         this.load.image('pasiva0','/sprites/gdd/atributos/buenaonda.jpg');
         //Botiquines mala onda
