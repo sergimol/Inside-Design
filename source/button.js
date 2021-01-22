@@ -79,20 +79,28 @@ export default class Button extends Phaser.GameObjects.Image {
             this.scene.scene.start('sceneManager');
         }
 
+        else if (this.label === 'activasGDD') {
+            this.scene.selectArrayGDD(this.scene.gddActivas);
+        }
+        else if (this.label === 'pasivasGDD') {
+            this.scene.selectArrayGDD(this.scene.gddPasivas);
+        }
+        else if (this.label === 'temporalesGDD') {
+            this.scene.selectArrayGDD(this.scene.gddTemporales);
+        }
         else if (this.label === 'armasGDD') {
             this.scene.selectArrayGDD(this.scene.gddArmas);
         }
         else if (this.label === 'esteticasGDD') {
             this.scene.selectArrayGDD(this.scene.gddEsteticas);
         }
-        else if (this.label === 'pasivasGDD') {
-            this.scene.selectArrayGDD(this.scene.gddPasivas);
+        else if (this.label === 'characterGDD') {
+            this.scene.selectArrayGDD(this.scene.gddCharacter);
         }
-        else if (this.label === 'activasGDD') {
-            this.scene.selectArrayGDD(this.scene.gddActivas);
+        else if (this.label === 'musicaGDD') {
+            this.scene.selectArrayGDD(this.scene.gddMusica);
         }
-        else if (this.label === 'temporalesGDD') {
-            this.scene.selectArrayGDD(this.scene.gddTemporales);
-        }
+       
+       
     }
 }
