@@ -86,7 +86,7 @@ export default class Player extends Humanoid {
     if(a === 0)
       this.actualACTIVE = 'dash';
     else
-      this.activePassives = 'shield';
+      this.actualACTIVE = 'shield';
     this.scene.setActiveImg(a);
     this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
@@ -634,8 +634,8 @@ export default class Player extends Humanoid {
           this.inDash = false;
           if (this.upgraded) {
             this.upgradedDashEmitter.stopFollow(this);
-            if(!this.upgradedDash !== null )
-            this.upgradedDash.destroy();
+            if(this.upgradedDash !== undefined)
+              this.upgradedDash.booleanoParaDestruirme = true;
           }
           else
             this.dashEmitter.stopFollow(this);
@@ -647,8 +647,8 @@ export default class Player extends Humanoid {
           //console.log(this.shield)
           if (this.shieldTime <= 0) {
             this.shielded = false;
-            if(!this.shield !== null )
-            this.shield.destroy();
+            if(this.shield !== undefined)
+              this.shield.booleanoParaDestruirme = true;
             this.activeCooldown = 500;
           }
           else {
@@ -659,8 +659,8 @@ export default class Player extends Humanoid {
         break;
       case 'area':
         if (this.areaTime <= 0) {
-          if (this.areaAttack != null)
-            this.areaAttack.destroy();
+          if (this.areaAttack !== undefined)
+            this.areaAttack.booleanoParaDestruirme = true;
         }
         else
           this.areaTime--;
