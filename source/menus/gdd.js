@@ -6,7 +6,7 @@ const pasivasList = ['pasiva0', 'pasiva1', 'pasiva2', 'pasiva3', 'pasiva4', 'pas
 const temporalesList = ['pasivaTemp0', 'pasivaTemp1', 'pasivaTemp2'];
 const armasList = ['armas0', 'armas1', 'armas2'];
 const esteticasList = ['ambiente0', 'ambiente1'];
-const characterList = ['ambiente0', 'ambiente1'];
+const characterList = ['character0', 'character1'];
 const musicaList = ['musica0', 'musica1'];
 
 
@@ -78,7 +78,7 @@ export default class Game extends Phaser.Scene {
 
         //AMBIENTES
         //Outlaws from the West
-        this.load.image('pasivaTemp2', '/sprites/gdd/temporales/estoytoperdio.jpg');
+        this.load.image('ambiente0', '/sprites/gdd/tiles/estoytoperdio.jpg');
         //Ray Tracing breakdance kill
         //La serie mas aburrida de la historia
         //Especial Navidad
@@ -268,7 +268,7 @@ export default class Game extends Phaser.Scene {
 
             //generar archivo del gdd
             this.gddActivas = [];
-            let numIdeas = config.gdd.nueroActivas;
+            let numIdeas = config.gdd.numeroActivas;
             for (let i = 0; i < numIdeas; i++)
                 this.gddActivas.push(false);
 
@@ -307,7 +307,6 @@ export default class Game extends Phaser.Scene {
             numIdeas = config.gdd.numeroMusica;
             for (let i = 0; i < numIdeas; i++)
                 this.gddMusica.push(false);
-
         }
     }
 }
