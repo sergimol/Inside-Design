@@ -269,7 +269,7 @@ export default class Game extends Phaser.Scene {
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(1, 7);
-    let nameRoom = 'sala2'; //+ numRoom.toString()
+    let nameRoom = 'sala' + numRoom.toString(); //
     this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;

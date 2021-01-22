@@ -1,4 +1,11 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "target":"."
+        }
+    },
  "height":100,
  "infinite":false,
  "layers":[
@@ -157,24 +164,6 @@
                  "width":0,
                  "x":631.83333333334,
                  "y":1111.5
-                }, 
-                {
-                 "gid":323,
-                 "height":16,
-                 "id":137,
-                 "name":"enemy",
-                 "properties":[
-                        {
-                         "name":"Sala",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":769,
-                 "y":486.333333333333
                 }, 
                 {
                  "gid":458,
