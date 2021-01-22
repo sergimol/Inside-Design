@@ -28,14 +28,14 @@ export default class Player extends Humanoid {
 
     //Atributos
     //this.body.mass = 900;
-    this.body.frictionAir = 0.25;
-    this.depth = 4;
+    this.body.frictionAir = config.player.frictionAir;
+    this.depth = config.depths.player;
     this.healthDropBonus = 0;
     this.activeCooldown = 0;
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
-    this.ammo = 5000//ammo;//config.player.baseAmmo;
+    this.ammo = config.player.baseAmmo;
     this.hasInfiniteAmmo = false;
     this.velFactor = config.player.baseVelFactor;
     this.drunk = false;

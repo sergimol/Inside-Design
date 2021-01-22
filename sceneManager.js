@@ -139,14 +139,14 @@ export default class Game extends Phaser.Scene {
 
         let entityLayer = this.map.getObjectLayer('Entities').objects
         let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
+
         // profundidad
-        backgroundLayer.setDepth(0);
-        groundLayer.setDepth(0);
-        detailsLayer.setDepth(0);
-        wallsLayer.setDepth(1);
-        //enemigos          ->3
-        //jugador y balas   ->4
-        collidersLayer.setDepth(5);
+        backgroundLayer.setDepth(config.depths.groundLayer);
+        detailsLayer.setDepth(config.depths.detailsLayer);
+        wallsLayer.setDepth(config.depths.wallsLayer);
+        //enemigos          ->2
+        //jugador y balas   ->3
+        collidersLayer.setDepth(config.depths.collidersLayer);
 
         // colisiones tilemap
         collidersLayer.setCollisionByProperty({ collide: true });
@@ -169,7 +169,7 @@ export default class Game extends Phaser.Scene {
         //this.playerSpriteID = config.player.def;
         //this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
         if (this.actualMusic != null)
-          this.actualMusic.stop();
+            this.actualMusic.stop();
         this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 5 });
         this.actualMusic.play();
         this.actualMusic.loop = true;

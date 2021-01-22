@@ -278,9 +278,9 @@ export default class Game extends Phaser.Scene {
 
     //Cargado de salas
     if (this.level != config.room.bossRoomLevel) {
-      while (numRoom === 2) {
+      while (numRoom === config.room.bossRoom) {
         console.log("No puedes cargar la room del boss")
-        let numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
+        numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
       }
     } else if (this.level === config.room.bossRoomLevel)
       numRoom = config.room.bossRoom;
@@ -560,13 +560,13 @@ export default class Game extends Phaser.Scene {
     let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
     // profundidad
     enemiesLayer.setVisible(false);
-    groundLayer.setDepth(0);
-    detailsLayer.setDepth(0);
-    reflexLayer.setDepth(0);
-    wallsLayer.setDepth(1);
-    //enemigos          ->3
-    //jugador y balas   ->4
-    collidersLayer.setDepth(5);
+    groundLayer.setDepth(config.depths.groundLayer);
+    detailsLayer.setDepth(config.depths.detailsLayer);
+    reflexLayer.setDepth(config.depths.reflexLayer);
+    wallsLayer.setDepth(config.depths.wallsLayer);
+    //enemigos          ->2
+    //jugador y balas   ->3
+    collidersLayer.setDepth(config.depths.collidersLayer);
 
     // colisiones tilemap
     collidersLayer.setCollisionByProperty({ collide: true });
@@ -930,6 +930,5 @@ export default class Game extends Phaser.Scene {
       frameRate: 60,
       repeat: 0
     })
-    // }
   }
 }

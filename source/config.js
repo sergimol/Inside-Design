@@ -62,7 +62,8 @@ const Config = {
         hummus: 9,*/
         numberAspectos: 10,
 
-        spriteID: 0
+        spriteID: 0,
+        frictionAir: 0.25,
     },
     
     //Configuración base de las armas
@@ -147,7 +148,15 @@ const Config = {
     },
 
     depths:{
+        groundLayer:0,
+        detailsLayer:0,
+        reflexLayer:0,
+        wallsLayer:1,
+        enemy:2,
+        player:3,
+        collidersLayer:4,
         button:5,
+        
 
     },
     cameraSettings:{
