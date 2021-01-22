@@ -226,21 +226,6 @@ export default class Player extends Humanoid {
   }//End of create
 
 
-  //updatear la posicion del puntero si el jugador se mueve.
-  /**
-   
-   Ideas
-   
-   calcular la distancia y despues de moverlo ponerlo, como primero s emueve el puntero en caso de moverse no habria problema
-   moverlo junto al jugador, hay encontrar la manera de que si el jugador se mueve tmb lo haga le puntero, el problema es que el metodo move es de3 un game object con fisicas, el punteor no tiene fisicas
-   */
-
-
-
-  // asignar la posicion del puntero
-
-
-
   dash() {
     this.applyForce({ x: this.dashDir.x * 20, y: this.dashDir.y * 20 });
   }
@@ -274,8 +259,6 @@ export default class Player extends Humanoid {
 
         this.applyForce({ x: this.dir.x * this.velFactor, y: this.dir.y * this.velFactor });
       }
-      //this.body.setVelocityX(this.speed * dirX);
-      //this.body.setVelocityY(this.speed * dirY);
 
       //Animacion
       if (this.dir.x === 0 && this.dir.y === 0) {
@@ -394,11 +377,11 @@ export default class Player extends Humanoid {
         break;
       case (5):
         console.log('Sanic');
-        this.velFactor *= 2;
+        this.velFactor *= 1.5;
         break;
       case (6):
         console.log('Cogo');
-        this.velFactor /= 2;
+        this.velFactor /= 1.5;
         break;
       //Cambio de arma
       case (7):

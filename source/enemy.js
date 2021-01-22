@@ -1,8 +1,6 @@
 import Humanoid from "./humanoid.js";
-import Doors from "./doors.js";
 import Weapon from "./weapon.js";
 
-import defaultWeapon from "./enemyWeaponFolder/defaultEnemyWeapon.js";
 
 import configDefault from "./config.js";
 
@@ -52,35 +50,6 @@ export default class Enemy extends Humanoid {
 
 
         this.add(this.aspecto);
-        /////////////
-        //Animaciones
-        /*
-        const anims = scene.anims;
-        anims.create({
-            key: 'enemyWalk',
-            frames: anims.generateFrameNumbers(config.sprite, { start: 4, end: 8 }), //15
-            frameRate: 15,
-            repeat: -1
-        })
-        anims.create({
-            key: 'enemyIdle',
-            frames: anims.generateFrameNumbers(config.sprite, { start: 1, end: 3 }),
-            frameRate: 7,
-            repeat: -1
-        })
-        anims.create({
-            key: 'enemyDep',
-            frames: anims.generateFrameNumbers(config.sprite, { start: 16, end: 28 }),
-            frameRate: 14,
-            repeat: 0
-        })
-        anims.create({
-            key: 'enemyHit',
-            frames: anims.generateFrameNumbers(config.sprite, { start: 9, end: 14 }),
-            frameRate: 60,
-            repeat: 0
-        })
-        */
 
         //Referencia al player
         this.playerRef = player;
@@ -153,7 +122,6 @@ export default class Enemy extends Humanoid {
         });
 
 
-        /** */
 
 
     }//Fin constructorasd

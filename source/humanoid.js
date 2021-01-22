@@ -128,11 +128,6 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
       }
 
 
-    stopMove() {
-        //console.log("PARATE BOLUDO");
-        //this.body.awsetVelocity(0, 0);
-    }
-
     rotateWeapon(angle) {
         this.weapon.rotateWeapon(angle);
         if (this.weapon.rotation < 0)
