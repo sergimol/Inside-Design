@@ -38,6 +38,7 @@ export default class Player extends Humanoid {
     this.hasInfiniteAmmo = hasInfiniteAmmo;
     this.velFactor = velFactor;
     this.drunk = false;
+    this.karting = false;
 
     this.weaponId = 0;
     this.tempTimer = -1;
@@ -221,6 +222,7 @@ export default class Player extends Humanoid {
 
     this.isEntering = true;
     this.isLeaving = false;
+
   }//End of create
 
 
@@ -246,14 +248,16 @@ export default class Player extends Humanoid {
 
 
   shoot() {
-    if (this.ammo >= this.weapon.ammoCostPerShoot() || this.hasInfiniteAmmo) {
-      if (this.weapon.shoot(false, this) && !this.hasInfiniteAmmo) {
-        this.ammo -= this.weapon.ammoCostPerShoot();
-        this.scene.setAmmo(this.ammo);
+    if(!this.karting){
+      if (this.ammo >= this.weapon.ammoCostPerShoot() || this.hasInfiniteAmmo ) {
+        if (this.weapon.shoot(false, this) && !this.hasInfiniteAmmo) {
+          this.ammo -= this.weapon.ammoCostPerShoot();
+          this.scene.setAmmo(this.ammo);
+        }
       }
+      else
+        this.weapon.shootAlternative(false, this);
     }
-    else
-      this.weapon.shootAlternative(false, this);
   }
 
   playerMoverPuntero(pointer) {
@@ -411,7 +415,7 @@ export default class Player extends Humanoid {
         this.changeSpriteIdea(false, false, " ", this.sId);
         break;
       case(10):
-		console.log("Cambio exclusivo de musica");
+		    console.log("Cambio exclusivo de musica");
         this.changeMusic(this.mId);
         break;
     }
@@ -422,12 +426,14 @@ export default class Player extends Humanoid {
     switch(id){
       case 0:
         console.log('run pacifica');
-        this.changeWeapon(14);////FALTA CONFIG)
+        this.lastWeaponId = this.weaponId;
+        this.changeWeapon(config.gdd.numeroArmas);
         this.tempTimer = 1000;
         break;
       case 1:
         console.log('mario kart');
         this.kart = new Bullet(this.scene, this.x, this.y, kart, false);
+        this.karting = true;
         this.tempTimer = 1500;
         break;
       case 2:
@@ -440,17 +446,20 @@ export default class Player extends Humanoid {
   }
 
   removeTempPassive() {
+    console.log('remove')
     switch(this.currentTemp){
       case 0:
-        this.weapon = new Weapon(this.scene, 0, 5, this.lastWeaponConfig)
+        this.changeWeapon(this.lastWeaponId)
         break;
       case 1:
         this.kart.booleanoParaDestruirme = true;
+        this.karting = false;
         break;
       case 2:
         this.drunk = false;
         break;
     }
+    this.currentTemp = -1;
   }
 
   changeWeapon(wId) {
@@ -746,5 +755,10 @@ export default class Player extends Humanoid {
     this.tempTimer--;
     if(this.tempTimer === 0)
       this.removeTempPassive();
+    else if(this.currentTemp === 1){
+      this.kart.x = this.x;
+      this.kart.y = this.y;
+      this.kart.aspecto.setFlipX(this.aspecto.flipX);
+    }
   }
 }

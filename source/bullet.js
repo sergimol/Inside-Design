@@ -248,7 +248,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                         //tiene que pasarle el daño y destruirse
 
                         
-                        bodyB.gameObject.gameObject.damage(this.damage);
+                        bodyB.gameObject.damage(this.damage);
 
                         
                         //añadamos el puchback de la bala,
