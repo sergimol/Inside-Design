@@ -3,7 +3,7 @@ import hijaConfig from "./defaultEnemyBullet.js";
 
 const BulletConfig = {
 
-    sprite: "shield", 
+    sprite: "area_attack", 
     scale: 1,
     sizeX: 8,
     sizeY: 8,
@@ -35,10 +35,10 @@ const BulletConfig = {
 
     //para la animacion
     
-    key: "shield",
+    key: "area_attack_anim",
     frameRate: 15,
-    frames: {start: 0 , end:0 },//{start: 1 , end:1 }), //15
-    repeat: -1,
+    frames: {start: 0 , end:3 },//{start: 1 , end:1 }), //15
+    repeat: 0,
 
     
     inertia: Infinity,

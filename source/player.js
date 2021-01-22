@@ -161,7 +161,6 @@ export default class Player extends Humanoid {
             this.areaAttack = new Bullet(this.scene, this.x, this.y, areaAttack, false);
           else
             this.areaAttack = new Bullet(this.scene, this.x, this.y, upgradedAreaAttack, false);
-          this.areaAttack.setVisible(false);
           this.areaTime = 10;
           this.activeCooldown = 250;
         }
