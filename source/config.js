@@ -160,7 +160,7 @@ const Config = {
         numRoomsIni: 1,     //Sala inicial
         numRoomsTotal: 14,  //Salas totales
         bossRoom:2,         //Sala del boss (de Tiled)
-        bossRoomLevel: 1,   //Sala en la que debería de aparecer el boss
+        bossRoomLevel: 0,   //Sala en la que debería de aparecer el boss
     },
 
     depths:{
