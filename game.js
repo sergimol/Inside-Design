@@ -31,6 +31,7 @@ export default class Game extends Phaser.Scene {
     this.hasInfiniteAmmo = data.infiniteAmmo;
     this.maxHealth = data.maxHealth;
     this.velFactor = data.velFactor;
+    this.enemySpriteID = data.enemySpriteID
     //this.playerAspectID = data.playerAspectID
   }
 
@@ -383,7 +384,8 @@ export default class Game extends Phaser.Scene {
                   health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weaponId, level: this.level,
                   tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID,
                   activePassives: this.player.activePassives, actualACTIVE: this.player.actualACTIVE, upgraded: this.player.upgraded, 
-                  infiniteAmmo: this.player.hasInfiniteAmmo, maxHealth: this.player.maxHealth, velFactor: this.player.velFactor
+                  infiniteAmmo: this.player.hasInfiniteAmmo, maxHealth: this.player.maxHealth, velFactor: this.player.velFactor,
+                  enemySpriteID: this.actualEnemyID
                 });
               }
               else {
