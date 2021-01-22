@@ -395,7 +395,7 @@ export default class Game extends Phaser.Scene {
               else {
                 //Se acaba la escena de juego y se reproduce la canción de creditos
                 this.actualMusic.stop();
-                this.actualMusic = this.sound.add(config.music.songReference[config.music.intro], { volume: 2 });
+                this.actualMusic = this.sound.add(config.music.songReference[config.music.intro], { volume: config.musicVolume.intro });
                 this.actualMusic.play();
                 this.scene.stop();
                 this.scene.start('theEnd');
@@ -447,7 +447,7 @@ export default class Game extends Phaser.Scene {
           this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
           if (this.actualMusic != null)
             this.actualMusic.stop();
-          this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 1 });
+          this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: config.musicVolume.general });
           this.actualMusic.play();
           this.actualMusic.loop = true;
 

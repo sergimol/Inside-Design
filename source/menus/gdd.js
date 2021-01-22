@@ -39,6 +39,8 @@ export default class Game extends Phaser.Scene {
 
         this.load.image('pasivas0', 'sprites/gdd/pasivas1.png');
         this.load.image('pasivas1', 'sprites/gdd/pasivas2.png');
+
+        this.image; //Imagen de la idea
     }
 
 
@@ -108,13 +110,13 @@ export default class Game extends Phaser.Scene {
     }
 
     showImage() {
-        let image;
+        this.image;
         switch (this.activeArray) {
             case this.gddActivas:
                 console.log("Activas")
                 break;
             case this.gddPasivas:
-                //this.add.image(700, 400, armasList[this.contador]);
+                this.image = this.add.image(700, 400, armasList[this.contador]);
                 console.log("Pasivas")
                 break;
 
