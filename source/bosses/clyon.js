@@ -54,10 +54,10 @@ const boss = {
     },
     {
         time: 10000,
-        idle: true,
-        acercarse: false,
+        idle: false,
+        acercarse: true,
         distanciaAcercarse:100,
-        alejarse:true,
+        alejarse:false,
         distanciaAlejarse:200,
         strafe: false,
         strafeTime: 1000, 
