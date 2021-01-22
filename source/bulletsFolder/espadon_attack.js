@@ -15,7 +15,7 @@ const BulletConfig = {
     rebotes: 0, 
     fuerzaRebote: 0.8, 
     velocidadMinima: -1,
-    damage: 50, 
+    damage: 30, 
     devulveBalas: false,
     destruyeBalas: false, 
     isSensor: true,

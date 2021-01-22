@@ -7,7 +7,7 @@ const WeaponConfig = {
     s: "mono",
     m: "auto", 
     cadence: 100,
-    dispersion: 3, 
+    dispersion: 30, 
     pellets: 1, 
     bulletForce: 0.3, 
     forceDispersion: 0,
