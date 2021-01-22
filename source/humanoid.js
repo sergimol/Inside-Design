@@ -1,5 +1,6 @@
 import Item from "./item.js";
 import Weapon from "./weapon.js";
+import config from "./config.js";
 
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container

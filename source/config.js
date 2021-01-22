@@ -153,7 +153,7 @@ const Config = {
         west: 1,
         doom: 2,
         pirata: 3,
-    }
+    },
 
     room:{
         numRoomsIni: 1,     //Sala inicial

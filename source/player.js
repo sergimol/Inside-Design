@@ -338,7 +338,6 @@ export default class Player extends Humanoid {
   //Método para añadir una pasiva aleatoria
   addPassive(id) {
     //Aplica la pasiva correspondiente
-    id = 8;
     switch (id) {
       //Aumenta la vida
       case (0):
@@ -442,7 +441,6 @@ export default class Player extends Humanoid {
   }
 
   changeTile(tId, isNewScene) {
-    tId = 6;
     this.tileID = tId;
     switch (tId) {
       //Cuidao solo haces ejecutas la musica cuando salta como idea

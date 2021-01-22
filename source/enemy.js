@@ -155,7 +155,7 @@ export default class Enemy extends Humanoid {
 checkHitState(){
     if (this.hitState) {
         if(!this.isBoss)
-            this.aspecto.play('hitEnemy', true);
+            this.aspecto.play('hitEnemy'+ configDefault.enemySprite.key[this.scene.actualEnemyID] , true);
         else
         {
             if(this.cleon)
