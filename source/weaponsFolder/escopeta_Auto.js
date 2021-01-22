@@ -22,6 +22,8 @@ const WeaponConfig = {
     costeMunicionPorBala: 2,
 
     
+    soundEffect:'shotgun',
+
     fixedDisp:{
         start: 0,
         end:0
