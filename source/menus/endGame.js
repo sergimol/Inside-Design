@@ -9,8 +9,8 @@ export default class Game extends Phaser.Scene {
         this.load.image('menuBackground', 'sprites/buttons/MainmenuBackground.png');
 
         //Imagenes Victoria
-        this.load.image('win0', 'sprites/gdd/finales.jpg');
-        this.load.image('win1', 'sprites/gdd/finales.jpg');
+        this.load.image('win0', 'sprites/finales/finalbueno1.jpg');
+        this.load.image('win1', 'sprites/finales/finalbueno2.jpg');
 
 
         //Imagenes de Derrota
@@ -30,14 +30,16 @@ export default class Game extends Phaser.Scene {
     endGame() {
         this.escenaGame.scene.stop();
         this.cameras.main.fadeIn(1000, 0, 0, 0);
-
+        let numRandom;
         //Sacame un numero entre todas las screens de final de juego
-        let numRandom = Phaser.Math.RND.between(0, 4);
+        
         if (this.escenaGame.player.isDead) {
+            numRandom = Phaser.Math.RND.between(0, 4);
             console.log("moriste")
             this.add.image(700, 400, looseList[numRandom]);
         }
         else {
+            numRandom = Phaser.Math.RND.between(0, 1);
             console.log("ganaste")
             this.add.image(700, 400, winList[numRandom]);
         }
