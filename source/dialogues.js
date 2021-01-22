@@ -70,6 +70,10 @@ const Dialogues = {
         ["paciffist"],
         ["kart"],
         ["drunk"]
+    ],
+
+    upgrade: [
+        ["mejora"]
     ]
 
 }
