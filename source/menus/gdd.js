@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
 
         //ARMAS
         //Arma Default
-        this.load.image('armas0', '/sprites/spritesarmas/miedo.jpg');
+        this.load.image('armas0', '/sprites/spritesarmas/pistolaBasica.png');
         //Escopeta Automatica
         this.load.image('armas1', '/sprites/spritesarmas/escopeta.png');
         //Escopeta Peta
