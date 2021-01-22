@@ -1,8 +1,6 @@
 import Humanoid from "./humanoid.js";
 import Puntero from "./puntero.js";
-import granade__launcher from "./weaponsFolder/granade_launcher.js";
 import defaultWeapon from "./weaponsFolder/defaultWeapon.js";
-import escopeta_lanzable from "./weaponsFolder/escopeta_lanzable.js";
 import config from "./config.js";
 import Weapon from "./weapon.js";
 
@@ -22,7 +20,7 @@ export default class Player extends Humanoid {
 
     this.spriteID = config.player.spriteID;
     //Arma
-    this.weapon = new Weapon(scene, 0, 5, config.player.baseWeaponID);
+    this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
     this.add(this.weapon);
     this.maxHealth = config.humanoid.health;
 

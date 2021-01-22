@@ -446,8 +446,8 @@ export default class Game extends Phaser.Scene {
         //this.player.changeAnimacionesonoseque();
 
         //Spawnear el numero de enemigos
-        for (let i = 0; i < 10;) {
-          //for (let i = 0; i < objeto.properties[0].numEnemies;) {
+        //for (let i = 0; i < 10;) {
+          for (let i = 0; i < objeto.properties[0].value;) {
 
           let tileX = Phaser.Math.RND.between(0, this.map.width);
           let tileY = Phaser.Math.RND.between(0, this.map.height);

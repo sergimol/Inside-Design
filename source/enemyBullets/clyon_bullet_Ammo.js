@@ -24,6 +24,7 @@ const BulletConfig = {
     destroyOnWall: false, //si true, ignorara rebotes y si es sensor cuando choque con una pared se destruira
     balaHija: null,
     lifeTime: 500, //milisegundos
+    dropAmmo:2,
 
     form:"rectangle",
     customForm: {
@@ -55,7 +56,7 @@ const BulletConfig = {
     },
     //para la animacion
     
-    key: "defaultBullet_anims",
+    key: "defaultEnemyBullet_anims",
     frameRate: 15,
     frames: {start: 0 , end:2 },//{start: 1 , end:1 }), //15
     repeat: -1,

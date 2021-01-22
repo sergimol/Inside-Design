@@ -98,7 +98,7 @@ const boss = {
         distanciaAlejarse:200,
         strafe: false,
         strafeTime: 1000, 
-        aiming: false,
+        aiming: true,
         shootCount: 8,
         shootRafagas: 1,
         shootTime: 0,
