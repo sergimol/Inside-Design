@@ -31,7 +31,7 @@ const Config = {
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
-        passiveCount: 13,
+        passiveCount: 14,
         weaponCount: 3,
         activeCount: 3,
         actives: [
@@ -123,6 +123,7 @@ const Config = {
     },
 
     music: {
+        musicNumber: 10,
         mainChip: 0,
         west: 1,
         old30s: 2,
@@ -184,8 +185,8 @@ const Config = {
         mainMenu: 0.25,
     },
     musicVolume:{
-        intro: 0,   //2
-        general: 0, //1 
+        intro: 2,   //2
+        general: 1, //1 
     }
 }
 

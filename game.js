@@ -190,34 +190,6 @@ export default class Game extends Phaser.Scene {
 
   create() {
 
-    //ANIMACIONES ENEMIGO PERO POCHAS
-    /*
-    this.anims.create({
-      key: 'walkEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 4, end: 8 }), //15
-      frameRate: 15,
-      repeat: -1
-    })
-    this.anims.create({
-      key: 'idleEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 1, end: 3 }),
-      frameRate: 7,
-      repeat: -1
-    })
-    this.anims.create({
-      key: 'deathEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 16, end: 28 }),
-      frameRate: 14,
-      repeat: 0
-    })
-    this.anims.create({
-      key: 'hitEnemy',
-      frames: this.anims.generateFrameNumbers('enemyDef', { start: 9, end: 14 }),
-      frameRate: 60,
-      repeat: 0
-    })
-    */
-
     //cleon
     this.anims.create({
       key: 'walkCleon',

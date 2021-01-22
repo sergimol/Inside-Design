@@ -296,13 +296,16 @@ export default class Player extends Humanoid {
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
         //Ajustes para los porcentajes
-        if(id === 8 || id === 9) //Cambio de arma
+        if(id === 8 || id === 9) //Cambio de armas
           id = 7;
         if(id === 10 || id === 11)//Cambio de tile
           id = 8;
         else if(id === 12)//Cambio de sprite
           id = 9;
+        else if(id === 13)
+          id = 10;
       } while (this.activePassives[id])
+      id = 10;
       
       if(id === 7){
         this.wId = Math.floor(Math.random() * config.gdd.numeroArmas);
@@ -318,9 +321,10 @@ export default class Player extends Humanoid {
         } while (this.sId <= 3)
         this.scene.startDialog('character', id, this.sId);
       }
-      /*else if(id === 10){
-        this.scene.startDialog('music', id);
-      }*/
+      else if(id === 10){
+        this.mId = Math.floor(Math.random() * config.music.musicNumber);
+        this.scene.startDialog('music', id, mId);
+      }
       else{
         this.scene.startDialog('passive', id, id);    
         this.activePassives[id] = true;
@@ -406,6 +410,10 @@ export default class Player extends Humanoid {
         console.log("Cambio de apariecia");
         this.changeSpriteIdea(false, false, " ", this.sId);
         break;
+      case (10):
+        console.log("Cambio exclusivo de musica");
+        this.changeMusic(this.mId);
+        break;
     }
 
   }
@@ -461,7 +469,6 @@ export default class Player extends Humanoid {
         this.scene.changeLayer(config.tileset.west);
         if (!isNewScene)
         {
-
           this.changeMusic(config.music.west, isNewScene);
           this.spriteID = config.player.west;
           this.scene.changePlayerSprite(this.spriteID);
@@ -506,7 +513,6 @@ export default class Player extends Humanoid {
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
         if (!isNewScene){
-
           this.changeMusic(config.music.rock, isNewScene);
           this.spriteID = config.player.doom;
           this.scene.changePlayerSprite(this.spriteID);

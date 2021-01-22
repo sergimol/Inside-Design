@@ -106,7 +106,8 @@ export default class Doors extends Phaser.GameObjects.Container {
 
     roomDialog(){
         if(this.scene.level === 0)
-            this.scene.player.chooseIdea('active');
+        this.scene.player.chooseIdea('passive');
+            //this.scene.player.chooseIdea('active');
         else if(this.scene.level === 5)
             this.scene.startDialog('upgrade', -1, 0);
         else
