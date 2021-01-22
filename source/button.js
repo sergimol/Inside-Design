@@ -4,8 +4,12 @@ export default class Button extends Phaser.GameObjects.Image {
     constructor(scene, x, y, sprite, sprite2, label) {
         super(scene, x, y, sprite);
         this.image = scene.add.image(x, y, sprite);
+        this.image.setScale(0.25);
+        //this.updateBounds();
+        console.log(this)
+
         this.setInteractive()
-            .on('pointerover', () => this.enterButtonHoverState())
+            .on('pointerover', () => this.enterButtonHoverState(), this.alpha = 1)
             .on('pointerout', () => this.enterButtonRestState())
             .on('pointerup', () => {
                 this.enterButtonHoverState();
@@ -15,6 +19,8 @@ export default class Button extends Phaser.GameObjects.Image {
         this.sprite = sprite;
         this.sprite2 = sprite2;
         this.label = label;
+
+        
 
         this.escenaOrigen = this.scene.scene.get('main');
     }
