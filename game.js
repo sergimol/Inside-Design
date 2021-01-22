@@ -376,7 +376,7 @@ export default class Game extends Phaser.Scene {
     this.events.on('shutdown', this.shutdown, this);
 
     this.input.keyboard.on('keydown_ESC', this.pauseGame, this);//this.pauseGame
-    this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);  
+    this.input.keyboard.on('keydown_SPACE', this.advanceDialog, this);  
 
   }//End of create
 
@@ -828,6 +828,7 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
+    this.doorSystem.openDoor();
     
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);

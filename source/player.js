@@ -181,9 +181,6 @@ export default class Player extends Humanoid {
     this.scene.setBackground(this.maxHealth);
     this.scene.setAmmo(this.ammo);
 
-    //Pasivas
-    //this.scene.input.keyboard.on('keydown_SPACE', this.addPassive, this);
-
     //Colisiones
 
 
