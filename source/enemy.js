@@ -121,7 +121,7 @@ export default class Enemy extends Humanoid {
 
         //DISPARO
         this.cadenceTime = config.cadenceTime;
-        this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime();
+        this.timerShoot = this.scene.time.now + this.cadenceTime * this.getShootTime(); //Cada cuanto dispara
 
         //Colisiones
 
@@ -238,7 +238,7 @@ checkHitState(){
                         this.dir = { x: 0, y: 0 };
                         this.auxRest();
                         //AQUI INICILIZAMOS EL TIMER CADA VEZ
-                        this.timerMove = this.scene.time.now + this.enemyTime + 700;
+                        this.timerMove = this.scene.time.now + this.enemyTime + Phaser.Math.RND.between(100,700);   //Damos margen al movimiento
                     }
                 }
                 
@@ -293,7 +293,7 @@ checkHitState(){
     nextShoot(){
         if(this.attackState){
 
-            if (this.scene.time.now > this.timerShoot) {
+            if (this.scene.time.now > this.timerShoot -  Phaser.Math.RND.between(100,500)) {    //Damos un pequeño margen aleatorio para que no sea al mismo tempo
                 //Disparamos y reactivamos el timer de disparo con un aleatorio
                 
                 //this.strafeAngle = -this.strafeAngle;

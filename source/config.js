@@ -32,7 +32,7 @@ const Config = {
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
         passiveCount: 14,
-        weaponCount: 3,
+        weaponCount: 17,
         activeCount: 3,
         actives: [
             'dash',
@@ -183,6 +183,8 @@ const Config = {
     },
     button:{
         mainMenu: 0.25,
+        gddMenu:0.8,
+        maNiggaDed:0.15,
     },
     musicVolume:{
         intro: 2,   //2

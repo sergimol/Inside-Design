@@ -1,23 +1,15 @@
 const Dialogues = {
     passives: [
-        ["", ""],
-        ["facil", "facil 2"],
-        ["rambo", "rambo 2", "rambo 3"],
-        ["buenaonda"],
-        ["malaonda"],
-        ["sanic", "sanic 2", "sanic 3", "sanic 4"],
-        ["cogo"],
-        ["arma", "arma 2"],
-        ["Outlaws from the West"],
-        ["cum"]
-        /*
-        9: ["Ray Tracing breakdance skill"],
-        10: ['La serie mas aburrida de la historia'],
-        11: ['Especial de Navidad'],
-        12: ['Mas de 1000 capitulos'],
-        13: ['El mejor juego de la historia'],
-        14: ['The Only Thing They Fear is You'],
-        15: ['P.T.']*/
+        ["¿No os parece que el jugador tiene muy poca salud?", "Tienes razón, hagámoslo más resistente."],
+        ["El juego es demasiado fácil, bajémosle la vida al jugador"],
+        ["El otro día me vi rambo y estoy seguro de que tiene munición infinita,", "Me has dado una idea, pongámoslo en el juego."],
+        ["Los botiquines recuperan muy poco, deberían dar más vida."],
+        ["Los botiquines recuperan demasiado, deberían dar menos vida."],
+        ["Hagamos que el personaje corra más, como sanic el erizo.", "GOTTA GO FAST."],
+        ["El jugador va demasiado rápido, tenemos que ralentizarlo."],
+        ["arma"],
+        ["tile"],
+        ["sprite"]
     ],
 
     actives: [
@@ -27,19 +19,23 @@ const Dialogues = {
     ],
 
     weapons:[
+        ["Deberíamos hacer un cambio de arma, ¿cuál ponemos?", "La pistola base está bien."],
+        ["Estaría bien cambiarle el arma.", "Vale, pongámosle una escopeta automática."],
+        ["Creo que ha llegado el momento de introducir la escopeta lanzaescopetas."],
+        ["Probemos otro arma, la escopeta de ráfagas, por ejemplo."],
+        ["Cambiémosle el arma.", "Estaría bien probar la escopeta normal."],
+        ["Este es un buen momento para probar el lanzagranadas."],
+        ["Necesitamos un arma con menos cadencia.", "¿Qué tal una minigun?"],
+        ["Cambiemos el arma por una pistola."],
+        ["Es momento de probar algo distinto, como la pistola láser."],
+        ["El jugador necesita un arma distinta, por ejemplo un rifle automático."],
+        ["Deberíamos cambiar el arma por un rifle de francotirador preciso."],
+        ["Ca"],
         ["weapon"],
         ["weapon"],
         ["weapon"],
         ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"]
+        [""]
     ],
 
     tilemap: [
@@ -76,6 +72,19 @@ const Dialogues = {
         ["Deberíamos meterle una mejora a la activa.", "¿Os parece que ahora el dash haga daño por contacto?", "Vale, hagamos eso."],
         ["El escudo es muy simple, ¿Hacemos que las balas reboten en él?", "Me parece bien, añadámoslo"],
         ["Estaría bien añadirle algo más al efecto en área.", "Podemos hacer que dañe a los enemigos en el área", "Estoy de acuerdo"]
+    ],
+
+    music: [
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
+        ["marikon"],
     ]
 
 }

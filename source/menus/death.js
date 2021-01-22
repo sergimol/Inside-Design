@@ -12,16 +12,18 @@ export default class Game extends Phaser.Scene {
         this.load.image('restartButtonlight', 'sprites/buttons/restartButtonlight.png');
         this.load.image('quitButton', 'sprites/buttons/quitButton.png');
         this.load.image('quitButtonlight', 'sprites/buttons/quitButtonlight.png');
+
+        //Imagenes de Derrota
+        
     }
     create() {
         console.log("se crea")
         this.cameras.main.zoom = 3;
 
-        this.playButton = new Button(this, 700, 380, 'restartButton', 'restartButtonlight', 'play',config.button.mainMenu)
-        this.gddButton = new Button(this, 700, 405, 'quitButton', 'quitButtonlight', 'quit',config.button.mainMenu)
+        this.stick = this.add.image(900, 500, 'menuBackground').setScale(config.button.maNiggaDed - 0.025).setDepth(config.depths.buttonBackground);
+        this.playButton = new Button(this, this.stick.x, this.stick.y - 8, 'restartButton', 'restartButtonlight', 'play',config.button.maNiggaDed)
+        this.gddButton = new Button(this, this.stick.x, this.stick.y + 12, 'quitButton', 'quitButtonlight', 'quit',config.button.maNiggaDed)
 
-        let background = this.add.image(700, 400, 'menuBackground');
-        background.setScale(0.25); 
-        background.setDepth = config.depths.buttonBackground;
+        
     }
 }
