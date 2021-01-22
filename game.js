@@ -32,7 +32,6 @@ export default class Game extends Phaser.Scene {
     this.maxHealth = data.maxHealth;
     this.velFactor = data.velFactor;
     this.enemySpriteID = data.enemySpriteID
-    //this.playerAspectID = data.playerAspectID
   }
 
 
@@ -187,6 +186,9 @@ export default class Game extends Phaser.Scene {
     this.load.image('dialogoSergio', 'sprites/dialogoSergio.png');
     //Carga de fuentes con bitmap//
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
+
+    //Video
+    this.load.video('filtrocinta', './sprites/video/filtrocintabien.mp4');
 
   }
 
@@ -952,6 +954,16 @@ export default class Game extends Phaser.Scene {
         repeat: 0
       })
     
+    }
+
+    putVideoOnScreen(){
+      this.video = this.add.video(700, 400, 'filtrocinta');
+      this.video.depth = 10;
+      this.video.setAlpha(0.3);
+      this.video.play();
+      this.video.setLoop(true);
+      this.video.setScrollFactor(0);
+      
     }
 
 
