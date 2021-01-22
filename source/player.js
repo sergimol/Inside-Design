@@ -14,7 +14,7 @@ import upgradedAreaAttack from "./bulletsFolder/upgradedAreaAttack.js";
 import kart from "./bulletsFolder/kart.js";
 
 export default class Player extends Humanoid {
-  constructor(scene, x, y, sprite, health, ammo) {
+  constructor(scene, x, y, sprite, health, ammo, activePassives, actualACTIVE, upgraded, hasInfiniteAmmo, maxHealth, velFactor) {
     super(scene, x, y, sprite, health, config.player);
     this.body.label = 'player';
 
@@ -22,7 +22,7 @@ export default class Player extends Humanoid {
     //Arma
     this.weapon = new Weapon(scene, 0, 5, defaultWeapon);
     this.add(this.weapon);
-    this.maxHealth = config.humanoid.health;
+    this.maxHealth = maxHealth;
 
     //Atributos
     //this.body.mass = 900;
@@ -30,12 +30,13 @@ export default class Player extends Humanoid {
     this.depth = config.depths.player;
     this.healthDropBonus = 0;
     this.activeCooldown = 0;
+
     //Puntero
     this.puntero = new Puntero(scene, 0, 0);
     this.add(this.puntero);
-    this.ammo = config.player.baseAmmo;
-    this.hasInfiniteAmmo = false;
-    this.velFactor = config.player.baseVelFactor;
+    this.ammo = ammo;
+    this.hasInfiniteAmmo = hasInfiniteAmmo;
+    this.velFactor = velFactor;
     this.drunk = false;
 
     this.weaponId = 0;
@@ -83,14 +84,8 @@ export default class Player extends Humanoid {
         this.semiAutomaticaHasShoot = false;
     }, this);
 
-    //TEMPORAL PARA QUE LA GENTE PUEDA PROBAR ACTIVAS
-    let a = Math.floor(Math.random() * 2);
-    if(a === 0)
-      this.actualACTIVE = 'dash';
-    else
-      this.actualACTIVE = 'shield';
-    this.scene.setActiveImg(a);
-    this.upgraded = false; //Será true cuando la activa esté mejorada
+    this.actualACTIVE = actualACTIVE;
+    this.upgraded = upgraded; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
     let dashUpgradedParticles = this.scene.add.particles('dashUpgradedParticle');
 
@@ -111,7 +106,6 @@ export default class Player extends Humanoid {
     this.inDash = false;
     this.shielded = false;
     this.shieldTime = 0;
-    this.dashPos;
     this.dashDir = new Phaser.Math.Vector2(this.puntero.x - this.x, this.puntero.y - this.y);
     this.scene.input.on('pointerdown', function (pointer) {
       //Comprobamos que sea el click derecho
@@ -180,6 +174,18 @@ export default class Player extends Humanoid {
     this.scene.setHealth(this.health);
     this.scene.setBackground(this.maxHealth);
     this.scene.setAmmo(this.ammo);
+    if(this.actualACTIVE !== 'none'){
+      switch(this.actualACTIVE){
+        case 'dash':
+          this.scene.setActiveImg(0);
+          break;
+        case 'shield':
+          this.scene.setActiveImg(1);
+          break;
+        case 'area':
+          break;
+      }
+    }
 
     //Colisiones
 
@@ -208,9 +214,8 @@ export default class Player extends Humanoid {
     this.emitter.startFollow(this);
 
     //Array de booleanos para saber si una pasiva está activada o no
-    this.activePassives = [];
-    for (let i = 0; i < config.player.passiveCount; i++)
-      this.activePassives[i] = false;
+    this.activePassives = activePassives;
+    
 
 
 
@@ -447,11 +452,15 @@ export default class Player extends Humanoid {
         console.log('Outlaws from the West');
         this.scene.changeLayer(config.tileset.west);
         if (!isNewScene)
-          this.changeMusic(config.music.west, isNewScene);
-        this.spriteID = config.player.west;
-        this.scene.changePlayerSprite(this.spriteID);
-        break;
+        {
 
+          this.changeMusic(config.music.west, isNewScene);
+          this.spriteID = config.player.west;
+          this.scene.changePlayerSprite(this.spriteID);
+          this.scene.changeEnemySprite(config.enemySprite.west);
+        }
+          break;
+          
       case (1):
         console.log('Ray Tracing breakdance kill');
         this.scene.changeLayer(config.tileset.raytracing);
@@ -472,8 +481,12 @@ export default class Player extends Humanoid {
       case (4):
         console.log('Mas de 1000 capitulos');
         this.scene.changeLayer(config.tileset.piratas);
-        this.spriteID = config.player.pirata;
-        this.scene.changePlayerSprite(this.spriteID);
+        if (!isNewScene)
+        {
+          this.spriteID = config.player.pirata;
+          this.scene.changePlayerSprite(this.spriteID);
+          this.scene.changeEnemySprite(config.enemySprite.pirata);
+        }
         break;
 
       case (5):
@@ -484,10 +497,13 @@ export default class Player extends Humanoid {
       case (6):
         console.log('The Only Thing They Fear is You');
         this.scene.changeLayer(config.tileset.doom);
-        if (!isNewScene)
+        if (!isNewScene){
+
           this.changeMusic(config.music.rock, isNewScene);
-        this.spriteID = config.player.doom;
-        this.scene.changePlayerSprite(this.spriteID);
+          this.spriteID = config.player.doom;
+          this.scene.changePlayerSprite(this.spriteID);
+          this.scene.changeEnemySprite(config.enemySprite.doom);
+        }
         break;
 
       case (7):

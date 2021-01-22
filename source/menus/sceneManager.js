@@ -111,8 +111,8 @@ export default class Game extends Phaser.Scene {
                 this.point = objeto;
             }
             else if (objeto.name === 'enemy') {
-                const e = new Enemy(this, objeto.x, objeto.y, this.point, objeto.properties[0].value - 1, this.doorSystem, configEnemy);
-                this.enemies.add(e);
+               // const e = new Enemy(this, objeto.x, objeto.y, this.point, objeto.properties[0].value - 1, this.doorSystem, configEnemy);
+               // this.enemies.add(e);
 
                 if (doorNum[objeto.properties[0].value - 1] != x)
                     enemyCount = 0;

@@ -65,6 +65,7 @@ const Config = {
 
         spriteID: 0,
         frictionAir: 0.25,
+        startingPassives: [false, false, false, false, false, false, false, false, false, false]
     },
     
     //Configuración base de las armas
@@ -141,11 +142,25 @@ const Config = {
         ammoDrop: 5
     },
 
+    enemySprite:
+    {
+        key: [
+            'enemyDef',
+            'enemyWest',
+            'enemyDemon',
+            'enemyPirata',
+        ],
+        def: 0,
+        west: 1,
+        doom: 2,
+        pirata: 3,
+    },
+
     room:{
         numRoomsIni: 1,     //Sala inicial
         numRoomsTotal: 14,  //Salas totales
         bossRoom:2,         //Sala del boss (de Tiled)
-        bossRoomLevel: 9,   //Sala en la que debería de aparecer el boss
+        bossRoomLevel: 1,   //Sala en la que debería de aparecer el boss
     },
 
     depths:{

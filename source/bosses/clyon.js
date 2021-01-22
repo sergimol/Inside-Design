@@ -24,6 +24,12 @@ const boss = {
     angleAcercarse: 0, 
     weapon: weapon2,
 
+    //animaciones
+    
+    hitKey:'hitCleon',
+    walkKey:'walkCleon',
+    idleKey:'idleCleon',
+    deadKey:'deathCleon',
 
     humanoide:{
         spriteScaleX:2,

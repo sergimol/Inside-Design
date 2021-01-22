@@ -4,7 +4,7 @@ import Enemy from "./enemy.js";
 
 export default class Boss extends Enemy {
     constructor(scene, x, y, player, doorN, doorS, config) {
-        super(scene, x, y, player, doorN, doorS, config)
+        super(scene, x, y, player, doorN, doorS, config, true)
         this.config = config;
 
         this.aiming = false;

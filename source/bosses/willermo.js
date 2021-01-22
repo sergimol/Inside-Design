@@ -24,6 +24,13 @@ const boss = {
     angleAcercarse: 0, 
     weapon: weapon1,
 
+    //animaciones
+    
+    hitKey:'hitGuille',
+    walkKey:'walkGuille',
+    idleKey:'idleGuille',
+    deadKey:'deathGuille',
+
 
     humanoide:{
         spriteScaleX:2,
