@@ -162,6 +162,9 @@ const Config = {
     cameraSettings:{
         zoom : 3,
         //shake:
+    },
+    button:{
+        mainMenu: 0.25,
     }
 }
 

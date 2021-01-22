@@ -1,12 +1,18 @@
 import config from "./config.js"
 
 export default class Button extends Phaser.GameObjects.Image {
-    constructor(scene, x, y, sprite, sprite2, label) {
+    constructor(scene, x, y, sprite, sprite2, label,scale) {
         super(scene, x, y, sprite);
-        this.image = scene.add.image(x, y, sprite);
-        this.image.setScale(0.25);
+        //this.image = scene.add.image(x, y, sprite);
+        //this.scene.add(this);
+        //  
         //this.updateBounds();
-        console.log(this)
+        //console.log(this)
+        this.setScale(scale); 
+        scene.add.existing(this);
+        //this.displayWidth = 100;
+        //this.displayHeight = 200;
+        
 
         this.setInteractive()
             .on('pointerover', () => this.enterButtonHoverState(), this.alpha = 1)
@@ -15,7 +21,7 @@ export default class Button extends Phaser.GameObjects.Image {
                 this.enterButtonHoverState();
                 this.enterActiveState(label);
             });
-        this.image.depth = config.depths.button;
+        this.depth = config.depths.button;
         this.sprite = sprite;
         this.sprite2 = sprite2;
         this.label = label;
@@ -26,11 +32,11 @@ export default class Button extends Phaser.GameObjects.Image {
     }
     //Al pasar por encima se ilumina el boton
     enterButtonHoverState() {
-        this.image.setTexture(this.sprite2);
+        this.setTexture(this.sprite2);
     }
 
     enterButtonRestState() {
-        this.image.setTexture(this.sprite);
+        this.setTexture(this.sprite);
     }
 
     enterActiveState() {
