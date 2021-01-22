@@ -97,6 +97,9 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
     this.load.spritesheet('microondas_shoot', 'sprites/spritesarmas/microondas.png', { frameWidth: 24, frameHeight: 24 });
     this.load.spritesheet('microondas_explosion', 'sprites/explosionMicroondas.png', { frameWidth: (93 * 5), frameHeight: (97 * 5) });
+    this.load.spritesheet('area_attack', 'sprites/area_attack.png', { frameWidth: 185, frameHeight: 200 });
+    this.load.spritesheet('kart', 'sprites/spritespersonajes/kart.png', {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet('flor', 'sprites/spritespersonajes/flor.png', {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet('fuego', 'sprites/fire.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('area_attack', 'sprites/area_attack.png', { frameWidth: (185), frameHeight: (200) });
     
@@ -165,6 +168,15 @@ export default class Game extends Phaser.Scene {
     this.load.image('dashUpgradedParticle', './sprites/dashParticulaMejorada.png');
     this.load.audio('dashSound', './audio/dashSound.wav');
     this.load.audio('microondas', './audio/microondas.wav');
+    this.load.audio('shotgun', './audio/shotgun.wav');
+    this.load.audio('metralleta', './audio/metralleta.wav');
+    this.load.audio('francotirador', './audio/fracotirador.wav');
+    this.load.audio('minigun', './audio/minigun.wav');
+    this.load.audio('gas', './audio/gas.mp3');
+    this.load.audio('granadasBlop', './audio/granadasBlop.wav');
+    this.load.audio('swing', './audio/swingDuro.wav');
+    this.load.audio('swingDuro', './audio/swingDuro.wav');
+    this.load.audio('katana', './audio/katana.mp3');
 
     //Elementos de la UI
     //Armas//
@@ -671,7 +683,9 @@ export default class Game extends Phaser.Scene {
       gddPasivas: this.gddPasivas,
       gddTemporales: this.gddTemporales,
       gddArmas: this.gddArmas,
-      gddEsteticas: this.gddEsteticas
+      gddEsteticas: this.gddEsteticas,
+      gddCharacter: this.gddCharacter,
+      gddMusica: this.gddMusica
     }
     localStorage.setItem('insideDesignSaveFile', JSON.stringify(file));
   }
@@ -690,6 +704,8 @@ export default class Game extends Phaser.Scene {
       this.gddTemporales = file.gddTemporales;
       this.gddArmas = file.gddArmas;
       this.gddEsteticas = file.gddEsteticas;
+      this.gddCharacter = file.gddCharacter;
+      this.gddMusica = file.gddMusica
     }
     else {
       this.disparosRealizados = 0;
@@ -721,6 +737,16 @@ export default class Game extends Phaser.Scene {
       numIdeas = config.gdd.numeroTemporales;
       for (let i = 0; i < numIdeas; i++)
         this.gddTemporales.push(false);
+
+      this.gddCharacter = [];
+      numIdeas = config.gdd.numeroCharacters;
+      for (let i = 0; i < numIdeas; i++)
+        this.gddCharacter.push(false);
+      
+      this.gddMusica = [];
+      numIdeas = config.gdd.numeroMusicas;
+      for (let i = 0; i < numIdeas; i++)
+        this.gddMusica.push(false);
     }
   }
 
@@ -871,7 +897,8 @@ export default class Game extends Phaser.Scene {
     else
       this.player.addPassive(this.pendingIdea);  
     
-    this.doorSystem.openDoor();
+    if(this.pendingType !== 'temporal')
+      this.doorSystem.openDoor();
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
@@ -890,18 +917,23 @@ export default class Game extends Phaser.Scene {
     if (this.pendingType === "weapon") {
       this.gddArmas[this.pendingIdeaId] = true;
     }
-    if (this.pendingType === "passive") {
+    else if (this.pendingType === "passive") {
       this.gddPasivas[this.pendingIdeaId] = true;
     }
-    if (this.pendingType === "active") {
+    else if (this.pendingType === "active") {
       this.gddActivas[this.pendingIdeaId] = true;
     }
-    if (this.pendingType === "temporal") {
+    else if (this.pendingType === "temporal") {
       this.gddTemporales[this.pendingIdeaId] = true;
     }
-    if (this.pendingType === "tilemap" || this.pendingType === "character") {
+    else if (this.pendingType === "tilemap") {
       this.gddEsteticas[this.pendingIdeaId] = true;
     }
+    else if (this.pendingType === "character") {
+      this.gddCharacter[this.pendingIdeaId] = true;
+    }
+    else if (this.pendingType === "music")
+      this.gddMusica[this.pendingIdeaId] = true;
 
     this.saveFile();
   }

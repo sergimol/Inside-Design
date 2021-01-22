@@ -36,7 +36,8 @@ const Dialogues = {
         ["Cambiemos el arma por un bate, que siempre es divertido."],
         ["Pongamos la katana como arma."],
         ["Creo que el jugador debería llevar un espadón de arma."],
-        ["El juego está muy frío, deberíamos poner el microondas."]
+        ["El juego está muy frío, deberíamos poner el microondas."],
+        ["Necesitamos un poco de calorcito, pongamos el lanzallamas."]
     ],
 
     tilemap: [

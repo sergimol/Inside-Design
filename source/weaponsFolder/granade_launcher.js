@@ -29,6 +29,8 @@ const WeaponConfig = {
     retroceso: -5,
     bullet: disparo,
 
+
+    soundEffect:'granadasBlop',
     
     //disparo alternativo/sin ammo
     cadenciaAlternative:100,

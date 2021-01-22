@@ -8,11 +8,13 @@ const Config = {
     },
 
     gdd:{
+        numeroEsteticas:8,
         numeroArmas:18,
-        numeroEsteticas:0,
         numeroPasivas:7,
         nueroActivas:3,
-        numeroTemporales:3
+        numeroTemporales:3,
+        numeroCharacters:10 ,
+        numeroMusicas: 9
     },
 
     //Configuración específica del jugador

@@ -139,6 +139,12 @@ export default class Doors extends Phaser.GameObjects.Container {
             }
             this.doorsTrigger.setExistingBody(rect);
             this.doorsTrigger.setStatic(true);
+
+            let id = Math.floor(Math.random() * 10)
+            if(id === 1){
+                id = Math.floor(Math.random() * 3)
+                this.scene.startDialog('temporal', id, id);
+            }
         }
     }
 
