@@ -30,23 +30,23 @@ const Dialogues = {
         ["Es momento de probar algo distinto, como la pistola láser."],
         ["El jugador necesita un arma distinta, por ejemplo un rifle automático."],
         ["Deberíamos cambiar el arma por un rifle de francotirador preciso."],
-        ["Ca"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        ["weapon"],
-        [""]
+        ["Cambiemos el arma por un rifle de francotirador."],
+        ["Probemos el rifle de rafagas."],
+        ["Cambiemos el arma por un bate, que siempre es divertido."],
+        ["Pongamos la katana como arma."],
+        ["Creo que el jugador debería llevar un espadón de arma."],
+        ["El juego está muy frío, deberíamos poner el microondas."]
     ],
 
     tilemap: [
-        ["tilemap"],
-        ["tilemap"],
-        ["tilemap"],
-        ["tilemap"],
-        ["tilemap"],
-        ["tilemap"],
-        ["tilemap"],
-        ["tilemap"]
+        ["Deberíamos convertir esto en un juego del oeste, con cactus y eso."],
+        ["¿Y si le metemos raytracing?"],
+        ["Creo que deberíamos hacer un juego sobre cubos y construcción, que no lo ha hecho nadie."],
+        ["Es momento del especial de navidad."],
+        ["¿Y si hacemos un juego de piratas?"],
+        [""],
+        ["Estaría bien hacer un juego sobre matar demonios."],
+        ["¿Y si hacemos un juego de miedo?"]
     ],
 
     character: [
@@ -84,7 +84,7 @@ const Dialogues = {
         ["marikon"],
         ["marikon"],
         ["marikon"],
-        ["marikon"],
+        ["marikon"]
     ]
 
 }
