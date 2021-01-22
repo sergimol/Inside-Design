@@ -162,6 +162,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('dashParticle', './sprites/dashParticula.png');
     this.load.image('dashUpgradedParticle', './sprites/dashParticulaMejorada.png');
     this.load.audio('dashSound', './audio/dashSound.wav');
+    this.load.audio('microondas', './audio/microondas.wav');
 
     //Elementos de la UI
     //Armas//
@@ -779,6 +780,7 @@ export default class Game extends Phaser.Scene {
 
   //Métodos del HUD
   setHealth(playerHealth) {
+    playerHealth = Math.ceil(playerHealth);
     this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
     this.healthCounter.text = playerHealth;
   }
@@ -837,6 +839,9 @@ export default class Game extends Phaser.Scene {
         break;
       case 'temporal':
         this.strings = dialogues.temps[auxId];
+        break;
+      case 'music':
+        this.strings = dialogues.music[auxId];
         break;
       case 'upgrade':
         if(this.player.actualACTIVE === 'dash')
