@@ -12,7 +12,8 @@ import escudoActiva from "./bulletsFolder/escudoActiva.js"
 import escudoMejoradoActiva from "./bulletsFolder/escudoMejoradoActiva.js";
 import upgradedDash from "./bulletsFolder/upgradedDash.js";
 import areaAttack from "./bulletsFolder/areaAttack.js";
-import upgradedAreaAttack from "./bulletsFolder/upgradedAreaAttack.js"
+import upgradedAreaAttack from "./bulletsFolder/upgradedAreaAttack.js";
+import kart from "./bulletsFolder/kart.js";
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
@@ -37,8 +38,11 @@ export default class Player extends Humanoid {
     this.ammo = 5000//ammo;//config.player.baseAmmo;
     this.hasInfiniteAmmo = false;
     this.velFactor = config.player.baseVelFactor;
+    this.drunk = false;
 
     this.weaponId = 0;
+    this.tempTimer = -1;
+    this.currentTemp = -1;
 
 
     //this.add(sprite);
@@ -86,7 +90,7 @@ export default class Player extends Humanoid {
     if(a === 0)
       this.actualACTIVE = 'dash';
     else
-      this.activePassives = 'shield';
+      this.actualACTIVE = 'shield';
     this.scene.setActiveImg(a);
     this.upgraded = false; //Será true cuando la activa esté mejorada
     let dashParticles = this.scene.add.particles('dashParticle');
@@ -178,9 +182,6 @@ export default class Player extends Humanoid {
     this.scene.setHealth(this.health);
     this.scene.setBackground(this.maxHealth);
     this.scene.setAmmo(this.ammo);
-
-    //Pasivas
-    //this.scene.input.keyboard.on('keydown_SPACE', this.addPassive, this);
 
     //Colisiones
 
@@ -319,8 +320,9 @@ export default class Player extends Humanoid {
       id = Math.floor(Math.random() * config.player.activeCount);
       this.scene.startDialog('active', id, id);
     }
-    else if (type === 'tempPassive') {
-
+    else if (type === 'temporal') {
+      id = Math.floor(Math.random() * config.gdd.numeroTemporales);
+      this.scene.startDialog('temporal', id, id);
     }
 
   }
@@ -398,8 +400,39 @@ export default class Player extends Humanoid {
 
   }
 
-  removePassive(id) {
-    this.activePassives[id] = false;
+  addTempPassive(id){
+    switch(id){
+      case 0:
+        console.log('run pacifica');
+        this.changeWeapon(14);////FALTA CONFIG)
+        this.tempTimer = 1000;
+        break;
+      case 1:
+        console.log('mario kart');
+        this.kart = new Bullet(this.scene, this.x, this.y, kart, false);
+        this.tempTimer = 1500;
+        break;
+      case 2:
+        console.log('borracho');
+        this.drunk = true;
+        this.tempTimer = 1200;
+        break;
+    }
+    this.currentTemp = id;
+  }
+
+  removeTempPassive() {
+    switch(this.currentTemp){
+      case 0:
+        this.weapon = new Weapon(this.scene, 0, 5, this.lastWeaponConfig)
+        break;
+      case 1:
+        this.kart.booleanoParaDestruirme = true;
+        break;
+      case 2:
+        this.drunk = false;
+        break;
+    }
   }
 
   changeWeapon(wId) {
@@ -572,8 +605,9 @@ export default class Player extends Humanoid {
       this.dir.x = 0;
       this.dir.y = 0;
       //Movimiento horizontal
-      if (this.cursors.left.isDown || this.cursors.a.isDown)
+      if (this.cursors.left.isDown || this.cursors.a.isDown){
         this.dir.x = -1;
+      }
       else if (this.cursors.right.isDown || this.cursors.d.isDown)
         this.dir.x = 1;
       //Movimiento vertical        
@@ -581,6 +615,11 @@ export default class Player extends Humanoid {
         this.dir.y = -1;
       else if (this.cursors.down.isDown || this.cursors.s.isDown)
         this.dir.y = 1;
+
+      if(this.drunk){
+        this.dir.x *= -1;
+        this.dir.y *= -1;
+      }
     }
     this.dir.normalize();
     this.playerMove();
@@ -608,6 +647,8 @@ export default class Player extends Humanoid {
     if (this.actualACTIVE !== 'none')
       this.handleActive();
 
+    if(this.tempTimer >= 0)
+      this.handleTemps();
     //Llamada al menu de pausa
     //console.log(this.cursors.escape.isDown)
   }
@@ -635,8 +676,8 @@ export default class Player extends Humanoid {
           this.inDash = false;
           if (this.upgraded) {
             this.upgradedDashEmitter.stopFollow(this);
-            if(this.upgradedDash !== null )
-            this.upgradedDash.destroy();
+            if(this.upgradedDash !== undefined)
+              this.upgradedDash.booleanoParaDestruirme = true;
           }
           else
             this.dashEmitter.stopFollow(this);
@@ -648,8 +689,8 @@ export default class Player extends Humanoid {
           //console.log(this.shield)
           if (this.shieldTime <= 0) {
             this.shielded = false;
-            if(this.shield !== null )
-            this.shield.destroy();
+            if(this.shield !== undefined)
+              this.shield.booleanoParaDestruirme = true;
             this.activeCooldown = 500;
           }
           else {
@@ -660,8 +701,8 @@ export default class Player extends Humanoid {
         break;
       case 'area':
         if (this.areaTime <= 0) {
-          if (this.areaAttack != null)
-            this.areaAttack.destroy();
+          if (this.areaAttack !== undefined)
+            this.areaAttack.booleanoParaDestruirme = true;
         }
         else
           this.areaTime--;
@@ -672,5 +713,11 @@ export default class Player extends Humanoid {
       this.activeCooldown--;
       this.scene.setCooldownBar(this.activeCooldown);
     }
+  }
+
+  handleTemps(){
+    this.tempTimer--;
+    if(this.tempTimer === 0)
+      this.removeTempPassive();
   }
 }

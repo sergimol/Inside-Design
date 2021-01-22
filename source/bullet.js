@@ -66,8 +66,8 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.scene.add.existing(this);
         this.body.label = config.label;
         
-        
-        this.aspecto.play(config.key);
+        if(config.key !== "shield")
+            this.aspecto.play(config.key);
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, config.inertia);
         this.setFrictionAir(config.airFriction);

@@ -104,6 +104,12 @@ export default class Doors extends Phaser.GameObjects.Container {
         }
     }
 
+    roomDialog(){
+        this.scene.player.chooseIdea('passive');
+        this.scene.player.upgradeActive();
+        this.isOpen = true;
+    }
+
     //Abro las puertas
     openDoor() {
         if (this.doors.label === "horizontal") {
@@ -114,10 +120,7 @@ export default class Doors extends Phaser.GameObjects.Container {
             this.doors.setTexture(this.spriteOpenedV);
             var rect = this.scene.matter.add.rectangle(this.doors.x, this.doors.y, 48, 16, { isSensor: true, label: 'exit' })
         }
-        this.doors.setExistingBody(rect);
-        this.scene.player.chooseIdea('passive');
-        this.scene.player.upgradeActive();
-        this.isOpen = true;
+        this.doors.setExistingBody(rect);        
     }
 
     closeTriggerDoor() {
@@ -138,6 +141,6 @@ export default class Doors extends Phaser.GameObjects.Container {
     preUpdate() {
         //Si EnemyCountDoor === 0, la puerta se tiene que abrir
         if(this.EnemyCountDoor <= 0 && !this.isOpen)
-            this.openDoor();
+            this.roomDialog();
     }
 }
