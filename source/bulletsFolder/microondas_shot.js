@@ -43,7 +43,6 @@ customForm: {
 
     bulletPelletHija:1, //cantidad de veces que debe instanciar hija
 
-
     hijaFaction: true, //si es true, usara el filtro de la bala padre para ser enemiga o amiga, si es null sera neutra (ejemplo la explosion)
     dispersionHija: 0, //dispersion en porcetaje/2 que se le aplicara a la bala al instanciarse
     forceDispersionHija: 0, //
