@@ -1,6 +1,4 @@
 import Doors from "../doors.js";
-import Enemy from "../enemy.js";
-import configEnemy from "../enemiesFolder/defaultEnemy.js";
 import Button from "../button.js";
 import config from "../config.js"
 

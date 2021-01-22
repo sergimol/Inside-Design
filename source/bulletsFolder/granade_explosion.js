@@ -1,6 +1,3 @@
-import hijaConfig from "./defaultEnemyBullet.js";
-
-
 const BulletConfig = {
 
     sprite: "granade_launcher_shoot_explosion", 

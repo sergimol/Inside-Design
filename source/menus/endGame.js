@@ -1,5 +1,3 @@
-import config from "../config.js"
-
 const winList = ['win0', 'win1'];
 const looseList = ['loose0', 'loose1','loose2','loose3','loose4'];
 

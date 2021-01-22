@@ -8,10 +8,6 @@ export default class Doors extends Phaser.GameObjects.Container {
         this.spriteOpenedV = spriteOV;
         this.spriteClosedV = spriteCV;
 
-        this.doors;            //Guarda las puertas que se van añadiendo a la clase
-        this.doorsTrigger;
-        this.EnemyCountDoor;   //Guarda los enemigos que hay que matar para que se abra cada puerta
-
         this.isOpen = false;
 
         this.scene.matter.world.on('collisionstart', (event) => {
