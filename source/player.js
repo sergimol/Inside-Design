@@ -16,7 +16,7 @@ import upgradedAreaAttack from "./bulletsFolder/upgradedAreaAttack.js"
 
 export default class Player extends Humanoid {
   constructor(scene, x, y, sprite, health, ammo) {
-    super(scene, x, y, sprite, health);
+    super(scene, x, y, sprite, health, config.player);
     this.body.label = 'player';
 
     this.spriteID = config.player.spriteID;

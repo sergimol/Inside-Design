@@ -115,6 +115,8 @@ export default class Game extends Phaser.Scene {
     this.load.tilemapTiledJSON('sala6', './sprites/tiles/sala6.json');
     this.load.tilemapTiledJSON('sala7', './sprites/tiles/sala7.json');
 
+    this.load.tilemapTiledJSON('sala11', './sprites/tiles/sala11.json');
+
     //nuevo
     this.load.audio('mainChiptuneSong', './audio/mainChiptune.mp3');
     this.load.audio('westernSong', './audio/western.mp3');
@@ -269,7 +271,7 @@ export default class Game extends Phaser.Scene {
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(1, 7);
-    let nameRoom = 'sala' + numRoom.toString(); //
+    let nameRoom = 'sala11'; //numRoom.toString()
     this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;
