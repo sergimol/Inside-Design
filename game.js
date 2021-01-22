@@ -25,6 +25,12 @@ export default class Game extends Phaser.Scene {
     this.musicID = data.musicID,
       this.lastSeekMusic = data.lastSeekMusic
     this.playerSpriteID = data.playerSpriteID;
+    this.activePassives = data.activePassives;
+    this.actualACTIVE = data.actualACTIVE;
+    this.upgraded = data.upgraded;
+    this.hasInfiniteAmmo = data.infiniteAmmo;
+    this.maxHealth = data.maxHealth;
+    this.velFactor = data.velFactor;
     //this.playerAspectID = data.playerAspectID
   }
 
@@ -380,8 +386,9 @@ export default class Game extends Phaser.Scene {
                 this.lastSeekMusic = this.actualMusic.seek;
                 this.scene.start('main', {
                   health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weaponId, level: this.level,
-                  tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID
-
+                  tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID,
+                  activePassives: this.player.activePassives, actualACTIVE: this.player.actualACTIVE, upgraded: this.player.upgraded, 
+                  infiniteAmmo: this.player.hasInfiniteAmmo, maxHealth: this.player.maxHealth, velFactor: this.player.velFactor
                 });
               }
               else {
@@ -424,7 +431,8 @@ export default class Game extends Phaser.Scene {
 
       //TODO no hayq ue pasarle el sprite asi si no por config y para los cambios d sprite de jugador
       if (objeto.name === 'player') {
-        this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo);
+        this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo, 
+          this.activePassives, this.actualACTIVE, this.upgraded, this.hasInfiniteAmmo, this.maxHealth, this.velFactor);
         this.player.changeWeapon(this.weaponID);
         this.player.changeTile(this.tileID, true);
 
@@ -788,12 +796,6 @@ export default class Game extends Phaser.Scene {
     this.cooldownBar.scaleX = time / 3;// * config.ui.barScaleX;
   }
 
-  /*addPassiveImg(id) {
-    let img = this.add.image(config.ui.passivePosX + (this.passiveCount * config.ui.passiveOffset), config.ui.passivePosY, config.ui.passiveImgs[id]);
-    img.setScale(0.3);
-    this.passiveCount++;
-  }*/
-
   chooseTalker() {
     let talkId;
     do {
@@ -827,13 +829,17 @@ export default class Game extends Phaser.Scene {
         this.strings = dialogues.character[auxId];
         break;
       case 'temporal':
-        this.strings = dialogues.character[auxId];
+        this.strings = dialogues.temps[auxId];
+        break;
+      case 'upgrade':
+        this.strings = dialogues.upgrade[auxId];
     }
 
     this.onDialog = true;
     this.dialogState = 0;
     this.dialog.text = this.strings[this.dialogState];
     this.pendingIdea = id;
+    this.pendingIdeaId = auxId;
     this.pendingType = type;
   }
 
@@ -845,7 +851,7 @@ export default class Game extends Phaser.Scene {
         this.dialog.text = this.strings[this.dialogState];
       }
       else
-        this.endDialog()
+        this.endDialog();
     }
   }
 
@@ -854,19 +860,17 @@ export default class Game extends Phaser.Scene {
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
 
+    ///CREO QUE ESTO NO SIRVE PARA NADA PERO NO LO QUERIA BORRAR
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
+    else if(this.pendingType === 'temporal')
+      this.player.addTempPassive(this.pendingIdea);
+    else if(this.pendingType === 'upgrade')
+      this.player.upgradeActive();
     else
-      this.player.addPassive(this.pendingIdea);
-
+      this.player.addPassive(this.pendingIdea);  
+    
     this.doorSystem.openDoor();
-    /*  //CREO QUE ESTO NO SIRVE PARA NADA PERO NO LO QUERIA BORRAR
-        if (this.pendingType === 'active')
-          this.player.changeActive(this.pendingIdea);
-        else if(this.pendingType === 'temporal')
-          this.player.addTempPassive(this.pendingIdea);
-        else
-          this.player.addPassive(this.pendingIdea);  */
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
@@ -881,21 +885,21 @@ export default class Game extends Phaser.Scene {
 
   }
 
-  updateGdd(key, id) {
-    if (key === "weapon") {
-      this.gddArmas[id] = true;
+  updateGdd() {
+    if (this.pendingType === "weapon") {
+      this.gddArmas[this.pendingIdeaId] = true;
     }
-    if (key === "pasiva") {
-      this.gddPasivas[id] = true;
+    if (this.pendingType === "passive") {
+      this.gddPasivas[this.pendingIdeaId] = true;
     }
-    if (key === "activa") {
-      this.gddActivas[id] = true;
+    if (this.pendingType === "active") {
+      this.gddActivas[this.pendingIdeaId] = true;
     }
-    if (key === "temporal") {
-      this.gddTemporales[id] = true;
+    if (this.pendingType === "temporal") {
+      this.gddTemporales[this.pendingIdeaId] = true;
     }
-    if (key === "estetica") {
-      this.gddEsteticas[id] = true;
+    if (this.pendingType === "tilemap" || this.pendingType === "character") {
+      this.gddEsteticas[this.pendingIdeaId] = true;
     }
 
     this.saveFile();

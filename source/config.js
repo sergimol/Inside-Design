@@ -64,6 +64,7 @@ const Config = {
 
         spriteID: 0,
         frictionAir: 0.25,
+        startingPassives: [false, false, false, false, false, false, false, false, false, false]
     },
     
     //Configuración base de las armas

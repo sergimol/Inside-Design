@@ -105,8 +105,10 @@ export default class Doors extends Phaser.GameObjects.Container {
     }
 
     roomDialog(){
-        this.scene.player.chooseIdea('passive');
-        this.scene.player.upgradeActive();
+        if(this.scene.level === 0)
+            this.scene.player.chooseIdea('active');
+        if(this.scene.level === 1)
+            this.scene.startDialog('upgrade', -1, 0);
         this.isOpen = true;
     }
 
@@ -139,7 +141,7 @@ export default class Doors extends Phaser.GameObjects.Container {
     }
 
     preUpdate() {
-        //Si EnemyCountDoor === 0, la puerta se tiene que abrir
+        //Si EnemyCountDoor === 0, se comienza el diálogo para añadir una idea
         if(this.EnemyCountDoor <= 0 && !this.isOpen)
             this.roomDialog();
     }
