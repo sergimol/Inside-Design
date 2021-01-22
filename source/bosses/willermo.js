@@ -1,6 +1,6 @@
 import weapon1 from "../enemyWeaponFolder/destructoraDeCodigo.js";
 import weapon2 from "../enemyWeaponFolder/lanzadora_de_gatos_williDotInc.js";
-import weapon3 from "../enemyWeaponFolder/MartilloThisMunicion.js";
+import weapon3 from "../enemyWeaponFolder/martilloThisMunicion.js";
 
 
 
@@ -23,17 +23,26 @@ const boss = {
     aggroVelFactor: 1.6,
     angleAcercarse: 0, 
     weapon: weapon1,
+
+
+    humanoide:{
+        spriteScaleX:2,
+        spriteScaleY:2,
+        scaleX:11  *2,
+        scaleY:16 * 2,
+    },
+
     rutina: [{
         time: 1000,
         idle: false,
-        acercarse: false,
+        acercarse: true,
         distanciaAcercarse:48,
         alejarse:false,
         distanciaAlejarse:95,
         strafe: false,
         starfeTime: 1000,
-        aiming: false,
-        shootCount: 1,
+        aiming: true,
+        shootCount: 2,
         shootRafagas:1,
         shootTime: 0,
         changeWeapon: null,
@@ -54,10 +63,10 @@ const boss = {
     },
     {
         time: 10000,
-        idle: true,
+        idle: false,
         acercarse: false,
         distanciaAcercarse:100,
-        alejarse:true,
+        alejarse:false,
         distanciaAlejarse:200,
         strafe: false,
         strafeTime: 1000, 
@@ -89,13 +98,13 @@ const boss = {
         distanciaAlejarse:200,
         strafe: false,
         strafeTime: 1000, 
-        aiming: false,
+        aiming: true,
         shootCount: 8,
         shootRafagas: 1,
         shootTime: 0,
         changeWeapon: null,
     },{
-        time: 5000,
+        time: 1000,
         idle: true,
         acercarse: true,
         distanciaAcercarse:100,

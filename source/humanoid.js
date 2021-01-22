@@ -1,14 +1,14 @@
 import Item from "./item.js";
-import config from "./config.js";
 import Weapon from "./weapon.js";
 
 
 export default class Humanoid extends Phaser.GameObjects.Container { //Container
-    constructor(scene, x, y, humanSprite, health) {
+    constructor(scene, x, y, humanSprite, health, config) {
         super(scene, x, y);
         scene.add.existing(this);
 
         this.aspecto = scene.add.sprite(0, 0, humanSprite);
+        this.aspecto.setScale(config.spriteScaleX, config.spriteScaleY)
         this.aspecto.depth = 3;                        //Layer de sprite en la que se renderiza, se renderiza por encima de todos lo que tengan numeros menores;
         this.add(this.aspecto);
       
@@ -16,13 +16,12 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
         this.health = health;//config.humanoid.health;
 
         this.isDead = false;                            //La entidad está viva
-        this.speed = config.humanoid.speed;
         this.hitState = false; //para cambiar a la animacion de hit
         //vector que acumula el empuje que s ele tiene que aplicar
         this.forceSaved = { x: 1, y: 0 };
 
 
-        this.setSize(config.humanoid.size - 5, config.humanoid.size);
+        this.setSize(config.scaleX, config.scaleY);
 
         this.scene.matter.add.gameObject(this);
         this.scene.matter.body.setInertia(this.body, Infinity);

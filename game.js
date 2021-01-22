@@ -5,7 +5,7 @@ import Enemy from "./source/enemy.js";
 import Item from "./source/item.js";
 import Doors from "./source/doors.js";
 import config from "./source/config.js"
-import enemyConfig from "./source/enemiesFolder/defaultEnemy.js"
+import listEnemies from "./source/enemyList.js"
 import dialogues from "./source/dialogues.js";
 
 import Boss from "./source/boss.js";
@@ -17,12 +17,12 @@ export default class Game extends Phaser.Scene {
     super({ key: "main" });
   }
   init(data) {
-      this.health = data.health,
+    this.health = data.health,
       this.ammo = data.ammo,
       this.weaponID = data.weaponID,
       this.level = data.level;
-      this.tileID = data.tileID;
-      this.musicID = data.musicID,
+    this.tileID = data.tileID;
+    this.musicID = data.musicID,
       this.lastSeekMusic = data.lastSeekMusic
       this.playerSpriteID = data.playerSpriteID;
       this.enemySpriteID = data.enemySpriteID;
@@ -54,13 +54,12 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('enemyPirata', './sprites/spritespersonajes/enemigopirata.png', { frameWidth: 24, frameHeight: 24 });
     this.load.spritesheet('enemyWest', './sprites/spritespersonajes/enemigowest.png', { frameWidth: 24, frameHeight: 24 });
 
-
-
-    //Diego
+    //Arma
     this.load.spritesheet('bullet', 'sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('enemybullet', 'sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
+
+    //Puntero
     this.load.image('crosshair', 'sprites/crosshair.png');
-    this.load.image('granade_launcher', 'sprites/granade_launcher.png');
 
     //Armas
     this.load.image('escopeta_lanzable', 'sprites/escopeta_lanzable.png');
@@ -82,12 +81,12 @@ export default class Game extends Phaser.Scene {
     this.load.image('pistolaLaser', 'sprites/spritesarmas/pistolaLaser.png');
     this.load.image('rafagas', 'sprites/spritesarmas/rafagas.png');
     this.load.image('rafagasRebote', 'sprites/spritesarmas/rafagasRebote.png');
+    this.load.image('granade_launcher', 'sprites/granade_launcher.png');
 
     this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
-    //Javi
     //Tiles de estéticas
     this.load.image('tileBase', './sprites/tiles/tileJavi.png');
     this.load.image('tileSetBaseEx', './sprites/tiles/tileSetBaseEx.png');
@@ -118,8 +117,15 @@ export default class Game extends Phaser.Scene {
     this.load.tilemapTiledJSON('sala5', './sprites/tiles/sala5.json');
     this.load.tilemapTiledJSON('sala6', './sprites/tiles/sala6.json');
     this.load.tilemapTiledJSON('sala7', './sprites/tiles/sala7.json');
+    this.load.tilemapTiledJSON('sala8', './sprites/tiles/sala8.json');
+    this.load.tilemapTiledJSON('sala9', './sprites/tiles/sala9.json');
+    this.load.tilemapTiledJSON('sala10', './sprites/tiles/sala10.json');
+    this.load.tilemapTiledJSON('sala11', './sprites/tiles/sala11.json');
+    this.load.tilemapTiledJSON('sala12', './sprites/tiles/sala12.json');
+    this.load.tilemapTiledJSON('sala13', './sprites/tiles/sala13.json');
+    this.load.tilemapTiledJSON('sala14', './sprites/tiles/sala14.json');
 
-    //nuevo
+    //BSO
     this.load.audio('mainChiptuneSong', './audio/mainChiptune.mp3');
     this.load.audio('westernSong', './audio/western.mp3');
     this.load.audio('30sSong', './audio/30s.mp3');
@@ -130,6 +136,7 @@ export default class Game extends Phaser.Scene {
     this.load.audio('pianoSong', './audio/piano.mp3');
     this.load.audio('berridosSong', './audio/berridos.mp3');
 
+    //FX
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
     this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
     this.load.audio('hitShootSound', './audio/hitShoot.wav');
@@ -143,9 +150,9 @@ export default class Game extends Phaser.Scene {
     this.load.audio('dashSound', './audio/dashSound.wav');
 
     //Elementos de la UI
-    //Armas
+    //Armas//
     this.load.image('gunshotsilhouette', 'sprites/gunshotSilueta.png');
-    //Pasivas
+    //Pasivas//
     this.load.image('tanqueo', 'sprites/pixel_tank.png');
     //this.load.image('facil', 'Sprites/');
     this.load.image('rambo', 'sprites/rambo.png');
@@ -153,16 +160,16 @@ export default class Game extends Phaser.Scene {
     //this.load.image('malaonda', 'Sprites/');
     this.load.image('sanic', 'sprites/sanic.png');
     this.load.image('cogo', 'sprites/ferrari.png');
-    //Activas
+    //Activas//
     this.load.image('dash', 'sprites/dash_1.png');
     this.load.image('shield', 'sprites/shield.png');
     this.load.image('bomb', 'sprites/bomb.png');
-    //Dialogos
+    //Dialogos//
     this.load.image('dialogoAndres', 'sprites/dialogoAndres.png');
     this.load.image('dialogoDiego', 'sprites/dialogoDiego.png');
     this.load.image('dialogoJavi', 'sprites/dialogoJavi.png');
     this.load.image('dialogoSergio', 'sprites/dialogoSergio.png');
-    //Carga de fuentes con bitmap
+    //Carga de fuentes con bitmap//
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
 
   }
@@ -248,10 +255,9 @@ export default class Game extends Phaser.Scene {
       frameRate: 60,
       repeat: 0
     })
-    
 
-    console.log("level: " + this.level)
-    //variables que utilizara ela rchivo de guardado
+
+    //variables que utilizara el archivo de guardado
     //estadisticas y gdd
     this.disparosRealizados = 0;
     this.enemiesKilled = 0;
@@ -274,9 +280,24 @@ export default class Game extends Phaser.Scene {
 
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
-    let numRoom = Phaser.Math.RND.between(1, 7);
-    let nameRoom = 'sala' + numRoom.toString();
-    this.map = this.make.tilemap({ key: nameRoom});
+    let numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
+
+    //Cargado de salas
+    if (this.level != config.room.bossRoomLevel) {
+      while (numRoom === config.room.bossRoom) {
+        console.log("No puedes cargar la room del boss")
+        numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
+      }
+    } else if (this.level === config.room.bossRoomLevel)
+      numRoom = config.room.bossRoom;
+
+    let nameRoom = 'sala' + numRoom.toString(); //
+
+    this.map = this.make.tilemap({ key: nameRoom });
+
+    console.log("level: " + this.level)
+    console.log("Sala cargada: " + nameRoom)
+
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;
     //console.log(this.levelname)
@@ -305,19 +326,6 @@ export default class Game extends Phaser.Scene {
       this.angleToPointer = Phaser.Math.Angle.Between(this.player.x, this.player.y, (pointer.x / this.cameras.main.zoom) + this.cameras.main.worldView.x, (pointer.y / this.cameras.main.zoom) + this.cameras.main.worldView.y);
 
     }, this);
-
-    //Prototipo Musica
-    //let sound = this.sound.add('mainTheme');
-    //sound.setVolume(0.7);
-    //sound.play();
-
-
-    //CARGA DE OBJETOS
-    //this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
-    //this.door;
-    //this.endZone;
-    //this.finish = false;
-    //this.loadObjects(entityLayer, DoorsentityLayer);
 
     //Camara
     this.cameras.main.zoom = 3;
@@ -355,11 +363,11 @@ export default class Game extends Phaser.Scene {
             playerBody = bodyB;
           }
           if (playerBody.label === 'endLevel') {
-            
+
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
             if (blockBody.label === 'player') {
               this.cameras.main.fadeOut(3000);
-              if (this.level != 8) {
+              if (this.level != config.room.bossRoomLevel) {
 
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
@@ -371,6 +379,11 @@ export default class Game extends Phaser.Scene {
                 });
               }
               else {
+                //Se acaba la escena de juego y se reproduce la canción de creditos
+                this.actualMusic.stop();
+                this.actualMusic = this.sound.add(config.music.songReference[config.music.intro], { volume: 2 });
+                this.actualMusic.play();
+                this.scene.stop();
                 this.scene.start('theEnd');
               }
             }
@@ -383,7 +396,7 @@ export default class Game extends Phaser.Scene {
     this.events.on('shutdown', this.shutdown, this);
 
     this.input.keyboard.on('keydown_ESC', this.pauseGame, this);//this.pauseGame
-    this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);  
+    this.input.keyboard.on('keydown_SPACE', this.advanceDialog, this);
 
   }//End of create
 
@@ -408,7 +421,7 @@ export default class Game extends Phaser.Scene {
         this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo);
         this.player.changeWeapon(this.weaponID);
         this.player.changeTile(this.tileID, true);
-        
+
         //Creamos la musica si es la primera sala
         if (this.level === 0) {
           this.musicID = config.music.mainChip;
@@ -419,8 +432,9 @@ export default class Game extends Phaser.Scene {
           this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
           if (this.actualMusic != null)
             this.actualMusic.stop();
-          this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 0.3 });
+          this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 1 });
           this.actualMusic.play();
+          this.actualMusic.loop = true;
 
         }
         else
@@ -429,10 +443,38 @@ export default class Game extends Phaser.Scene {
           this.changeEnemySprite(this.enemySpriteID);
         }
         //this.player.changeAnimacionesonoseque();
+
+        //Spawnear el numero de enemigos
+        //for (let i = 0; i < 10;) {
+          for (let i = 0; i < objeto.properties[0].value;) {
+
+          let tileX = Phaser.Math.RND.between(0, this.map.width);
+          let tileY = Phaser.Math.RND.between(0, this.map.height);
+
+          if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
+            //let e = new Boss(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, clyon);
+            //hacer random para elegir entre 3 enemigos de acuerdo a 0 - 3, 3- 6, 6 - 9
+            let tipo = Phaser.Math.RND.between(0 + Math.floor(((this.level + 1) / 7)), Math.floor(((this.level + 1) / 3)));
+            let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, listEnemies[tipo]);
+            this.enemies.add(e);
+
+
+            if (doorNum != x)
+              enemyCount = 0;
+
+            ++enemyCount;
+            doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
+
+            x = doorNum;
+            i++;
+          }
+
+        }
+
       }
       else if (objeto.name === 'enemy') {
         //const e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon);
-        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig, false, false);
+        let e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, listEnemies[0], false, false);
         this.enemies.add(e);
 
         if (doorNum != x)
@@ -444,20 +486,19 @@ export default class Game extends Phaser.Scene {
         x = doorNum;
       }
       else if (objeto.name === 'endLevel') {
-        this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
-        this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 40, 40, { isSensor: true, label: 'endLevel' }));
+        this.endZone = this.matter.add.rectangle(objeto.x + 32, objeto.y, 48, 48, { isSensor: true, label: 'endLevel' });
       }
-      else if (objeto.name === 'boss'){
+      else if (objeto.name === 'boss') {
         let e;
-        switch (objeto.properties[1].value){
-          case("cylon"):
-          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon, true, true);
-          break;
-          case("willermo"): 
-          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo, true, false);
-          break;
+        switch (objeto.properties[1].value) {
+          case ("cylon"):
+            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon, true, true);
+            break;
+          case ("willermo"):
+            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo, true, false);
+            break;
         }
-       
+
         //const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
@@ -472,28 +513,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    for (let i = 0; i < 10; i++) {
 
-      let tileX = Phaser.Math.RND.between(0, this.map.width);
-      let tileY = Phaser.Math.RND.between(0, this.map.height);
-
-      if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
-        //let e = new Boss(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, clyon);
-        let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, enemyConfig);
-        this.enemies.add(e);
-
-
-        if (doorNum != x)
-          enemyCount = 0;
-
-        ++enemyCount;
-        doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
-
-        x = doorNum;
-      }
-      else i--;
-
-    }
 
     for (const objeto of DoorsentityLayer) {
       //Creamos una puerta con la posicion y el numero necesario de enemigos  y la rotacion que hacen falta matar para que se abra
@@ -531,43 +551,25 @@ export default class Game extends Phaser.Scene {
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
     let reflexLayer = this.map.createStaticLayer('Reflex', this.tileset);
     let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
-    let wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
-    let colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
-    let boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
     let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
-    let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
-    let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
 
 
     let entityLayer = this.map.getObjectLayer('Entities').objects
     let DoorsentityLayer = this.map.getObjectLayer('Doors').objects
     // profundidad
     enemiesLayer.setVisible(false);
-    groundLayer.setDepth(0);
-    detailsLayer.setDepth(0);
-    reflexLayer.setDepth(0);
-    wallsLayer.setDepth(1);
-    colsbottomLayer.setDepth(2);
-    boxbottomLayer.setDepth(2);
-    //enemigos          ->3
-    //jugador y balas   ->4
-    wallstopLayer.setDepth(5);
-    collidersLayer.setDepth(5);
-    colstopLayer.setDepth(6);
-    boxtopLayer.setDepth(6);
+    groundLayer.setDepth(config.depths.groundLayer);
+    detailsLayer.setDepth(config.depths.detailsLayer);
+    reflexLayer.setDepth(config.depths.reflexLayer);
+    wallsLayer.setDepth(config.depths.wallsLayer);
+    //enemigos          ->2
+    //jugador y balas   ->3
+    collidersLayer.setDepth(config.depths.collidersLayer);
 
     // colisiones tilemap
     collidersLayer.setCollisionByProperty({ collide: true });
-    colsbottomLayer.setCollisionByProperty({ collide: true });
-    boxbottomLayer.setCollisionByProperty({ collide: true });
-    colstopLayer.setCollisionByProperty({ collide: true });
-    boxtopLayer.setCollisionByProperty({ collide: true });
     // físicas
     this.matter.world.convertTilemapLayer(collidersLayer, { label: "pared" });
-    this.matter.world.convertTilemapLayer(colsbottomLayer);
-    this.matter.world.convertTilemapLayer(boxbottomLayer);
-    this.matter.world.convertTilemapLayer(colstopLayer);
-    this.matter.world.convertTilemapLayer(boxtopLayer);
 
     //CARGA DE OBJETOS NOSEQUE
     this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
@@ -600,8 +602,8 @@ export default class Game extends Phaser.Scene {
     this.healthBar.scaleY = config.ui.barScaleY;
     this.healthBackground.scaleY = config.ui.barScaleY + 6;
 
-    
-    this.cooldownBar = this.add.graphics();    
+
+    this.cooldownBar = this.add.graphics();
     this.cooldownBar.fillStyle(0x00ff00, 1);
     this.cooldownBar.fillRect(0, 0, 1, 1);
     this.cooldownBar.setScrollFactor(0);
@@ -609,7 +611,7 @@ export default class Game extends Phaser.Scene {
     this.cooldownBar.x = config.ui.cooldownPosX;
     this.cooldownBar.y = config.ui.cooldownPosY;
     this.cooldownBar.scaleX = 0;
-    this.cooldownBar.scaleY = 5; 
+    this.cooldownBar.scaleY = 5;
 
     this.weaponImg = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
     this.weaponImg.scale = config.ui.weaponScl;
@@ -641,7 +643,7 @@ export default class Game extends Phaser.Scene {
     this.dialogBox.setScrollFactor(0);
     this.dialogBox.setDepth(7);
 
-    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', { fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: "#ffffff"};
+    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', { fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: "#ffffff" };
     this.dialog.setScale(0.5)
     this.dialog.setScrollFactor(0);
     this.dialog.setDepth(7);
@@ -749,7 +751,8 @@ export default class Game extends Phaser.Scene {
         let seekNose = this.actualMusic.seek;
         this.actualMusic.destroy();
         this.actualMusic = this.sound.add(this.nextSong);
-        this.actualMusic.play()
+        this.actualMusic.play();
+        this.actualMusic.loop = true;
         this.actualMusic.setSeek(seekNose);
       }
       // }
@@ -779,7 +782,7 @@ export default class Game extends Phaser.Scene {
     this.activeImg.setTexture(config.ui.activeImgs[id]);
   }
 
-  setCooldownBar(time){
+  setCooldownBar(time) {
     this.cooldownBar.scaleX = time / 3;// * config.ui.barScaleX;
   }
 
@@ -789,11 +792,11 @@ export default class Game extends Phaser.Scene {
     this.passiveCount++;
   }*/
 
-  chooseTalker(){
+  chooseTalker() {
     let talkId;
-    do{
+    do {
       talkId = Math.floor(Math.random() * 4);
-    }while(talkId === this.talkedLast);
+    } while (talkId === this.talkedLast);
 
     this.dialogBox.setTexture(config.ui.dialogBoxes[talkId]);
     this.talkedLast = talkId;
@@ -805,7 +808,7 @@ export default class Game extends Phaser.Scene {
     this.dialogBox.setVisible(true);
 
     //Recoge el array con los diálogos 
-    switch(type){
+    switch (type) {
       case 'passive':
         this.strings = dialogues.passives[auxId];
         break;
@@ -821,6 +824,8 @@ export default class Game extends Phaser.Scene {
       case 'character':
         this.strings = dialogues.character[auxId];
         break;
+      case 'temporal':
+        this.strings = dialogues.character[auxId];
     }
 
     this.onDialog = true;
@@ -833,7 +838,7 @@ export default class Game extends Phaser.Scene {
   advanceDialog() {
     if (this.onDialog) {
       this.dialogState++;
-      if (this.dialogState < this.strings.length){
+      if (this.dialogState < this.strings.length) {
         this.chooseTalker();
         this.dialog.text = this.strings[this.dialogState];
       }
@@ -846,12 +851,20 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
-    
+
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
-    else 
+    else
       this.player.addPassive(this.pendingIdea);
-    
+
+    this.doorSystem.openDoor();
+    /*  //CREO QUE ESTO NO SIRVE PARA NADA PERO NO LO QUERIA BORRAR
+        if (this.pendingType === 'active')
+          this.player.changeActive(this.pendingIdea);
+        else if(this.pendingType === 'temporal')
+          this.player.addTempPassive(this.pendingIdea);
+        else
+          this.player.addPassive(this.pendingIdea);  */
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
@@ -861,6 +874,7 @@ export default class Game extends Phaser.Scene {
     this.actualMusic.destroy();
     this.actualMusic = this.sound.add(this.nextSong);
     this.actualMusic.play()
+    this.actualMusic.loop = true;
     this.actualMusic.setSeek(seekNose);
 
   }
@@ -884,7 +898,6 @@ export default class Game extends Phaser.Scene {
 
     this.saveFile();
   }
-
 
   changePlayerSprite(id){
 
@@ -945,6 +958,7 @@ export default class Game extends Phaser.Scene {
       })
     
     }
+
 
 
 }

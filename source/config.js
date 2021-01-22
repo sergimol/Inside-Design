@@ -1,3 +1,4 @@
+
 const Config = {
     //Configuración base de los humanoides
     humanoid: {
@@ -9,15 +10,22 @@ const Config = {
     gdd:{
         numeroArmas:13,
         numeroEsteticas:0,
-        numeroPasivas:0,
-        nueroActivas:0,
-        numeroTemporales:0
+        numeroPasivas:10,
+        nueroActivas:3,
+        numeroTemporales:3
     },
 
     //Configuración específica del jugador
     player: {
+        
+        spriteScaleX:1,
+        spriteScaleY:1,
+        scaleX:11,
+        scaleY:16,
         depth: 4,
         baseAmmo: 100,
+        baseHealth:10,
+        baseWeaponID:0,
         dashTime: 50,
         mass: 800,
         dashTint: 0x00ff1e,
@@ -55,14 +63,15 @@ const Config = {
         hummus: 9,*/
         numberAspectos: 10,
 
-        spriteID: 0
+        spriteID: 0,
+        frictionAir: 0.25,
     },
     
     //Configuración base de las armas
     weapon:{
         shakeDur: 100,
         shakeInt: 0.0005,
-        shotVolume: 0.1
+        shotVolume: 0.1,
     },
     
     //Configuración de la UI
@@ -122,8 +131,9 @@ const Config = {
         horror: 6,
         piano: 7,
         berridos: 8, 
+        intro: 9, 
         songReference: ['mainChiptuneSong', 'westernSong', '30sSong', 'neonRiderSong',
-        'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong']
+        'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong','introSong']
     },
 
     items: {
@@ -145,7 +155,33 @@ const Config = {
         pirata: 3,
     }
 
-    
+    room:{
+        numRoomsIni: 1,     //Sala inicial
+        numRoomsTotal: 14,  //Salas totales
+        bossRoom:2,         //Sala del boss (de Tiled)
+        bossRoomLevel: 9,   //Sala en la que debería de aparecer el boss
+    },
+
+    depths:{
+        groundLayer:0,
+        detailsLayer:0,
+        reflexLayer:0,
+        wallsLayer:1,
+        enemy:2,
+        player:3,
+        collidersLayer:4,
+        bullets:4,
+        buttonBackground:5,
+        button:6,
+        
+    },
+    cameraSettings:{
+        zoom : 3,
+        //shake:
+    },
+    button:{
+        mainMenu: 0.25,
+    }
 }
 
 export default Config

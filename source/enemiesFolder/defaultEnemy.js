@@ -1,12 +1,15 @@
+import defaultWeapon from "./../enemyWeaponFolder/defaultEnemyWeapon.js";
+
 const enemy = {
 
     lvl: 1,
 
     sprite: "player",
 
-    health: 3,
+    weapon: defaultWeapon,
+    health: 10,
     mass: 800,
-    speed: 50,
+    speed: 100,
     depth: 3,
     idleMovTime: 1000,
     aggroMovTime: 500,
@@ -17,6 +20,12 @@ const enemy = {
     aggroVelFactor: 0.4,
     angleAcercarse:Math.PI / 4,
 
+    humanoide:{
+        spriteScaleX:1,
+        spriteScaleY:1,
+        scaleX:11,
+        scaleY:16,
+    },
     rutina: [{
         time: 10000,
         idle:false,
@@ -24,7 +33,7 @@ const enemy = {
         distanciaAcercarse:100,
         alejarse:true,
         distanciaAlejarse:95,
-        strafe: true,
+        strafe: false,
         starfeTime: 1000
     }/**
     {

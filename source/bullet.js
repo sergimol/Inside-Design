@@ -1,5 +1,5 @@
 import Item from "./item.js"
-
+import configG from "./config.js"
 
 export default class Bullet extends Phaser.GameObjects.Container{
     constructor(scene, x, y, config, esEnemigo){
@@ -33,7 +33,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.config = config;
         this.esEnemigo = esEnemigo;
         
-        this.depth = 4; //lo voy a dejar asi porque de momento importa bastante poco
+        this.depth = configG.depths.bullets; //lo voy a dejar asi porque de momento importa bastante poco
         this.aspecto.setScale(config.scale);
         this.setSize(config.sizeX, config.sizeY);
 
@@ -66,8 +66,8 @@ export default class Bullet extends Phaser.GameObjects.Container{
         this.scene.add.existing(this);
         this.body.label = config.label;
         
-        
-        this.aspecto.play(config.key);
+        if(config.key !== "shield")
+            this.aspecto.play(config.key);
         //quitarles la rotacion xd
         this.scene.matter.body.setInertia(this.body, config.inertia);
         this.setFrictionAir(config.airFriction);
