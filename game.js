@@ -751,7 +751,6 @@ export default class Game extends Phaser.Scene {
 
   //Métodos del HUD
   setHealth(playerHealth) {
-    playerHealth = Math.ceil(playerHealth);
     this.healthBar.scaleX = playerHealth * config.ui.barScaleX;
     this.healthCounter.text = playerHealth;
   }

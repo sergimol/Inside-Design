@@ -36,7 +36,7 @@ customForm: {
     angularVelocityMultiply: 2, //multiplicara un valor aleatorio de entre 0 y 1 
     angularVelocitySuma: -1, //samara la valor aleatorio multiplicado
     angularVelocityResultadoMultiply: 1, //multiplicara el resultado de todo lo anterior
-    lifeTime: 40000, //milisegundos
+    lifeTime: 1000, //milisegundos
     pushback: 0, //fuerza con la que empuja la bala al chocar con un objetivo
 
     balaHija: hijaConfig, //Todo a partir de aqui pertenece a la hija

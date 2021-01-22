@@ -305,7 +305,6 @@ export default class Player extends Humanoid {
         else if(id === 13)
           id = 10;
       } while (this.activePassives[id])
-      id = 10;
       
       if(id === 7){
         this.wId = Math.floor(Math.random() * config.gdd.numeroArmas);
@@ -322,8 +321,10 @@ export default class Player extends Humanoid {
         this.scene.startDialog('character', id, this.sId);
       }
       else if(id === 10){
-        this.mId = Math.floor(Math.random() * config.music.musicNumber);
-        this.scene.startDialog('music', id, mId);
+        do {
+          this.mId = Math.floor(Math.random() * config.music.musicNumber);
+        } while (this.mId < 5)
+        this.scene.startDialog('music', id, this.mId);
       }
       else{
         this.scene.startDialog('passive', id, id);    

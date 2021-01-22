@@ -123,19 +123,19 @@ const Config = {
     },
 
     music: {
-        musicNumber: 10,
+        musicNumber: 9,
         mainChip: 0,
         west: 1,
-        old30s: 2,
-        neon: 3,
-        epic: 4,
-        rock: 5,
-        horror: 6,
+        rock: 2,
+        horror: 3,
+        neon: 4,
+        old30s: 5,
+        epic: 6,
         piano: 7,
         berridos: 8, 
         intro: 9, 
-        songReference: ['mainChiptuneSong', 'westernSong', '30sSong', 'neonRiderSong',
-        'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong','introSong']
+        songReference: ['mainChiptuneSong', 'westernSong', 'rockSong', 'horrorSong',
+        'neonRiderSong', '30sSong', 'epicSong', 'pianoSong', 'berridosSong','introSong']
     },
 
     items: {
