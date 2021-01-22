@@ -1,6 +1,6 @@
 const Dialogues = {
     passives: [
-        ["tanqueo", "tanqueo 2"],
+        ["", ""],
         ["facil", "facil 2"],
         ["rambo", "rambo 2", "rambo 3"],
         ["buenaonda"],
