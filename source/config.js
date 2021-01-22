@@ -186,8 +186,8 @@ const Config = {
         maNiggaDed:0.15,
     },
     musicVolume:{
-        intro: 0,   //2
-        general: 0, //1 
+        intro: 2,   //2
+        general: 1, //1 
     }
 }
 

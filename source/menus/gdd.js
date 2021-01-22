@@ -36,6 +36,13 @@ export default class Game extends Phaser.Scene {
         this.load.image('desbloquear','sprites/gdd/desbloqueable.jpg')
         this.load.image('sombra','sprites/gdd/sombra.png')
 
+        //PASIVAS
+        
+        //PASIVAS TEMPORALES
+        //ARMAS
+        //AMBIENTES
+        //PERSONAJES
+        //MUSICA
         this.load.image('armas0', 'sprites/gdd/armas1.png');
         this.load.image('armas1', 'sprites/gdd/armas2.png');
         this.load.image('armas2', 'sprites/gdd/armas3.png');
@@ -93,7 +100,7 @@ export default class Game extends Phaser.Scene {
     exitGDD() {
         console.log("exitGDD")
         this.scene.stop();
-        this.scene.start('sceneManager');
+        this.scene.resume('sceneManager');
     }
 
     nextGDD(nombreArray) {
