@@ -29,6 +29,8 @@ export default class Button extends Phaser.GameObjects.Image {
 
 
         this.escenaOrigen = this.scene.scene.get('main');
+
+
     }
     //Al pasar por encima se ilumina el boton
     enterButtonHoverState() {
@@ -53,6 +55,8 @@ export default class Button extends Phaser.GameObjects.Image {
                 });
         }
         else if (this.label === 'quit') {
+            let game = this.scene.scene.get('main');
+            game.actualMusic.stop();
             this.scene.scene.stop('main');
             this.scene.scene.start('sceneManager');
         }
@@ -60,8 +64,8 @@ export default class Button extends Phaser.GameObjects.Image {
             this.scene.resumeGame();
         }
         else if (this.label === 'gdd') {
-            this.scene.scene.stop();
-            this.scene.scene.start('gdd');
+            this.scene.scene.pause();
+            this.scene.scene.launch('gdd');
         }
         else if (this.label === 'options') {
             console.log("Casi crack")
@@ -75,7 +79,7 @@ export default class Button extends Phaser.GameObjects.Image {
         }
         else if (this.label === 'exitGDD') {
             this.scene.scene.stop('gdd');
-            this.scene.scene.start('sceneManager');
+            this.scene.scene.resume('sceneManager');
         }
 
         else if (this.label === 'activasGDD') {
@@ -99,7 +103,9 @@ export default class Button extends Phaser.GameObjects.Image {
         else if (this.label === 'musicaGDD') {
             this.scene.selectArrayGDD(this.scene.gddMusica);
         }
-
-
+        else if (this.label === 'localStorageReset') {
+            localStorage.clear();
+            console.log("a tomar por culo")
+        }
     }
 }
