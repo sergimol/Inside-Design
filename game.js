@@ -63,6 +63,8 @@ export default class Game extends Phaser.Scene {
     //Arma
     this.load.spritesheet('bullet', 'sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('enemybullet', 'sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('enemybulletAmmo', 'sprites/enemyBulletAmmo.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('enemybulletSwing', 'sprites/enemyBulletSwing.png', { frameWidth: 64, frameHeight: 64 });
 
     //Puntero
     this.load.image('crosshair', 'sprites/crosshair.png');

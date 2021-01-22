@@ -3,7 +3,7 @@ import hijaConfig from "./../bulletsFolder/defaultEnemyBullet.js";
 
 const BulletConfig = {
 
-    sprite: "enemybullet", 
+    sprite: "enemybulletAmmo", 
     scale: 0.7,
     sizeX: 8,
     sizeY: 8,
@@ -57,9 +57,9 @@ const BulletConfig = {
 
     //para la animacion
     
-    key: "defaultEnemyBullet_anims",
+    key: "defaultEnemyBulletAmmo_anims",
     frameRate: 15,
-    frames: {start: 0 , end:2 },//{start: 1 , end:1 }), //15
+    frames: {start: 0 , end:3 },//{start: 1 , end:1 }), //15
     repeat: -1,
 
     
