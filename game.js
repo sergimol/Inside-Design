@@ -269,7 +269,7 @@ export default class Game extends Phaser.Scene {
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(1, 7);
-    let nameRoom = 'sala' + numRoom.toString();
+    let nameRoom = 'sala2'; //+ numRoom.toString()
     this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;
@@ -542,27 +542,14 @@ export default class Game extends Phaser.Scene {
     detailsLayer.setDepth(0);
     reflexLayer.setDepth(0);
     wallsLayer.setDepth(1);
-    colsbottomLayer.setDepth(2);
-    boxbottomLayer.setDepth(2);
     //enemigos          ->3
     //jugador y balas   ->4
-    wallstopLayer.setDepth(5);
     collidersLayer.setDepth(5);
-    colstopLayer.setDepth(6);
-    boxtopLayer.setDepth(6);
 
     // colisiones tilemap
     collidersLayer.setCollisionByProperty({ collide: true });
-    colsbottomLayer.setCollisionByProperty({ collide: true });
-    boxbottomLayer.setCollisionByProperty({ collide: true });
-    colstopLayer.setCollisionByProperty({ collide: true });
-    boxtopLayer.setCollisionByProperty({ collide: true });
     // físicas
     this.matter.world.convertTilemapLayer(collidersLayer, { label: "pared" });
-    this.matter.world.convertTilemapLayer(colsbottomLayer);
-    this.matter.world.convertTilemapLayer(boxbottomLayer);
-    this.matter.world.convertTilemapLayer(colstopLayer);
-    this.matter.world.convertTilemapLayer(boxtopLayer);
 
     //CARGA DE OBJETOS NOSEQUE
     this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
