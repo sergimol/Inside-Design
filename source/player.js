@@ -295,6 +295,13 @@ export default class Player extends Humanoid {
       //Número aleatorio
       do {
         id = Math.floor(Math.random() * config.player.passiveCount);
+        //Ajustes para los porcentajes
+        if(id === 8 || id === 9) //Cambio de arma
+          id = 7;
+        if(id === 10 || id === 11)//Cambio de tile
+          id = 8;
+        else if(id === 12)//Cambio de sprite
+          id = 9;
       } while (this.activePassives[id])
       
       if(id === 7){

@@ -1,11 +1,13 @@
 import Button from "../button.js";
 import config from "../config.js"
 
-const armasList = ['armas0', 'armas1', 'armas2'];
-const esteticasList = ['pasivas0', 'pasivas1'];
 const activasList = ['pasivas0', 'pasivas1'];
 const pasivasList = ['pasivas0', 'pasivas1'];
 const temporalesList = ['pasivas0', 'pasivas1'];
+const armasList = ['armas0', 'armas1', 'armas2'];
+const esteticasList = ['pasivas0', 'pasivas1'];
+const characterList = ['pasivas0', 'pasivas1'];
+const musicaList = ['pasivas0', 'pasivas1'];
 
 
 export default class Game extends Phaser.Scene {
@@ -14,17 +16,21 @@ export default class Game extends Phaser.Scene {
     }
     preload() {
         this.load.image('background', 'sprites/gdd/gddBackground.png');
-        this.load.image('gotele', 'sprites/gdd/gddgotele.png');
 
         this.load.image('back', 'sprites/gdd/gddback.png');
         this.load.image('next', 'sprites/gdd/gddnext.png');
         this.load.image('exit', 'sprites/gdd/gddexit.png');
 
-        this.load.image('armas', 'sprites/gdd/gddarmas.png');
-        this.load.image('esteticas', 'sprites/gdd/gddesteticas.png');
-        this.load.image('pasivas', 'sprites/gdd/gddpasivas.png');
-        this.load.image('activas', 'sprites/gdd/gddactivas.png');
-        this.load.image('temporales', 'sprites/gdd/gddtemporales.png');
+
+        this.load.image('activas', 'sprites/gdd/activasButton.png');
+        this.load.image('pasivas', 'sprites/gdd/pasivasButton.png');
+        this.load.image('temporales', 'sprites/gdd/pasivasTempButton.png');
+        this.load.image('armas', 'sprites/gdd/armasButton.png');
+        this.load.image('esteticas', 'sprites/gdd/ambientesButton.png');
+        this.load.image('character', 'sprites/gdd/charactersButton.png');
+        this.load.image('musica', 'sprites/gdd/musicaButton.png');
+
+
 
         //IMAGENES IDEAS
         this.load.image('armas0', 'sprites/gdd/armas1.png');
@@ -44,34 +50,37 @@ export default class Game extends Phaser.Scene {
         this.input.keyboard.on('keydown_ESC', this.exitGDD, this);
 
 
-        this.add.image(700, 400, 'gotele');
         this.add.image(700, 400, 'background');
 
 
-        this.backButton = new Button(this, 220, 220, 'back', 'back', 'backGDD')
-        this.nextButton = new Button(this, 1150, 220, 'next', 'next', 'nextGDD')
-        this.exitButton = new Button(this, 220, 550, 'exit', 'exit', 'exitGDD')
+        this.backButton = new Button(this, 200, 100, 'back', 'back', 'backGDD',0.8)
+        this.nextButton = new Button(this, 1200, 100, 'next', 'next', 'nextGDD',0.8)
+        this.exitButton = new Button(this, 200, 700, 'exit', 'exit', 'exitGDD',0.8)
 
-        this.armasButton = new Button(this, 1150, 400, 'armas', 'armas', 'armasGDD')
-        this.esteticasButton = new Button(this, 1150, 470, 'esteticas', 'esteticas', 'esteticasGDD')
-        this.pasivasButton = new Button(this, 1150, 540, 'pasivas', 'pasivas', 'pasivasGDD')
-        this.activasButton = new Button(this, 1150, 610, 'activas', 'activas', 'activasGDD')
-        this.temporalesButton = new Button(this, 1150, 680, 'temporales', 'temporales', 'temporalesGDD')
+
+        this.activasButton = new Button(this, 1200, 230, 'activas', 'activas', 'activasGDD',0.8)
+        this.pasivasButton = new Button(this, 1200, 330, 'pasivas', 'pasivas', 'pasivasGDD',0.8)
+        this.temporalesButton = new Button(this, 1200, 430, 'temporales', 'temporales', 'temporalesGDD',0.8)
+        this.armasButton = new Button(this, 1200, 530, 'armas', 'armas', 'armasGDD',0.8)
+        this.esteticasButton = new Button(this, 1200, 630, 'esteticas', 'esteticas', 'esteticasGDD',0.8)
+        this.characterButton = new Button(this, 1200, 730, 'character', 'character', 'characterGDD',0.8)
+        this.musicaButton = new Button(this, 1200, 830, 'musica', 'musica', 'musicaGDD',0.8)
 
         this.contador = 0;
 
+
+        this.gddActivas = [];
+        this.gddPasivas = [];
+        this.gddTemporales = [];
         this.gddArmas = [];
         this.gddEsteticas = [];
-        this.gddPasivas = [];
-        this.gddActivas = [];
-        this.gddTemporales = [];
+        this.gddCharacter = [];
+        this.gddMusica = [];
+
         this.loadFile();
 
 
         this.activeArray = [];
-
-
-
     }
 
     exitGDD() {
@@ -101,21 +110,30 @@ export default class Game extends Phaser.Scene {
     showImage() {
         let image;
         switch (this.activeArray) {
-            case this.gddArmas:
-                this.add.image(700, 400, armasList[this.contador]);
-                break;
-            case this.gddEsteticas:
-
+            case this.gddActivas:
+                console.log("Activas")
                 break;
             case this.gddPasivas:
-                this.add.image(700, 400, pasivasList[this.contador]);
+                //this.add.image(700, 400, armasList[this.contador]);
+                console.log("Pasivas")
                 break;
-            case this.gddActivas:
 
-                break;
             case this.gddTemporales:
-
+                console.log("PasivasTemp")
                 break;
+            case this.gddArmas:
+                console.log("Armas")
+                break;
+            case this.gddEsteticas:
+                console.log("Esteticas")
+                break;
+            case this.gddCharacter:
+                console.log("Character")
+                break;
+            case this.gddMusica:
+                console.log("Musica")
+                break;
+
         }
     }
 
@@ -153,27 +171,32 @@ export default class Game extends Phaser.Scene {
             //generar archivo del gdd
             this.gddActivas = [];
             let numIdeas = config.gdd.nueroActivas;
+
             for (let i = 0; i < numIdeas; i++)
                 this.gddActivas.push(false);
 
             this.gddPasivas = [];
             numIdeas = config.gdd.numeroPasivas;
+
             for (let i = 0; i < numIdeas; i++)
                 this.gddPasivas.push(false);
 
             this.gddArmas = [];
             numIdeas = config.gdd.numeroArmas;
+
             for (let i = 0; i < numIdeas; i++)
                 this.gddArmas.push(false);
 
             this.gddEsteticas = [];
             numIdeas = config.gdd.numeroEsteticas;
+
             for (let i = 0; i < numIdeas; i++)
                 this.gddEsteticas.push(false);
 
 
             this.gddTemporales = [];
             numIdeas = config.gdd.numeroTemporales;
+            
             for (let i = 0; i < numIdeas; i++)
                 this.gddTemporales.push(false);
         }
