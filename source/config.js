@@ -16,6 +16,11 @@ const Config = {
 
     //Configuración específica del jugador
     player: {
+
+        spriteScaleX:1,
+        spriteScaleY:1,
+        scaleX:11,
+        scaleY:16,
         depth: 4,
         baseAmmo: 100,
         dashTime: 50,

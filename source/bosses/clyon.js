@@ -23,6 +23,15 @@ const boss = {
     aggroVelFactor: 0.8,
     angleAcercarse: 0, 
     weapon: weapon2,
+
+
+    humanoide:{
+        spriteScaleX:2,
+        spriteScaleY:2,
+        scaleX:11  *2,
+        scaleY:16 * 2,
+    },
+
     rutina: [{
         time: 8000,
         idle: false,
