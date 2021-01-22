@@ -288,6 +288,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                             let velocityVector = this.scene.matter.vector.create(Math.cos(anguloAux)* bodyB.speed *2, Math.sin(anguloAux)* bodyB.speed * 2);
                             
                             this.scene.matter.body.setVelocity(bodyB, velocityVector); //darle vector de velocidad
+                            bodyB.gameObject.damage = bodyB.gameObject.damage * 3;
 
                             if (bodyB.isSensor === true){
                                 bodyB.collisionFilter = {
@@ -328,6 +329,7 @@ export default class Bullet extends Phaser.GameObjects.Container{
                             this.scene.matter.body.setAngle(bodyA, anguloAux);
                             this.scene.matter.body.setVelocity(bodyA, velocityVector);
 
+                            bodyA.gameObject.damage = bodyA.gameObject.damage * 3;
                             if (bodyA.isSensor === true){
                                 bodyA.collisionFilter = {
                                     'group' : -5, 
