@@ -39,6 +39,8 @@ export default class Player extends Humanoid {
     this.velFactor = config.player.baseVelFactor;
 
     this.weaponId = 0;
+    this.tempTimer = -1;
+    this.currentTemp = -1;
 
 
     //this.add(sprite);
@@ -397,8 +399,32 @@ export default class Player extends Humanoid {
 
   }
 
-  removePassive(id) {
-    this.activePassives[id] = false;
+  addTempPassive(id){
+    switch(id){
+      case 0:
+        console.log('run pacifica');
+        this.lastWeaponConfig = this.weapon.config;
+        this.weapon = new Weapon(this.scene, 0, 5) ////FALTA CONFIG)
+        break;
+      case 1:
+        console.log('mario kart');
+        break;
+      case 2:
+        console.log('borracho');
+        break;
+    }
+  }
+
+  removeTempPassive() {
+    switch(this.currentTemp){
+      case 0:
+        this.weapon = new Weapon(this.scene, 0, 5, this.lastWeaponConfig)
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+    }
   }
 
   changeWeapon(wId) {
