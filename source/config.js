@@ -9,9 +9,9 @@ const Config = {
     gdd:{
         numeroArmas:13,
         numeroEsteticas:0,
-        numeroPasivas:0,
-        nueroActivas:0,
-        numeroTemporales:0
+        numeroPasivas:10,
+        nueroActivas:3,
+        numeroTemporales:3
     },
 
     //Configuración específica del jugador

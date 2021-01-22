@@ -805,6 +805,8 @@ export default class Game extends Phaser.Scene {
       case 'character':
         this.strings = dialogues.character[auxId];
         break;
+      case 'temporal' :
+        this.strings = dialogues.character[auxId];
     }
 
     this.onDialog = true;
@@ -834,9 +836,10 @@ export default class Game extends Phaser.Scene {
     
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
-    else 
-      this.player.addPassive(this.pendingIdea);
-    
+    else if(this.pendingType === 'temporal')
+      this.player.addTempPassive(this.pendingIdea);
+    else
+      this.player.addPassive(this.pendingIdea);    
   }
 
   //CAMBIAR MUSICA POR EL PLAYER

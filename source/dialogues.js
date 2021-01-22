@@ -64,6 +64,12 @@ const Dialogues = {
         ["sprite"],
         ["sprite"],
         ["sprite"]
+    ],
+
+    temps: [
+        ["paciffist"],
+        ["kart"],
+        ["drunk"]
     ]
 
 }
