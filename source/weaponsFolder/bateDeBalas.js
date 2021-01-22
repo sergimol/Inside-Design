@@ -6,7 +6,7 @@ const WeaponConfig = {
     spriteWeapon: "bate",
     s: "mono",
     m: "semi", 
-    cadence: 800,
+    cadence: 1500,
     dispersion: 10, 
     pellets: 1, 
     bulletForce: 0.1, 

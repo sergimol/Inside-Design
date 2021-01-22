@@ -95,6 +95,7 @@ export default class Game extends Phaser.Scene {
     this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
     
     this.load.spritesheet('bate_attack', 'sprites/swing.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('katana_attack', 'sprites/tajo.png', { frameWidth: 64, frameHeight: 64 });
     //Tiles de estéticas
     this.load.image('tileBase', './sprites/tiles/tileJavi.png');
     this.load.image('tileSetBaseEx', './sprites/tiles/tileSetBaseEx.png');

@@ -3,7 +3,7 @@ import hijaConfig from "./defaultEnemyBullet.js";
 
 const BulletConfig = {
 
-    sprite: "bate_attack", 
+    sprite: "katana_attack", 
     scale: 1,
     //sizeX: 83,
     //sizeY: 83,
@@ -16,13 +16,13 @@ const BulletConfig = {
     fuerzaRebote: 0.8, 
     velocidadMinima: -1,
     damage: 10, 
-    devulveBalas: true,
-    destruyeBalas: false, 
+    devulveBalas: false,
+    destruyeBalas: true, 
     isSensor: true,
     pierce: Infinity,
     destroyOnWall: false, //si true, ignorara rebotes y si es sensor cuando choque con una pared se destruira
     balaHija: null,
-    lifeTime: 400, //milisegundos
+    lifeTime: 150, //milisegundos
 
     form:"circle",
     customForm: {
@@ -41,10 +41,10 @@ const BulletConfig = {
 
     //para la animacion
     
-        key: "bate_attack_anim",
-        frameRate: 1,
-        frames: {start: 0 , end:0 },//{start: 1 , end:1 }), //15
-        repeat: -1,
+        key: "katana_attack_anim",
+        frameRate: 25,
+        frames: {start: 0 , end:3 },//{start: 1 , end:1 }), //15
+        repeat: 0,
     
 
     inertia: Infinity,
