@@ -396,7 +396,7 @@ export default class Player extends Humanoid {
         this.changeTile(this.tId, false);
         break;
       case (9):
-        console.log("Cambio solo apariecia");
+        console.log("Cambio de apariecia");
         this.changeSpriteIdea(false, false, " ", this.sId);
         break;
     }
@@ -520,7 +520,7 @@ export default class Player extends Humanoid {
     this.musicID = mId;
     switch (mId) {
       case (config.music.mainChip):
-        console.log('Outlaws from the West');
+        console.log('mainChip');
         this.scene.changeMusic(config.music.mainChip);
         break;
 
@@ -530,12 +530,12 @@ export default class Player extends Humanoid {
         break;
 
       case (config.music.neon):
-        console.log('Ray Tracing breakdance skill');
+        console.log('Inside Neon');
         this.scene.changeMusic(config.music.neon);
         break;
 
       case (config.music.old30s):
-        console.log('La serie mas aburrida de la historia');
+        console.log('Old30s');
         this.scene.changeMusic(config.music.old30s);
         break;
 
@@ -550,17 +550,17 @@ export default class Player extends Humanoid {
         break;
 
       case (config.music.berridos):
-        console.log('El mejor juego de la historia');
+        console.log('Animales');
         this.scene.changeMusic(config.music.berridos);
         break;
 
       case (config.music.rock):
-        console.log('The Only Thing They Fear is You');
+        console.log('BackToRock');
         this.scene.changeMusic(config.music.rock);
         break;
 
       case (config.music.piano):
-        console.log('P.T.');
+        console.log('Piano man');
         this.scene.changeMusic(config.music.piano);
         break;
     }
