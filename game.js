@@ -269,7 +269,7 @@ export default class Game extends Phaser.Scene {
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(1, 7);
-    let nameRoom = 'sala2'; //
+    let nameRoom = 'sala2'; //+ numRoom.toString()
     this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;
@@ -519,7 +519,12 @@ export default class Game extends Phaser.Scene {
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
     let reflexLayer = this.map.createStaticLayer('Reflex', this.tileset);
     let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
+    let wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
+    let colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
+    let boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
     let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
+    let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
+    let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
 
 
     let entityLayer = this.map.getObjectLayer('Entities').objects
