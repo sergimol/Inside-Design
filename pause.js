@@ -4,7 +4,7 @@ export default class Game extends Phaser.Scene {
         super({ key: "pause" });
     }
     preload() {
-        this.load.image('menuBackground', 'sprites/menuBackground.png');
+        this.load.image('menuBackground', 'sprites/buttons/menuBackground.png');
 
         this.load.image('quitButton', 'sprites/buttons/quitButton.png');
         this.load.image('quitButtonlight', 'sprites/buttons/quitButtonlight.png');
@@ -31,5 +31,7 @@ export default class Game extends Phaser.Scene {
         this.scene.stop();
         this.scene.resume('UIScene');
         this.scene.resume('main');
+    }
+    stopMusic(){
     }
 }

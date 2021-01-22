@@ -1,3 +1,5 @@
+import config from "./config.js"
+
 export default class Button extends Phaser.GameObjects.Image {
     constructor(scene, x, y, sprite, sprite2, label) {
         super(scene, x, y, sprite);
@@ -9,7 +11,7 @@ export default class Button extends Phaser.GameObjects.Image {
                 this.enterButtonHoverState();
                 this.enterActiveState(label);
             });
-        this.image.depth = 5;
+        this.image.depth = config.depths.button;
         this.sprite = sprite;
         this.sprite2 = sprite2;
         this.label = label;
@@ -29,12 +31,16 @@ export default class Button extends Phaser.GameObjects.Image {
         if (this.label === 'play') {
             //if (this.escenaOrigen != null)
             //    this.escenaOrigen.scene.actualMusic.stop();
+            this.scene.actualMusic.stop();
             if (this.scene.health != undefined)
                 this.scene.scene.start('main', { health: this.scene.health, ammo: this.scene.ammo, weaponID: this.scene.weaponID, level: this.scene.level });
             else
-                this.scene.scene.start('main', { health: 10, ammo: 100, weaponID: 5, level: 0 });
+                this.scene.scene.start('main', { health: config.player.baseHealth, ammo: config.player.baseAmmo, weaponID: 5, level: config.player.baseWeaponID });
         }
         else if (this.label === 'quit') {
+            //this.scene.scene.stop('pause');
+            //console.log(this.scene)
+            //this.scene.actualMusic.stop();
             this.scene.scene.stop('main');
             this.scene.scene.start('sceneManager');
         }

@@ -16,13 +16,15 @@ const Config = {
 
     //Configuración específica del jugador
     player: {
-
+        
         spriteScaleX:1,
         spriteScaleY:1,
         scaleX:11,
         scaleY:16,
         depth: 4,
         baseAmmo: 100,
+        baseHealth:10,
+        baseWeaponID:0,
         dashTime: 50,
         mass: 800,
         dashTint: 0x00ff1e,
@@ -127,16 +129,27 @@ const Config = {
         horror: 6,
         piano: 7,
         berridos: 8, 
+        intro: 9, 
         songReference: ['mainChiptuneSong', 'westernSong', '30sSong', 'neonRiderSong',
-        'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong']
+        'epicSong', 'rockSong', 'horrorSong', 'pianoSong', 'berridosSong','introSong']
     },
 
     items: {
         healthDrop: 3,
         ammoDrop: 5
-    }
+    },
 
-    
+    room:{
+        numRoomsIni: 1,     //Sala inicial
+        numRoomsTotal: 14,  //Salas totales
+        bossRoom:2,         //Sala del boss (de Tiled)
+        bossRoomLevel: 1,   //Sala en la que debería de aparecer el boss
+    },
+
+    depths:{
+        button:5,
+        
+    }
 }
 
 export default Config

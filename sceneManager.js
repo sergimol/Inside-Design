@@ -2,6 +2,7 @@ import Doors from "./source/doors.js";
 import Enemy from "./source/enemy.js";
 import configEnemy from "./source/enemiesFolder/defaultEnemy.js";
 import Button from "./source/button.js";
+import config from "./source/config.js"
 
 export default class Game extends Phaser.Scene {
     constructor() {
@@ -64,6 +65,8 @@ export default class Game extends Phaser.Scene {
         this.load.image('playButtonlight', './sprites/buttons/playButtonlight.png');
         this.load.image('gddButtonlight', './sprites/buttons/gddButtonlight.png');
         this.load.image('optionsButtonlight', './sprites/buttons/optionsButtonlight.png');
+
+        this.load.audio('introSong', './audio/introSong.mp3');
     }
 
     create() {
@@ -157,6 +160,19 @@ export default class Game extends Phaser.Scene {
         this.endZone;
         this.finish = false;
         this.loadObjects(entityLayer, DoorsentityLayer);
+
+
+
+
+        this.musicID = config.music.intro;
+        //this.player.musicID = this.musicID;
+        //this.playerSpriteID = config.player.def;
+        //this.player.changeSpriteIdea(false, true, this.playerSpriteID, -1);
+        if (this.actualMusic != null)
+          this.actualMusic.stop();
+        this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 5 });
+        this.actualMusic.play();
+        this.actualMusic.loop = true;
     }
 
     shutdown() {

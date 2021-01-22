@@ -17,14 +17,14 @@ export default class Game extends Phaser.Scene {
     super({ key: "main" });
   }
   init(data) {
-      this.health = data.health,
+    this.health = data.health,
       this.ammo = data.ammo,
       this.weaponID = data.weaponID,
       this.level = data.level;
-      this.tileID = data.tileID;
-      this.musicID = data.musicID,
+    this.tileID = data.tileID;
+    this.musicID = data.musicID,
       this.lastSeekMusic = data.lastSeekMusic
-      this.playerSpriteID = data.playerSpriteID;
+    this.playerSpriteID = data.playerSpriteID;
     //this.playerAspectID = data.playerAspectID
   }
 
@@ -114,8 +114,13 @@ export default class Game extends Phaser.Scene {
     this.load.tilemapTiledJSON('sala5', './sprites/tiles/sala5.json');
     this.load.tilemapTiledJSON('sala6', './sprites/tiles/sala6.json');
     this.load.tilemapTiledJSON('sala7', './sprites/tiles/sala7.json');
-
+    this.load.tilemapTiledJSON('sala8', './sprites/tiles/sala8.json');
+    this.load.tilemapTiledJSON('sala9', './sprites/tiles/sala9.json');
+    this.load.tilemapTiledJSON('sala10', './sprites/tiles/sala10.json');
     this.load.tilemapTiledJSON('sala11', './sprites/tiles/sala11.json');
+    this.load.tilemapTiledJSON('sala12', './sprites/tiles/sala12.json');
+    this.load.tilemapTiledJSON('sala13', './sprites/tiles/sala13.json');
+    this.load.tilemapTiledJSON('sala14', './sprites/tiles/sala14.json');
 
     //nuevo
     this.load.audio('mainChiptuneSong', './audio/mainChiptune.mp3');
@@ -127,6 +132,7 @@ export default class Game extends Phaser.Scene {
     this.load.audio('horrorSong', './audio/horror.mp3');
     this.load.audio('pianoSong', './audio/piano.mp3');
     this.load.audio('berridosSong', './audio/berridos.mp3');
+
 
     this.load.audio('gunShootSound', './audio/gunShoot.wav');
     this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
@@ -244,9 +250,8 @@ export default class Game extends Phaser.Scene {
       frameRate: 60,
       repeat: 0
     })
-    
 
-    console.log("level: " + this.level)
+
     //variables que utilizara ela rchivo de guardado
     //estadisticas y gdd
     this.disparosRealizados = 0;
@@ -270,9 +275,24 @@ export default class Game extends Phaser.Scene {
 
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
-    let numRoom = Phaser.Math.RND.between(1, 7);
-    let nameRoom = 'sala11'; //numRoom.toString()
-    this.map = this.make.tilemap({ key: nameRoom});
+    let numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
+
+    //Si no toca la sala del boss no lo cargues, si toca, cargala
+    if (this.level != config.room.bossRoomLevel) {
+      while (numRoom === 2) {
+        console.log("No puedes cargar la room del boss")
+        let numRoom = Phaser.Math.RND.between(config.room.numRoomsIni, config.room.numRoomsTotal);
+      }
+    } else if (this.level === config.room.bossRoomLevel)
+    numRoom = 2;
+
+    let nameRoom = 'sala' + numRoom.toString(); //
+
+    this.map = this.make.tilemap({ key: nameRoom });
+
+    console.log("level: " + this.level)
+    console.log("Sala cargada: " + nameRoom)
+
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;
     //console.log(this.levelname)
@@ -351,11 +371,11 @@ export default class Game extends Phaser.Scene {
             playerBody = bodyB;
           }
           if (playerBody.label === 'endLevel') {
-            
+
             //this.time.delayedCall(3000, this.scene.start('sceneManager'), [], this);
             if (blockBody.label === 'player') {
               this.cameras.main.fadeOut(3000);
-              if (this.level != 8) {
+              if (this.level != config.room.bossRoomLevel) {
 
                 ++this.level;
                 this.lastSeekMusic = this.actualMusic.seek;
@@ -378,7 +398,7 @@ export default class Game extends Phaser.Scene {
     this.events.on('shutdown', this.shutdown, this);
 
     this.input.keyboard.on('keydown_ESC', this.pauseGame, this);//this.pauseGame
-    this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);  
+    this.input.keyboard.on('keydown_ENTER', this.advanceDialog, this);
 
   }//End of create
 
@@ -403,7 +423,7 @@ export default class Game extends Phaser.Scene {
         this.player = new Player(this, objeto.x, objeto.y, "player", this.health, this.ammo);
         this.player.changeWeapon(this.weaponID);
         this.player.changeTile(this.tileID, true);
-        
+
         //Creamos la musica si es la primera sala
         if (this.level === 0) {
           this.musicID = config.music.mainChip;
@@ -414,6 +434,7 @@ export default class Game extends Phaser.Scene {
             this.actualMusic.stop();
           this.actualMusic = this.sound.add(config.music.songReference[this.musicID], { volume: 0.3 });
           this.actualMusic.play();
+          this.actualMusic.loop = true;
 
         }
         else
@@ -422,29 +443,29 @@ export default class Game extends Phaser.Scene {
 
         //Spawnear el numero de enemigos
         for (let i = 0; i < 10;) {
-        //for (let i = 0; i < objeto.properties[0].numEnemies;) {
+          //for (let i = 0; i < objeto.properties[0].numEnemies;) {
 
           let tileX = Phaser.Math.RND.between(0, this.map.width);
           let tileY = Phaser.Math.RND.between(0, this.map.height);
-    
+
           if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
             //let e = new Boss(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, clyon);
             //hacer random para elegir entre 3 enemigos de acuerdo a 0 - 3, 3- 6, 6 - 9
-            let tipo = Phaser.Math.RND.between(0 + Math.floor(((this.level + 1)/7)), Math.floor(((this.level + 1)/3)));
+            let tipo = Phaser.Math.RND.between(0 + Math.floor(((this.level + 1) / 7)), Math.floor(((this.level + 1) / 3)));
             let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, listEnemies[tipo]);
             this.enemies.add(e);
-    
-    
+
+
             if (doorNum != x)
               enemyCount = 0;
-    
+
             ++enemyCount;
             doorNum = enemyCount;  //Deberia de incrementar en 1 el doorNum de la sala del enemigo
-    
+
             x = doorNum;
             i++;
           }
-    
+
         }
 
       }
@@ -465,17 +486,17 @@ export default class Game extends Phaser.Scene {
         this.endZone = this.matter.add.image(0, 0, 'trigger');  //!SE QUE ESTO ESTÁ FEO AIUDA SELAION
         this.endZone.setExistingBody(this.Bodies.rectangle(objeto.x, objeto.y, 40, 40, { isSensor: true, label: 'endLevel' }));
       }
-      else if (objeto.name === 'boss'){
+      else if (objeto.name === 'boss') {
         let e;
-        switch (objeto.properties[1].value){
-          case("cylon"):
-          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon, true, true);
-          break;
-          case("willermo"): 
-          e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo, true, false);
-          break;
+        switch (objeto.properties[1].value) {
+          case ("cylon"):
+            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, clyon, true, true);
+            break;
+          case ("willermo"):
+            e = new Boss(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, willermo, true, false);
+            break;
         }
-       
+
         //const e = new Enemy(this, objeto.x, objeto.y, this.player, 0, this.doorSystem, enemyConfig);
         this.enemies.add(e);
 
@@ -490,7 +511,7 @@ export default class Game extends Phaser.Scene {
     }
 
 
-    
+
 
     for (const objeto of DoorsentityLayer) {
       //Creamos una puerta con la posicion y el numero necesario de enemigos  y la rotacion que hacen falta matar para que se abra
@@ -528,12 +549,7 @@ export default class Game extends Phaser.Scene {
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
     let reflexLayer = this.map.createStaticLayer('Reflex', this.tileset);
     let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
-    let wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
-    let colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
-    let boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
     let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
-    let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
-    let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
 
 
     let entityLayer = this.map.getObjectLayer('Entities').objects
@@ -584,8 +600,8 @@ export default class Game extends Phaser.Scene {
     this.healthBar.scaleY = config.ui.barScaleY;
     this.healthBackground.scaleY = config.ui.barScaleY + 6;
 
-    
-    this.cooldownBar = this.add.graphics();    
+
+    this.cooldownBar = this.add.graphics();
     this.cooldownBar.fillStyle(0x00ff00, 1);
     this.cooldownBar.fillRect(0, 0, 1, 1);
     this.cooldownBar.setScrollFactor(0);
@@ -593,7 +609,7 @@ export default class Game extends Phaser.Scene {
     this.cooldownBar.x = config.ui.cooldownPosX;
     this.cooldownBar.y = config.ui.cooldownPosY;
     this.cooldownBar.scaleX = 0;
-    this.cooldownBar.scaleY = 5; 
+    this.cooldownBar.scaleY = 5;
 
     this.weaponImg = this.add.image(config.ui.weaponPosX, config.ui.weaponPosY, 'gunshotsilhouette');
     this.weaponImg.scale = config.ui.weaponScl;
@@ -625,7 +641,7 @@ export default class Game extends Phaser.Scene {
     this.dialogBox.setScrollFactor(0);
     this.dialogBox.setDepth(7);
 
-    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', { fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: "#ffffff"};
+    this.dialog = this.add.text(config.ui.dialogX, config.ui.dialogY), '', { fontFamily: 'Rock Salt', fontSize: config.ui.dialogFontSize, color: "#ffffff" };
     this.dialog.setScale(0.5)
     this.dialog.setScrollFactor(0);
     this.dialog.setDepth(7);
@@ -733,7 +749,8 @@ export default class Game extends Phaser.Scene {
         let seekNose = this.actualMusic.seek;
         this.actualMusic.destroy();
         this.actualMusic = this.sound.add(this.nextSong);
-        this.actualMusic.play()
+        this.actualMusic.play();
+        this.actualMusic.loop = true;
         this.actualMusic.setSeek(seekNose);
       }
       // }
@@ -763,7 +780,7 @@ export default class Game extends Phaser.Scene {
     this.activeImg.setTexture(config.ui.activeImgs[id]);
   }
 
-  setCooldownBar(time){
+  setCooldownBar(time) {
     this.cooldownBar.scaleX = time / 3;// * config.ui.barScaleX;
   }
 
@@ -773,11 +790,11 @@ export default class Game extends Phaser.Scene {
     this.passiveCount++;
   }*/
 
-  chooseTalker(){
+  chooseTalker() {
     let talkId;
-    do{
+    do {
       talkId = Math.floor(Math.random() * 4);
-    }while(talkId === this.talkedLast);
+    } while (talkId === this.talkedLast);
 
     this.dialogBox.setTexture(config.ui.dialogBoxes[talkId]);
     this.talkedLast = talkId;
@@ -789,7 +806,7 @@ export default class Game extends Phaser.Scene {
     this.dialogBox.setVisible(true);
 
     //Recoge el array con los diálogos 
-    switch(type){
+    switch (type) {
       case 'passive':
         this.strings = dialogues.passives[auxId];
         break;
@@ -817,7 +834,7 @@ export default class Game extends Phaser.Scene {
   advanceDialog() {
     if (this.onDialog) {
       this.dialogState++;
-      if (this.dialogState < this.strings.length){
+      if (this.dialogState < this.strings.length) {
         this.chooseTalker();
         this.dialog.text = this.strings[this.dialogState];
       }
@@ -830,12 +847,12 @@ export default class Game extends Phaser.Scene {
     this.onDialog = false;
     this.dialogBox.setVisible(false);
     this.dialog.text = '';
-    
+
     if (this.pendingType === 'active')
       this.player.changeActive(this.pendingIdea);
-    else 
+    else
       this.player.addPassive(this.pendingIdea);
-    
+
   }
 
   //CAMBIAR MUSICA POR EL PLAYER
@@ -845,6 +862,7 @@ export default class Game extends Phaser.Scene {
     this.actualMusic.destroy();
     this.actualMusic = this.sound.add(this.nextSong);
     this.actualMusic.play()
+    this.actualMusic.loop = true;
     this.actualMusic.setSeek(seekNose);
 
   }
@@ -870,34 +888,34 @@ export default class Game extends Phaser.Scene {
   }
 
 
-  changePlayerSprite(id){
+  changePlayerSprite(id) {
     //ANIMACIONES JUGADOR
     //if(this.anims.exists('walk')){
-      //this.anims.destroy();
-      this.anims.create({
-        key: 'walk' + config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 4, end: 8 }), //15
-        frameRate: 15,
-        repeat: -1
-      })
-      this.anims.create({
-        key: 'idle'+ config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 1, end: 3 }),
-        frameRate: 7,
-        repeat: -1
-      })
-      this.anims.create({
-        key: 'death'+ config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 16, end: 28 }),
-        frameRate: 14,
-        repeat: 0
-      })
-      this.anims.create({
-        key: 'hit'+ config.player.spriteKey[id],
-        frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 9, end: 14 }),
-        frameRate: 60,
-        repeat: 0
-      })
-   // }
-    }
+    //this.anims.destroy();
+    this.anims.create({
+      key: 'walk' + config.player.spriteKey[id],
+      frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 4, end: 8 }), //15
+      frameRate: 15,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'idle' + config.player.spriteKey[id],
+      frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 1, end: 3 }),
+      frameRate: 7,
+      repeat: -1
+    })
+    this.anims.create({
+      key: 'death' + config.player.spriteKey[id],
+      frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 16, end: 28 }),
+      frameRate: 14,
+      repeat: 0
+    })
+    this.anims.create({
+      key: 'hit' + config.player.spriteKey[id],
+      frames: this.anims.generateFrameNumbers(config.player.spriteKey[id], { start: 9, end: 14 }),
+      frameRate: 60,
+      repeat: 0
+    })
+    // }
+  }
 }
