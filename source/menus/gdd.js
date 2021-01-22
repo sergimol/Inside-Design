@@ -37,12 +37,77 @@ export default class Game extends Phaser.Scene {
         this.load.image('sombra','sprites/gdd/sombra.png')
 
         //PASIVAS
-        
+        //Me lo tanqueo
+        this.load.image('pasiva0','/sprites/gdd/atributos/melotanqueo.jpg');
+        //Demasiado facil
+        this.load.image('pasiva2','/sprites/gdd/atributos/demasiadofacil.jpg');
+        //Rambo
+        //Botiquines buena onda
+        this.load.image('pasiva0','/sprites/gdd/atributos/buenaonda.jpg');
+        //Botiquines mala onda
+        this.load.image('pasiva3','/sprites/gdd/atributos/malaonda.jpg');
+        //Sanic
+        this.load.image('pasiva0','/sprites/gdd/atributos/sanic.jpg');
+        //Cogo
+        this.load.image('pasiva1','/sprites/gdd/atributos/cogo.jpg');
+
         //PASIVAS TEMPORALES
+        //run pacifica
+        this.load.image('pasiva0','/sprites/gdd/temporales/runpacifica.jpg');
+        //mario kart
+        this.load.image('pasiva0','/sprites/gdd/temporales/mariokart.jpg');
+        //borracho
+        this.load.image('pasiva0','/sprites/gdd/temporales/estoytoperdio.jpg');
         //ARMAS
+        //Arma Default
+        //Escopeta Automatica
+        //Escopeta Peta
+        //Escopeta Rafagas
+        //Escopeta
+        //Lanza Granadas
+        //Machine Gun
+        //We are the World
+        //Pistola
+        //Pistola Laser
+        //Rifle Automático
+        //Rifle Francotirador de Precision
+        //Rifle Francotirador
+        //Rifle Rafagas
         //AMBIENTES
+        //Outlaws from the West
+        //Ray Tracing breakdance kill
+        //La serie mas aburrida de la historia
+        //Especial Navidad
+        //Mas de 1000 capitulos
+        //El mejor juego de la historia
+        //The Only Thing They Fear is You
+        //P.T.
         //PERSONAJES
+        //playerDef
+        //playerWest
+        //playerDoomGuy
+        //playerPirata
+        //playerCalvo
+        //playerEllie
+        //playerRuso
+        //playerPayaso
+        //playerCresta
+        //playerHummus
         //MUSICA
+        //mainChip
+        //Outlaws from the West
+        //Inside Neon
+        //Old30s
+        //Especial Navidad
+        //Mas de 1000 capitulos
+        //Animales 
+        //BackToRock
+        //Piano man
+
+
+
+
+
         this.load.image('armas0', 'sprites/gdd/armas1.png');
         this.load.image('armas1', 'sprites/gdd/armas2.png');
         this.load.image('armas2', 'sprites/gdd/armas3.png');
