@@ -269,7 +269,7 @@ export default class Game extends Phaser.Scene {
     //ARRAY DE HABITACIONES
     this.arrayRooms = [];
     let numRoom = Phaser.Math.RND.between(1, 7);
-    let nameRoom = 'sala' + numRoom.toString();
+    let nameRoom = 'sala2'; //
     this.map = this.make.tilemap({ key: nameRoom});
     //this.arrayRooms.push(this.make.tilemap({ key: 'sala1' }));
     //this.levelname = this.level + 7;
@@ -519,12 +519,7 @@ export default class Game extends Phaser.Scene {
     let detailsLayer = this.map.createStaticLayer('Details', this.tileset);
     let reflexLayer = this.map.createStaticLayer('Reflex', this.tileset);
     let wallsLayer = this.map.createStaticLayer('Walls', this.tileset);
-    let wallstopLayer = this.map.createStaticLayer('WallsTop', this.tileset);
-    let colsbottomLayer = this.map.createStaticLayer('ColsBottom', this.tileset);
-    let boxbottomLayer = this.map.createStaticLayer('BoxBottom', this.tileset);
     let collidersLayer = this.map.createStaticLayer('Colliders', this.tileset);
-    let colstopLayer = this.map.createStaticLayer('ColsTop', this.tileset);
-    let boxtopLayer = this.map.createStaticLayer('BoxTop', this.tileset);
 
 
     let entityLayer = this.map.getObjectLayer('Entities').objects
@@ -535,27 +530,14 @@ export default class Game extends Phaser.Scene {
     detailsLayer.setDepth(0);
     reflexLayer.setDepth(0);
     wallsLayer.setDepth(1);
-    colsbottomLayer.setDepth(2);
-    boxbottomLayer.setDepth(2);
     //enemigos          ->3
     //jugador y balas   ->4
-    wallstopLayer.setDepth(5);
     collidersLayer.setDepth(5);
-    colstopLayer.setDepth(6);
-    boxtopLayer.setDepth(6);
 
     // colisiones tilemap
     collidersLayer.setCollisionByProperty({ collide: true });
-    colsbottomLayer.setCollisionByProperty({ collide: true });
-    boxbottomLayer.setCollisionByProperty({ collide: true });
-    colstopLayer.setCollisionByProperty({ collide: true });
-    boxtopLayer.setCollisionByProperty({ collide: true });
     // físicas
     this.matter.world.convertTilemapLayer(collidersLayer, { label: "pared" });
-    this.matter.world.convertTilemapLayer(colsbottomLayer);
-    this.matter.world.convertTilemapLayer(boxbottomLayer);
-    this.matter.world.convertTilemapLayer(colstopLayer);
-    this.matter.world.convertTilemapLayer(boxtopLayer);
 
     //CARGA DE OBJETOS NOSEQUE
     this.Bodies = Phaser.Physics.Matter.Matter.Bodies;
