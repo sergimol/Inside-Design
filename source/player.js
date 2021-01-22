@@ -305,7 +305,7 @@ export default class Player extends Humanoid {
           id = 10;
       } while (this.activePassives[id])
 
-      id = 7;
+      id = 10;
       if (id === 7) {
         this.wId = Math.floor(Math.random() * config.gdd.numeroArmas);
         this.scene.startDialog('weapon', id, this.wId);

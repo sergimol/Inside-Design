@@ -32,6 +32,7 @@ export default class Game extends Phaser.Scene {
     this.maxHealth = data.maxHealth;
     this.velFactor = data.velFactor;
     this.enemySpriteID = data.enemySpriteID
+    this.videoPlay = data.videoPlay;
   }
 
 
@@ -247,6 +248,15 @@ export default class Game extends Phaser.Scene {
     })
 
 
+    //Auxiliar para el video 
+    
+    if(this.videoPlay)
+    {
+      this.putVideoOnScreen();
+    }
+    else
+      this.videoPlaying = false;
+
     //variables que utilizara el archivo de guardado
     //estadisticas y gdd
     this.disparosRealizados = 0;
@@ -367,7 +377,7 @@ export default class Game extends Phaser.Scene {
                   tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID,
                   activePassives: this.player.activePassives, actualACTIVE: this.player.actualACTIVE, upgraded: this.player.upgraded, 
                   infiniteAmmo: this.player.hasInfiniteAmmo, maxHealth: this.player.maxHealth, velFactor: this.player.velFactor,
-                  enemySpriteID: this.actualEnemyID
+                  enemySpriteID: this.actualEnemyID, videoPlay: this.videoPlaying
                 });
               }
               else {
@@ -957,6 +967,7 @@ export default class Game extends Phaser.Scene {
     }
 
     putVideoOnScreen(){
+      this.videoPlaying = true;
       this.video = this.add.video(700, 400, 'filtrocinta');
       this.video.depth = 10;
       this.video.setAlpha(0.3);
