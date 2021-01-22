@@ -418,8 +418,8 @@ Si el jugador se la vuelve a pasar se le darán las mismas 2 opciones, cuantas m
 Como se ve en el sistema de ideas, cada una tiene un nombre algo “artístico”. Esto se debe a que el juego tiene un sistema de coleccionables llamado “GDD”, donde se recogen todas las ideas que haya recogido el jugador, con sus nombres artísticos y detalles de diseño.
 
 ##### ARQUITECTURA DEL JUEGO
-Archivo de la arquitectura aquí.
-Imagen de la arquitectura aquí.
+![Captura](https://user-images.githubusercontent.com/62880649/105544056-d92b3900-5cfa-11eb-8b91-a0f756e5d6f0.JPG)
+
 
 ##### SISTEMA DE GESTIÓN 
 Para realizar la gestión de las tareas a realizar utilizaremos pivotal tracker. El proyecto puede accederse desde www.pivotaltracker.com/n/projects/2470812
