@@ -335,8 +335,9 @@ export default class Game extends Phaser.Scene {
     }, this);
 
     //Camara
-    this.cameras.main.zoom = 3;
+    
     this.cameras.main.startFollow(this.player.puntero.intermedio);
+    this.cameras.main.zoom = 3;
 
     this.cursors = this.input.keyboard.createCursorKeys();
     /*
@@ -494,7 +495,7 @@ export default class Game extends Phaser.Scene {
         x = doorNum;
       }
       else if (objeto.name === 'endLevel') {
-        this.endZone = this.matter.add.rectangle(objeto.x + 32, objeto.y, 48, 48, { isSensor: true, label: 'endLevel' });
+        this.endZone = this.matter.add.rectangle(objeto.x, objeto.y, 70, 70, { isSensor: true, label: 'endLevel' });
       }
       else if (objeto.name === 'boss') {
         let e;
