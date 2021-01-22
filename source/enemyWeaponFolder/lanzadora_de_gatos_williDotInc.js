@@ -30,6 +30,8 @@ const WeaponConfig = {
     retroceso: -1,
     bullet: disparo,
 
+    
+    soundEffect:'swingDuro',
 
     //disparo alternativo/sin ammo
     cadenciaAlternative:100,

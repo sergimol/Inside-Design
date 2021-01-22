@@ -31,6 +31,8 @@ const WeaponConfig = {
     bullet: disparo,
 
 
+    soundEffect:'swing',
+
     //disparo alternativo/sin ammo
     cadenciaAlternative:100,
     rafagasCadenceAlternative:100,

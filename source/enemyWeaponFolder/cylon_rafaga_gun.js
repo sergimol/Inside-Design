@@ -29,6 +29,8 @@ const WeaponConfig = {
     retroceso: -1,
     bullet: disparo,
 
+    
+    soundEffect:'minigun',
 
     //disparo alternativo/sin ammo
     cadenciaAlternative:100,

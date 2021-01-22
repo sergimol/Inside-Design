@@ -137,13 +137,24 @@ export default class Bullet extends Phaser.GameObjects.Container{
                     // Default: 1, Player: 2, Enemy: 4, PlayerBullet: 8, Enemy Bullet: 16
                     //Aqui se asignan todas las colisiones
                     if (config.isSensor){
-                        
-                        this.body.collisionFilter = {
-                            'group' : -5, 
+                        if (!config.destroyOnWall) {
+
+                            this.body.collisionFilter = {
+                                'group' : -5, 
+                                
+                                'category': 16,
+                                'mask':2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
+                            };
+                        }
+                        else{
                             
-                            'category': 16,
-                            'mask':2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
-                        };
+                            this.body.collisionFilter = {
+                                'group' : -5, 
+                                
+                                'category': 16,
+                                'mask':1 | 2 | 8, //POR SI CHOCA CON el swing de un arma a meele del jugador
+                            };
+                        }
                         //disparo.body.isSensor = true;
                     }
                     else{
@@ -161,12 +172,22 @@ export default class Bullet extends Phaser.GameObjects.Container{
                     //Aqui se asignan todas las colisiones
 
                     if (config.isSensor){
-                        this.body.collisionFilter = {
-                            'group' : -4, //hara siempre la regla category/mask
-                            
-                            'category': 8,
-                            'mask':4 | 16, //PORa que detecte la colision del jugador tmb
-                        };
+                        if (!config.destroyOnWall) {
+
+                            this.body.collisionFilter = {
+                                'group' : -4, //hara siempre la regla category/mask
+                                
+                                'category': 8,
+                                'mask':4 | 16, //PORa que detecte la colision del jugador tmb
+                            };
+                        }else {
+                            this.body.collisionFilter = {
+                                'group' : -4, //hara siempre la regla category/mask
+                                
+                                'category': 8,
+                                'mask':1 | 4 | 16, //PORa que detecte la colision del jugador tmb
+                            };
+                        }
                         //disparo.body.isSensor = true;
                     }
                     else{
