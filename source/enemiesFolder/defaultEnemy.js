@@ -20,6 +20,12 @@ const enemy = {
     aggroVelFactor: 0.4,
     angleAcercarse:Math.PI / 4,
 
+    humanoide:{
+        spriteScaleX:1,
+        spriteScaleY:1,
+        scaleX:11,
+        scaleY:16,
+    },
     rutina: [{
         time: 10000,
         idle:false,
