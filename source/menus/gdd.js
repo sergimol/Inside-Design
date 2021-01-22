@@ -33,6 +33,9 @@ export default class Game extends Phaser.Scene {
 
 
         //IMAGENES IDEAS
+        this.load.image('desbloquear','sprites/gdd/desbloqueable.jpg')
+        this.load.image('sombra','sprites/gdd/sombra.png')
+
         this.load.image('armas0', 'sprites/gdd/armas1.png');
         this.load.image('armas1', 'sprites/gdd/armas2.png');
         this.load.image('armas2', 'sprites/gdd/armas3.png');
@@ -53,20 +56,22 @@ export default class Game extends Phaser.Scene {
 
 
         this.add.image(700, 400, 'background');
+        this.add.image(570, 430, 'sombra').setScale(0.63);
+        this.add.image(550, 400, 'desbloquear').setScale(0.60);
 
 
-        this.backButton = new Button(this, 200, 100, 'back', 'back', 'backGDD',0.8)
-        this.nextButton = new Button(this, 1200, 100, 'next', 'next', 'nextGDD',0.8)
-        this.exitButton = new Button(this, 200, 700, 'exit', 'exit', 'exitGDD',0.8)
+        this.backButton = new Button(this, 200, 100, 'back', 'back', 'backGDD', config.button.gddMenu)
+        this.nextButton = new Button(this, 1200, 100, 'next', 'next', 'nextGDD', config.button.gddMenu)
+        this.exitButton = new Button(this, 200, 700, 'exit', 'exit', 'exitGDD', config.button.gddMenu)
 
 
-        this.activasButton = new Button(this, 1200, 230, 'activas', 'activas', 'activasGDD',0.8)
-        this.pasivasButton = new Button(this, 1200, 330, 'pasivas', 'pasivas', 'pasivasGDD',0.8)
-        this.temporalesButton = new Button(this, 1200, 430, 'temporales', 'temporales', 'temporalesGDD',0.8)
-        this.armasButton = new Button(this, 1200, 530, 'armas', 'armas', 'armasGDD',0.8)
-        this.esteticasButton = new Button(this, 1200, 630, 'esteticas', 'esteticas', 'esteticasGDD',0.8)
-        this.characterButton = new Button(this, 1200, 730, 'character', 'character', 'characterGDD',0.8)
-        this.musicaButton = new Button(this, 1200, 830, 'musica', 'musica', 'musicaGDD',0.8)
+        this.activasButton = new Button(this, 1200, 230, 'activas', 'activas', 'activasGDD', config.button.gddMenu)
+        this.pasivasButton = new Button(this, 1200, 330, 'pasivas', 'pasivas', 'pasivasGDD', config.button.gddMenu)
+        this.temporalesButton = new Button(this, 1200, 430, 'temporales', 'temporales', 'temporalesGDD', config.button.gddMenu)
+        this.armasButton = new Button(this, 1200, 530, 'armas', 'armas', 'armasGDD', config.button.gddMenu)
+        this.esteticasButton = new Button(this, 1200, 630, 'esteticas', 'esteticas', 'esteticasGDD', config.button.gddMenu)
+        this.characterButton = new Button(this, 1200, 730, 'character', 'character', 'characterGDD', config.button.gddMenu)
+        this.musicaButton = new Button(this, 1200, 830, 'musica', 'musica', 'musicaGDD', config.button.gddMenu)
 
         this.contador = 0;
 
@@ -111,32 +116,43 @@ export default class Game extends Phaser.Scene {
 
     showImage() {
         this.image;
-        switch (this.activeArray) {
-            case this.gddActivas:
-                console.log("Activas")
-                break;
-            case this.gddPasivas:
-                this.image = this.add.image(700, 400, armasList[this.contador]);
-                console.log("Pasivas")
-                break;
+        if (this.activeArray[this.contador]) {
+            switch (this.activeArray) {
+                case this.gddActivas:
+                    console.log("Activas")
+                    this.image = this.add.image(700, 400, activasList[this.contador]);
+                    break;
+                case this.gddPasivas:
+                    console.log("Pasivas")
+                    this.image = this.add.image(700, 400, pasivasList[this.contador]);
+                    break;
 
-            case this.gddTemporales:
-                console.log("PasivasTemp")
-                break;
-            case this.gddArmas:
-                console.log("Armas")
-                break;
-            case this.gddEsteticas:
-                console.log("Esteticas")
-                break;
-            case this.gddCharacter:
-                console.log("Character")
-                break;
-            case this.gddMusica:
-                console.log("Musica")
-                break;
+                case this.gddTemporales:
+                    console.log("PasivasTemp")
+                    this.image = this.add.image(700, 400, temporalesList[this.contador]);
+                    break;
+                case this.gddArmas:
+                    console.log("Armas")
+                    this.image = this.add.image(700, 400, armasList[this.contador]);
+                    break;
+                case this.gddEsteticas:
+                    console.log("Esteticas")
+                    this.image = this.add.image(700, 400, esteticasList[this.contador]);
+                    break;
+                case this.gddCharacter:
+                    console.log("Character")
+                    this.image = this.add.image(700, 400, characterList[this.contador]);
+                    break;
+                case this.gddMusica:
+                    console.log("Musica")
+                    this.image = this.add.image(700, 400, musicaList[this.contador]);
+                    break;
 
+            }
+        } else {
+            this.image = this.add.image(550, 400, 'desbloquear');
         }
+        this.image.setScale(0.60);
     }
 
 
@@ -198,7 +214,7 @@ export default class Game extends Phaser.Scene {
 
             this.gddTemporales = [];
             numIdeas = config.gdd.numeroTemporales;
-            
+
             for (let i = 0; i < numIdeas; i++)
                 this.gddTemporales.push(false);
         }
