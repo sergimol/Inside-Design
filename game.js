@@ -174,9 +174,9 @@ export default class Game extends Phaser.Scene {
     this.load.audio('minigun', './audio/minigun.wav');
     this.load.audio('gas', './audio/gas.mp3');
     this.load.audio('granadasBlop', './audio/granadasBlop.wav');
-    this.load.audio('swing', './audio/swing.wav');
+    this.load.audio('swing', './audio/swingDuro.wav');
     this.load.audio('swingDuro', './audio/swingDuro.wav');
-    this.load.audio('katana', './audio/katana.wav');
+    this.load.audio('katana', './audio/katana.mp3');
 
     //Elementos de la UI
     //Armas//
