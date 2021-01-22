@@ -1,5 +1,5 @@
 import disparo from "./../bulletsFolder/paciffistBullet.js";
-
+import disparoAlternativo from "../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
     id: 0,
