@@ -183,6 +183,7 @@ export default class Player extends Humanoid {
           this.scene.setActiveImg(1);
           break;
         case 'area':
+          this.scene.setActiveImg(2);
           break;
       }
     }

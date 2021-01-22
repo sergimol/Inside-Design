@@ -31,6 +31,7 @@ export default class Game extends Phaser.Scene {
     this.hasInfiniteAmmo = data.infiniteAmmo;
     this.maxHealth = data.maxHealth;
     this.velFactor = data.velFactor;
+    this.enemySpriteID = data.enemySpriteID
     //this.playerAspectID = data.playerAspectID
   }
 
@@ -87,11 +88,14 @@ export default class Game extends Phaser.Scene {
     this.load.image('rafagas', 'sprites/spritesarmas/rafagas.png');
     this.load.image('rafagasRebote', 'sprites/spritesarmas/rafagasRebote.png');
     this.load.image('granade_launcher', 'sprites/granade_launcher.png');
+    this.load.image('bate', 'sprites/bate.png');
 
     this.load.spritesheet('granade__launcher_shoot', 'sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
     this.load.spritesheet('escopeta_lanzable_shoot', 'sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('granade_launcher_shoot_explosion', 'sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
-
+    
+    this.load.spritesheet('bate_attack', 'sprites/swing.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('katana_attack', 'sprites/tajo.png', { frameWidth: 64, frameHeight: 64 });
     //Tiles de estéticas
     this.load.image('tileBase', './sprites/tiles/tileJavi.png');
     this.load.image('tileSetBaseEx', './sprites/tiles/tileSetBaseEx.png');
@@ -381,7 +385,8 @@ export default class Game extends Phaser.Scene {
                   health: this.player.health, ammo: this.player.ammo, weaponID: this.player.weaponId, level: this.level,
                   tileID: this.player.tileID, musicID: this.player.musicID, lastSeekMusic: this.lastSeekMusic, playerSpriteID: this.player.spriteID,
                   activePassives: this.player.activePassives, actualACTIVE: this.player.actualACTIVE, upgraded: this.player.upgraded, 
-                  infiniteAmmo: this.player.hasInfiniteAmmo, maxHealth: this.player.maxHealth, velFactor: this.player.velFactor
+                  infiniteAmmo: this.player.hasInfiniteAmmo, maxHealth: this.player.maxHealth, velFactor: this.player.velFactor,
+                  enemySpriteID: this.actualEnemyID
                 });
               }
               else {

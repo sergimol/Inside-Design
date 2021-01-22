@@ -11,11 +11,14 @@ import rifle_Automatico from "./weaponsFolder/rifle_Automatico.js";
 import rifle_francotirador_preciso from "./weaponsFolder/rifle_Francotirador_Preciso.js";
 import rifle_francotirador from "./weaponsFolder/rifle_Francotirador.js";
 import rifle_rafagas from "./weaponsFolder/rifle_Rafagas.js";
-import paciffistWeapon from "./weaponsFolder/paciffistWeapon.js"
+import bate from "./weaponsFolder/bateDeBalas.js";
+import katana from "./weaponsFolder/katana.js";
+import paciffistWeapon from "./weaponsFolder/paciffistWeapon.js";
+
 
 const List = [
 defaultWeapon, escopetaAuto, escopeta_lanzable, escopeta_rafagas, escopeta,
 granade__launcher, machinegun, pistolaBasica, pistolaLaser, rifle_Automatico,
-rifle_francotirador_preciso, rifle_francotirador, rifle_rafagas, paciffistWeapon];
+rifle_francotirador_preciso, rifle_francotirador, rifle_rafagas, bate, katana, paciffistWeapon];
 
 export default List;
