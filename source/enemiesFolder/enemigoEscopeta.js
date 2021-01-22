@@ -1,4 +1,4 @@
-import defaultWeapon from "./../enemyWeaponFolder/defaultEnemyWeapon.js";
+import defaultWeapon from "./../enemyWeaponFolder/escopetaEnemiga.js";
 
 const enemy = {
 
@@ -7,9 +7,9 @@ const enemy = {
     sprite: "player",
 
     weapon: defaultWeapon,
-    health: 10,
+    health: 50,
     mass: 800,
-    speed: 100,
+    speed: 50,
     depth: 3,
     idleMovTime: 1000,
     aggroMovTime: 500,
@@ -18,14 +18,14 @@ const enemy = {
     aggroDistance: 500,
     idleVelFactor: 0.1,
     aggroVelFactor: 0.4,
-    angleAcercarse:Math.PI / 4,
+    angleAcercarse:Math.PI / 6,
 
     rutina: [{
         time: 10000,
         idle:false,
         acercarse: true,
-        distanciaAcercarse:100,
-        alejarse:true,
+        distanciaAcercarse:150,
+        alejarse:false,
         distanciaAlejarse:95,
         strafe: false,
         starfeTime: 1000
