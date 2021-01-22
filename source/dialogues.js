@@ -21,9 +21,9 @@ const Dialogues = {
     ],
 
     actives: [
-        ["aaaaaaaaaaaaaaaaaaaaaaaa"],
-        ["bbbbbbbbbbbbbbbbbbbbbbbb"],
-        ["cccccccccccccccccccccccc"]
+        ["Creo que deberíamos poner un dash de habilidad activa.", "Buena idea, puede aportar más dinamismo.", "Vale, pues ahora al pulsar CLICK DERECHO el jugador hará un dash."],
+        ["Creo que deberíamos poner un escudo de habilidad activa.", "Me gusta, ahora al pulsar CLICK DERECHO el jugador activará un escudo que se desactivará tras un tiempo."],
+        ["Creo que deberíamos poner un efecto en área de habilidad activa.", "Muy bien, pues ahora al pulsar CLICK DERECHO el jugador destruirá todas las balas enemigas en un área."]
     ],
 
     weapons:[
