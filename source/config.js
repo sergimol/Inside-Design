@@ -10,7 +10,7 @@ const Config = {
     gdd:{
         numeroArmas:15,
         numeroEsteticas:0,
-        numeroPasivas:10,
+        numeroPasivas:7,
         nueroActivas:3,
         numeroTemporales:3
     },
@@ -31,7 +31,7 @@ const Config = {
         dashTint: 0x00ff1e,
         baseTint: 0xffffff,
         baseVelFactor: 1.5,
-        passiveCount: 10,
+        passiveCount: 13,
         weaponCount: 3,
         activeCount: 3,
         actives: [
