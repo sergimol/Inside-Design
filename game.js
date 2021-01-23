@@ -37,11 +37,6 @@ export default class Game extends Phaser.Scene {
   preload() {
     //Loading video
 
-    //this.load.video('loadingvideo', './sprites/video/loading.mp4');
-    //this.video = this.add.video(700, 400, 'loadingvideo');
-    //this.video.play();
-    //this.putloadingVideoOnScreen();
-
     //Sprites Player
     this.load.spritesheet('playerDef', './sprites/spritespersonajes/playerdefinitivo.png', { frameWidth: 24, frameHeight: 24 });
     this.load.spritesheet('playerWest', './sprites/spritespersonajes/arthurmorgan.png', { frameWidth: 24, frameHeight: 24 });
@@ -986,7 +981,7 @@ export default class Game extends Phaser.Scene {
 
   }
 
-  /*putVideoOnScreen() {
+  putVideoOnScreen() {
     this.videoPlaying = true;
     this.video = this.add.video(700, 400, 'filtrocinta');
     this.video.depth = 10;
@@ -994,5 +989,5 @@ export default class Game extends Phaser.Scene {
     this.video.play();
     this.video.setLoop(true);
     this.video.setScrollFactor(0);
-  }*/
+  }
 }

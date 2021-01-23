@@ -42,7 +42,7 @@ const Dialogues = {
         ["Es momento de probar algo distinto,\n como la pistola láser."],
         ["El jugador necesita un arma distinta,\n por ejemplo un rifle automático."],
         ["Deberíamos cambiar el arma por\n un rifle de francotirador preciso."],
-        ["Cambiemos el arma por un\n rifle de francotirador."],
+        ["Cambiemos el arma por un rifle de francotirador."],
         ["Probemos el rifle de rafagas."],
         ["Cambiemos el arma por un bate, \nque siempre es divertido."],
         ["Pongamos la katana como arma."],

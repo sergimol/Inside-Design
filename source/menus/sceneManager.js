@@ -66,6 +66,7 @@ export default class Game extends Phaser.Scene {
         this.load.image('menuBackground', './sprites/buttons/mainMenuBackGround.png');
 
         this.load.audio('introSong', './audio/introSong.mp3');
+        this.load.video('loadingvideo', './sprites/video/loading.mp4');
     }
 
     create() {
@@ -181,5 +182,11 @@ export default class Game extends Phaser.Scene {
     shutdown() {
         //  We need to clear keyboard events, or they'll stack up when the Menu is re-run
         this.input.keyboard.shutdown();
+    }
+    putloadingvideo(){
+        console.log("te lo pongo")
+    this.video = this.add.video(700, 400, 'loadingvideo');
+    this.video.play();
+    this.video.depth = 10;
     }
 }

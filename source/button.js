@@ -45,7 +45,6 @@ export default class Button extends Phaser.GameObjects.Image {
         if (this.label === 'play') {
             if (this.scene.actualMusic !== undefined)
                 this.scene.actualMusic.stop();
-
             if (this.scene.health != undefined)
                 this.scene.scene.start('main', { health: this.scene.health, ammo: this.scene.ammo, weaponID: this.scene.weaponID, level: this.scene.level });
             else
@@ -53,6 +52,7 @@ export default class Button extends Phaser.GameObjects.Image {
                     health: config.player.baseHealth, ammo: config.player.baseAmmo, weaponID: config.player.baseWeaponID, level: 0,
                     activePassives: config.player.startingPassives, actualACTIVE: 'none', upgraded: false, infiniteAmmo: false, maxHealth: config.player.baseHealth, velFactor: config.player.baseVelFactor
                 });
+            //this.scene.putloadingvideo();
         }
         else if (this.label === 'quit') {
             let game = this.scene.scene.get('main');

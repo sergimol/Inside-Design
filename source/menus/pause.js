@@ -20,7 +20,7 @@ export default class Game extends Phaser.Scene {
         this.cameras.main.zoom = config.cameraSettings.zoom;
 
         this.resumeButton = new Button(this, 700, 380, 'resumeButton', 'resumeButtonlight', 'resume',config.button.mainMenu)
-        this.gddButton = new Button(this, 700, 405, 'quitButton', 'quitButtonlight', 'quit', config.button.mainMenu)
+        this.quitButton = new Button(this, 700, 405, 'quitButton', 'quitButtonlight', 'quit', config.button.mainMenu)
         this.optionsButton = new Button(this, 700, 430, 'optionsButton', 'optionsButtonlight', 'options', config.button.mainMenu)
 
         this.input.keyboard.on('keydown_ESC', this.resumeGame, this);
