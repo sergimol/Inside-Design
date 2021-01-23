@@ -16,113 +16,113 @@ export default class Game extends Phaser.Scene {
         super({ key: "gdd" });
     }
     preload() {
-        this.load.image('background', './sprites/gdd/gddBackground.png');
+        this.load.image('background', './../../sprites/gdd/gddBackground.png');
 
-        this.load.image('back', './sprites/gdd/gddback.png');
-        this.load.image('next', './sprites/gdd/gddnext.png');
-        this.load.image('exit', './sprites/gdd/gddexit.png');
+        this.load.image('back', './../../sprites/gdd/gddback.png');
+        this.load.image('next', './../../sprites/gdd/gddnext.png');
+        this.load.image('exit', './../../sprites/gdd/gddexit.png');
 
 
-        this.load.image('activas', './sprites/gdd/activasButton.png');
-        this.load.image('pasivas', './sprites/gdd/pasivasButton.png');
-        this.load.image('temporales', './sprites/gdd/pasivasTempButton.png');
-        this.load.image('armas', './sprites/gdd/armasButton.png');
-        this.load.image('esteticas', './sprites/gdd/ambientesButton.png');
-        this.load.image('character', './sprites/gdd/charactersButton.png');
-        this.load.image('musica', './sprites/gdd/musicaButton.png');
+        this.load.image('activas', './../../sprites/gdd/activasButton.png');
+        this.load.image('pasivas', './../../sprites/gdd/pasivasButton.png');
+        this.load.image('temporales', './../../sprites/gdd/pasivasTempButton.png');
+        this.load.image('armas', './../../sprites/gdd/armasButton.png');
+        this.load.image('esteticas', './../../sprites/gdd/ambientesButton.png');
+        this.load.image('character', './../../sprites/gdd/charactersButton.png');
+        this.load.image('musica', './../../sprites/gdd/musicaButton.png');
 
 
 
         //IMAGENES IDEAS
-        this.load.image('desbloquear', './sprites/gdd/desbloqueable.jpg')
-        this.load.image('sombra', './sprites/gdd/sombra.png')
+        this.load.image('desbloquear', './../../sprites/gdd/desbloqueable.jpg')
+        this.load.image('sombra', './../../sprites/gdd/sombra.png')
 
         //PASIVAS
         //Me lo tanqueo
-        this.load.image('pasiva0', './sprites/gdd/atributos/melotanqueo.jpg');
+        this.load.image('pasiva0', './../../sprites/gdd/atributos/melotanqueo.jpg');
         //Demasiado facil
-        this.load.image('pasiva1', './sprites/gdd/atributos/demasiadofacil.jpg');
+        this.load.image('pasiva1', './../../sprites/gdd/atributos/demasiadofacil.jpg');
         //Rambo
         //this.load.image('pasiva2', '/sprites/gdd/atributos/rambo.jpg');
         //Botiquines buena onda
-        this.load.image('pasiva3', './sprites/gdd/atributos/buenaonda.jpg');
+        this.load.image('pasiva3', './../../sprites/gdd/atributos/buenaonda.jpg');
         //Botiquines mala onda
-        this.load.image('pasiva4', './sprites/gdd/atributos/malaonda.jpg');
+        this.load.image('pasiva4', './../../sprites/gdd/atributos/malaonda.jpg');
         //Sanic
-        this.load.image('pasiva5', './sprites/gdd/atributos/sanic.jpg');
+        this.load.image('pasiva5', './../../sprites/gdd/atributos/sanic.jpg');
         //Cogo
-        this.load.image('pasiva6', './sprites/gdd/atributos/cogo.jpg');
+        this.load.image('pasiva6', './../../sprites/gdd/atributos/cogo.jpg');
 
         //PASIVAS TEMPORALES
         //run pacifica
-        this.load.image('pasivaTemp0', './sprites/gdd/temporales/runpacifica.jpg');
+        this.load.image('pasivaTemp0', './../../sprites/gdd/temporales/runpacifica.jpg');
         //mario kart
-        this.load.image('pasivaTemp1', './sprites/gdd/temporales/mariokart.jpg');
+        this.load.image('pasivaTemp1', './../../sprites/gdd/temporales/mariokart.jpg');
         //borracho
-        this.load.image('pasivaTemp2', './sprites/gdd/temporales/estoytoperdio.jpg');
+        this.load.image('pasivaTemp2', './../../sprites/gdd/temporales/estoytoperdio.jpg');
 
         //ARMAS
         //Arma Default
-        this.load.image('armas0', './sprites/spritesarmas/pistolaBasica.png');
+        this.load.image('armas0', './../../sprites/spritesarmas/pistolaBasica.png');
         //Escopeta Automatica
-        this.load.image('armas1', './sprites/spritesarmas/escopeta.png');
+        this.load.image('armas1', './../../sprites/spritesarmas/escopeta.png');
         //Escopeta Peta
-        this.load.image('armas2', './sprites/spritesarmas/escopeta.png');
+        this.load.image('armas2', './../../sprites/spritesarmas/escopeta.png');
         //Escopeta Rafagas
-        this.load.image('armas3', './sprites/spritesarmas/escopeta.png');
+        this.load.image('armas3', './../../sprites/spritesarmas/escopeta.png');
         //Escopeta
-        this.load.image('armas4', './sprites/spritesarmas/escopeta.png');
+        this.load.image('armas4', './../../sprites/spritesarmas/escopeta.png');
         //Lanza Granadas
-        this.load.image('armas5', './sprites/spritesarmas/lanzagranadas.png');
+        this.load.image('armas5', './../../sprites/spritesarmas/lanzagranadas.png');
         //Machine Gun
-        this.load.image('armas6', './sprites/spritesarmas/miniGunRebote.png');
+        this.load.image('armas6', './../../sprites/spritesarmas/miniGunRebote.png');
         //We are the World
-        this.load.image('armas7', './sprites/spritesarmas/pistolaBasica.png');
+        this.load.image('armas7', './../../sprites/spritesarmas/pistolaBasica.png');
         //Pistola
-        this.load.image('armas8', './sprites/spritesarmas/pistolaBasica.png');
+        this.load.image('armas8', './../../sprites/spritesarmas/pistolaBasica.png');
         //Pistola Laser
-        this.load.image('armas9', './sprites/spritesarmas/pistolaLaser.png');
+        this.load.image('armas9', './../../sprites/spritesarmas/pistolaLaser.png');
         //Rifle Automático
-        this.load.image('armas10', './sprites/spritesarmas/rafagas.png');
+        this.load.image('armas10', './../../sprites/spritesarmas/rafagas.png');
         //Rifle Francotirador de Precision
-        this.load.image('armas11', './sprites/spritesarmas/francotirador.png');
+        this.load.image('armas11', './../../sprites/spritesarmas/francotirador.png');
         //Rifle Francotirador
-        this.load.image('armas12', './sprites/spritesarmas/francotirador.png');
+        this.load.image('armas12', './../../sprites/spritesarmas/francotirador.png');
         //Rifle Rafagas
-        this.load.image('armas13', './sprites/spritesarmas/metralleta.png');
+        this.load.image('armas13', './../../sprites/spritesarmas/metralleta.png');
         //Rifle Rafagas
-        this.load.image('armas14', './sprites/spritesarmas/metralleta.png');
+        this.load.image('armas14', './../../sprites/spritesarmas/metralleta.png');
         //Bate
-        this.load.image('armas15', './sprites/spritesarmas/bate.png');
+        this.load.image('armas15', './../../sprites/spritesarmas/bate.png');
         //Katana
-        this.load.image('armas16', './sprites/spritesarmas/katana.png');
+        this.load.image('armas16', './../../sprites/spritesarmas/katana.png');
         //espadon
-        this.load.image('armas17', './sprites/spritesarmas/espadon.png');
+        this.load.image('armas17', './../../sprites/spritesarmas/espadon.png');
         //Microondas
-        this.load.image('armas18', './sprites/spritesarmas/microondas.png');
+        this.load.image('armas18', './../../sprites/spritesarmas/microondas.png');
         //Lanzallamas
-        this.load.image('armas19', './sprites/spritesarmas/lanzallamas.png');
+        this.load.image('armas19', './../../sprites/spritesarmas/lanzallamas.png');
 
 
 
 
         //AMBIENTES
         //Outlaws from the West
-        this.load.image('ambiente0', './sprites/gdd/tiles/western.jpg');
+        this.load.image('ambiente0', './../../sprites/gdd/tiles/western.jpg');
         //Ray Tracing breakdance kill
-        this.load.image('ambiente1', './sprites/gdd/tiles/raytracing.jpg');
+        this.load.image('ambiente1', './../../sprites/gdd/tiles/raytracing.jpg');
         //La serie mas aburrida de la historia
-        this.load.image('ambiente2', './sprites/gdd/tiles/laseriemas.jpg');
+        this.load.image('ambiente2', './../../sprites/gdd/tiles/laseriemas.jpg');
         //Especial Navidad
-        this.load.image('ambiente3', './sprites/gdd/tiles/especialdenavidad.jpg');
+        this.load.image('ambiente3', './../../sprites/gdd/tiles/especialdenavidad.jpg');
         //Mas de 1000 capitulos
-        this.load.image('ambiente4', './sprites/gdd/tiles/masdemil.jpg');
+        this.load.image('ambiente4', './../../sprites/gdd/tiles/masdemil.jpg');
         //El mejor juego de la historia
-        this.load.image('ambiente5', './sprites/gdd/tiles/elmejorjuego.jpg');
+        this.load.image('ambiente5', './../../sprites/gdd/tiles/elmejorjuego.jpg');
         //The Only Thing They Fear is You
-        this.load.image('ambiente6', './sprites/gdd/tiles/ilegalenaustralia.jpg');
+        this.load.image('ambiente6', './../../sprites/gdd/tiles/ilegalenaustralia.jpg');
         //P.T.
-        this.load.image('ambiente7', './sprites/gdd/tiles/miedo.jpg');
+        this.load.image('ambiente7', './../../sprites/gdd/tiles/miedo.jpg');
 
         //PERSONAJES
         //playerDef
