@@ -1,3 +1,4 @@
+import config from "./config.js"
 export default class Doors extends Phaser.GameObjects.Container {
     constructor(scene, spriteOV, spriteCV, spriteOH, spriteCH) {
         super(scene);
@@ -62,7 +63,7 @@ export default class Doors extends Phaser.GameObjects.Container {
 
             this.EnemyCountDoor = numDoor;   //Guardo el numero de enemigos que hay que matar para que se abra la puerta
             this.doors.setStatic(true);
-            this.doors.depth = 4;
+            this.doors.depth = config.depths.doorlayer;
 
 
 

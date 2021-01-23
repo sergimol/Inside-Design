@@ -374,6 +374,7 @@ export default class Game extends Phaser.Scene {
                 this.actualMusic.stop();
                 this.actualMusic = this.sound.add(config.music.songReference[config.music.intro], { volume: config.musicVolume.intro });
                 this.actualMusic.play();
+                this.video.stop();
                 this.scene.start('endGame');
               }
             }
@@ -985,11 +986,7 @@ export default class Game extends Phaser.Scene {
       this.video.depth = 10;
       this.video.setAlpha(0.3);
       this.video.play();
-      this.video.setLoop(true);
+      //this.video.setLoop(true);
       this.video.setScrollFactor(0);
-      
     }
-
-
-
 }

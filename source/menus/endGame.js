@@ -9,20 +9,20 @@ export default class Game extends Phaser.Scene {
         super({ key: "endGame" });
     }
     preload() {
-        this.load.image('menuBackground', '../../sprites/buttons/MainmenuBackground.png');
-        this.load.image('exit', '../../sprites/gdd/gddexit.png');
+        this.load.image('menuBackground', './sprites/buttons/mainMenuBackGround.png');
+        this.load.image('exit', './sprites/gdd/gddexit.png');
 
         //Imagenes Victoria
-        this.load.image('win0', '../../sprites/finales/finalbueno1.jpg');
-        this.load.image('win1', '../../sprites/finales/finalbueno2.jpg');
+        this.load.image('win0', './sprites/finales/finalbueno1.jpg');
+        this.load.image('win1', './sprites/finales/finalbueno2.jpg');
 
 
         //Imagenes de Derrota
-        this.load.image('loose0', '../../sprites/finales/ambicioso.jpg');
-        this.load.image('loose1', '../../sprites/finales/canela.jpg');
-        this.load.image('loose2', '../../sprites/finales/crunch.jpg');
-        this.load.image('loose3', '../../sprites/finales/demandas.jpg');
-        this.load.image('loose4', '../../sprites/finales/gdd.jpg');
+        this.load.image('loose0', './sprites/finales/ambicioso.jpg');
+        this.load.image('loose1', './sprites/finales/canela.jpg');
+        this.load.image('loose2', './sprites/finales/crunch.jpg');
+        this.load.image('loose3', './sprites/finales/demandas.jpg');
+        this.load.image('loose4', './sprites/finales/gdd.jpg');
     }
     create() {
         this.escenaGame = this.scene.get('main');

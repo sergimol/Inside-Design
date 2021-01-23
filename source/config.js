@@ -173,10 +173,11 @@ const Config = {
         wallsLayer:1,
         enemy:2,
         player:3,
-        collidersLayer:4,
-        bullets:4,
-        buttonBackground:5,
-        button:6,
+        doorlayer:4,
+        collidersLayer:5,
+        bullets:5,
+        buttonBackground:6,
+        button:7,
         
     },
     cameraSettings:{

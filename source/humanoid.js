@@ -54,7 +54,7 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                     this.scene.enemyCount--;
                     this.scene.enemiesKilled++;
                     this.scene.saveFile();
-                    let numItems = Phaser.Math.RND.between(0, 4);
+                    let numItems = Phaser.Math.RND.between(0, 5);
                     this.weapon.pararRafagasCola();
                     if (!this.isBoss)
                     this.aspecto.play('deathEnemy'+ config.enemySprite.key[this.scene.actualEnemyID], true);
@@ -63,8 +63,8 @@ export default class Humanoid extends Phaser.GameObjects.Container { //Container
                     
                     //console.log(numItems);
                     for (let n = 0; n < numItems; ++n) {
-                        let chooseItem = Phaser.Math.RND.between(0, 4);
-                        if (chooseItem < 4)
+                        let chooseItem = Phaser.Math.RND.between(0, 20);
+                        if (chooseItem < 19)
                             var item = new Item(this.scene, this.x, this.y, 'bulletAmmo', this.scene.player);
                         else
                             var item = new Item(this.scene, this.x, this.y, 'medkit', this.scene.player);

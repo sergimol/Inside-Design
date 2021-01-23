@@ -44,12 +44,13 @@
     <canvas id="canvas" width="1400" height="800"></canvas>
     <script type="module">
       
-      import Game from "./game.js";
 
-      import GameManager from "./source/menus/sceneManager.js";
-      import Pause from "./source/menus/pause.js";
-      import EndGame from "./source/menus/endGame.js";
-      import GDD from "./source/menus/gdd.js";
+      import gameManager from "./source/menus/sceneManager.js";
+      import game from "./game.js";
+
+      import pause from "./source/menus/pause.js";
+      import endGame from "./source/menus/endGame.js";
+      import gDD from "./source/menus/gdd.js";
 
       var config = {
         type: Phaser.WEBGL,
@@ -64,7 +65,7 @@
           mode: Phaser.Scale.FIT,
           autoCenter: Phaser.Scale.CENTER_BOTH,
         },
-        scene: [GameManager, Game, Pause, EndGame, GDD],
+        scene: [gameManager, game, pause, endGame, gDD],
         physics: {
           default: "matter",
           matter: { gravity: { y: 0 }, debug: false },

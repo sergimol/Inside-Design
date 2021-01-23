@@ -1,7 +1,7 @@
 import Button from "../button.js";
 import config from "../config.js"
 
-const activasList = ['activa0', 'activa1'];
+const activasList = ['desbloquear', 'desbloquear','desbloquear'];
 const pasivasList = ['pasiva0', 'pasiva1', 'desbloquear', 'pasiva3', 'pasiva4', 'pasiva5', 'pasiva6'];
 const temporalesList = ['pasivaTemp0', 'pasivaTemp1', 'pasivaTemp2'];
 const armasList = ['armas0', 'armas1', 'armas2', 'armas3', 'armas4', 'armas5', 'armas6', 'armas7',
@@ -36,6 +36,9 @@ export default class Game extends Phaser.Scene {
         //IMAGENES IDEAS
         this.load.image('desbloquear', './sprites/gdd/desbloqueable.jpg')
         this.load.image('sombra', './sprites/gdd/sombra.png')
+
+        //ACTIVAS   
+
 
         //PASIVAS
         //Me lo tanqueo
