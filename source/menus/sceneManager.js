@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
         this.load.image('optionsButtonlight', './sprites/buttons/optionsButtonlight.png');
         this.load.image('localStoragelight', './sprites/buttons/localStoragelight.png');
 
-        this.load.image('menuBackground', './sprites/buttons/mainMenuBackground.png');
+        this.load.image('menuBackground', './sprites/buttons/mainMenuBackGround.png');
 
         this.load.audio('introSong', './audio/introSong.mp3');
     }
