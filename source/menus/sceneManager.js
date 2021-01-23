@@ -22,7 +22,7 @@ export default class Game extends Phaser.Scene {
         this.load.image('granade_launcher', './sprites/granade_launcher.png');
 
         this.load.image('escopeta_lanzable', './sprites/escopeta_lanzable.png');
-        this.load.image('pistolaBasica', 'sprites/spritesarmas/pistolaBasica.png');
+        this.load.image('pistolaBasica', './sprites/spritesarmas/pistolaBasica.png');
 
         this.load.spritesheet('granade__launcher_shoot', './sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
         this.load.spritesheet('escopeta_lanzable_shoot', './sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
         this.load.image('optionsButtonlight', './sprites/buttons/optionsButtonlight.png');
         this.load.image('localStoragelight', './sprites/buttons/localStoragelight.png');
 
-        this.load.image('menuBackground', 'sprites/buttons/mainMenuBackground.png');
+        this.load.image('menuBackground', './sprites/buttons/mainMenuBackground.png');
 
         this.load.audio('introSong', './audio/introSong.mp3');
     }
