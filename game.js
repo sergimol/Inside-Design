@@ -14,6 +14,7 @@ export default class Game extends Phaser.Scene {
     super({ key: "main" });
   }
   init(data) {
+    console.log("deberias de empezar a jugar-1")
     this.health = data.health,
       this.ammo = data.ammo,
       this.weaponID = data.weaponID,
@@ -200,11 +201,11 @@ export default class Game extends Phaser.Scene {
 
     //Video
     this.load.video('filtrocinta', './sprites/video/filtrocintabien.mp4');
-
+    console.log("deberias de empezar a jugar0")
   }
 
   create() {
-
+    console.log("deberias de empezar a jugar1")
     //cleon
     this.anims.create({
       key: 'walkCleon',

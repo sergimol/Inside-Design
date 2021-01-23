@@ -186,7 +186,7 @@ const Config = {
     button:{
         mainMenu: 0.25,
         gddMenu:0.8,
-        maNiggaDed:0.15,
+        endMenu:0.6,
     },
     musicVolume:{
         intro: 0.5,   //2
