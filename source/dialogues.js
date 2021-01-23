@@ -1,12 +1,15 @@
 const Dialogues = {
     passives: [
-        ["¿No os parece que el jugador tiene muy poca salud?", "Tienes razón, hagámoslo más resistente."],
-        ["El juego es demasiado fácil, bajémosle la vida al jugador"],
-        ["El otro día me vi rambo y estoy seguro de que tiene munición infinita,", "Me has dado una idea, pongámoslo en el juego."],
-        ["Los botiquines recuperan muy poco, deberían dar más vida."],
-        ["Los botiquines recuperan demasiado, deberían dar menos vida."],
-        ["Hagamos que el personaje corra más, como sanic el erizo.", "GOTTA GO FAST."],
-        ["El jugador va demasiado rápido, tenemos que ralentizarlo."],
+        ["¿No os parece que el jugador tiene muy \npoca salud?", 
+        "Tienes razón, hagámoslo más resistente."],
+        ["El juego es demasiado fácil, \nbajémosle la vida al jugador"],
+        ["El otro día me vi rambo y estoy seguro \nde que tiene munición infinita,",
+         "Me has dado una idea,\n pongámoslo en el juego."],
+        ["Los botiquines recuperan muy poco,\n deberían dar más vida."],
+        ["Los botiquines recuperan demasiado,\n deberían dar menos vida."],
+        ["Hagamos que el personaje corra más,\n como sanic el erizo.",
+         "GOTTA GO FAST."],
+        ["El jugador va demasiado rápido,\n tenemos que ralentizarlo."],
         //Estos 3 no deberían llamarse pero mejor tenerlos a que reviente el juego
         ["arma"],
         ["tile"],
@@ -14,40 +17,48 @@ const Dialogues = {
     ],
 
     actives: [
-        ["Creo que deberíamos poner un dash de habilidad activa.", "Buena idea, puede aportar más dinamismo.", "Vale, pues ahora al pulsar CLICK DERECHO el jugador hará un dash."],
-        ["Creo que deberíamos poner un escudo de habilidad activa.", "Me gusta, ahora al pulsar CLICK DERECHO el jugador activará un escudo que se desactivará tras un tiempo."],
-        ["Creo que deberíamos poner un efecto en área de habilidad activa.", "Muy bien, pues ahora al pulsar CLICK DERECHO el jugador destruirá todas las balas enemigas en un área."]
+        ["Creo que deberíamos poner un dash de\n habilidad activa.", 
+        "Buena idea, puede aportar más dinamismo.", 
+        "Vale, pues ahora al pulsar CLICK DERECHO el\n jugador hará un dash."],
+        ["Creo que deberíamos poner un escudo de \nhabilidad activa.", 
+        "Me gusta, ahora al pulsar CLICK DERECHO el \njugador activará un escudo que se desactivará\n tras un tiempo."],
+        ["Creo que deberíamos poner un efecto en \nárea de habilidad activa.", 
+        "Muy bien, pues ahora al pulsar CLICK DERECHO\n el jugador destruirá todas las balas enemigas\n en un área."]
     ],
 
     weapons:[
-        ["Deberíamos hacer un cambio de arma, ¿cuál ponemos?", "La pistola base está bien."],
-        ["Estaría bien cambiarle el arma.", "Vale, pongámosle una escopeta automática."],
-        ["Creo que ha llegado el momento de introducir la escopeta lanzaescopetas."],
-        ["Probemos otro arma, la escopeta de ráfagas, por ejemplo."],
-        ["Cambiémosle el arma.", "Estaría bien probar la escopeta normal."],
-        ["Este es un buen momento para probar el lanzagranadas."],
-        ["Necesitamos un arma con menos cadencia.", "¿Qué tal una minigun?"],
+        ["Deberíamos hacer un cambio de arma,\n ¿cuál ponemos?",
+         "La pistola base está bien."],
+        ["Estaría bien cambiarle el arma.", 
+        "Vale, pongámosle una escopeta automática."],
+        ["Creo que ha llegado el momento de introducir \nla escopeta lanzaescopetas."],
+        ["Probemos otro arma, la escopeta de ráfagas,\n por ejemplo."],
+        ["Cambiémosle el arma.", 
+        "Estaría bien probar la escopeta normal."],
+        ["Este es un buen momento para probar\n el lanzagranadas."],
+        ["Necesitamos un arma con menos cadencia.", 
+        "¿Qué tal una minigun?"],
         ["Cambiemos el arma por una pistola."],
-        ["Es momento de probar algo distinto, como la pistola láser."],
-        ["El jugador necesita un arma distinta, por ejemplo un rifle automático."],
-        ["Deberíamos cambiar el arma por un rifle de francotirador preciso."],
-        ["Cambiemos el arma por un rifle de francotirador."],
+        ["Es momento de probar algo distinto,\n como la pistola láser."],
+        ["El jugador necesita un arma distinta,\n por ejemplo un rifle automático."],
+        ["Deberíamos cambiar el arma por\n un rifle de francotirador preciso."],
+        ["Cambiemos el arma por un\n rifle de francotirador."],
         ["Probemos el rifle de rafagas."],
-        ["Cambiemos el arma por un bate, que siempre es divertido."],
+        ["Cambiemos el arma por un bate, \nque siempre es divertido."],
         ["Pongamos la katana como arma."],
-        ["Creo que el jugador debería llevar un espadón de arma."],
-        ["El juego está muy frío, deberíamos poner el microondas."],
-        ["Necesitamos un poco de calorcito, pongamos el lanzallamas."]
+        ["Creo que el jugador debería llevar\n un espadón de arma."],
+        ["El juego está muy frío,\n deberíamos poner el microondas."],
+        ["Necesitamos un poco de calorcito, \npongamos el lanzallamas."]
     ],
 
     tilemap: [
-        ["Deberíamos convertir esto en un juego del oeste, con cactus y eso."],
+        ["Deberíamos convertir esto en un juego del\n oeste, con cactus y eso."],
         ["¿Y si le metemos raytracing?"],
-        ["Creo que deberíamos hacer un juego sobre cubos y construcción, que no lo ha hecho nadie."],
+        ["Creo que deberíamos hacer un juego sobre \ncubos y construcción, que no lo ha hecho nadie."],
         ["Es momento del especial de navidad."],
         ["¿Y si hacemos un juego de piratas?"],
-        ["Es peligroso continuar con este tilemap, deberíamos coger otro."],
-        ["Estaría bien hacer un juego sobre matar demonios."],
+        ["Es peligroso continuar con este tilemap,\n deberíamos coger otro."],
+        ["Estaría bien hacer un juego sobre \nmatar demonios."],
         ["¿Y si hacemos un juego de miedo?"]
     ],
 
@@ -59,21 +70,27 @@ const Dialogues = {
         ["Y si hacemos que el protagonista sea calvo."],
         ["¿Y si hacemos un juego político?"],
         ["El protagonista tiene que ser ruso."],
-        ["Nuestro protagonista tiene que ser un payaso."],
+        ["Nuestro protagonista tiene que ser\n estudiante de la UCM."],
         ["Pongámosle cresta al personaje."],
         ["¿Y si hacemos un simulador de hummus?"]
     ],
 
     temps: [
-        ["Me he estado jugando Undertale y creo que deberíamos meter una run pacifíca", "Bueno, podemos probarlo un rato."],
-        ["Podemos probar como sería un juego de coches durante un rato."],
-        ["Podemos probar a hacer un juego de borrachos durante un tiempo."]
+        ["Me he estado jugando Undertale y creo\n que deberíamos meter una run pacifíca",
+         "Bueno, podemos probarlo un rato."],
+        ["Podemos probar como sería un juego \nde coches durante un rato."],
+        ["Podemos probar a hacer un juego \nde borrachos durante un tiempo."]
     ],
 
     upgrade: [
-        ["Deberíamos meterle una mejora a la activa.", "¿Os parece que ahora el dash haga daño por contacto?", "Vale, hagamos eso."],
-        ["El escudo es muy simple, ¿Hacemos que las balas reboten en él?", "Me parece bien, añadámoslo"],
-        ["Estaría bien añadirle algo más al efecto en área.", "Podemos hacer que dañe a los enemigos en el área", "Estoy de acuerdo"]
+        ["Deberíamos meterle una mejora a la activa.",
+         "¿Os parece que ahora el dash haga daño por contacto?", 
+         "Vale, hagamos eso."],
+        ["El escudo es muy simple, \n¿Hacemos que las balas reboten en él?", 
+        "Me parece bien, añadámoslo"],
+        ["Estaría bien añadirle algo más al efecto en área.", 
+        "Podemos hacer que dañe a los enemigos en el área", 
+        "Estoy de acuerdo"]
     ],
 
     music: [

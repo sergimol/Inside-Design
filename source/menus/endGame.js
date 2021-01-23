@@ -8,6 +8,7 @@ export default class Game extends Phaser.Scene {
     constructor() {
         super({ key: "endGame" });
     }
+    
     preload() {
         this.load.image('menuBackground', './sprites/buttons/mainMenuBackGround.png');
         this.load.image('exit', './sprites/gdd/gddexit.png');
