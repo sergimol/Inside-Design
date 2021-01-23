@@ -153,7 +153,7 @@ export default class Player extends Humanoid {
             this.shield.setAlpha(0.5);
             this.shield.depth = 4;
             this.shielded = true;
-            this.shieldTime = 1500;
+            this.shieldTime = 250;
           }
         }
         //BOMBAS

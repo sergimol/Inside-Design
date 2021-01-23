@@ -57,7 +57,8 @@ export default class Button extends Phaser.GameObjects.Image {
         else if (this.label === 'quit') {
             let game = this.scene.scene.get('main');
             game.actualMusic.stop();
-            game.video.stop()
+            if (game.video != undefined)
+                game.video.stop()
             this.scene.scene.stop('main');
             this.scene.scene.start('sceneManager');
         }
