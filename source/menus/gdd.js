@@ -229,32 +229,33 @@ export default class Game extends Phaser.Scene {
             switch (this.activeArray) {
                 case this.gddActivas:
                     console.log("Activas")
-                    this.image = this.add.image(700, 400, activasList[this.contador]);
+                    this.image = this.add.image(550, 400, activasList[this.contador]);
                     break;
                 case this.gddPasivas:
                     console.log("Pasivas")
-                    this.image = this.add.image(700, 400, pasivasList[this.contador]);
+                    this.image = this.add.image(550, 400, pasivasList[this.contador]);
                     break;
 
                 case this.gddTemporales:
                     console.log("PasivasTemp")
-                    this.image = this.add.image(700, 400, temporalesList[this.contador]);
+                    this.image = this.add.image(550, 400, temporalesList[this.contador]);
                     break;
                 case this.gddArmas:
                     console.log("Armas")
-                    this.image = this.add.image(700, 400, armasList[this.contador]);
+                    this.image = this.add.image(550, 400, armasList[this.contador]);
+                    this.image.setScale(10);
                     break;
                 case this.gddEsteticas:
                     console.log("Esteticas")
-                    this.image = this.add.image(700, 400, esteticasList[this.contador]);
+                    this.image = this.add.image(550, 400, esteticasList[this.contador]);
                     break;
                 case this.gddCharacter:
                     console.log("Character")
-                    this.image = this.add.image(700, 400, characterList[this.contador]);
+                    this.image = this.add.image(550, 400, characterList[this.contador]);
                     break;
                 case this.gddMusica:
                     console.log("Musica")
-                    this.image = this.add.image(700, 400, musicaList[this.contador]);
+                    this.image = this.add.image(550, 400, musicaList[this.contador]);
                     break;
 
             }
