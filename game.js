@@ -31,14 +31,15 @@ export default class Game extends Phaser.Scene {
     this.velFactor = data.velFactor;
     this.enemySpriteID = data.enemySpriteID
     this.videoPlay = data.videoPlay;
-
-
   }
 
 
   preload() {
     //Loading video
+
     //this.load.video('loadingvideo', './sprites/video/loading.mp4');
+    //this.video = this.add.video(700, 400, 'loadingvideo');
+    //this.video.play();
     //this.putloadingVideoOnScreen();
 
     //Sprites Player
@@ -211,7 +212,6 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.loadingvideo.destroy();
     console.log("deberias de empezar a jugar1")
     //cleon
     this.anims.create({
@@ -986,7 +986,7 @@ export default class Game extends Phaser.Scene {
 
   }
 
-  putVideoOnScreen() {
+  /*putVideoOnScreen() {
     this.videoPlaying = true;
     this.video = this.add.video(700, 400, 'filtrocinta');
     this.video.depth = 10;
@@ -994,10 +994,5 @@ export default class Game extends Phaser.Scene {
     this.video.play();
     this.video.setLoop(true);
     this.video.setScrollFactor(0);
-  }
-  putloadingVideoOnScreen() {
-    this.video = this.add.video(700, 400, 'filtrocinta');
-    this.video.depth = 10;
-    this.video.play();
-  }
+  }*/
 }
