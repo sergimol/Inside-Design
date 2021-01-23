@@ -13,59 +13,59 @@ export default class Game extends Phaser.Scene {
             this.level = data.level;
     }
     preload() {
-        this.load.spritesheet('player', './sprites/player.png', { frameWidth: 24, frameHeight: 24 });
+        this.load.spritesheet('player', './../../sprites/player.png', { frameWidth: 24, frameHeight: 24 });
 
         //Diego
-        this.load.spritesheet('bullet', './sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.spritesheet('enemybullet', './sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
-        this.load.image('crosshair', './sprites/crosshair.png');
-        this.load.image('granade_launcher', './sprites/granade_launcher.png');
+        this.load.spritesheet('bullet', './../../sprites/newBullet.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.spritesheet('enemybullet', './../../sprites/enemyBullet.png', { frameWidth: 64, frameHeight: 64 });
+        this.load.image('crosshair', './../../sprites/crosshair.png');
+        this.load.image('granade_launcher', './../../sprites/granade_launcher.png');
 
-        this.load.image('escopeta_lanzable', './sprites/escopeta_lanzable.png');
-        this.load.image('pistolaBasica', 'sprites/spritesarmas/pistolaBasica.png');
+        this.load.image('escopeta_lanzable', './../../sprites/escopeta_lanzable.png');
+        this.load.image('pistolaBasica', './../../sprites/spritesarmas/pistolaBasica.png');
 
-        this.load.spritesheet('granade__launcher_shoot', './sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
-        this.load.spritesheet('escopeta_lanzable_shoot', './sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
-        this.load.spritesheet('granade_launcher_shoot_explosion', './sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
+        this.load.spritesheet('granade__launcher_shoot', './../../sprites/granade_bullet.png', { frameWidth: 12, frameHeight: 12 });
+        this.load.spritesheet('escopeta_lanzable_shoot', './../../sprites/escopeta_lanzable.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet('granade_launcher_shoot_explosion', './../../sprites/granade_explosion.png', { frameWidth: 84, frameHeight: 83 });
 
         //Javi
         //Tiles de estéticas
-        this.load.image('tileBase', './sprites/tiles/tileJavi.png');
-        this.load.image('doorV', './sprites/doorV.png');
-        this.load.image('doorOpenV', './sprites/doorOpenV.png');
-        this.load.image('doorH', './sprites/doorH.png');
-        this.load.image('doorOpenH', './sprites/doorOpenH.png');
-        this.load.image('trigger', './sprites/trigger.png');
-        this.load.image('end', './sprites/end.jpg');
+        this.load.image('tileBase', './../../sprites/tiles/tileJavi.png');
+        this.load.image('doorV', './../../sprites/doorV.png');
+        this.load.image('doorOpenV', './../../sprites/doorOpenV.png');
+        this.load.image('doorH', './../../sprites/doorH.png');
+        this.load.image('doorOpenH', './../../sprites/doorOpenH.png');
+        this.load.image('trigger', './../../sprites/trigger.png');
+        this.load.image('end', './../../sprites/end.jpg');
 
-        this.load.tilemapTiledJSON('menu', './sprites/tiles/menu.json');
+        this.load.tilemapTiledJSON('menu', './../../sprites/tiles/menu.json');
 
         //nuevo
-        this.load.audio('gunShootSound', './audio/gunShoot.wav');
-        this.load.audio('gunShootSound2', './audio/gunShoot2.wav');
-        this.load.audio('hitShootSound', './audio/hitShoot.wav');
-        this.load.audio('deadSound', './audio/deadSound.wav');
-        this.load.image('gunShoot', './sprites/gunShootProt.png');
-        this.load.image('bate', './sprites/bate3.png');
-        this.load.image('swing', './sprites/swing.png');
-        this.load.image('walkParticle', './sprites/walkParticulas.png');
-        this.load.image('dashParticle', './sprites/dashParticula.png')
-        this.load.audio('dashSound', './audio/dashSound.wav');
+        this.load.audio('gunShootSound', './../../audio/gunShoot.wav');
+        this.load.audio('gunShootSound2', './../../audio/gunShoot2.wav');
+        this.load.audio('hitShootSound', './../../audio/hitShoot.wav');
+        this.load.audio('deadSound', './../../audio/deadSound.wav');
+        this.load.image('gunShoot', './../../sprites/gunShootProt.png');
+        this.load.image('bate', './../../sprites/bate3.png');
+        this.load.image('swing', './../../sprites/swing.png');
+        this.load.image('walkParticle', './../../sprites/walkParticulas.png');
+        this.load.image('dashParticle', './../../sprites/dashParticula.png')
+        this.load.audio('dashSound', './../../audio/dashSound.wav');
 
         //Buttons
-        this.load.image('playButton', './sprites/buttons/playButton.png');
-        this.load.image('gddButton', './sprites/buttons/gddButton.png');
-        this.load.image('optionsButton', './sprites/buttons/optionsButton.png');
-        this.load.image('localStorage', './sprites/buttons/localStorage.png');
+        this.load.image('playButton', './../../sprites/buttons/playButton.png');
+        this.load.image('gddButton', './../../sprites/buttons/gddButton.png');
+        this.load.image('optionsButton', './../../sprites/buttons/optionsButton.png');
+        this.load.image('localStorage', './../../sprites/buttons/localStorage.png');
 
-        this.load.image('playButtonlight', './sprites/buttons/playButtonlight.png');
-        this.load.image('gddButtonlight', './sprites/buttons/gddButtonlight.png');
-        this.load.image('optionsButtonlight', './sprites/buttons/optionsButtonlight.png');
-        this.load.image('localStoragelight', './sprites/buttons/localStoragelight.png');
+        this.load.image('playButtonlight', './../../sprites/buttons/playButtonlight.png');
+        this.load.image('gddButtonlight', './../../sprites/buttons/gddButtonlight.png');
+        this.load.image('optionsButtonlight', './../../sprites/buttons/optionsButtonlight.png');
+        this.load.image('localStoragelight', './../../sprites/buttons/localStoragelight.png');
 
-        this.load.image('menuBackground', 'sprites/buttons/mainMenuBackground.png');
+        this.load.image('menuBackground', './../../sprites/buttons/mainMenuBackground.png');
 
-        this.load.audio('introSong', './audio/introSong.mp3');
+        this.load.audio('introSong', './../../audio/introSong.mp3');
     }
 
     create() {
