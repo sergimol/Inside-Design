@@ -444,7 +444,10 @@ export default class Game extends Phaser.Scene {
           if (this.map.hasTileAt(tileX, tileY, groundLayer)) {
             //let e = new Boss(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, clyon);
             //hacer random para elegir entre 3 enemigos de acuerdo a 0 - 3, 3- 6, 6 - 9
-            let tipo = Phaser.Math.RND.between(0 + Math.floor(((this.level + 1) / 7)), Math.floor(((this.level + 1) / 3)));
+            let y = Math.floor(((this.level + 1) / 3));
+            if (y > 2) y = 2;
+
+            let tipo = Phaser.Math.RND.between(Math.floor(((this.level + 1) / 7)), y);
             let e = new Enemy(this, tileX * this.map.tileWidth, tileY * this.map.tileHeight, this.player, 0, this.doorSystem, listEnemies[tipo]);
             this.enemies.add(e);
 
