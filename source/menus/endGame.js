@@ -14,8 +14,8 @@ export default class Game extends Phaser.Scene {
         this.load.image('exit', './sprites/gdd/gddexit.png');
 
         //Imagenes Victoria
-        this.load.image('win0', './sprites/finales/finalbueno1.jpg');
-        this.load.image('win1', './sprites/finales/finalbueno2.jpg');
+        this.load.image('win0', './sprites/finales/finalBueno1.jpg');
+        this.load.image('win1', './sprites/finales/finalBueno2.jpg');
 
 
         //Imagenes de Derrota
