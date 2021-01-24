@@ -1,4 +1,4 @@
-import disparo from "../bulletsFolder/defaultBullet.js";
+import disparo from "../bulletsFolder/ssniperBulletPierce.js";
 import disparoAlternativo from "../bulletsFolder/defaultBullet.js";
 
 const WeaponConfig = {
