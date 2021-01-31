@@ -183,10 +183,67 @@ export default class Game extends Phaser.Scene {
         //  We need to clear keyboard events, or they'll stack up when the Menu is re-run
         this.input.keyboard.shutdown();
     }
-    putloadingvideo(){
+    /*putloadingvideo(){
         console.log("te lo pongo")
     this.video = this.add.video(700, 400, 'loadingvideo');
     this.video.play();
-    this.video.depth = 10;
-    }
+    this.video.depth = 10;*/
 }
+/*
+API
+https://rexrainbow.github.io/phaser3-rex-notes/docs/site/timeline/
+Phaser ARCADE COMPONENTS
+https://photonstorm.github.io/phaser3-docs/Phaser.Physics.Arcade.Components.html
+
+
+
+
+DETECCION DE CUALQUIER TECLA
+-Whatsapp
+this.scene.input.keyboard.on("keydown", () => {
+    if (this.body.onFloor()) {
+
+
+    }
+});
+-Inside Design
+this.input.keyboard.on('keydown_ESC', this.resumeGame, this);
+-Examen ordinaria 2019
+this.spacebar = this.input.keyboard.addKey('SPACE');
+if(this.spacebar.isDown && !this.gameRunning)
+      this.scene.restart();
+  }
+
+
+
+DETECCION DE COLISIONES
+-Examen ordinaria 2019
+this.matter.world.on('collisionstart', 
+      (evento, cuerpo1, cuerpo2) => {
+      if(cuerpo1 == this.player.body || cuerpo2 == this.player.body && (cuerpo1.type == "Ellipse" || cuerpo2.type == "Ellipse")){
+        let collidedBall = (cuerpo1 == this.player.body) ? cuerpo2 : cuerpo1;
+        this.ballCollided(collidedBall.gameObject);
+      }
+    },this
+);
+
+UI
+-Examen ordinaria 2019
+this.collisions = 15;
+    this.timeToPlay = 30;//secs
+    this.gameRunning = true;
+
+    let string = "Quedan " + this.collisions + " colisiones y " + this.timeToPlay + " segundos";
+    this.uiText = this.add.text(25,25,string).setFontSize(40).setColor('#000000');
+
+    this.timer = this.time.addEvent({
+      delay: 1000,                // ms
+      callback: this.updateUI,
+      args: [true],
+      callbackScope: this,
+      loop: true
+  });
+
+
+
+*/
