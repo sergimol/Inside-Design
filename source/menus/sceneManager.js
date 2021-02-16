@@ -226,6 +226,17 @@ this.matter.world.on('collisionstart',
       }
     },this
 );
+-Si el delayedEvent no funciona:
+
+-2018 ordinaria
+this.scene.physics.add.collider(this,player,f=>{this.scene.givePoint(this);});
+this.time.addEvent({
+      delay: this.timer,                // ms
+      callback: () => {
+        this.updateTime();
+      },
+      loop: false
+    });
 
 UI
 -Examen ordinaria 2019
